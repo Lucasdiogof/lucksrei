@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.lucasdiogof.fifaqueue",
+      "sha256_cert_fingerprints": [
+        "19:42:BA:9C:AA:7D:A8:A9:2E:E7:DA:25:21:6B:DE:AD:CF:13:B4:48:8B:55:FA:DC:75:4D:A5:B6:E5:AF:E1:3A"
+      ]
+    }
+  }
+]
