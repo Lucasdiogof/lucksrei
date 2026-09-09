@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fan Hub — Case Study | Lucksrei</title>
+<meta name="description" content="Fan Hub: base Flutter multi-clube com flavors independentes, arquitetura club-scoped, Arena de jogos e recursos em tempo real via Supabase.">
+<link rel="canonical" href="https://lucksrei.com/projects/fan-hub/">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="stylesheet" href="/assets/css/style.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lucksrei">
+<meta property="og:title" content="Fan Hub — Case Study | Lucksrei">
+<meta property="og:description" content="Base Flutter multi-clube com flavors independentes, arquitetura club-scoped e recursos em tempo real via Supabase.">
+<meta property="og:url" content="https://lucksrei.com/projects/fan-hub/">
+<meta name="twitter:card" content="summary">
+</head>
+<body>
+<a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+<header class="site-header">
+  <div class="container">
+    <nav class="nav" aria-label="Principal">
+      <a class="nav-brand" href="/">Lucksrei <small>by Lucas Diogo</small></a>
+      <div class="nav-links">
+        <a href="/#sobre">Sobre</a>
+        <a href="/#experiencia">Experiência</a>
+        <a href="/#projetos">Projetos</a>
+        <a href="/#stack">Stack</a>
+        <a href="/contact/">Contato</a>
+      </div>
+      <div class="nav-actions">
+        <a class="btn btn-ghost btn-sm" href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub</a>
+        <button class="mobile-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="/#sobre">Sobre</a>
+    <a href="/#experiencia">Experiência</a>
+    <a href="/#projetos">Projetos</a>
+    <a href="/#stack">Stack</a>
+    <a href="/contact/">Contato</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="/">Lucksrei</a> / <a href="/#projetos">Projetos</a> / Fan Hub</div>
+      <span class="eyebrow">Case study — Produto próprio</span>
+      <h1>Fan Hub</h1>
+      <p class="lead">
+        Uma base Flutter multi-clube: um único produto capaz de operar como aplicativos
+        independentes para diferentes clubes de futebol, cada um com identidade visual,
+        conteúdo e funcionalidades próprias — sem duplicar o código-base.
+      </p>
+      <div class="page-meta">
+        <span class="badge">Android</span>
+        <span class="badge">iOS</span>
+        <span class="badge">Web / PWA</span>
+        <span class="badge">Flutter</span>
+        <span class="badge">Supabase</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="case-block" data-reveal>
+        <h2>Visão do produto</h2>
+        <p>
+          O Fan Hub nasceu da ideia de que a experiência digital de um torcedor — partidas,
+          conteúdo, jogos e presença no clube — pode ser construída sobre uma base técnica
+          compartilhada, sem que cada clube exija um app completamente novo do zero. Hoje o
+          Fan Hub roda em produção com flavors para o <strong>Goiás</strong> e o
+          <strong>RB Bragantino</strong>.
+        </p>
+      </div>
+
+      <div class="case-block" data-reveal>
+        <h2>Desafio arquitetural</h2>
+        <p>
+          O núcleo do desafio é manter um único código-base evoluindo para múltiplos clubes
+          sem que features, dados ou identidade visual de um clube vazem para o outro. Isso
+          exigiu uma arquitetura club-scoped desde a camada de domínio até a camada de dados,
+          com configuração de clube injetada na inicialização do app (via flavor) e isolamento
+          real dos dados no Supabase — cada clube com seu próprio projeto e políticas de RLS
+          dedicadas.
+        </p>
+        <div class="arch-diagram">
+          <div class="arch-core">Núcleo compartilhado — Flutter · Clean Architecture · Arena engine · Design system</div>
+          <div class="arch-flavors">
+            <div class="arch-flavor"><strong>Flavor Goiás</strong><span>Identidade, conteúdo e dados próprios</span></div>
+            <div class="arch-flavor"><strong>Flavor RB Bragantino</strong><span>Identidade, conteúdo e dados próprios</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-block" data-reveal>
+        <h2>Principais recursos</h2>
+        <div class="feature-grid">
+          <div class="feature-item"><strong>Home do clube</strong>Próximos jogos, notícias e conteúdo do clube.</div>
+          <div class="feature-item"><strong>Arena de jogos</strong>Minijogos para torcedores: quiz, adivinhar jogador, adivinhar escalação.</div>
+          <div class="feature-item"><strong>Rankings</strong>Progressão e pontuação cross-game por torcedor.</div>
+          <div class="feature-item"><strong>Passaporte</strong>Registro de presença em partidas.</div>
+          <div class="feature-item"><strong>Loja &amp; Ingressos</strong>Catálogo de produtos e emissão de ingressos.</div>
+          <div class="feature-item"><strong>Sócio torcedor</strong>Assinatura e benefícios de sócio.</div>
+          <div class="feature-item"><strong>Mídia</strong>Notícias, YouTube, X e Instagram agregados por clube.</div>
+          <div class="feature-item"><strong>Realtime</strong>Atualizações ao vivo via Supabase Realtime.</div>
+        </div>
+      </div>
+
+      <div class="case-block" data-reveal>
+        <h2>Stack técnica</h2>
+        <div class="stack-grid">
+          <div class="stack-category">
+            <h3>Mobile</h3>
+            <ul><li>Flutter</li><li>Dart</li><li>Flavors</li><li>Android</li><li>iOS</li><li>Web / PWA</li></ul>
+          </div>
+          <div class="stack-category">
+            <h3>Backend</h3>
+            <ul><li>Supabase</li><li>PostgreSQL</li><li>Row Level Security</li><li>Realtime</li></ul>
+          </div>
+          <div class="stack-category">
+            <h3>Delivery</h3>
+            <ul><li>CI/CD</li><li>Multi-flavor build pipeline</li></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-block" data-reveal>
+        <h2>Prévia</h2>
+        <div class="placeholder-shot">Screenshots do produto em preparação</div>
+        <p class="disclosure">
+          O Fan Hub é um produto próprio da Lucksrei. Não representa parceria, contrato ou
+          endosso oficial do Goiás Esporte Clube ou do Red Bull Bragantino.
+        </p>
+      </div>
+
+      <div class="case-footer-nav">
+        <a class="btn btn-ghost" href="/#projetos">← Todos os projetos</a>
+        <a class="btn btn-primary" href="/projects/fifa-queue/">Próximo: FIFA Queue →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Lucksrei</div>
+        <p>Lucksrei é o estúdio de software operado por Lucas Diogo — projeto, construo, publico e mantenho produtos mobile completos, do design técnico ao release nas lojas.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="/#projetos">Projetos</a></li>
+          <li><a href="/#experiencia">Experiência</a></li>
+          <li><a href="/contact/">Contato</a></li>
+          <li><a href="/privacy/">Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Conecte-se</h4>
+        <ul>
+          <li><a href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="mailto:lucasdiogo1234@gmail.com">lucasdiogo1234@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Lucksrei — LUCAS DIOGO FRANCA · CNPJ 54.868.173/0001-55</span>
+      <span>Brasil</span>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" aria-label="Voltar ao topo">↑</button>
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

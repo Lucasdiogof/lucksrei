@@ -1,127 +1,387 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Lucksrei — Desenvolvimento de aplicativos e soluções digitais</title>
-  <meta name="description" content="Lucksrei desenvolve, mantém e publica aplicativos e produtos digitais para diferentes segmentos.">
-  <style>
-:root{
-  --bg:#0b1220;
-  --panel:#121a2b;
-  --text:#f8fafc;
-  --muted:#a8b3c7;
-  --line:#23304a;
-  --accent:#7dd3fc;
-  --accent2:#a7f3d0;
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lucksrei — Lucas Diogo, Senior Mobile Developer & Software Studio</title>
+<meta name="description" content="Lucksrei é o estúdio de software operado por Lucas Diogo, Senior Mobile Developer especialista em Flutter. Produtos mobile completos: arquitetura, backend, release e manutenção.">
+<link rel="canonical" href="https://lucksrei.com/">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="stylesheet" href="/assets/css/style.css">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lucksrei">
+<meta property="og:title" content="Lucksrei — Lucas Diogo, Senior Mobile Developer & Software Studio">
+<meta property="og:description" content="Estúdio de software operado por Lucas Diogo. Produtos mobile completos: arquitetura, backend, release e manutenção.">
+<meta property="og:url" content="https://lucksrei.com/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lucksrei — Lucas Diogo, Senior Mobile Developer">
+<meta name="twitter:description" content="Estúdio de software operado por Lucas Diogo. Produtos mobile completos: arquitetura, backend, release e manutenção.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Lucas Diogo",
+  "url": "https://lucksrei.com/",
+  "jobTitle": "Senior Mobile Developer",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Lucksrei",
+    "legalName": "LUCAS DIOGO FRANCA",
+    "taxID": "54.868.173/0001-55",
+    "url": "https://lucksrei.com/"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/in/lucas-diogo-aa39b9174/",
+    "https://github.com/Lucasdiogof"
+  ]
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:linear-gradient(180deg,#0b1220 0%,#0e1627 100%);
-  color:var(--text);
-}
-a{color:inherit}
-.container{max-width:1040px;margin:0 auto;padding:0 24px}
-header{padding:24px 0;border-bottom:1px solid var(--line)}
-nav{display:flex;align-items:center;justify-content:space-between;gap:20px}
-.brand{font-weight:800;letter-spacing:.02em;font-size:22px}
-.links{display:flex;gap:18px;flex-wrap:wrap}
-.links a{color:var(--muted);text-decoration:none}
-.links a:hover{color:var(--text)}
-.hero{padding:96px 0 72px}
-.badge{
-  display:inline-block;padding:8px 12px;border:1px solid var(--line);
-  border-radius:999px;color:var(--accent2);background:rgba(255,255,255,.02);
-  font-size:14px;margin-bottom:20px
-}
-h1{font-size:clamp(42px,7vw,76px);line-height:1;max-width:900px;margin:0 0 22px}
-.lead{font-size:20px;line-height:1.65;color:var(--muted);max-width:760px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding:20px 0 72px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px}
-.card h3{margin-top:0}
-.card p{color:var(--muted);line-height:1.6}
-section{padding:56px 0}
-section h2{font-size:34px;margin:0 0 18px}
-section p, section li{color:var(--muted);line-height:1.7}
-.info{display:grid;grid-template-columns:1fr 1fr;gap:28px}
-footer{border-top:1px solid var(--line);padding:28px 0 44px;color:var(--muted);font-size:14px}
-.button{
-  display:inline-block;margin-top:18px;padding:12px 18px;border-radius:12px;
-  background:var(--text);color:#0b1220;text-decoration:none;font-weight:700
-}
-@media (max-width:800px){
-  .grid,.info{grid-template-columns:1fr}
-  .links{display:none}
-  .hero{padding-top:64px}
-}
-</style>
+</script>
 </head>
 <body>
-<header>
+<a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+<header class="site-header">
   <div class="container">
-    <nav>
-      <div class="brand">Lucksrei</div>
-      <div class="links">
-        <a href="#servicos">Serviços</a>
+    <nav class="nav" aria-label="Principal">
+      <a class="nav-brand" href="/">Lucksrei <small>by Lucas Diogo</small></a>
+      <div class="nav-links">
         <a href="#sobre">Sobre</a>
+        <a href="#experiencia">Experiência</a>
+        <a href="#projetos">Projetos</a>
+        <a href="#stack">Stack</a>
         <a href="/contact/">Contato</a>
-        <a href="/privacy/">Privacidade</a>
+      </div>
+      <div class="nav-actions">
+        <a class="btn btn-ghost btn-sm" href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub</a>
+        <button class="mobile-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
       </div>
     </nav>
   </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="#sobre">Sobre</a>
+    <a href="#experiencia">Experiência</a>
+    <a href="#projetos">Projetos</a>
+    <a href="#stack">Stack</a>
+    <a href="/contact/">Contato</a>
+  </div>
 </header>
 
-<main>
+<main id="main">
+
   <section class="hero">
-    <div class="container">
-      <div class="badge">Software • Mobile • Web</div>
-      <h1>Aplicativos e produtos digitais feitos para evoluir.</h1>
-      <p class="lead">
-        A Lucksrei desenvolve, mantém e publica aplicativos para Android, iOS e web,
-        além de soluções digitais próprias e projetos de software para diferentes segmentos.
-      </p>
-      <a class="button" href="/contact/">Fale com a Lucksrei</a>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="badge"><span class="dot"></span> Disponível para novos projetos mobile</span>
+        <h1>Produtos mobile projetados, construídos e publicados de ponta a ponta.</h1>
+        <p class="lead">
+          Sou Lucas Diogo, Senior Mobile Developer especialista em Flutter. A Lucksrei é o
+          estúdio através do qual projeto arquitetura, implemento backend, integro serviços
+          e publico aplicativos completos para Android, iOS e Web.
+        </p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#projetos">Ver projetos</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn btn-ghost" href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn btn-ghost" href="/contact/">Contato</a>
+        </div>
+        <div class="hero-meta">
+          <span>Flutter · Dart</span>
+          <span>Android / iOS / Web</span>
+          <span>Clean Architecture</span>
+          <span>Release &amp; CI/CD</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="pipeline">
+          <div class="pipeline-row" data-reveal><span class="step-index">01</span><span class="step-name">Product &amp; Architecture</span></div>
+          <div class="pipeline-arrow">↓</div>
+          <div class="pipeline-row" data-reveal><span class="step-index">02</span><span class="step-name">Flutter — Android / iOS / Web</span></div>
+          <div class="pipeline-arrow">↓</div>
+          <div class="pipeline-row" data-reveal><span class="step-index">03</span><span class="step-name">Backend — Supabase / Firebase</span></div>
+          <div class="pipeline-arrow">↓</div>
+          <div class="pipeline-row" data-reveal><span class="step-index">04</span><span class="step-name">Realtime &amp; Integrations</span></div>
+          <div class="pipeline-arrow">↓</div>
+          <div class="pipeline-row" data-reveal><span class="step-index">05</span><span class="step-name">CI/CD &amp; Store Release</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="servicos">
-    <div class="container">
-      <h2>O que fazemos</h2>
-      <div class="grid">
-        <div class="card"><h3>Aplicativos móveis</h3><p>Desenvolvimento de aplicativos para Android e iOS, com foco em qualidade, desempenho e evolução contínua.</p></div>
-        <div class="card"><h3>Aplicações web</h3><p>Criação de produtos e experiências web responsivas, integradas a serviços, APIs e plataformas modernas.</p></div>
-        <div class="card"><h3>Produtos digitais</h3><p>Criação, publicação, manutenção e gerenciamento de aplicativos e serviços digitais próprios.</p></div>
-      </div>
+  <section class="metrics" aria-label="Indicadores">
+    <div class="container metrics-grid">
+      <div class="metric"><div class="value"><span data-counter="8" data-counter-suffix="+">0</span> anos</div><div class="label">Em desenvolvimento de software, desde 2018</div></div>
+      <div class="metric"><div class="value"><span data-counter="4">0</span> produtos</div><div class="label">Aplicativos próprios em produção</div></div>
+      <div class="metric"><div class="value">3 plataformas</div><div class="label">Android · iOS · Web/PWA</div></div>
+      <div class="metric"><div class="value">Ciclo completo</div><div class="label">Da arquitetura ao release nas lojas</div></div>
     </div>
   </section>
 
   <section id="sobre">
-    <div class="container info">
-      <div>
-        <h2>Sobre a Lucksrei</h2>
+    <div class="container about-grid">
+      <div class="about-body" data-reveal>
+        <span class="eyebrow">Sobre</span>
+        <h2>Senior Mobile Developer, especialista em Flutter</h2>
         <p>
-          Lucksrei é a marca utilizada por LUCAS DIOGO FRANCA para desenvolvimento,
-          manutenção e publicação de software, aplicativos e produtos digitais.
+          Tenho forte experiência na construção de aplicações escaláveis e de alta performance
+          com Flutter, atuando de forma multiplataforma em Android e iOS. Trabalho com Clean
+          Architecture, TDD, BLoC/Cubit, injeção de dependência, integração com APIs REST e
+          web services, persistência local e sincronização offline-first.
+        </p>
+        <p>
+          Já atuei em fintech, agritech, sistemas governamentais e produtos digitais próprios,
+          passando por sincronização de dados, Hive, Sembast, Firebase, Supabase, múltiplos
+          flavors de app, publicação na Google Play e App Store, Fastlane, GitHub Actions,
+          Azure DevOps e, na origem, backend em Java.
+        </p>
+        <p>
+          A Lucksrei é o estúdio de software que uso para dar forma a essa experiência em
+          produtos próprios — do primeiro rascunho de arquitetura até a manutenção contínua
+          em produção.
         </p>
       </div>
-      <div class="card">
-        <p><strong>Razão Social</strong><br>LUCAS DIOGO FRANCA</p>
-        <p><strong>CNPJ</strong><br>54.868.173/0001-55</p>
-        <p><strong>País</strong><br>Brasil</p>
+      <div class="fact-card" data-reveal>
+        <dl>
+          <div><dt>Marca</dt><dd>Lucksrei</dd></div>
+          <div><dt>Razão social</dt><dd>LUCAS DIOGO FRANCA</dd></div>
+          <div><dt>CNPJ</dt><dd>54.868.173/0001-55</dd></div>
+          <div><dt>Atuação</dt><dd>Mobile Engineering — Flutter</dd></div>
+          <div><dt>Plataformas</dt><dd>Android, iOS, Web/PWA</dd></div>
+          <div><dt>Base</dt><dd>Brasil</dd></div>
+        </dl>
       </div>
     </div>
   </section>
+
+  <section id="projetos">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Featured work</span>
+        <h2>Produtos próprios em produção</h2>
+        <p>Aplicativos que projetei, construí e mantenho — do banco de dados à loja de aplicativos.</p>
+      </div>
+      <div class="projects-grid">
+        <a class="project-card is-featured" href="/projects/fan-hub/" data-reveal>
+          <div class="project-card-top"><span class="project-tag">Multi-clube · Realtime</span></div>
+          <h3>Fan Hub</h3>
+          <p>Base Flutter multi-clube com flavors independentes (Goiás e RB Bragantino), conteúdo e funcionalidades club-scoped, Arena de jogos, rankings e recursos em tempo real via Supabase.</p>
+          <div class="chips">
+            <span class="chip">Flutter</span><span class="chip">Supabase</span><span class="chip">PostgreSQL · RLS</span><span class="chip">Realtime</span>
+          </div>
+          <span class="go">Ver case study →</span>
+        </a>
+        <a class="project-card" href="/projects/fifa-queue/" data-reveal>
+          <div class="project-card-top"><span class="project-tag">Matchmaking</span></div>
+          <h3>FIFA Queue</h3>
+          <p>App para times competitivos encontrarem partidas, com matchmaking server-authoritative, fila FIFO e sincronização em tempo real.</p>
+          <div class="chips"><span class="chip">Flutter</span><span class="chip">Supabase</span><span class="chip">Edge Functions</span></div>
+          <span class="go">Ver case study →</span>
+        </a>
+        <a class="project-card" href="/projects/aura/" data-reveal>
+          <div class="project-card-top"><span class="project-tag">EdTech</span></div>
+          <h3>Aura</h3>
+          <p>Aplicativo educacional para estudo e preparação para vestibulares e provas, com questões, sessões de estudo e acompanhamento de progresso.</p>
+          <div class="chips"><span class="chip">Flutter</span><span class="chip">Supabase</span></div>
+          <span class="go">Ver case study →</span>
+        </a>
+        <a class="project-card" href="/projects/la-pelve/" data-reveal>
+          <div class="project-card-top"><span class="project-tag">Saúde · Gestão</span></div>
+          <h3>La Pelve</h3>
+          <p>Ferramenta de organização clínica para fisioterapia pélvica: agenda, pacientes, anamnese, evolução e histórico de atendimentos.</p>
+          <div class="chips"><span class="chip">Flutter</span><span class="chip">Supabase</span></div>
+          <span class="go">Ver case study →</span>
+        </a>
+      </div>
+
+      <div class="section-foot" data-reveal>
+        <span class="eyebrow">Previous / professional projects</span>
+        <div class="legacy-grid">
+          <div class="legacy-item">
+            <h4>Emater</h4>
+            <p>App para técnicos e produtores rurais.</p>
+            <div class="chips"><span class="chip">Flutter</span><span class="chip">ObjectDB</span><span class="chip">REST API</span></div>
+          </div>
+          <div class="legacy-item">
+            <h4>AGR Fiscal</h4>
+            <p>App para fiscais de agência reguladora.</p>
+            <div class="chips"><span class="chip">Flutter</span><span class="chip">ObjectDB</span><span class="chip">REST API</span></div>
+          </div>
+          <div class="legacy-item">
+            <h4>Vai</h4>
+            <p>Aplicativo de mobilidade urbana.</p>
+            <div class="chips"><span class="chip">Flutter</span><span class="chip">Firebase RTDB</span></div>
+          </div>
+          <div class="legacy-item">
+            <h4>GPOL</h4>
+            <p>Aplicativo de gestão política.</p>
+            <div class="chips"><span class="chip">Flutter</span><span class="chip">Firestore</span></div>
+          </div>
+        </div>
+        <p class="disclosure">Projetos desenvolvidos como freelancer entre 2019 e 2021 — trabalhos profissionais, não produtos da Lucksrei.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="processo">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Como eu construo</span>
+        <h2>Do discovery ao produto em produção</h2>
+        <p>O mesmo ciclo que aplico nos produtos próprios da Lucksrei e em projetos profissionais.</p>
+      </div>
+      <div class="process-grid">
+        <div class="process-step" data-reveal><span class="num">01</span><h3>Discovery &amp; Architecture</h3><p>Definição de escopo, modelagem de dados e arquitetura (Clean Architecture, camadas, contratos).</p></div>
+        <div class="process-step" data-reveal><span class="num">02</span><h3>Product / UI Implementation</h3><p>Implementação da interface em Flutter, com foco em consistência visual e experiência mobile-first.</p></div>
+        <div class="process-step" data-reveal><span class="num">03</span><h3>Backend &amp; Integrations</h3><p>Modelagem no Supabase/Firebase, regras de acesso, integrações e serviços em tempo real.</p></div>
+        <div class="process-step" data-reveal><span class="num">04</span><h3>Testing &amp; Reliability</h3><p>Testes unitários e de widget, validação de fluxos críticos e revisão de arquitetura.</p></div>
+        <div class="process-step" data-reveal><span class="num">05</span><h3>CI/CD &amp; Store Release</h3><p>Pipelines de build e publicação — GitHub Actions, Fastlane, Google Play e App Store.</p></div>
+        <div class="process-step" data-reveal><span class="num">06</span><h3>Monitoring &amp; Evolution</h3><p>Acompanhamento pós-release, correções e evolução contínua do produto.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Stack</span>
+        <h2>Tecnologias que uso no dia a dia</h2>
+      </div>
+      <div class="stack-grid">
+        <div class="stack-category" data-reveal>
+          <h3>Mobile</h3>
+          <ul><li>Flutter</li><li>Dart</li><li>Android</li><li>iOS</li><li>Web / PWA</li></ul>
+        </div>
+        <div class="stack-category" data-reveal>
+          <h3>Architecture</h3>
+          <ul><li>Clean Architecture</li><li>TDD</li><li>Dependency Injection</li><li>BLoC</li><li>Cubit</li><li>Provider</li></ul>
+        </div>
+        <div class="stack-category" data-reveal>
+          <h3>Backend &amp; Data</h3>
+          <ul><li>Supabase</li><li>PostgreSQL</li><li>Firebase</li><li>REST APIs</li><li>WebServices</li><li>Hive</li><li>Sembast</li><li>NoSQL</li></ul>
+        </div>
+        <div class="stack-category" data-reveal>
+          <h3>Delivery</h3>
+          <ul><li>Git</li><li>GitHub Actions</li><li>Fastlane</li><li>Azure DevOps</li><li>Google Play</li><li>App Store</li></ul>
+        </div>
+        <div class="stack-category" data-reveal>
+          <h3>Backend background</h3>
+          <ul><li>Java</li><li>Spring</li><li>Maven</li><li>MVC</li><li>ZK Framework</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experiencia">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow">Experiência</span>
+        <h2>Trajetória profissional</h2>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item is-current" data-reveal>
+          <div class="timeline-head">
+            <h3>Cooper Tec</h3>
+            <span class="timeline-role">Mobile Developer</span>
+            <span class="timeline-period">09/2023 — atual</span>
+          </div>
+          <ul><li>Flutter/Dart Android e iOS</li><li>BLoC</li><li>Clean Architecture</li><li>TDD</li><li>Dependency Injection</li><li>Sincronização e persistência</li><li>Performance</li><li>Ambientes distribuídos</li></ul>
+        </div>
+        <div class="timeline-item" data-reveal>
+          <div class="timeline-head">
+            <h3>Agrosmart</h3>
+            <span class="timeline-role">Mobile Developer</span>
+            <span class="timeline-period">01/2022 — 06/2023</span>
+          </div>
+          <ul><li>Flutter</li><li>Cubit/BLoC</li><li>Clean Architecture</li><li>TDD</li><li>Offline-first</li><li>Hive</li><li>Sembast</li><li>Dependency Injection</li><li>Fastlane</li><li>GitHub Actions</li></ul>
+        </div>
+        <div class="timeline-item" data-reveal>
+          <div class="timeline-head">
+            <h3>Toro Investimentos</h3>
+            <span class="timeline-role">Mobile Developer</span>
+            <span class="timeline-period">05/2021 — 12/2021</span>
+          </div>
+          <ul><li>Flutter</li><li>Setor financeiro</li><li>Clean Architecture</li><li>Dependency Injection</li><li>Azure DevOps</li><li>CI/CD</li><li>Aplicações em produção</li></ul>
+        </div>
+        <div class="timeline-item" data-reveal>
+          <div class="timeline-head">
+            <h3>IZA</h3>
+            <span class="timeline-role">Mobile Developer</span>
+            <span class="timeline-period">10/2020 — 03/2021</span>
+          </div>
+          <ul><li>Flutter</li><li>Firebase</li><li>Dependency Injection</li><li>NoSQL</li></ul>
+        </div>
+        <div class="timeline-item" data-reveal>
+          <div class="timeline-head">
+            <h3>Freelancer</h3>
+            <span class="timeline-role">Mobile Developer</span>
+            <span class="timeline-period">01/2019 — 02/2021</span>
+          </div>
+          <ul><li>Emater</li><li>AGR Fiscal</li><li>Vai</li><li>GPOL</li></ul>
+        </div>
+        <div class="timeline-item" data-reveal>
+          <div class="timeline-head">
+            <h3>Memora</h3>
+            <span class="timeline-role">Mobile/Web Developer</span>
+            <span class="timeline-period">03/2018 — 05/2021</span>
+          </div>
+          <ul><li>Java</li><li>Sistemas corporativos</li><li>MVC</li><li>ZK Framework</li><li>Evolução e modernização de sistemas</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato">
+    <div class="container">
+      <div class="cta-band" data-reveal>
+        <h2>Tem um produto mobile em mente?</h2>
+        <p>Fale sobre arquitetura, backend ou release — respondo por e-mail ou LinkedIn.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="/contact/">Ir para contato</a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
-<footer>
+<footer class="site-footer">
   <div class="container">
-    © 2026 Lucksrei. Todos os direitos reservados. ·
-    <a href="/privacy/">Privacidade</a> ·
-    <a href="/contact/">Contato</a>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Lucksrei</div>
+        <p>Lucksrei é o estúdio de software operado por Lucas Diogo — projeto, construo, publico e mantenho produtos mobile completos, do design técnico ao release nas lojas.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="/#projetos">Projetos</a></li>
+          <li><a href="/#experiencia">Experiência</a></li>
+          <li><a href="/contact/">Contato</a></li>
+          <li><a href="/privacy/">Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Conecte-se</h4>
+        <ul>
+          <li><a href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="mailto:lucasdiogo1234@gmail.com">lucasdiogo1234@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Lucksrei — LUCAS DIOGO FRANCA · CNPJ 54.868.173/0001-55</span>
+      <span>Brasil</span>
+    </div>
   </div>
 </footer>
+
+<button class="back-to-top" aria-label="Voltar ao topo">↑</button>
+<script src="/assets/js/main.js"></script>
 </body>
 </html>

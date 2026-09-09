@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FIFA Queue — Case Study | Lucksrei</title>
+<meta name="description" content="FIFA Queue: matchmaking server-authoritative para times competitivos, com fila FIFO, convites e sincronização em tempo real via Supabase.">
+<link rel="canonical" href="https://lucksrei.com/projects/fifa-queue/">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="stylesheet" href="/assets/css/style.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lucksrei">
+<meta property="og:title" content="FIFA Queue — Case Study | Lucksrei">
+<meta property="og:description" content="Matchmaking server-authoritative para times competitivos, com fila FIFO e sincronização em tempo real.">
+<meta property="og:url" content="https://lucksrei.com/projects/fifa-queue/">
+<meta name="twitter:card" content="summary">
+</head>
+<body>
+<a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+<header class="site-header">
+  <div class="container">
+    <nav class="nav" aria-label="Principal">
+      <a class="nav-brand" href="/">Lucksrei <small>by Lucas Diogo</small></a>
+      <div class="nav-links">
+        <a href="/#sobre">Sobre</a>
+        <a href="/#experiencia">Experiência</a>
+        <a href="/#projetos">Projetos</a>
+        <a href="/#stack">Stack</a>
+        <a href="/contact/">Contato</a>
+      </div>
+      <div class="nav-actions">
+        <a class="btn btn-ghost btn-sm" href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub</a>
+        <button class="mobile-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="/#sobre">Sobre</a>
+    <a href="/#experiencia">Experiência</a>
+    <a href="/#projetos">Projetos</a>
+    <a href="/#stack">Stack</a>
+    <a href="/contact/">Contato</a>
+  </div>
+</header>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="/">Lucksrei</a> / <a href="/#projetos">Projetos</a> / FIFA Queue</div>
+      <span class="eyebrow">Case study — Produto próprio</span>
+      <h1>FIFA Queue</h1>
+      <p class="lead">
+        Aplicativo para times competitivos encontrarem partidas de forma justa e previsível —
+        com uma fila de matchmaking cuja autoridade fica sempre no servidor, nunca no cliente.
+      </p>
+      <div class="page-meta">
+        <span class="badge">Flutter</span>
+        <span class="badge">Supabase</span>
+        <span class="badge">Realtime</span>
+        <span class="badge">Edge Functions</span>
+        <span class="badge">FCM</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="case-block" data-reveal>
+        <h2>Visão do produto</h2>
+        <p>
+          Times formam grupos, entram numa fila de busca por adversário e recebem uma partida
+          assim que houver um par compatível disponível. O app cobre todo o ciclo: criação de
+          time e convites, entrada na fila, formação da partida e notificação em tempo real.
+        </p>
+      </div>
+
+      <div class="case-block" data-reveal>
+        <h2>Desafio arquitetural — matchmaking confiável</h2>
+        <p>
+          O ponto central do FIFA Queue é garantir que o pareamento de partidas seja
+          consistente mesmo com múltiplos clientes agindo ao mesmo tempo. Toda decisão de
+          matchmaking acontece no servidor (Postgres + Edge Functions), nunca no app: fila
+          FIFO, lock por time — cada time só pode ter uma busca ativa por vez — e um padrão de
+          transactional outbox para garantir que eventos de partida e notificações sejam
+          entregues de forma consistente, mesmo em caso de falha parcial.
+        </p>
+        <div class="flow-row" data-reveal>
+          <span class="flow-node">Team</span><span class="flow-arrow">→</span>
+          <span class="flow-node">Queue (FIFO)</span><span class="flow-arrow">→</span>
+          <span class="flow-node">Server Authority</span><span class="flow-arrow">→</span>
+          <span class="flow-node">Match</span><span class="flow-arrow">→</span>
+          <span class="flow-node">Realtime sync</span>
+        </div>
+      </div>
+
+      <div class="case-block" data-reveal>
+        <h2>Principais recursos</h2>
+        <div class="feature-grid">
+          <div class="feature-item"><strong>Times &amp; membros</strong>Criação de time, convites e gestão de membros.</div>
+          <div class="feature-item"><strong>Fila de busca</strong>Uma busca ativa por time, com expiração automática.</div>
+          <div class="feature-item"><strong>Matchmaking server-side</strong>Pareamento decidido inteiramente no backend.</div>
+          <div class="feature-item"><strong>Notificações</strong>Push via FCM para eventos de fila e partida.</div>
+          <div class="feature-item"><strong>Estado em tempo real</strong>Sincronização via Supabase Realtime.</div>
+          <div class="feature-item"><strong>Row Level Security</strong>Acesso a dados restrito por time/usuário no Postgres.</div>
+        </div>
+      </div>
+
+      <div class="case-block" data-reveal>
+        <h2>Stack técnica</h2>
+        <div class="stack-grid">
+          <div class="stack-category">
+            <h3>Mobile</h3>
+            <ul><li>Flutter</li><li>Dart</li></ul>
+          </div>
+          <div class="stack-category">
+            <h3>Backend</h3>
+            <ul><li>Supabase</li><li>PostgreSQL</li><li>Edge Functions</li><li>Row Level Security</li><li>Realtime</li></ul>
+          </div>
+          <div class="stack-category">
+            <h3>Mensageria</h3>
+            <ul><li>FCM</li><li>Transactional outbox</li></ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-block" data-reveal>
+        <h2>Prévia</h2>
+        <div class="placeholder-shot">Screenshots do produto em preparação</div>
+      </div>
+
+      <div class="case-footer-nav">
+        <a class="btn btn-ghost" href="/projects/fan-hub/">← Fan Hub</a>
+        <a class="btn btn-primary" href="/projects/aura/">Próximo: Aura →</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Lucksrei</div>
+        <p>Lucksrei é o estúdio de software operado por Lucas Diogo — projeto, construo, publico e mantenho produtos mobile completos, do design técnico ao release nas lojas.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="/#projetos">Projetos</a></li>
+          <li><a href="/#experiencia">Experiência</a></li>
+          <li><a href="/contact/">Contato</a></li>
+          <li><a href="/privacy/">Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Conecte-se</h4>
+        <ul>
+          <li><a href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="mailto:lucasdiogo1234@gmail.com">lucasdiogo1234@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Lucksrei — LUCAS DIOGO FRANCA · CNPJ 54.868.173/0001-55</span>
+      <span>Brasil</span>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" aria-label="Voltar ao topo">↑</button>
+<script src="/assets/js/main.js"></script>
+</body>
+</html>
