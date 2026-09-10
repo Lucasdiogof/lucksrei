@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "HALJMW29DC.com.lucasdiogof.fifaqueue",
+        "paths": ["/join/*", "/u/*"]
+      }
+    ]
+  }
+}
