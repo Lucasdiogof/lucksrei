@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FIFA Queue — Case Study | Lucksrei</title>
-<meta name="description" content="FIFA Queue: matchmaking server-authoritative para times competitivos, com fila FIFO, convites e sincronização em tempo real via Supabase.">
+<title>Match Queue — Case Study | Lucksrei</title>
+<meta name="description" content="Match Queue: matchmaking server-authoritative para times competitivos, com fila FIFO, convites e sincronização em tempo real via Supabase.">
 <link rel="canonical" href="https://lucksrei.com/projects/fifa-queue/">
 <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
 <link rel="stylesheet" href="/assets/css/style.css">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lucksrei">
-<meta property="og:title" content="FIFA Queue — Case Study | Lucksrei">
+<meta property="og:title" content="Match Queue — Case Study | Lucksrei">
 <meta property="og:description" content="Matchmaking server-authoritative para times competitivos, com fila FIFO e sincronização em tempo real.">
 <meta property="og:url" content="https://lucksrei.com/projects/fifa-queue/">
 <meta name="twitter:card" content="summary">
@@ -49,9 +49,9 @@
 <main id="main">
   <section class="page-hero">
     <div class="container">
-      <div class="breadcrumb"><a href="/">Lucksrei</a> / <a href="/#projetos">Projetos</a> / FIFA Queue</div>
+      <div class="breadcrumb"><a href="/">Lucksrei</a> / <a href="/#projetos">Projetos</a> / Match Queue</div>
       <span class="eyebrow">Case study — Produto próprio</span>
-      <h1>FIFA Queue</h1>
+      <h1>Match Queue</h1>
       <p class="lead">
         Aplicativo para times competitivos encontrarem partidas de forma justa e previsível —
         com uma fila de matchmaking cuja autoridade fica sempre no servidor, nunca no cliente.
@@ -83,7 +83,7 @@
       <div class="case-block" data-reveal>
         <h2>Desafio arquitetural — matchmaking confiável</h2>
         <p>
-          O ponto central do FIFA Queue é garantir que o pareamento de partidas seja
+          O ponto central do Match Queue é garantir que o pareamento de partidas seja
           consistente mesmo com múltiplos clientes agindo ao mesmo tempo. Toda decisão de
           matchmaking acontece no servidor (Postgres + Edge Functions), nunca no app: fila
           FIFO, lock por time — cada time só pode ter uma busca ativa por vez — e um padrão de
