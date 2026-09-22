@@ -92,7 +92,7 @@
     }
   }
 
-  // rAF-throttled pointer tracking shared by the hero glow and the "view case" bubble
+  // rAF-throttled pointer tracking for the hero glow
   var pendingFrame = null;
   var queueFrame = function (fn) {
     if (pendingFrame) window.cancelAnimationFrame(pendingFrame);
@@ -147,29 +147,5 @@
     } else {
       counters.forEach(animateCounter);
     }
-  }
-
-  var showcaseRows = Array.prototype.slice.call(document.querySelectorAll("[data-view-case]"));
-  if (showcaseRows.length && !reduceMotion && canHover) {
-    var bubble = document.createElement("div");
-    bubble.className = "view-bubble";
-    bubble.textContent = "Ver case";
-    bubble.setAttribute("aria-hidden", "true");
-    document.body.appendChild(bubble);
-
-    var hideBubble = function () { bubble.classList.remove("is-visible"); };
-
-    showcaseRows.forEach(function (row) {
-      row.addEventListener("mouseenter", function () { bubble.classList.add("is-visible"); });
-      row.addEventListener("mouseleave", hideBubble);
-      row.addEventListener("mousemove", function (e) {
-        queueFrame(function () {
-          bubble.style.left = e.clientX + "px";
-          bubble.style.top = e.clientY + "px";
-        });
-      });
-    });
-    // safety net: never leave the bubble stuck visible if the pointer leaves the viewport mid-hover
-    document.addEventListener("mouseleave", hideBubble);
   }
 })();
