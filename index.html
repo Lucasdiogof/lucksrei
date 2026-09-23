@@ -14,7 +14,15 @@
 <meta property="og:title" content="Lucksrei — Lucas Diogo, Senior Mobile Developer & Software Studio">
 <meta property="og:description" content="Estúdio de software operado por Lucas Diogo. Produtos mobile completos: arquitetura, backend, release e manutenção.">
 <meta property="og:url" content="https://lucksrei.com/">
-<meta name="twitter:card" content="summary">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:image" content="https://lucksrei.com/assets/img/og/lucksrei-og.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lucksrei — Lucas Diogo, Senior Mobile Developer. Produtos mobile, da arquitetura à loja.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lucksrei.com/assets/img/og/lucksrei-og.jpg">
+<meta name="twitter:image:alt" content="Lucksrei — Lucas Diogo, Senior Mobile Developer. Produtos mobile, da arquitetura à loja.">
 <meta name="twitter:title" content="Lucksrei — Lucas Diogo, Senior Mobile Developer">
 <meta name="twitter:description" content="Estúdio de software operado por Lucas Diogo. Produtos mobile completos: arquitetura, backend, release e manutenção.">
 
@@ -24,6 +32,7 @@
   "@type": "Person",
   "name": "Lucas Diogo",
   "url": "https://lucksrei.com/",
+  "image": "https://lucksrei.com/assets/img/lucas/lucas-diogo.webp",
   "jobTitle": "Senior Mobile Developer",
   "worksFor": {
     "@type": "Organization",
@@ -78,9 +87,8 @@
         <span class="badge"><span class="dot"></span> Disponível para novos projetos mobile</span>
         <h1>Produtos mobile,<br>da arquitetura <em>à loja.</em></h1>
         <p class="lead">
-          Sou Lucas Diogo, Senior Mobile Developer especialista em Flutter. A Lucksrei é o
-          estúdio através do qual projeto, construo e publico aplicativos completos —
-          do banco de dados à App Store.
+          Sou Lucas Diogo, Senior Mobile Developer especialista em Flutter. Na Lucksrei
+          projeto, construo e publico aplicativos completos — do banco de dados à App Store.
         </p>
         <div class="hero-ctas">
           <a class="btn btn-primary" href="#projetos">Ver produtos</a>
@@ -106,7 +114,7 @@
   <section class="metrics" aria-label="Indicadores">
     <div class="container metrics-grid">
       <div class="metric"><div class="value"><span data-counter="8" data-counter-suffix="+">8+</span> anos</div><div class="label">Em desenvolvimento de software, desde 2018</div></div>
-      <div class="metric"><div class="value"><span data-counter="4">4</span> produtos</div><div class="label">Aplicativos próprios em produção</div></div>
+      <div class="metric"><div class="value"><span data-counter="4">4</span> produtos</div><div class="label">Aplicativos próprios, criados pela Lucksrei</div></div>
       <div class="metric"><div class="value">3 plataformas</div><div class="label">Android · iOS · Web/PWA</div></div>
       <div class="metric"><div class="value">Ciclo completo</div><div class="label">Da arquitetura ao release nas lojas</div></div>
     </div>
@@ -118,22 +126,20 @@
         <span class="eyebrow">Sobre</span>
         <h2>Senior Mobile Developer, especialista em Flutter</h2>
         <p>
-          Tenho forte experiência na construção de aplicações escaláveis e de alta performance
-          com Flutter, atuando de forma multiplataforma em Android e iOS. Trabalho com Clean
-          Architecture, TDD, BLoC/Cubit, injeção de dependência, integração com APIs REST e
-          web services, persistência local e sincronização offline-first.
+          Construo aplicativos Flutter para Android e iOS com Clean Architecture, TDD e
+          BLoC/Cubit — e cuido do que vem antes e depois: backend, integrações e publicação
+          nas lojas.
         </p>
         <p>
-          Já atuei em fintech, agritech, sistemas governamentais e produtos digitais próprios,
-          passando por sincronização de dados, Hive, Sembast, Firebase, Supabase, múltiplos
-          flavors de app, publicação na Google Play e App Store, Fastlane, GitHub Actions,
-          Azure DevOps e, na origem, backend em Java.
+          Passei por fintech, agritech e sistemas governamentais (na origem, backend em Java).
+          A Lucksrei é onde levo essa experiência para produtos próprios, do primeiro rascunho
+          de arquitetura à manutenção contínua.
         </p>
-        <p>
-          A Lucksrei é o estúdio de software que uso para dar forma a essa experiência em
-          produtos próprios — do primeiro rascunho de arquitetura até a manutenção contínua
-          em produção.
-        </p>
+        <ul class="about-points">
+          <li><strong>Mobile engineering</strong><span>Flutter · Clean Architecture · TDD · BLoC/Cubit · injeção de dependência</span></li>
+          <li><strong>Architecture &amp; backend</strong><span>Supabase · PostgreSQL · Firebase · APIs REST · offline-first</span></li>
+          <li><strong>Delivery &amp; stores</strong><span>CI/CD · Fastlane · Google Play · App Store</span></li>
+        </ul>
       </div>
       <div class="fact-card" data-reveal>
         <dl>
@@ -152,11 +158,11 @@
     <div class="container">
       <div class="section-head" data-reveal>
         <span class="eyebrow">Featured work</span>
-        <h2>Produtos próprios em produção</h2>
+        <h2>Produtos próprios</h2>
         <p>Aplicativos que projetei, construí e mantenho — do banco de dados à loja de aplicativos.</p>
       </div>
       <div class="showcase">
-        <a class="showcase-row" href="/projects/fan-hub/" data-reveal>
+        <a class="showcase-row" href="/projects/fan-hub/" data-product="fan-hub" data-reveal>
           <div class="showcase-copy">
             <span class="showcase-num">01</span>
             <span class="showcase-tagline">Multi-clube · Realtime</span>
@@ -168,12 +174,12 @@
             <span class="showcase-go">Ver case study <span class="showcase-go-arrow">→</span></span>
           </div>
           <div class="showcase-visual">
-            <img class="showcase-media" loading="lazy" src="/assets/img/fan-hub/goias/art/overview.webp" width="924" height="2000"
+            <img class="showcase-media" loading="lazy" decoding="async" src="/assets/img/fan-hub/goias/art/overview.webp" width="924" height="2000"
                  alt="Fan Hub — Goiás: tela inicial do app com o próximo jogo, contagem regressiva e atalhos do torcedor">
           </div>
         </a>
 
-        <a class="showcase-row" href="/projects/match-queue/" data-reveal>
+        <a class="showcase-row" href="/projects/match-queue/" data-product="match-queue" data-reveal>
           <div class="showcase-copy">
             <span class="showcase-num">02</span>
             <span class="showcase-tagline">Matchmaking</span>
@@ -185,12 +191,12 @@
             <span class="showcase-go">Ver case study <span class="showcase-go-arrow">→</span></span>
           </div>
           <div class="showcase-visual">
-            <img class="showcase-media" loading="lazy" src="/assets/img/match-queue/art/queue.webp" width="924" height="2000"
+            <img class="showcase-media" loading="lazy" decoding="async" src="/assets/img/match-queue/art/queue.webp" width="924" height="2000"
                  alt="Match Queue: tela Jogar com a busca de partida em andamento e os modos Champions e Rivals">
           </div>
         </a>
 
-        <a class="showcase-row" href="/projects/la-pelve/" data-reveal>
+        <a class="showcase-row" href="/projects/la-pelve/" data-product="la-pelve" data-reveal>
           <div class="showcase-copy">
             <span class="showcase-num">03</span>
             <span class="showcase-tagline">Saúde · Gestão</span>
@@ -202,12 +208,12 @@
             <span class="showcase-go">Ver case study <span class="showcase-go-arrow">→</span></span>
           </div>
           <div class="showcase-visual">
-            <img class="showcase-media" loading="lazy" src="/assets/img/la-pelve/screens/login.webp" width="924" height="2000"
-                 alt="La Pelve: tela de entrada com a mensagem Feito para sua rotina clínica">
+            <img class="showcase-media" loading="lazy" decoding="async" src="/assets/img/la-pelve/screens/home.webp" width="924" height="2000"
+                 alt="La Pelve: tela Início com próximos atendimentos, ações rápidas e visão geral da clínica">
           </div>
         </a>
 
-        <a class="showcase-row" href="/projects/aura/" data-reveal>
+        <a class="showcase-row" href="/projects/aura/" data-product="aura" data-reveal>
           <div class="showcase-copy">
             <span class="showcase-num">04</span>
             <span class="showcase-tagline">EdTech</span>
@@ -218,10 +224,9 @@
             </div>
             <span class="showcase-go">Ver case study <span class="showcase-go-arrow">→</span></span>
           </div>
-          <div class="showcase-visual" aria-hidden="true">
-            <div class="frame">
-              <div class="frame-head"><span class="frame-index">04</span><span class="frame-name">Aura</span></div>
-              <div class="frame-screen"><span>Preview</span>Sessão de estudo</div>
+          <div class="showcase-visual">
+            <div class="placeholder-shot" role="img" aria-label="Aura — imagens do produto em breve" data-index="04">
+              <strong>Aura</strong>Visuais em breve
             </div>
           </div>
         </a>
@@ -231,22 +236,22 @@
         <span class="eyebrow">Archive — client work</span>
         <div class="legacy-grid">
           <div class="legacy-item">
-            <h4>Emater</h4>
+            <h3>Emater</h3>
             <p>App para técnicos e produtores rurais.</p>
             <div class="chips"><span class="chip">Flutter</span><span class="chip">ObjectDB</span><span class="chip">REST API</span></div>
           </div>
           <div class="legacy-item">
-            <h4>AGR Fiscal</h4>
+            <h3>AGR Fiscal</h3>
             <p>App para fiscais de agência reguladora.</p>
             <div class="chips"><span class="chip">Flutter</span><span class="chip">ObjectDB</span><span class="chip">REST API</span></div>
           </div>
           <div class="legacy-item">
-            <h4>Vai</h4>
+            <h3>Vai</h3>
             <p>Aplicativo de mobilidade urbana.</p>
             <div class="chips"><span class="chip">Flutter</span><span class="chip">Firebase RTDB</span></div>
           </div>
           <div class="legacy-item">
-            <h4>GPOL</h4>
+            <h3>GPOL</h3>
             <p>Aplicativo de gestão política.</p>
             <div class="chips"><span class="chip">Flutter</span><span class="chip">Firestore</span></div>
           </div>
@@ -282,47 +287,26 @@
         <p>Ciclo completo de produto mobile — não apenas implementação de tela.</p>
       </div>
       <div class="capabilities-grid">
-        <div class="capability-card is-wide" data-reveal>
+        <div class="capability-card" data-reveal>
           <div>
             <h3>Mobile Engineering</h3>
-            <p>Apps Flutter multiplataforma com Clean Architecture, TDD, BLoC/Cubit e injeção de dependência — do primeiro widget ao app em produção.</p>
+            <p>Apps Flutter que escalam sem virar dívida técnica: arquitetura em camadas, testes e um único código-base para Android e iOS.</p>
           </div>
-          <div class="tech-line">Flutter / Dart · Android · iOS · Web/PWA</div>
-        </div>
-        <div class="capability-card is-wide" data-reveal>
-          <div>
-            <h3>Backend &amp; Data</h3>
-            <p>Modelagem de dados, regras de acesso e APIs — Postgres com Row Level Security, REST e sincronização offline-first.</p>
-          </div>
-          <div class="tech-line">Supabase / PostgreSQL · Firebase · Hive / Sembast</div>
+          <div class="tech-line">Flutter / Dart · Clean Architecture · BLoC/Cubit · TDD</div>
         </div>
         <div class="capability-card" data-reveal>
           <div>
-            <h3>Realtime Systems</h3>
-            <p>Filas, matchmaking server-authoritative e estado sincronizado entre clientes em tempo real.</p>
+            <h3>Backend &amp; Realtime</h3>
+            <p>Dados seguros e estado sincronizado: Postgres com RLS, filas server-authoritative e atualizações em tempo real.</p>
           </div>
-          <div class="tech-line">Realtime · Edge Functions · outbox pattern</div>
+          <div class="tech-line">Supabase · PostgreSQL · Edge Functions · Firebase · Hive / Sembast</div>
         </div>
         <div class="capability-card" data-reveal>
           <div>
-            <h3>Shipping</h3>
-            <p>Pipelines de build e publicação, sem fricção manual de release.</p>
+            <h3>Release &amp; Delivery</h3>
+            <p>Do build à loja sem passos manuais: pipelines de CI/CD, publicação na App Store e Google Play, e monitoramento depois do release.</p>
           </div>
-          <div class="tech-line">GitHub Actions · Fastlane · App Store / Play</div>
-        </div>
-        <div class="capability-card" data-reveal>
-          <div>
-            <h3>Cloud &amp; Delivery</h3>
-            <p>Infraestrutura leve e edge-first para servir os produtos com baixa latência.</p>
-          </div>
-          <div class="tech-line">Cloudflare Workers · Wrangler</div>
-        </div>
-        <div class="capability-card" data-reveal>
-          <div>
-            <h3>Reliability</h3>
-            <p>Observabilidade e testes automatizados para reduzir surpresas em produção.</p>
-          </div>
-          <div class="tech-line">Sentry · Crashlytics · FCM · automated testing</div>
+          <div class="tech-line">GitHub Actions · Fastlane · Cloudflare · Sentry · Crashlytics · FCM</div>
         </div>
       </div>
     </div>
@@ -391,8 +375,8 @@
     <div class="container">
       <div class="cta-band" data-reveal>
         <h2>Tem um produto em mente?<br>Vamos construir.</h2>
+        <a class="cta-mail" href="mailto:lucasdiogo1234@gmail.com">lucasdiogo1234@gmail.com</a>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="mailto:lucasdiogo1234@gmail.com">lucasdiogo1234@gmail.com ↗</a>
           <a class="btn btn-ghost" href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener">LinkedIn ↗</a>
         </div>
       </div>
@@ -409,7 +393,7 @@
         <p>Lucksrei é o estúdio de software operado por Lucas Diogo — projeto, construo, publico e mantenho produtos mobile completos, do design técnico ao release nas lojas.</p>
       </div>
       <div class="footer-col">
-        <h4>Navegação</h4>
+        <p class="footer-title">Navegação</p>
         <ul>
           <li><a href="/#projetos">Projetos</a></li>
           <li><a href="/#experiencia">Experiência</a></li>
@@ -418,7 +402,7 @@
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Conecte-se</h4>
+        <p class="footer-title">Conecte-se</p>
         <ul>
           <li><a href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener">LinkedIn</a></li>
           <li><a href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub</a></li>
