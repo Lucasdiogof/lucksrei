@@ -104,10 +104,6 @@ a:focus-visible, button:focus-visible{
   font-weight: 700; font-size: 18px; letter-spacing: -.01em;
   text-decoration: none;
 }
-.nav-brand small{
-  font-weight: 500; font-size: 12px; color: var(--text-faint);
-  font-family: var(--font-mono);
-}
 .nav-links{
   display: flex; align-items: center; gap: 28px;
 }
@@ -215,10 +211,11 @@ a:focus-visible, button:focus-visible{
 
 /* product frame — placeholder slot for a real screenshot, replace background-image later */
 .hero-visual{ position: relative; }
+.hero-visual .portrait{ max-width: 400px; margin: 0 auto; }
 .frame{
   position: relative; border-radius: var(--radius-lg);
   border: 1px solid var(--border);
-  background: radial-gradient(520px 280px at var(--mx,50%) var(--my,10%), var(--glow), transparent 60%), var(--panel);
+  background: var(--panel);
   padding: 20px 20px 24px;
 }
 .frame-head{
@@ -229,11 +226,6 @@ a:focus-visible, button:focus-visible{
   font-family: var(--font-mono); font-size: 12.5px; color: var(--accent); font-weight: 700;
 }
 .frame-name{ font-weight: 650; font-size: 15px; }
-.frame-dots{ display: flex; gap: 6px; }
-.frame-dots span{
-  width: 6px; height: 6px; border-radius: 50%; background: var(--border-strong);
-}
-.frame-dots span.is-active{ background: var(--accent); }
 .frame-screen{
   aspect-ratio: 9 / 16; max-height: 420px; margin: 0 auto; width: 100%;
   border-radius: var(--radius-sm); border: 1px dashed var(--border-strong);
@@ -250,11 +242,6 @@ a:focus-visible, button:focus-visible{
 .frame-screen img, .placeholder-shot img{
   width: 100%; height: 100%; object-fit: cover; border-radius: inherit;
 }
-.frame-caption{
-  display: flex; justify-content: space-between; gap: 12px; margin-top: 16px;
-  font-size: 13px; color: var(--text-faint);
-}
-.frame-caption strong{ color: var(--text-dim); font-weight: 500; }
 
 @media (max-width: 980px){
   .hero-grid{ grid-template-columns: 1fr; }
@@ -296,6 +283,12 @@ section{ padding: 88px 0; }
 }
 .about-body p{ color: var(--text-dim); font-size: 16.5px; line-height: 1.75; margin-bottom: 16px; }
 .about-body p:last-child{ margin-bottom: 0; }
+.portrait{ margin: 0; }
+.portrait img{
+  width: 100%; height: auto; border-radius: var(--radius-lg); border: 1px solid var(--border);
+}
+.portrait figcaption{ margin-top: 12px; font-size: 13.5px; color: var(--text-dim); }
+.portrait figcaption strong{ display: block; color: var(--text); font-size: 15px; font-weight: 600; }
 .fact-card{
   border: 1px solid var(--border); background: var(--panel);
   border-radius: var(--radius); padding: 24px;

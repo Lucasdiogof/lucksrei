@@ -2,7 +2,6 @@
   "use strict";
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var canHover = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
 
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
@@ -90,26 +89,6 @@
       }, { threshold: 0.15 });
       revealTargets.forEach(function (el) { revealObserver.observe(el); });
     }
-  }
-
-  // rAF-throttled pointer tracking for the hero glow
-  var pendingFrame = null;
-  var queueFrame = function (fn) {
-    if (pendingFrame) window.cancelAnimationFrame(pendingFrame);
-    pendingFrame = window.requestAnimationFrame(function () { pendingFrame = null; fn(); });
-  };
-
-  var heroVisual = document.querySelector(".hero-visual");
-  if (heroVisual && !reduceMotion && canHover) {
-    heroVisual.addEventListener("mousemove", function (e) {
-      queueFrame(function () {
-        var rect = heroVisual.getBoundingClientRect();
-        var x = ((e.clientX - rect.left) / rect.width) * 100;
-        var y = ((e.clientY - rect.top) / rect.height) * 100;
-        heroVisual.style.setProperty("--mx", x + "%");
-        heroVisual.style.setProperty("--my", y + "%");
-      });
-    });
   }
 
   var counters = Array.prototype.slice.call(document.querySelectorAll("[data-counter]"));
