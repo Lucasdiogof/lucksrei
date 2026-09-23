@@ -256,10 +256,6 @@ a:focus-visible, button:focus-visible{
 }
 .frame-caption strong{ color: var(--text-dim); font-weight: 500; }
 
-/* duo variant — used where a product genuinely has two parallel contexts (e.g. Fan Hub's club flavors) */
-.frame-duo{ display: flex; gap: 10px; }
-.frame-duo .frame-screen{ flex: 1; aspect-ratio: 3 / 5; max-height: none; padding: 14px; }
-
 @media (max-width: 980px){
   .hero-grid{ grid-template-columns: 1fr; }
   .frame-screen{ max-height: 300px; }
@@ -350,6 +346,13 @@ section{ padding: 88px 0; }
 .showcase-row:hover .showcase-visual .frame{ border-color: var(--border-strong); transform: translateY(-2px); }
 .showcase-row:hover .showcase-visual .frame-screen{ transform: scale(1.008); }
 
+.showcase-media{
+  display: block; width: 100%; max-width: 340px; height: auto; margin: 0 auto;
+  border-radius: var(--radius-lg); border: 1px solid var(--border);
+  transition: border-color .22s var(--ease), transform .22s var(--ease);
+}
+.showcase-row:hover .showcase-media{ border-color: var(--border-strong); transform: translateY(-2px); }
+
 @media (max-width: 900px){
   .showcase-row{ grid-template-columns: 1fr; gap: 24px; padding: 40px 0; }
   .showcase-row:nth-child(even) .showcase-copy,
@@ -360,7 +363,8 @@ section{ padding: 88px 0; }
 @media (prefers-reduced-motion: reduce){
   .showcase-row:hover .showcase-go-arrow,
   .showcase-row:hover .showcase-visual .frame,
-  .showcase-row:hover .showcase-visual .frame-screen{ transform: none; }
+  .showcase-row:hover .showcase-visual .frame-screen,
+  .showcase-row:hover .showcase-media{ transform: none; }
 }
 
 /* ---------- process ---------- */
@@ -579,6 +583,38 @@ section{ padding: 88px 0; }
   font-family: var(--font-mono); font-size: 11px; color: var(--text-faint);
 }
 @media (max-width: 700px){ .shot-grid{ grid-template-columns: 1fr 1fr; } }
+
+/* case study media — real art and screenshots (9:16 portrait, dimensions set on <img> to avoid layout shift) */
+.media{
+  display: block; width: 100%; height: auto;
+  border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--panel);
+}
+.media-sm{ border-radius: var(--radius); }
+.case-hero{
+  display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center;
+}
+.case-hero .media{ max-width: 380px; margin: 0 auto; }
+.art-grid{
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 28px;
+}
+.art-grid figure:nth-child(2){ margin-top: 48px; }
+.art-grid-2{ grid-template-columns: repeat(2, 1fr); max-width: 760px; }
+.art-grid-2 figure:nth-child(2){ margin-top: 0; }
+.shot-strip{
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 28px;
+}
+figure.fig{ margin: 0; }
+.fig figcaption{ margin-top: 12px; font-size: 13.5px; color: var(--text-dim); line-height: 1.55; }
+.fig figcaption strong{ display: block; color: var(--text); font-size: 14.5px; font-weight: 600; margin-bottom: 2px; }
+.case-intro{ max-width: 620px; }
+.case-block .eyebrow{ margin-bottom: 10px; }
+@media (max-width: 900px){
+  .case-hero{ grid-template-columns: 1fr; gap: 32px; }
+  .art-grid, .art-grid-2{ grid-template-columns: 1fr; gap: 32px; }
+  .art-grid figure:nth-child(2){ margin-top: 0; }
+  .art-grid .media, .shot-strip .media{ max-width: 420px; margin: 0 auto; }
+  .shot-strip{ grid-template-columns: repeat(2, 1fr); }
+}
 
 .disclosure{
   border-left: 2px solid var(--border-strong); padding: 4px 0 4px 16px;

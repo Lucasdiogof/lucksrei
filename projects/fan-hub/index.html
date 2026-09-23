@@ -13,6 +13,7 @@
 <meta property="og:title" content="Fan Hub — Case Study | Lucksrei">
 <meta property="og:description" content="Base Flutter multi-clube com flavors independentes, arquitetura club-scoped e recursos em tempo real via Supabase.">
 <meta property="og:url" content="https://lucksrei.com/projects/fan-hub/">
+<meta property="og:image" content="https://lucksrei.com/assets/img/fan-hub/goias/art/overview.webp">
 <meta name="twitter:card" content="summary">
 </head>
 <body>
@@ -48,51 +49,97 @@
 
 <main id="main">
   <section class="page-hero">
-    <div class="container">
-      <div class="breadcrumb"><a href="/">Lucksrei</a> / <a href="/#projetos">Projetos</a> / Fan Hub</div>
-      <span class="eyebrow">Case study — Produto próprio</span>
-      <h1>Fan Hub</h1>
-      <p class="lead">
-        Uma base Flutter multi-clube: um único produto capaz de operar como aplicativos
-        independentes para diferentes clubes de futebol, cada um com identidade visual,
-        conteúdo e funcionalidades próprias — sem duplicar o código-base.
-      </p>
-      <div class="page-meta">
-        <span class="badge">Android</span>
-        <span class="badge">iOS</span>
-        <span class="badge">Web / PWA</span>
-        <span class="badge">Flutter</span>
-        <span class="badge">Supabase</span>
+    <div class="container case-hero">
+      <div>
+        <div class="breadcrumb"><a href="/">Lucksrei</a> / <a href="/#projetos">Projetos</a> / Fan Hub</div>
+        <span class="eyebrow">Case study — Produto próprio</span>
+        <h1>Fan Hub</h1>
+        <p class="lead">
+          Plataforma Flutter multi-clube: uma base compartilhada que opera como apps independentes,
+          cada um com identidade, conteúdo e funcionalidades próprias. Hoje, com experiências
+          dedicadas ao Goiás e ao RB Bragantino.
+        </p>
+        <div class="page-meta">
+          <span class="badge">Android</span>
+          <span class="badge">iOS</span>
+          <span class="badge">Web / PWA</span>
+          <span class="badge">Flutter</span>
+          <span class="badge">Supabase</span>
+        </div>
+        <div class="hero-ctas" style="margin-top:16px">
+          <a class="btn btn-ghost btn-sm" href="/projects/fan-hub/privacy/goias/">Privacidade — Goiás EC</a>
+          <a class="btn btn-ghost btn-sm" href="/projects/fan-hub/privacy/bragantino/">Privacidade — RB Bragantino</a>
+        </div>
       </div>
-      <div class="hero-ctas" style="margin-top:16px">
-        <a class="btn btn-ghost btn-sm" href="/projects/fan-hub/privacy/goias/">Privacidade — Goiás EC</a>
-        <a class="btn btn-ghost btn-sm" href="/projects/fan-hub/privacy/bragantino/">Privacidade — RB Bragantino</a>
-      </div>
+      <img class="media" src="/assets/img/fan-hub/goias/art/overview.webp" width="924" height="2000" fetchpriority="high"
+           alt="Fan Hub — Goiás: tela inicial do app com o próximo jogo, contagem regressiva e atalhos do torcedor">
     </div>
   </section>
 
   <section>
     <div class="container">
       <div class="case-block" data-reveal>
-        <h2>Visão do produto</h2>
-        <p>
-          O Fan Hub nasceu da ideia de que a experiência digital de um torcedor — partidas,
-          conteúdo, jogos e presença no clube — pode ser construída sobre uma base técnica
-          compartilhada, sem que cada clube exija um app completamente novo do zero. Hoje o
-          Fan Hub roda em produção com flavors para o <strong>Goiás</strong> e o
-          <strong>RB Bragantino</strong>.
+        <span class="eyebrow">Flavor Goiás</span>
+        <h2>A experiência do torcedor</h2>
+        <p class="case-intro">
+          A partir de uma base compartilhada, o flavor do Goiás reúne o dia a dia do torcedor:
+          jogo, clube, interação e conteúdo em um só app.
         </p>
+        <div class="art-grid">
+          <figure class="fig">
+            <img class="media" loading="lazy" src="/assets/img/fan-hub/goias/art/arena.webp" width="924" height="2000"
+                 alt="Arena Esmeraldina: próximo jogo, Escalação da Torcida e Passaporte Esmeraldino">
+            <figcaption><strong>Arena Esmeraldina</strong>Escalação da Torcida, Passaporte e desafios no mesmo hub.</figcaption>
+          </figure>
+          <figure class="fig">
+            <img class="media" loading="lazy" src="/assets/img/fan-hub/goias/art/lineup.webp" width="924" height="2000"
+                 alt="Escalação da Torcida: campo com a formação 4-1-2-1-2 escolhida pela torcida">
+            <figcaption><strong>Escalação da Torcida</strong>O torcedor escala o time e compara com a visão da torcida.</figcaption>
+          </figure>
+          <figure class="fig">
+            <img class="media" loading="lazy" src="/assets/img/fan-hub/goias/art/quiz.webp" width="924" height="2000"
+                 alt="Quiz do Verdão: pergunta com quatro alternativas e barra de progresso">
+            <figcaption><strong>Quiz do Verdão</strong>Perguntas por nível, com progresso ao longo do quiz.</figcaption>
+          </figure>
+        </div>
       </div>
 
       <div class="case-block" data-reveal>
-        <h2>Desafio arquitetural</h2>
+        <span class="eyebrow">Telas reais</span>
+        <h2>O app em uso</h2>
+        <div class="shot-strip">
+          <figure class="fig">
+            <img class="media media-sm" loading="lazy" src="/assets/img/fan-hub/goias/screens/home.webp" width="738" height="1600"
+                 alt="Tela inicial do app com o próximo jogo, contagem regressiva e acesso a ingressos">
+            <figcaption><strong>Home</strong>Próximo jogo, contagem e atalhos.</figcaption>
+          </figure>
+          <figure class="fig">
+            <img class="media media-sm" loading="lazy" src="/assets/img/fan-hub/goias/screens/calendar.webp" width="738" height="1600"
+                 alt="Aba Jogos com o calendário mensal de partidas">
+            <figcaption><strong>Jogos</strong>Partidas, calendário e classificação.</figcaption>
+          </figure>
+          <figure class="fig">
+            <img class="media media-sm" loading="lazy" src="/assets/img/fan-hub/goias/screens/club.webp" width="738" height="1600"
+                 alt="Área do clube com história, títulos, diretoria e elenco">
+            <figcaption><strong>O Clube</strong>História, títulos, diretoria e elenco.</figcaption>
+          </figure>
+          <figure class="fig">
+            <img class="media media-sm" loading="lazy" src="/assets/img/fan-hub/goias/screens/anthem.webp" width="738" height="1600"
+                 alt="Player do hino com controles de reprodução, volume e letra">
+            <figcaption><strong>Hino &amp; Músicas</strong>Player com volume e letra na tela.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="case-block" data-reveal>
+        <span class="eyebrow">Arquitetura</span>
+        <h2>Um código-base, vários clubes</h2>
         <p>
-          O núcleo do desafio é manter um único código-base evoluindo para múltiplos clubes
-          sem que features, dados ou identidade visual de um clube vazem para o outro. Isso
-          exigiu uma arquitetura club-scoped desde a camada de domínio até a camada de dados,
-          com configuração de clube injetada na inicialização do app (via flavor) e isolamento
-          real dos dados no Supabase — cada clube com seu próprio projeto e políticas de RLS
-          dedicadas.
+          O desafio é evoluir um único código-base para múltiplos clubes sem que features, dados
+          ou identidade visual de um vazem para o outro. A solução é uma arquitetura club-scoped
+          da camada de domínio à de dados, com a configuração do clube injetada na inicialização
+          (via flavor) e isolamento real no Supabase — cada clube com seu próprio projeto e
+          políticas de RLS dedicadas.
         </p>
         <div class="arch-diagram">
           <div class="arch-core">Núcleo compartilhado — Flutter · Clean Architecture · Arena engine · Design system</div>
@@ -132,15 +179,6 @@
             <h3>Delivery</h3>
             <ul><li>CI/CD</li><li>Multi-flavor build pipeline</li></ul>
           </div>
-        </div>
-      </div>
-
-      <div class="case-block" data-reveal>
-        <h2>Produto</h2>
-        <div class="shot-grid" aria-hidden="true">
-          <div class="placeholder-shot" data-index="01/03">Home do clube</div>
-          <div class="placeholder-shot" data-index="02/03">Arena de jogos</div>
-          <div class="placeholder-shot" data-index="03/03">Rankings</div>
         </div>
         <p class="disclosure">
           O Fan Hub é um produto próprio da Lucksrei. Não representa parceria, contrato ou
