@@ -647,7 +647,7 @@ figure.fig{ margin: 0; }
 .apps-filter[aria-pressed="true"]{ border-color: var(--accent); color: var(--text); background: var(--glow-soft); }
 .apps-filter[aria-pressed="true"] .count{ color: var(--accent); }
 
-.apps-group{ margin-bottom: 56px; }
+.apps-group{ padding: 0; margin-bottom: 36px; }
 .apps-group[hidden]{ display: none; }
 .apps-group-head{ max-width: 720px; margin-bottom: 22px; }
 .apps-group-head h2{ font-size: 20px; margin-bottom: 6px; }
