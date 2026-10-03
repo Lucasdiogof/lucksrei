@@ -59,6 +59,7 @@
         <a href="#sobre">Sobre</a>
         <a href="#experiencia">Experiência</a>
         <a href="#projetos">Projetos</a>
+        <a href="/apps/">Apps</a>
         <a href="#tecnologias">Tecnologias</a>
         <a href="/contact/">Contato</a>
       </div>
@@ -74,6 +75,7 @@
     <a href="#sobre">Sobre</a>
     <a href="#experiencia">Experiência</a>
     <a href="#projetos">Projetos</a>
+    <a href="/apps/">Apps</a>
     <a href="#tecnologias">Tecnologias</a>
     <a href="/contact/">Contato</a>
   </div>
@@ -113,11 +115,22 @@
   </section>
 
   <section class="metrics" aria-label="Indicadores">
-    <div class="container metrics-grid">
-      <div class="metric"><div class="value"><span data-counter="8" data-counter-suffix="+">8+</span> anos</div><div class="label">Em desenvolvimento de software, desde 2018</div></div>
-      <div class="metric"><div class="value"><span data-counter="4">4</span> produtos</div><div class="label">Aplicativos próprios, do zero à loja</div></div>
-      <div class="metric"><div class="value">3 plataformas</div><div class="label">Android · iOS · Web/PWA</div></div>
-      <div class="metric"><div class="value">Ciclo completo</div><div class="label">Da arquitetura ao release nas lojas</div></div>
+    <!-- Números editáveis aqui. data-counter = valor animado; data-counter-suffix = sufixo. -->
+    <div class="container">
+      <div class="metrics-grid">
+        <div class="metric"><div class="value"><span data-counter="30" data-counter-suffix="+">30+</span></div><div class="label"><strong>Apps</strong>Aplicativos e produtos em que trabalhei</div></div>
+        <div class="metric"><div class="value"><span data-counter="2" data-counter-suffix="M+">2M+</span></div><div class="label"><strong>Downloads</strong>Somando os produtos que ajudei a construir</div></div>
+        <div class="metric"><div class="value"><span data-counter="100" data-counter-suffix="k+">100k+</span></div><div class="label"><strong>Avaliações</strong>Nas principais lojas de aplicativos</div></div>
+        <div class="metric"><div class="value"><span data-counter="8" data-counter-suffix="+">8+</span></div><div class="label"><strong>Anos</strong>Construindo software, desde 2018</div></div>
+      </div>
+      <div class="metrics-foot">
+        <p>Android · iOS · Web/PWA<span class="sep" aria-hidden="true">/</span>Meus produtos próprios: <a href="#projetos">Fan Hub, Match Queue, Aprovaura e La Pelve</a></p>
+        <a class="apps-cta" href="/apps/" aria-label="Explorar todos os apps em que trabalhei">
+          <span class="apps-stack" id="apps-stack" aria-hidden="true"><img src="/assets/img/apps/fan-hub.webp" alt="" width="32" height="32" loading="lazy"><img src="/assets/img/apps/match-queue.webp" alt="" width="32" height="32" loading="lazy"><img src="/assets/img/apps/aprovaura.webp" alt="" width="32" height="32" loading="lazy"><img src="/assets/img/apps/la-pelve.webp" alt="" width="32" height="32" loading="lazy"><img src="/assets/img/apps/cooper-pay.webp" alt="" width="32" height="32" loading="lazy"></span>
+          <span class="apps-more" id="apps-more" aria-hidden="true">+27</span>
+          <span class="link-arrow">Explorar todos os apps <span aria-hidden="true">→</span></span>
+        </a>
+      </div>
     </div>
   </section>
 
@@ -419,6 +432,8 @@
 </footer>
 
 <button class="back-to-top" aria-label="Voltar ao topo">↑</button>
+<script src="/assets/js/apps-data.js"></script>
+<script src="/assets/js/apps-cta.js"></script>
 <script src="/assets/js/main.js"></script>
 </body>
 </html>
