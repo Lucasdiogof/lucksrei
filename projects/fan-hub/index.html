@@ -55,9 +55,8 @@
         <span class="eyebrow">Case study — Produto próprio</span>
         <h1>Fan Hub</h1>
         <p class="lead">
-          Plataforma Flutter multi-clube: uma base compartilhada que opera como apps independentes,
-          cada um com identidade, conteúdo e funcionalidades próprias. Hoje, com experiências
-          dedicadas ao Goiás, ao RB Bragantino e ao Vila Nova.
+          App Flutter dedicado ao torcedor do Goiás, com identidade, conteúdo e funcionalidades
+          próprias, construído sobre uma arquitetura club-scoped.
         </p>
         <div class="page-meta">
           <span class="badge">Android</span>
@@ -68,7 +67,6 @@
         </div>
         <div class="hero-ctas" style="margin-top:16px">
           <a class="btn btn-ghost btn-sm" href="/projects/fan-hub/privacy/goias/">Privacidade — Goiás EC</a>
-          <a class="btn btn-ghost btn-sm" href="/projects/fan-hub/privacy/bragantino/">Privacidade — RB Bragantino</a>
         </div>
       </div>
       <img class="media" src="/assets/img/fan-hub/goias/art/overview.webp" width="924" height="2000" fetchpriority="high"
@@ -133,20 +131,16 @@
 
       <div class="case-block" data-reveal>
         <span class="eyebrow">Arquitetura</span>
-        <h2>Um código-base, vários clubes</h2>
+        <h2>Arquitetura club-scoped</h2>
         <p>
-          O desafio é evoluir um único código-base para múltiplos clubes sem que features, dados
-          ou identidade visual de um vazem para o outro. A solução é uma arquitetura club-scoped
-          da camada de domínio à de dados, com a configuração do clube injetada na inicialização
-          (via flavor) e isolamento real no Supabase — cada clube com seu próprio projeto e
-          políticas de RLS dedicadas.
+          O app é construído sobre uma arquitetura club-scoped da camada de domínio à de dados,
+          com a configuração do clube injetada na inicialização (via flavor) e isolamento real
+          no Supabase — projeto próprio e políticas de RLS dedicadas.
         </p>
         <div class="arch-diagram">
           <div class="arch-core">Núcleo compartilhado — Flutter · Clean Architecture · Arena engine · Design system</div>
-          <div class="arch-flavors arch-flavors-3">
+          <div class="arch-flavors" style="grid-template-columns:1fr">
             <div class="arch-flavor"><strong>Flavor Goiás</strong><span>Identidade, conteúdo e dados próprios</span></div>
-            <div class="arch-flavor"><strong>Flavor RB Bragantino</strong><span>Identidade, conteúdo e dados próprios</span></div>
-            <div class="arch-flavor"><strong>Flavor Vila Nova</strong><span>Identidade, conteúdo e dados próprios</span></div>
           </div>
         </div>
       </div>
@@ -160,7 +154,7 @@
           <div class="feature-item"><strong>Passaporte</strong>Registro de presença em partidas.</div>
           <div class="feature-item"><strong>Loja &amp; Ingressos</strong>Catálogo de produtos e emissão de ingressos.</div>
           <div class="feature-item"><strong>Sócio torcedor</strong>Assinatura e benefícios de sócio.</div>
-          <div class="feature-item"><strong>Mídia</strong>Notícias, YouTube, X e Instagram agregados por clube.</div>
+          <div class="feature-item"><strong>Mídia</strong>Notícias, YouTube, X e Instagram agregados.</div>
           <div class="feature-item"><strong>Realtime</strong>Atualizações ao vivo via Supabase Realtime.</div>
         </div>
       </div>
@@ -178,12 +172,12 @@
           </div>
           <div class="stack-category">
             <h3>Delivery</h3>
-            <ul><li>CI/CD</li><li>Multi-flavor build pipeline</li></ul>
+            <ul><li>CI/CD</li><li>Build pipeline por flavor</li></ul>
           </div>
         </div>
         <p class="disclosure">
           O Fan Hub é um produto próprio da Lucksrei. Não representa parceria, contrato ou
-          endosso oficial do Goiás Esporte Clube, do Red Bull Bragantino ou do Vila Nova Futebol Clube.
+          endosso oficial do Goiás Esporte Clube.
         </p>
       </div>
 
