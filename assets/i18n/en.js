@@ -249,7 +249,7 @@
   "contact.s1.span1": "Contact",
   "contact.s2.dd1": "<a href=\"https://www.linkedin.com/in/lucas-diogo-aa39b9174/\" target=\"_blank\" rel=\"noopener\">linkedin.com/in/lucas-diogo</a>",
   "contact.s2.dd2": "<a href=\"https://github.com/Lucasdiogof\" target=\"_blank\" rel=\"noopener\">github.com/Lucasdiogof</a>",
-  "contact.s2.div1": "<a class=\"btn btn-primary\" href=\"mailto:lucasdiogo1234@gmail.com\">Send email</a> <a class=\"btn btn-ghost\" href=\"https://www.linkedin.com/in/lucas-diogo-aa39b9174/\" target=\"_blank\" rel=\"noopener\">Message on LinkedIn</a>",
+  "contact.s2.div1": "<a class=\"btn btn-primary\" href=\"mailto:marketing@lucksrei.com\">Send email</a> <a class=\"btn btn-ghost\" href=\"https://www.linkedin.com/in/lucas-diogo-aa39b9174/\" target=\"_blank\" rel=\"noopener\">Message on LinkedIn</a>",
   "contact.s2.dt1": "Email",
   "contact.s2.dt2": "LinkedIn",
   "contact.s2.dt3": "Brand",
