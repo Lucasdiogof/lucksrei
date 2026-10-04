@@ -1,17 +1,19 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en" data-seo="contact">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Contato — Lucksrei</title>
-<meta name="description" content="Fale com a Lucksrei / Lucas Diogo sobre produtos mobile, arquitetura e projetos de software.">
+<script src="/assets/js/i18n-boot.js"></script>
+<title>Contact — Lucksrei</title>
+<meta name="description" content="Get in touch with Lucas Diogo França, Senior Mobile Developer, about mobile development, architecture and opportunities.">
 <link rel="canonical" href="https://lucksrei.com/contact/">
 <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
 <link rel="stylesheet" href="/assets/css/style.css">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lucksrei">
-<meta property="og:title" content="Contato — Lucksrei">
+<meta property="og:title" content="Contact — Lucksrei">
 <meta property="og:url" content="https://lucksrei.com/contact/">
+<meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://lucksrei.com/assets/img/og/lucksrei-og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -19,47 +21,50 @@
 <meta name="twitter:image" content="https://lucksrei.com/assets/img/og/lucksrei-og.jpg">
 </head>
 <body>
-<a class="skip-link" href="#main">Pular para o conteúdo</a>
+<a class="skip-link" href="#main" data-i18n="nav.skip">Skip to content</a>
 
 <header class="site-header">
   <div class="container">
-    <nav class="nav" aria-label="Principal">
+    <nav class="nav" aria-label="Main" data-i18n-attr="aria-label:nav.aria">
       <a class="nav-brand" href="/">Lucksrei</a>
       <div class="nav-links">
-        <a href="/#sobre">Sobre</a>
-        <a href="/#experiencia">Experiência</a>
-        <a href="/#projetos">Projetos</a>
-        <a href="/apps/">Apps</a>
-        <a href="/#tecnologias">Tecnologias</a>
-        <a href="/contact/">Contato</a>
+        <a href="/#sobre" data-i18n="nav.about">About</a>
+        <a href="/#experiencia" data-i18n="nav.experience">Experience</a>
+        <a href="/#projetos" data-i18n="nav.projects">Projects</a>
+        <a href="/apps/" data-i18n="nav.apps">Apps</a>
+        <a href="/#tecnologias" data-i18n="nav.technologies">Technologies</a>
+        <a href="/contact/" data-i18n="nav.contact">Contact</a>
       </div>
       <div class="nav-actions">
+        <div class="lang-switch" role="group" aria-label="Language" data-i18n-attr="aria-label:nav.lang_aria">
+          <button type="button" class="lang-btn" data-locale="en" lang="en" aria-pressed="true" title="English">EN</button>
+          <button type="button" class="lang-btn" data-locale="pt-BR" lang="pt-BR" aria-pressed="false" title="Português (Brasil)">PT</button>
+          <button type="button" class="lang-btn" data-locale="es" lang="es" aria-pressed="false" title="Español">ES</button>
+        </div>
         <a class="btn btn-ghost btn-sm" href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub</a>
-        <button class="mobile-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-nav">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <button class="mobile-toggle" aria-label="Open menu" data-i18n-attr="aria-label:nav.menu_open" aria-expanded="false" aria-controls="mobile-nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
     </nav>
   </div>
   <div class="mobile-nav" id="mobile-nav">
-    <a href="/#sobre">Sobre</a>
-    <a href="/#experiencia">Experiência</a>
-    <a href="/#projetos">Projetos</a>
-    <a href="/apps/">Apps</a>
-    <a href="/#tecnologias">Tecnologias</a>
-    <a href="/contact/">Contato</a>
+    <a href="/#sobre" data-i18n="nav.about">About</a>
+    <a href="/#experiencia" data-i18n="nav.experience">Experience</a>
+    <a href="/#projetos" data-i18n="nav.projects">Projects</a>
+    <a href="/apps/" data-i18n="nav.apps">Apps</a>
+    <a href="/#tecnologias" data-i18n="nav.technologies">Technologies</a>
+    <a href="/contact/" data-i18n="nav.contact">Contact</a>
   </div>
 </header>
 
 <main id="main">
   <section class="page-hero">
     <div class="container">
-      <div class="breadcrumb"><a href="/">Lucksrei</a> / Contato</div>
-      <span class="eyebrow">Contato</span>
-      <h1>Vamos conversar sobre o seu produto</h1>
-      <p class="lead">
-        Respondo diretamente — sem formulários de triagem. Escolha o canal que preferir.
-      </p>
+      <div class="breadcrumb" data-i18n="contact.s1.div1"><a href="/">Lucksrei</a> / Contact</div>
+      <span class="eyebrow" data-i18n="contact.s1.span1">Contact</span>
+      <h1 data-i18n="contact.s1.h11">Let's talk about your product</h1>
+      <p class="lead" data-i18n="contact.s1.p1">I reply directly — no screening forms. Pick whichever channel you prefer.</p>
     </div>
   </section>
 
@@ -68,22 +73,19 @@
       <div class="about-body" data-reveal>
         <div class="fact-card" style="margin-bottom:20px">
           <dl>
-            <div><dt>E-mail</dt><dd><a href="mailto:lucasdiogo1234@gmail.com">lucasdiogo1234@gmail.com</a></dd></div>
-            <div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener">linkedin.com/in/lucas-diogo</a></dd></div>
-            <div><dt>GitHub</dt><dd><a href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">github.com/Lucasdiogof</a></dd></div>
+            <div><dt data-i18n="contact.s2.dt1">Email</dt><dd><a href="mailto:lucasdiogo1234@gmail.com">lucasdiogo1234@gmail.com</a></dd></div>
+            <div><dt data-i18n="contact.s2.dt2">LinkedIn</dt><dd data-i18n="contact.s2.dd1"><a href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener">linkedin.com/in/lucas-diogo</a></dd></div>
+            <div><dt>GitHub</dt><dd data-i18n="contact.s2.dd2"><a href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">github.com/Lucasdiogof</a></dd></div>
           </dl>
         </div>
-        <div class="hero-ctas">
-          <a class="btn btn-primary" href="mailto:lucasdiogo1234@gmail.com">Enviar e-mail</a>
-          <a class="btn btn-ghost" href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener">Chamar no LinkedIn</a>
-        </div>
+        <div class="hero-ctas" data-i18n="contact.s2.div1"><a class="btn btn-primary" href="mailto:lucasdiogo1234@gmail.com">Send email</a> <a class="btn btn-ghost" href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener">Message on LinkedIn</a></div>
       </div>
       <div class="fact-card" data-reveal>
         <dl>
-          <div><dt>Marca</dt><dd>Lucksrei</dd></div>
-          <div><dt>Razão social</dt><dd>LUCAS DIOGO FRANCA</dd></div>
-          <div><dt>CNPJ</dt><dd>54.868.173/0001-55</dd></div>
-          <div><dt>País</dt><dd>Brasil</dd></div>
+          <div><dt data-i18n="contact.s2.dt3">Brand</dt><dd>Lucksrei</dd></div>
+          <div><dt data-i18n="common.razao_social">Legal name</dt><dd>LUCAS DIOGO FRANCA</dd></div>
+          <div><dt data-i18n="common.cnpj">CNPJ</dt><dd>54.868.173/0001-55</dd></div>
+          <div><dt data-i18n="contact.s2.dt6">Country</dt><dd data-i18n="common.brasil">Brazil</dd></div>
         </dl>
       </div>
     </div>
@@ -95,19 +97,20 @@
     <div class="footer-grid">
       <div>
         <div class="footer-brand">Lucksrei</div>
-        <p>Portfólio de Lucas Diogo França, Senior Mobile Developer especialista em Flutter. Lucksrei é a marca sob a qual publico meus aplicativos.</p>
+        <p data-i18n="footer.about">Portfolio of Lucas Diogo França, Senior Mobile Developer specialized in Flutter. Lucksrei is the brand under which I publish my apps.</p>
       </div>
       <div class="footer-col">
-        <p class="footer-title">Navegação</p>
+        <p class="footer-title" data-i18n="footer.nav_title">Navigation</p>
         <ul>
-          <li><a href="/#projetos">Projetos</a></li>
-          <li><a href="/#experiencia">Experiência</a></li>
-          <li><a href="/contact/">Contato</a></li>
-          <li><a href="/privacy/">Privacidade</a></li>
+          <li><a href="/#projetos" data-i18n="nav.projects">Projects</a></li>
+          <li><a href="/apps/" data-i18n="nav.apps">Apps</a></li>
+          <li><a href="/#experiencia" data-i18n="nav.experience">Experience</a></li>
+          <li><a href="/contact/" data-i18n="nav.contact">Contact</a></li>
+          <li><a href="/privacy/" data-i18n="footer.privacy">Privacy</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <p class="footer-title">Conecte-se</p>
+        <p class="footer-title" data-i18n="footer.connect_title">Connect</p>
         <ul>
           <li><a href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener">LinkedIn</a></li>
           <li><a href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub</a></li>
@@ -117,12 +120,13 @@
     </div>
     <div class="footer-bottom">
       <span>© <span id="year">2026</span> Lucksrei — LUCAS DIOGO FRANCA · CNPJ 54.868.173/0001-55</span>
-      <span>Brasil</span>
+      <span data-i18n="footer.country">Brazil</span>
     </div>
   </div>
 </footer>
 
-<button class="back-to-top" aria-label="Voltar ao topo">↑</button>
+<button class="back-to-top" aria-label="Back to top" data-i18n-attr="aria-label:common.voltar_ao_topo">↑</button>
+<script src="/assets/js/i18n.js"></script>
 <script src="/assets/js/main.js"></script>
 </body>
 </html>

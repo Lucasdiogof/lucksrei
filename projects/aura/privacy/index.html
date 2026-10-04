@@ -1,8 +1,9 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="/assets/js/i18n-boot.js"></script>
 <title>Política de Privacidade — Aprovaura | Lucksrei</title>
 <meta name="description" content="Política de privacidade do aplicativo Aprovaura: quais dados coletamos, como usamos, como funciona a correção de redações com inteligência artificial e como excluir sua conta.">
 <link rel="canonical" href="https://lucksrei.com/projects/aura/privacy/">
@@ -16,39 +17,45 @@
 <meta name="twitter:card" content="summary">
 </head>
 <body>
-<a class="skip-link" href="#main">Pular para o conteúdo</a>
+<a class="skip-link" href="#main" data-i18n="nav.skip">Skip to content</a>
 
 <header class="site-header">
   <div class="container">
-    <nav class="nav" aria-label="Principal">
+    <nav class="nav" aria-label="Main" data-i18n-attr="aria-label:nav.aria">
       <a class="nav-brand" href="/">Lucksrei</a>
       <div class="nav-links">
-        <a href="/#sobre">Sobre</a>
-        <a href="/#experiencia">Experiência</a>
-        <a href="/#projetos">Projetos</a>
-        <a href="/apps/">Apps</a>
-        <a href="/#tecnologias">Tecnologias</a>
-        <a href="/contact/">Contato</a>
+        <a href="/#sobre" data-i18n="nav.about">About</a>
+        <a href="/#experiencia" data-i18n="nav.experience">Experience</a>
+        <a href="/#projetos" data-i18n="nav.projects">Projects</a>
+        <a href="/apps/" data-i18n="nav.apps">Apps</a>
+        <a href="/#tecnologias" data-i18n="nav.technologies">Technologies</a>
+        <a href="/contact/" data-i18n="nav.contact">Contact</a>
       </div>
       <div class="nav-actions">
+        <div class="lang-switch" role="group" aria-label="Language" data-i18n-attr="aria-label:nav.lang_aria">
+          <button type="button" class="lang-btn" data-locale="en" lang="en" aria-pressed="true" title="English">EN</button>
+          <button type="button" class="lang-btn" data-locale="pt-BR" lang="pt-BR" aria-pressed="false" title="Português (Brasil)">PT</button>
+          <button type="button" class="lang-btn" data-locale="es" lang="es" aria-pressed="false" title="Español">ES</button>
+        </div>
         <a class="btn btn-ghost btn-sm" href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub</a>
-        <button class="mobile-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-nav">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <button class="mobile-toggle" aria-label="Open menu" data-i18n-attr="aria-label:nav.menu_open" aria-expanded="false" aria-controls="mobile-nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
     </nav>
   </div>
   <div class="mobile-nav" id="mobile-nav">
-    <a href="/#sobre">Sobre</a>
-    <a href="/#experiencia">Experiência</a>
-    <a href="/#projetos">Projetos</a>
-    <a href="/apps/">Apps</a>
-    <a href="/#tecnologias">Tecnologias</a>
-    <a href="/contact/">Contato</a>
+    <a href="/#sobre" data-i18n="nav.about">About</a>
+    <a href="/#experiencia" data-i18n="nav.experience">Experience</a>
+    <a href="/#projetos" data-i18n="nav.projects">Projects</a>
+    <a href="/apps/" data-i18n="nav.apps">Apps</a>
+    <a href="/#tecnologias" data-i18n="nav.technologies">Technologies</a>
+    <a href="/contact/" data-i18n="nav.contact">Contact</a>
   </div>
 </header>
 
-<main id="main">
+<main id="main" lang="pt-BR">
+  <div class="container pt-only-notice-wrap"><p class="pt-only-notice" lang="en" data-i18n="privacy.notice">This privacy policy is available in Portuguese only.</p></div>
   <section class="page-hero">
     <div class="container">
       <div class="breadcrumb"><a href="/">Lucksrei</a> / <a href="/#projetos">Projetos</a> / <a href="/projects/aura/">Aprovaura</a> / Privacidade</div>
@@ -229,19 +236,20 @@
     <div class="footer-grid">
       <div>
         <div class="footer-brand">Lucksrei</div>
-        <p>Portfólio de Lucas Diogo França, Senior Mobile Developer especialista em Flutter. Lucksrei é a marca sob a qual publico meus aplicativos.</p>
+        <p data-i18n="footer.about">Portfolio of Lucas Diogo França, Senior Mobile Developer specialized in Flutter. Lucksrei is the brand under which I publish my apps.</p>
       </div>
       <div class="footer-col">
-        <p class="footer-title">Navegação</p>
+        <p class="footer-title" data-i18n="footer.nav_title">Navigation</p>
         <ul>
-          <li><a href="/#projetos">Projetos</a></li>
-          <li><a href="/#experiencia">Experiência</a></li>
-          <li><a href="/contact/">Contato</a></li>
-          <li><a href="/privacy/">Privacidade</a></li>
+          <li><a href="/#projetos" data-i18n="nav.projects">Projects</a></li>
+          <li><a href="/apps/" data-i18n="nav.apps">Apps</a></li>
+          <li><a href="/#experiencia" data-i18n="nav.experience">Experience</a></li>
+          <li><a href="/contact/" data-i18n="nav.contact">Contact</a></li>
+          <li><a href="/privacy/" data-i18n="footer.privacy">Privacy</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <p class="footer-title">Conecte-se</p>
+        <p class="footer-title" data-i18n="footer.connect_title">Connect</p>
         <ul>
           <li><a href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener">LinkedIn</a></li>
           <li><a href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub</a></li>
@@ -251,12 +259,13 @@
     </div>
     <div class="footer-bottom">
       <span>© <span id="year">2026</span> Lucksrei — LUCAS DIOGO FRANCA · CNPJ 54.868.173/0001-55</span>
-      <span>Brasil</span>
+      <span data-i18n="footer.country">Brazil</span>
     </div>
   </div>
 </footer>
 
-<button class="back-to-top" aria-label="Voltar ao topo">↑</button>
+<button class="back-to-top" aria-label="Back to top" data-i18n-attr="aria-label:common.voltar_ao_topo">↑</button>
+<script src="/assets/js/i18n.js"></script>
 <script src="/assets/js/main.js"></script>
 </body>
 </html>

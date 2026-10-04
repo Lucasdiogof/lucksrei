@@ -1,10 +1,11 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en" data-seo="notfound">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Página não encontrada — Lucksrei</title>
-<meta name="description" content="Página não encontrada — Lucksrei.">
+<script src="/assets/js/i18n-boot.js"></script>
+<title>Page not found — Lucksrei</title>
+<meta name="description" content="Page not found — Lucksrei.">
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
 <link rel="stylesheet" href="/assets/css/style.css">
@@ -12,21 +13,45 @@
 <body>
 <header class="site-header">
   <div class="container">
-    <nav class="nav" aria-label="Principal">
+    <nav class="nav" aria-label="Main" data-i18n-attr="aria-label:nav.aria">
       <a class="nav-brand" href="/">Lucksrei</a>
+      <div class="nav-links">
+        <a href="/#sobre" data-i18n="nav.about">About</a>
+        <a href="/#experiencia" data-i18n="nav.experience">Experience</a>
+        <a href="/#projetos" data-i18n="nav.projects">Projects</a>
+        <a href="/apps/" data-i18n="nav.apps">Apps</a>
+        <a href="/#tecnologias" data-i18n="nav.technologies">Technologies</a>
+        <a href="/contact/" data-i18n="nav.contact">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <div class="lang-switch" role="group" aria-label="Language" data-i18n-attr="aria-label:nav.lang_aria">
+          <button type="button" class="lang-btn" data-locale="en" lang="en" aria-pressed="true" title="English">EN</button>
+          <button type="button" class="lang-btn" data-locale="pt-BR" lang="pt-BR" aria-pressed="false" title="Português (Brasil)">PT</button>
+          <button type="button" class="lang-btn" data-locale="es" lang="es" aria-pressed="false" title="Español">ES</button>
+        </div>
+        <a class="btn btn-ghost btn-sm" href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub</a>
+        <button class="mobile-toggle" aria-label="Open menu" data-i18n-attr="aria-label:nav.menu_open" aria-expanded="false" aria-controls="mobile-nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
     </nav>
+  </div>
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="/#sobre" data-i18n="nav.about">About</a>
+    <a href="/#experiencia" data-i18n="nav.experience">Experience</a>
+    <a href="/#projetos" data-i18n="nav.projects">Projects</a>
+    <a href="/apps/" data-i18n="nav.apps">Apps</a>
+    <a href="/#tecnologias" data-i18n="nav.technologies">Technologies</a>
+    <a href="/contact/" data-i18n="nav.contact">Contact</a>
   </div>
 </header>
 <main id="main">
   <section class="page-hero">
     <div class="container">
       <span class="eyebrow">404</span>
-      <h1>Essa página não existe.</h1>
-      <p class="lead">O endereço acessado não foi encontrado. Volte para o início ou veja os projetos.</p>
-      <div class="hero-ctas" style="margin-top:24px">
-        <a class="btn btn-primary" href="/">Voltar ao início</a>
-        <a class="btn btn-ghost" href="/#projetos">Ver projetos</a>
-      </div>
+      <h1 data-i18n="notfound.s1.h11">This page doesn't exist.</h1>
+      <p class="lead" data-i18n="notfound.s1.p1">The address you visited couldn't be found. Go back home or check out the projects.</p>
+      <div class="hero-ctas" style="margin-top:24px" data-i18n="notfound.s1.div1"><a class="btn btn-primary" href="/">Back to home</a> <a class="btn btn-ghost" href="/#projetos">View projects</a></div>
     </div>
   </section>
 </main>
@@ -37,6 +62,7 @@
     </div>
   </div>
 </footer>
+<script src="/assets/js/i18n.js"></script>
 <script src="/assets/js/main.js"></script>
 </body>
 </html>

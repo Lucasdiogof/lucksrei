@@ -36,18 +36,27 @@ d.apps.forEach(function (a) {
 
 // logos publicadas: 25 WebP, todas referenciadas, nenhuma via /src/
 var published = fs.readdirSync(path.join(root, "assets/img/apps")).filter(function (n) { return /\.webp$/.test(n); });
-check(published.length === 25, "logos publicadas devem ser 25, são " + published.length);
+check(published.length === 29, "logos publicadas devem ser 29, são " + published.length);
 var referenced = d.apps.filter(function (a) { return a.logo; }).map(function (a) { return path.basename(a.logo); });
-check(referenced.length === 25, "apps com logo devem ser 25, são " + referenced.length);
+check(referenced.length === 29, "apps com logo devem ser 29, são " + referenced.length);
 published.forEach(function (n) { check(referenced.indexOf(n) >= 0, "logo publicada sem app: " + n); });
 d.apps.forEach(function (a) {
-  if (a.logo && a.group !== "own") check(path.basename(a.logo, ".webp") === a.id, "logo/id divergem em " + a.id);
+  if (a.logo && a.group === "cooper") check(path.basename(a.logo, ".webp") === a.id, "logo/id divergem em " + a.id);
   if (a.logo) check(a.logo.indexOf("/src/") < 0, "logo aponta para /src/: " + a.id);
 });
+var noLogo = d.apps.filter(function (a) { return !a.logo; }).map(function (a) { return a.id; }).sort().join(",");
+check(noLogo === "agr-fiscal,gpol,vai", "fallbacks esperados: agr-fiscal,gpol,vai; atual: " + noLogo);
 var agr = d.apps.filter(function (a) { return a.id === "agr-fiscal"; })[0];
 check(agr && !agr.androidUrl && !agr.iosUrl, "AGR Fiscal não deve ter URL de loja");
 var ignore = fs.readFileSync(path.join(root, ".assetsignore"), "utf8");
 check(/assets\/img\/apps\/src/.test(ignore), "originais devem estar no .assetsignore");
+// lojas: nada do app fora do portfólio e links Cooper só do publisher Cooper Card (br.com.cooper.*)
+var banned = ["coopercard.mobile." + "apa", "id1573329092"];
+d.apps.forEach(function (a) {
+  [a.androidUrl, a.iosUrl].forEach(function (u) { if (u) banned.forEach(function (b) { check(u.indexOf(b) < 0, "link de app fora do portfólio em " + a.id); }); });
+  if (a.group === "cooper" && a.androidUrl) check(/id=br\.com\.cooper\.[a-z]+$/.test(a.androidUrl), "pacote Android Cooper inesperado em " + a.id);
+});
+check(d.apps.filter(function (a) { return a.group === "cooper" && a.androidUrl && a.iosUrl; }).length === 19, "19 apps Cooper devem ter Android e iOS");
 // CTA da home: o fallback estático precisa bater com o cálculo
 var home = fs.readFileSync(path.join(root, "index.html"), "utf8");
 var m = home.match(/id="apps-more"[^>]*>\+(\d+)</);

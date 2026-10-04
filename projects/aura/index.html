@@ -1,18 +1,20 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en" data-seo="aprovaura">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="/assets/js/i18n-boot.js"></script>
 <title>Aprovaura — Case Study | Lucksrei</title>
-<meta name="description" content="Aprovaura: aplicativo educacional para estudo e preparação para vestibulares e provas, com questões, sessões de estudo e acompanhamento de progresso.">
+<meta name="description" content="Aprovaura: an educational app for studying and preparing for university entrance exams and tests, with questions, study sessions, mock exams, AI essay grading and progress tracking.">
 <link rel="canonical" href="https://lucksrei.com/projects/aura/">
 <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
 <link rel="stylesheet" href="/assets/css/style.css">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lucksrei">
 <meta property="og:title" content="Aprovaura — Case Study | Lucksrei">
-<meta property="og:description" content="Aplicativo educacional para estudo e preparação para vestibulares e provas.">
+<meta property="og:description" content="Educational app for studying and preparing for university entrance exams and tests.">
 <meta property="og:url" content="https://lucksrei.com/projects/aura/">
+<meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://lucksrei.com/assets/img/og/lucksrei-og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -20,48 +22,50 @@
 <meta name="twitter:image" content="https://lucksrei.com/assets/img/og/lucksrei-og.jpg">
 </head>
 <body>
-<a class="skip-link" href="#main">Pular para o conteúdo</a>
+<a class="skip-link" href="#main" data-i18n="nav.skip">Skip to content</a>
 
 <header class="site-header">
   <div class="container">
-    <nav class="nav" aria-label="Principal">
+    <nav class="nav" aria-label="Main" data-i18n-attr="aria-label:nav.aria">
       <a class="nav-brand" href="/">Lucksrei</a>
       <div class="nav-links">
-        <a href="/#sobre">Sobre</a>
-        <a href="/#experiencia">Experiência</a>
-        <a href="/#projetos">Projetos</a>
-        <a href="/apps/">Apps</a>
-        <a href="/#tecnologias">Tecnologias</a>
-        <a href="/contact/">Contato</a>
+        <a href="/#sobre" data-i18n="nav.about">About</a>
+        <a href="/#experiencia" data-i18n="nav.experience">Experience</a>
+        <a href="/#projetos" data-i18n="nav.projects">Projects</a>
+        <a href="/apps/" data-i18n="nav.apps">Apps</a>
+        <a href="/#tecnologias" data-i18n="nav.technologies">Technologies</a>
+        <a href="/contact/" data-i18n="nav.contact">Contact</a>
       </div>
       <div class="nav-actions">
+        <div class="lang-switch" role="group" aria-label="Language" data-i18n-attr="aria-label:nav.lang_aria">
+          <button type="button" class="lang-btn" data-locale="en" lang="en" aria-pressed="true" title="English">EN</button>
+          <button type="button" class="lang-btn" data-locale="pt-BR" lang="pt-BR" aria-pressed="false" title="Português (Brasil)">PT</button>
+          <button type="button" class="lang-btn" data-locale="es" lang="es" aria-pressed="false" title="Español">ES</button>
+        </div>
         <a class="btn btn-ghost btn-sm" href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub</a>
-        <button class="mobile-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-nav">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <button class="mobile-toggle" aria-label="Open menu" data-i18n-attr="aria-label:nav.menu_open" aria-expanded="false" aria-controls="mobile-nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
       </div>
     </nav>
   </div>
   <div class="mobile-nav" id="mobile-nav">
-    <a href="/#sobre">Sobre</a>
-    <a href="/#experiencia">Experiência</a>
-    <a href="/#projetos">Projetos</a>
-    <a href="/apps/">Apps</a>
-    <a href="/#tecnologias">Tecnologias</a>
-    <a href="/contact/">Contato</a>
+    <a href="/#sobre" data-i18n="nav.about">About</a>
+    <a href="/#experiencia" data-i18n="nav.experience">Experience</a>
+    <a href="/#projetos" data-i18n="nav.projects">Projects</a>
+    <a href="/apps/" data-i18n="nav.apps">Apps</a>
+    <a href="/#tecnologias" data-i18n="nav.technologies">Technologies</a>
+    <a href="/contact/" data-i18n="nav.contact">Contact</a>
   </div>
 </header>
 
 <main id="main">
   <section class="page-hero">
     <div class="container">
-      <div class="breadcrumb"><a href="/">Lucksrei</a> / <a href="/#projetos">Projetos</a> / Aprovaura</div>
-      <span class="eyebrow">Case study — Produto próprio</span>
+      <div class="breadcrumb" data-i18n="aprovaura.s1.div1"><a href="/">Lucksrei</a> / <a href="/#projetos">Projects</a> / Aprovaura</div>
+      <span class="eyebrow" data-i18n="common.case_study_produto_proprio">Case study — Own product</span>
       <h1>Aprovaura</h1>
-      <p class="lead">
-        Aplicativo educacional pensado para ajudar estudantes a se prepararem para vestibulares
-        e provas, com questões organizadas por matéria e sessões de estudo focadas.
-      </p>
+      <p class="lead" data-i18n="aprovaura.s1.p1">An educational app designed to help students prepare for university entrance exams and tests, with questions organized by subject and focused study sessions.</p>
       <div class="page-meta">
         <span class="badge">Android</span>
         <span class="badge">iOS</span>
@@ -69,51 +73,40 @@
         <span class="badge">Supabase</span>
         <span class="badge">IA</span>
       </div>
-      <div class="hero-ctas" style="margin-top:16px">
-        <a class="btn btn-ghost btn-sm" href="/projects/aura/privacy/">Política de Privacidade do app</a>
-      </div>
+      <div class="hero-ctas" style="margin-top:16px" data-i18n="aprovaura.s1.div2">App privacy policy</div>
     </div>
   </section>
 
   <section>
     <div class="container">
       <div class="case-block" data-reveal>
-        <h2>Visão do produto</h2>
-        <p>
-          O Aprovaura organiza o estudo em sessões objetivas: o aluno escolhe uma matéria, responde
-          questões e acompanha seu progresso ao longo do tempo. O objetivo é reduzir a
-          fricção entre "quero estudar" e "estou estudando", com conteúdo estruturado e
-          resposta imediata sobre acertos e erros.
-        </p>
+        <h2 data-i18n="common.visao_do_produto">Product overview</h2>
+        <p data-i18n="aprovaura.s2.p1">Aprovaura organizes studying into focused sessions: the student picks a subject, answers questions and tracks progress over time. The goal is to reduce the friction between "I want to study" and "I'm studying", with structured content and instant feedback on right and wrong answers.</p>
       </div>
 
       <div class="case-block" data-reveal>
-        <h2>Estrutura de conteúdo</h2>
-        <p>
-          As questões são organizadas por matéria e distribuídas em sessões de estudo.
-          O acompanhamento de progresso é feito por questão e consolidado por área de
-          conteúdo, permitindo ao aluno identificar onde reforçar os estudos.
-        </p>
+        <h2 data-i18n="aprovaura.s2.h22">Content structure</h2>
+        <p data-i18n="aprovaura.s2.p2">Questions are organized by subject and distributed across study sessions. Progress is tracked per question and consolidated by content area, so students can see where to focus their studying.</p>
       </div>
 
       <div class="case-block" data-reveal>
-        <h2>Principais recursos</h2>
+        <h2 data-i18n="common.principais_recursos">Key features</h2>
         <div class="feature-grid">
-          <div class="feature-item"><strong>Banco de questões</strong>Perguntas e respostas organizadas por matéria.</div>
-          <div class="feature-item"><strong>Sessões de estudo</strong>Fluxo de prática focado por tema.</div>
-          <div class="feature-item"><strong>Progressão em Aura</strong>Sistema de pontuação do app — evolução do aluno por matéria e por questão.</div>
-          <div class="feature-item"><strong>Simulados personalizados</strong>Matérias, dificuldade e quantidade à escolha, com modo prova.</div>
-          <div class="feature-item"><strong>Revisão de erros</strong>Questões erradas agrupadas por matéria e assunto.</div>
-          <div class="feature-item"><strong>Redação com IA</strong>Correção estimada por competência (Gemini), com aviso de privacidade.</div>
-          <div class="feature-item"><strong>Mapas interativos</strong>Atividades de geografia com localização no mapa.</div>
-          <div class="feature-item"><strong>Meta diária e ofensiva</strong>Acompanhamento de constância ao longo da semana.</div>
-          <div class="feature-item"><strong>Três idiomas, dois temas</strong>Português, inglês e espanhol; tema claro e escuro.</div>
-          <div class="feature-item"><strong>Multiplataforma</strong>Experiência consistente em Android e iOS.</div>
+          <div class="feature-item" data-i18n="aprovaura.s2.div1"><strong>Question bank</strong>Questions and answers organized by subject.</div>
+          <div class="feature-item" data-i18n="aprovaura.s2.div2"><strong>Study sessions</strong>Practice flow focused by topic.</div>
+          <div class="feature-item" data-i18n="aprovaura.s2.div3"><strong>Aura progression</strong>The app's scoring system — student progress by subject and by question.</div>
+          <div class="feature-item" data-i18n="aprovaura.s2.div4"><strong>Custom mock exams</strong>Subjects, difficulty and number of questions of your choice, with exam mode.</div>
+          <div class="feature-item" data-i18n="aprovaura.s2.div5"><strong>Mistake review</strong>Wrong answers grouped by subject and topic.</div>
+          <div class="feature-item" data-i18n="aprovaura.s2.div6"><strong>AI essay grading</strong>Estimated grading by competency (Gemini), with a privacy notice.</div>
+          <div class="feature-item" data-i18n="aprovaura.s2.div7"><strong>Interactive maps</strong>Geography activities with map location.</div>
+          <div class="feature-item" data-i18n="aprovaura.s2.div8"><strong>Daily goal and streak</strong>Consistency tracking throughout the week.</div>
+          <div class="feature-item" data-i18n="aprovaura.s2.div9"><strong>Three languages, two themes</strong>Portuguese, English and Spanish; light and dark theme.</div>
+          <div class="feature-item" data-i18n="aprovaura.s2.div10"><strong>Cross-platform</strong>Consistent experience on Android and iOS.</div>
         </div>
       </div>
 
       <div class="case-block" data-reveal>
-        <h2>Stack técnica</h2>
+        <h2 data-i18n="common.stack_tecnica">Tech stack</h2>
         <div class="stack-grid">
           <div class="stack-category">
             <h3>Mobile</h3>
@@ -131,139 +124,41 @@
       </div>
 
       <div class="case-block" data-reveal>
-        <span class="eyebrow">Estudo</span>
-        <h2>Do "quero estudar" à primeira questão</h2>
-        <p class="case-intro">Escolha uma matéria ou comece uma prática rápida. Cada resposta traz feedback imediato, e os erros voltam em uma área própria de revisão.</p>
-        <div class="shot-strip">
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/practice.webp" width="590" height="1280"
-                 alt="Tela Praticar com as matérias História, Geografia, Matemática, Português, Biologia, Física, Química e Atualidades">
-            <figcaption><strong>Praticar</strong>Matérias em cartões, com atalhos para prática rápida, revisão de erros e favoritos.</figcaption>
-          </figure>
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/quick.webp" width="590" height="1280"
-                 alt="Prática rápida: questão de Biologia com quatro alternativas e barra de progresso">
-            <figcaption><strong>Prática rápida</strong>Sessões curtas de 10 questões, com opção de favoritar ou reportar a questão.</figcaption>
-          </figure>
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/review.webp" width="590" height="1280"
-                 alt="Tela Revisar erros com questões erradas agrupadas por matéria e assunto">
-            <figcaption><strong>Revisar erros</strong>Questões erradas agrupadas por matéria e assunto, em prática ou em simulado.</figcaption>
-          </figure>
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/geography.webp" width="590" height="1280"
-                 alt="Geografia: lista de temas por nível, como Brasil, América do Sul e Europa">
-            <figcaption><strong>Trilhas por tema</strong>Dentro de cada matéria, temas e subtemas com progresso e filtro por dificuldade.</figcaption>
-          </figure>
-        </div>
+        <span class="eyebrow" data-i18n="aprovaura.s2.span1">Study</span>
+        <h2 data-i18n="aprovaura.s2.h25">From "I want to study" to the first question</h2>
+        <p class="case-intro" data-i18n="aprovaura.s2.p3">Pick a subject or start a quick practice. Every answer gives instant feedback, and mistakes come back in a dedicated review area.</p>
+        <div class="shot-strip" data-shots="aprovaura:b1"></div>
       </div>
 
       <div class="case-block" data-reveal>
-        <span class="eyebrow">Simulados</span>
-        <h2>Montar o próprio simulado</h2>
-        <p class="case-intro">O aluno combina matérias, escolhe a dificuldade de cada uma e define quantas questões quer. No modo prova, o resultado só aparece ao finalizar.</p>
-        <div class="shot-strip">
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/mock-build.webp" width="590" height="1280"
-                 alt="Montar simulado: seleção de matérias, nível e quantidade de questões">
-            <figcaption><strong>Montagem</strong>Matéria, nível (fácil, médio, difícil ou misto) e quantidade, com o total de questões disponíveis.</figcaption>
-          </figure>
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/mock-summary.webp" width="590" height="1280"
-                 alt="Resumo do simulado com duas matérias, 30 questões e modo prova">
-            <figcaption><strong>Resumo</strong>Revisão do simulado antes de começar, com o modo prova.</figcaption>
-          </figure>
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/mock-question.webp" width="590" height="1280"
-                 alt="Simulado em andamento: questão 1 de 30 sobre Geografia">
-            <figcaption><strong>Durante a prova</strong>Navegação entre questões, com matéria e dificuldade sempre visíveis.</figcaption>
-          </figure>
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/mock-result.webp" width="590" height="1280"
-                 alt="Resultado do simulado com percentual de acerto e desempenho por matéria e dificuldade">
-            <figcaption><strong>Resultado</strong>Acertos, erros e desempenho por matéria e por dificuldade.</figcaption>
-          </figure>
-        </div>
+        <span class="eyebrow" data-i18n="aprovaura.s2.span2">Mock exams</span>
+        <h2 data-i18n="aprovaura.s2.h26">Build your own mock exam</h2>
+        <p class="case-intro" data-i18n="aprovaura.s2.p4">Students combine subjects, choose the difficulty of each and set how many questions they want. In exam mode, the result is only shown at the end.</p>
+        <div class="shot-strip" data-shots="aprovaura:b2"></div>
       </div>
 
       <div class="case-block" data-reveal>
-        <span class="eyebrow">Redação</span>
-        <h2>Correção de redação com IA</h2>
-        <p class="case-intro">O aluno escolhe um tema, escreve o texto e envia para correção. A devolutiva é estimada por IA, no formato das cinco competências do ENEM, e o app deixa claro que não é a nota oficial.</p>
-        <div class="shot-strip">
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/essay-themes.webp" width="590" height="1280"
-                 alt="Lista de temas de redação">
-            <figcaption><strong>Temas</strong>Propostas de redação para praticar a escrita.</figcaption>
-          </figure>
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/essay-submit.webp" width="590" height="1280"
-                 alt="Confirmação de envio da redação para correção, com aviso de privacidade">
-            <figcaption><strong>Envio com transparência</strong>Antes de enviar, o app informa o que é compartilhado com a IA e linka a política de privacidade.</figcaption>
-          </figure>
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/essay-score.webp" width="590" height="1280"
-                 alt="Redação corrigida com nota estimada de 800 de 1000 e competências">
-            <figcaption><strong>Nota estimada</strong>Nota de 0 a 1000 e as cinco competências, cada uma com sua pontuação.</figcaption>
-          </figure>
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/essay-feedback.webp" width="590" height="1280"
-                 alt="Comentário geral, pontos fortes e próximos passos para a redação">
-            <figcaption><strong>Devolutiva</strong>Comentário geral, pontos fortes e o que fazer para evoluir.</figcaption>
-          </figure>
-        </div>
+        <span class="eyebrow" data-i18n="aprovaura.s2.span3">Essay</span>
+        <h2 data-i18n="aprovaura.s2.h27">AI essay grading</h2>
+        <p class="case-intro" data-i18n="aprovaura.s2.p5">Students pick a topic, write the text and submit it for grading. The feedback is estimated by AI, following ENEM's five competencies, and the app makes clear it is not the official score.</p>
+        <div class="shot-strip" data-shots="aprovaura:b3"></div>
       </div>
 
       <div class="case-block" data-reveal>
-        <span class="eyebrow">Mapas</span>
-        <h2>Geografia jogando</h2>
-        <p class="case-intro">Em Relevo do Brasil, o aluno localiza no mapa as formas de relevo. O acerto rende Aura e a tela final mostra o desempenho.</p>
-        <div class="shot-strip">
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/map.webp" width="590" height="1280"
-                 alt="Mapa do Brasil com pontos para localizar a Planície Costeira">
-            <figcaption><strong>Localize no mapa</strong>Mapa interativo com pergunta e pontos clicáveis.</figcaption>
-          </figure>
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/map-done.webp" width="590" height="1280"
-                 alt="Tela de conclusão com o mascote Aurudo, 6 de 17 acertos e +10 Aura">
-            <figcaption><strong>Conclusão</strong>Resultado da rodada com o mascote do app e a recompensa em Aura.</figcaption>
-          </figure>
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/topics.webp" width="590" height="1280"
-                 alt="Lista de tópicos de Brasil: território, hidrografia, relevo, biomas e clima">
-            <figcaption><strong>Tópicos</strong>Conteúdo organizado em subtemas, cada um com sua barra de progresso.</figcaption>
-          </figure>
-        </div>
+        <span class="eyebrow" data-i18n="aprovaura.s2.span4">Maps</span>
+        <h2 data-i18n="aprovaura.s2.h28">Learning geography by playing</h2>
+        <p class="case-intro" data-i18n="aprovaura.s2.p6">In Brazilian Relief, students locate landforms on the map. Correct answers earn Aura and the final screen shows performance.</p>
+        <div class="shot-strip" data-shots="aprovaura:b4"></div>
       </div>
 
       <div class="case-block" data-reveal>
-        <span class="eyebrow">Progressão e personalização</span>
-        <h2>Meta, ofensiva e Aura</h2>
-        <p class="case-intro">A tela inicial reúne a meta diária e a sequência de dias. Aura é a pontuação do app e alimenta o nível do aluno. O app tem tema claro e escuro e está disponível em português, inglês e espanhol.</p>
-        <div class="shot-strip">
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/home.webp" width="590" height="1280"
-                 alt="Tela inicial com meta de hoje, ofensiva de 3 dias e atalhos de prática">
-            <figcaption><strong>Início</strong>Meta diária, ofensiva e atalhos para praticar.</figcaption>
-          </figure>
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/theme-dark.webp" width="590" height="1280"
-                 alt="Seleção de tema com a opção Escuro ativa">
-            <figcaption><strong>Tema</strong>Automático, claro ou escuro.</figcaption>
-          </figure>
-          <figure class="fig">
-            <img class="media media-sm" loading="lazy" decoding="async" src="/assets/img/aura/screens/language.webp" width="590" height="1280"
-                 alt="Seleção de idioma: Português, English e Español">
-            <figcaption><strong>Idiomas</strong>Português, inglês e espanhol.</figcaption>
-          </figure>
-        </div>
+        <span class="eyebrow" data-i18n="aprovaura.s2.span5">Progression and personalization</span>
+        <h2 data-i18n="aprovaura.s2.h29">Goal, streak and Aura</h2>
+        <p class="case-intro" data-i18n="aprovaura.s2.p7">The home screen brings together the daily goal and the day streak. Aura is the app's score and drives the student's level. The app has light and dark themes and is available in Portuguese, English and Spanish.</p>
+        <div class="shot-strip" data-shots="aprovaura:b5"></div>
       </div>
 
-      <div class="case-footer-nav">
-        <a class="btn btn-ghost" href="/projects/match-queue/">← Match Queue</a>
-        <a class="btn btn-primary" href="/projects/la-pelve/">Próximo: La Pelve →</a>
-      </div>
+      <div class="case-footer-nav" data-i18n="aprovaura.s2.div11"><a class="btn btn-ghost" href="/projects/match-queue/">← Match Queue</a> <a class="btn btn-primary" href="/projects/la-pelve/">Next: La Pelve →</a></div>
     </div>
   </section>
 </main>
@@ -273,19 +168,20 @@
     <div class="footer-grid">
       <div>
         <div class="footer-brand">Lucksrei</div>
-        <p>Portfólio de Lucas Diogo França, Senior Mobile Developer especialista em Flutter. Lucksrei é a marca sob a qual publico meus aplicativos.</p>
+        <p data-i18n="footer.about">Portfolio of Lucas Diogo França, Senior Mobile Developer specialized in Flutter. Lucksrei is the brand under which I publish my apps.</p>
       </div>
       <div class="footer-col">
-        <p class="footer-title">Navegação</p>
+        <p class="footer-title" data-i18n="footer.nav_title">Navigation</p>
         <ul>
-          <li><a href="/#projetos">Projetos</a></li>
-          <li><a href="/#experiencia">Experiência</a></li>
-          <li><a href="/contact/">Contato</a></li>
-          <li><a href="/privacy/">Privacidade</a></li>
+          <li><a href="/#projetos" data-i18n="nav.projects">Projects</a></li>
+          <li><a href="/apps/" data-i18n="nav.apps">Apps</a></li>
+          <li><a href="/#experiencia" data-i18n="nav.experience">Experience</a></li>
+          <li><a href="/contact/" data-i18n="nav.contact">Contact</a></li>
+          <li><a href="/privacy/" data-i18n="footer.privacy">Privacy</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <p class="footer-title">Conecte-se</p>
+        <p class="footer-title" data-i18n="footer.connect_title">Connect</p>
         <ul>
           <li><a href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener">LinkedIn</a></li>
           <li><a href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub</a></li>
@@ -295,12 +191,15 @@
     </div>
     <div class="footer-bottom">
       <span>© <span id="year">2026</span> Lucksrei — LUCAS DIOGO FRANCA · CNPJ 54.868.173/0001-55</span>
-      <span>Brasil</span>
+      <span data-i18n="footer.country">Brazil</span>
     </div>
   </div>
 </footer>
 
-<button class="back-to-top" aria-label="Voltar ao topo">↑</button>
+<button class="back-to-top" aria-label="Back to top" data-i18n-attr="aria-label:common.voltar_ao_topo">↑</button>
+<script src="/assets/js/i18n.js"></script>
+<script src="/assets/js/screenshots-data.js"></script>
+<script src="/assets/js/shots.js"></script>
 <script src="/assets/js/main.js"></script>
 </body>
 </html>
