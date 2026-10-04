@@ -791,3 +791,12 @@ html:not([lang="pt-BR"]) .pt-only-notice{ display: block; }
 .case-hero.no-visual{ grid-template-columns: 1fr; }
 .showcase-row.no-visual .showcase-visual{ display: none; }
 .showcase-row.no-visual{ grid-template-columns: 1fr; }
+
+/* ---------- recurso planejado (case pages) ---------- */
+.planned-block{ border-left: 2px solid var(--accent-warn); padding-left: 22px; }
+.planned-block h2{ margin-bottom: 12px; }
+.planned-block p{ color: var(--text-dim); max-width: 720px; line-height: 1.7; margin-top: 12px; }
+.status-pill{
+  display: inline-block; font-family: var(--font-mono); font-size: 12px; letter-spacing: .04em;
+  color: var(--accent-warn); border: 1px dashed var(--accent-warn); border-radius: 999px; padding: 4px 11px;
+}
