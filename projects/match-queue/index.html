@@ -63,7 +63,7 @@
       <div class="breadcrumb" data-i18n="matchqueue.s1.div1"><a href="/">Lucksrei</a> / <a href="/#projetos">Projects</a> / Match Queue</div>
       <span class="eyebrow" data-i18n="common.case_study_produto_proprio">Case study — Own product</span>
       <h1>Match Queue</h1>
-      <p class="lead" data-i18n="matchqueue.s1.p1">An app for competitive teams to find matches fairly and predictably — with a matchmaking queue whose authority always lives on the server, never on the client.</p>
+      <p class="lead" data-i18n="matchqueue.s1.p1">An app for competitive teams to find matches. The matchmaking queue runs on the server; the client only asks and follows.</p>
       <div class="page-meta">
         <span class="badge">Flutter</span>
         <span class="badge">Supabase</span>
@@ -81,7 +81,7 @@
     <div class="container">
       <div class="case-block" data-reveal>
         <h2 data-i18n="common.visao_do_produto">Product overview</h2>
-        <p data-i18n="matchqueue.s2.p1">Teams form groups, join a queue to look for an opponent and get a match as soon as a compatible pair is available. The app covers the whole cycle: team creation and invites, joining the queue, match formation and real-time notification.</p>
+        <p data-i18n="matchqueue.s2.p1">Teams organize into groups, join the queue and get a match when a compatible opponent exists. The app covers team creation, invites, the queue, match formation and real-time notifications.</p>
       </div>
 
       <div class="case-block" data-reveal>
@@ -105,8 +105,8 @@
       </div>
 
       <div class="case-block" data-reveal>
-        <h2 data-i18n="matchqueue.s2.h25">Architectural challenge — reliable matchmaking</h2>
-        <p data-i18n="matchqueue.s2.p4">The core of Match Queue is making sure match pairing stays consistent even with multiple clients acting at the same time. Every matchmaking decision happens on the server (Postgres + Edge Functions), never in the app: a FIFO queue, a per-team lock — each team can only have one active search at a time — and a transactional outbox pattern to guarantee that match events and notifications are delivered consistently, even after a partial failure.</p>
+        <h2 data-i18n="matchqueue.s2.h25">Matchmaking on the server</h2>
+        <p data-i18n="matchqueue.s2.p4">Pairing has to stay consistent with many clients acting at once, so every decision happens on the server (Postgres + Edge Functions), never in the app: a FIFO queue, a per-team lock (one active search at a time) and a transactional outbox to deliver match events and notifications even when something fails midway.</p>
         <div class="flow-row" data-reveal>
           <span class="flow-node">Team</span><span class="flow-arrow">→</span>
           <span class="flow-node">Queue (FIFO)</span><span class="flow-arrow">→</span>
@@ -157,7 +157,7 @@
     <div class="footer-grid">
       <div>
         <div class="footer-brand">Lucksrei</div>
-        <p data-i18n="footer.about">Portfolio of Lucas Diogo França, Senior Mobile Developer specialized in Flutter. Lucksrei is the brand under which I publish my apps.</p>
+        <p data-i18n="footer.about">Portfolio of Lucas Diogo França, mobile developer. Lucksrei is the brand behind my apps.</p>
       </div>
       <div class="footer-col">
         <p class="footer-title" data-i18n="footer.nav_title">Navigation</p>
