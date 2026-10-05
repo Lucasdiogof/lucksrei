@@ -1,8 +1,19 @@
 {
   "name": "lucksrei-site",
+  "main": "worker/index.mjs",
   "compatibility_date": "2026-09-09",
   "assets": {
     "directory": "./",
-    "not_found_handling": "404-page"
-  }
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "lucksrei-visits",
+      "database_id": "244f20e5-166c-4f6c-bfa1-0ad648902fab",
+      "migrations_dir": "migrations"
+    }
+  ]
 }

@@ -24,6 +24,7 @@
   "footer.country": "Brazil",
   "footer.nav_title": "Navigation",
   "footer.privacy": "Privacy",
+  "footer.visitors": "Visitor map",
 
   /* ---- common ---- */
   "common.arquitetura": "Architecture",
@@ -73,6 +74,10 @@
   "seo.matchqueue.title": "Match Queue — Case Study | Lucksrei",
   "seo.notfound.description": "Page not found — Lucksrei.",
   "seo.notfound.title": "Page not found — Lucksrei",
+  "seo.visitors.description": "Map of the countries lucksrei.com received visits from over the last 12 months. Statistics aggregated by country, with no IP address or precise location.",
+  "seo.visitors.ogDescription": "Where lucksrei.com visits come from, aggregated by country.",
+  "seo.visitors.ogTitle": "Visitors | Lucksrei",
+  "seo.visitors.title": "Visitors | Lucksrei",
 
   /* ---- home ---- */
   "home.a11y.a_arialabel3": "See all the apps I've worked on",
@@ -187,6 +192,28 @@
   "apps.sector.sports": "Sports",
   "apps.store_android_aria": "View {name} on Google Play (opens in a new tab)",
   "apps.store_ios_aria": "View {name} on the App Store (opens in a new tab)",
+
+  /* ---- visitors ---- */
+  "visitors.breadcrumb": "<a href=\"/\">Lucksrei</a> / Visitors",
+  "visitors.empty": "No visits recorded yet.",
+  "visitors.error": "The statistics couldn't be loaded right now.",
+  "visitors.eyebrow": "Visitors",
+  "visitors.lead": "Countries lucksrei.com received visits from over the last 12 months.",
+  "visitors.legend.high": "more",
+  "visitors.legend.low": "fewer",
+  "visitors.map_aria": "World map showing visit intensity by country",
+  "visitors.note": "Statistics are aggregated by country. No IP address or precise location is shown on this page.",
+  "visitors.note_metric": "A visit is counted at most once per browser tab session; this is not a count of unique visitors.",
+  "visitors.ranking": "Ranking",
+  "visitors.since": "Data since {month}",
+  "visitors.stat.countries": "Countries",
+  "visitors.stat.visits": "Visits",
+  "visitors.stat.you": "You are in",
+  "visitors.title": "Where visits come from",
+  "visitors.unknown_you": "unavailable",
+  "visitors.updated": "Updated on {date}",
+  "visitors.visits_one": "{n} visit",
+  "visitors.visits_other": "{n} visits",
 
   /* ---- contact ---- */
   "contact.s1.div1": "<a href=\"/\">Lucksrei</a> / Contact",

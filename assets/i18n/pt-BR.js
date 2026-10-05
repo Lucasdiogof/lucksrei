@@ -24,6 +24,7 @@
   "footer.country": "Brasil",
   "footer.nav_title": "Navegação",
   "footer.privacy": "Privacidade",
+  "footer.visitors": "Mapa de visitantes",
 
   /* ---- common ---- */
   "common.arquitetura": "Arquitetura",
@@ -73,6 +74,10 @@
   "seo.matchqueue.title": "Match Queue — Case Study | Lucksrei",
   "seo.notfound.description": "Página não encontrada — Lucksrei.",
   "seo.notfound.title": "Página não encontrada — Lucksrei",
+  "seo.visitors.description": "Mapa dos países de onde o lucksrei.com recebeu visitas nos últimos 12 meses. Estatísticas agregadas por país, sem IP nem localização precisa.",
+  "seo.visitors.ogDescription": "De onde chegam os acessos ao lucksrei.com, agregados por país.",
+  "seo.visitors.ogTitle": "Visitantes | Lucksrei",
+  "seo.visitors.title": "Visitantes | Lucksrei",
 
   /* ---- home ---- */
   "home.a11y.a_arialabel3": "Ver todos os apps em que trabalhei",
@@ -187,6 +192,28 @@
   "apps.sector.sports": "Esportes",
   "apps.store_android_aria": "Ver {name} no Google Play (abre em nova aba)",
   "apps.store_ios_aria": "Ver {name} na App Store (abre em nova aba)",
+
+  /* ---- visitors ---- */
+  "visitors.breadcrumb": "<a href=\"/\">Lucksrei</a> / Visitantes",
+  "visitors.empty": "Ainda não há visitas registradas.",
+  "visitors.error": "Não foi possível carregar as estatísticas agora.",
+  "visitors.eyebrow": "Visitantes",
+  "visitors.lead": "Países de onde o lucksrei.com recebeu visitas nos últimos 12 meses.",
+  "visitors.legend.high": "mais",
+  "visitors.legend.low": "menos",
+  "visitors.map_aria": "Mapa-múndi com a intensidade de visitas por país",
+  "visitors.note": "As estatísticas são agregadas por país. Nenhum IP ou localização precisa é exibido nesta página.",
+  "visitors.note_metric": "Uma visita é contada no máximo uma vez por sessão de aba do navegador; não é uma contagem de visitantes únicos.",
+  "visitors.ranking": "Ranking",
+  "visitors.since": "Dados desde {month}",
+  "visitors.stat.countries": "Países",
+  "visitors.stat.visits": "Visitas",
+  "visitors.stat.you": "Você está em",
+  "visitors.title": "De onde chegam os acessos",
+  "visitors.unknown_you": "indisponível",
+  "visitors.updated": "Atualizado em {date}",
+  "visitors.visits_one": "{n} visita",
+  "visitors.visits_other": "{n} visitas",
 
   /* ---- contact ---- */
   "contact.s1.div1": "<a href=\"/\">Lucksrei</a> / Contato",

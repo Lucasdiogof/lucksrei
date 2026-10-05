@@ -158,4 +158,13 @@
       counters.forEach(animateCounter);
     }
   }
+
+  // Visitas: no máximo uma contagem por sessão de aba. O marcador fica só em sessionStorage (nunca é enviado);
+  // sem cookie e sem identificador. O servidor grava apenas mês + país (ver worker/index.mjs).
+  try {
+    if (navigator.sendBeacon && !sessionStorage.getItem("lk.v")) {
+      sessionStorage.setItem("lk.v", "1");
+      navigator.sendBeacon("/api/visit");
+    }
+  } catch (err) { /* storage indisponível: não conta */ }
 })();

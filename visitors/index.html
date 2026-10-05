@@ -1,16 +1,29 @@
 <!doctype html>
-<html lang="en" data-seo="notfound">
+<html lang="en" data-seo="visitors">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script src="/assets/js/i18n-boot.js"></script>
-<title>Page not found — Lucksrei</title>
-<meta name="description" content="Page not found — Lucksrei.">
-<meta name="robots" content="noindex">
+<title>Visitors | Lucksrei</title>
+<meta name="description" content="Map of the countries lucksrei.com received visits from over the last 12 months. Statistics aggregated by country, with no IP address or precise location.">
+<link rel="canonical" href="https://lucksrei.com/visitors/">
 <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
 <link rel="stylesheet" href="/assets/css/style.css">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lucksrei">
+<meta property="og:title" content="Visitors | Lucksrei">
+<meta property="og:description" content="Where lucksrei.com visits come from, aggregated by country.">
+<meta property="og:url" content="https://lucksrei.com/visitors/">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://lucksrei.com/assets/img/og/lucksrei-og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://lucksrei.com/assets/img/og/lucksrei-og.jpg">
 </head>
 <body>
+<a class="skip-link" href="#main" data-i18n="nav.skip">Skip to content</a>
+
 <header class="site-header">
   <div class="container">
     <nav class="nav" aria-label="Main" data-i18n-attr="aria-label:nav.aria">
@@ -45,26 +58,45 @@
     <a href="/contact/" data-i18n="nav.contact">Contact</a>
   </div>
 </header>
+
 <main id="main">
-  <section class="nf">
-    <div class="container nf-grid">
-      <div class="nf-copy">
-        <span class="eyebrow">404</span>
-        <h1 data-i18n="notfound.s1.h11">This page doesn't exist.</h1>
-        <p class="lead" data-i18n="notfound.s1.p1">The address you visited couldn't be found. Go back home or check out the projects.</p>
-        <div class="hero-ctas" style="margin-top:24px" data-i18n="notfound.s1.div1"><a class="btn btn-primary" href="/">Back to home</a> <a class="btn btn-ghost" href="/#projetos">View projects</a></div>
-      </div>
-      <div class="term" aria-hidden="true">
-        <div class="term-bar"><i></i><i></i><i></i><span>lucksrei — build</span></div>
-        <pre class="term-body"><span class="term-line"><b>$</b> flutter build route</span>
-<span class="term-line dim">Resolving <span data-current-path>/</span></span>
-<span class="term-line dim">Running pipeline… architecture · tests · stores</span>
-<span class="term-line err">✗ BUILD FAILED — no route matches (404)</span>
-<span class="term-line"><b>$</b> cd ~ <i class="caret"></i></span></pre>
-      </div>
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb" data-i18n="visitors.breadcrumb"><a href="/">Lucksrei</a> / Visitors</div>
+      <span class="eyebrow" data-i18n="visitors.eyebrow">Visitors</span>
+      <h1 data-i18n="visitors.title">Where visits come from</h1>
+      <p class="lead" data-i18n="visitors.lead">Countries lucksrei.com received visits from over the last 12 months.</p>
+    </div>
+  </section>
+
+  <section class="visitors-section">
+    <div class="container">
+      <dl class="visitors-stats">
+        <div><dt data-i18n="visitors.stat.visits">Visits</dt><dd id="v-total">—</dd></div>
+        <div><dt data-i18n="visitors.stat.countries">Countries</dt><dd id="v-countries">—</dd></div>
+        <div><dt data-i18n="visitors.stat.you">You are in</dt><dd id="v-you">—</dd></div>
+      </dl>
+
+      <figure class="visitors-map" id="v-map" aria-busy="true">
+        <div class="map-legend" aria-hidden="true">
+          <span data-i18n="visitors.legend.low">fewer</span>
+          <i class="lv0"></i><i class="lv1"></i><i class="lv2"></i><i class="lv3"></i><i class="lv4"></i><i class="lv5"></i>
+          <span data-i18n="visitors.legend.high">more</span>
+        </div>
+        <div class="map-tip" id="v-tip" role="tooltip" hidden></div>
+      </figure>
+      <p class="visitors-meta" id="v-meta"></p>
+      <p class="visitors-status" id="v-status" role="status" aria-live="polite"></p>
+
+      <h2 class="visitors-rank-title" data-i18n="visitors.ranking">Ranking</h2>
+      <ol class="visitors-rank" id="v-rank"></ol>
+
+      <p class="visitors-note" data-i18n="visitors.note">Statistics are aggregated by country. No IP address or precise location is shown on this page.</p>
+      <p class="visitors-note" data-i18n="visitors.note_metric">A visit is counted at most once per browser tab session; this is not a count of unique visitors.</p>
     </div>
   </section>
 </main>
+
 <footer class="site-footer">
   <div class="container">
     <div class="footer-top">
@@ -111,7 +143,10 @@
     </div>
   </div>
 </footer>
+
+<button class="back-to-top" aria-label="Back to top" data-i18n-attr="aria-label:common.voltar_ao_topo">↑</button>
 <script src="/assets/js/i18n.js"></script>
+<script src="/assets/js/visitors.js"></script>
 <script src="/assets/js/main.js"></script>
 </body>
 </html>
