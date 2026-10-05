@@ -9,3 +9,4 @@ worker
 migrations
 tools
 tests
+docs
