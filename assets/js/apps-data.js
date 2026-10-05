@@ -49,7 +49,7 @@
 
     apps: [
       /* ---- meus produtos ---- */
-      { id: 'fan-hub', name: 'Fan Hub', subtitle: { en: 'Goiás fan app', 'pt-BR': 'App do torcedor do Goiás', es: 'App de la hinchada del Goiás' }, group: 'own', sector: 'sports',
+      { id: 'fan-hub', name: 'Goiás App', subtitle: { en: 'Goiás fan app', 'pt-BR': 'App do torcedor do Goiás', es: 'App de la hinchada del Goiás' }, group: 'own', sector: 'sports',
         logo: '/assets/img/apps/fan-hub.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null,
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase'], caseUrl: '/projects/fan-hub/' },
       { id: 'match-queue', name: 'Match Queue', subtitle: { en: 'Matchmaking for competitive teams', 'pt-BR': 'Matchmaking para times competitivos', es: 'Matchmaking para equipos competitivos' }, group: 'own', sector: 'games',
