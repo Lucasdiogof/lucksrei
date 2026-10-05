@@ -128,6 +128,47 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
   Object.keys(store).forEach(function (k) { delete store[k]; });
   check((await W.fetch(req("GET", "/api/visitors"), broken, ctx)).status === 503, "falha no D1: visitors 503");
 
+  // --- cache: visit e whoami nunca em cache; visitors 5 min na borda
+  check((await W.fetch(req("POST", "/api/visit", h, { country: "BR" }), env, ctx)).headers.get("cache-control") === "no-store", "visit: no-store");
+  check((await W.fetch(req("POST", "/api/visit", UA, { country: "BR" }), env, ctx)).headers.get("cache-control") === "no-store", "visit ignorada: no-store");
+
+  // --- países sem forma no SVG (microestados): entram em total, countries_count e ranking
+  var svgSrc = read("assets/img/visitors/world.svg");
+  ["SG", "MT", "MC"].forEach(function (c) { check(svgSrc.indexOf('data-c="' + c + '"') < 0, c + " continua sem forma no SVG (caso coberto por este teste)"); });
+  var envM = { DB: fakeDb(), ASSETS: env.ASSETS };
+  Object.keys(store).forEach(function (k) { delete store[k]; });
+  var seed = { BR: 4, SG: 3, MT: 2, MC: 1 };
+  for (var sc in seed) for (var si = 0; si < seed[sc]; si++) await W.fetch(req("POST", "/api/visit", h, { country: sc }), envM, ctx);
+  await W.fetch(req("POST", "/api/visit", h, { country: "T1" }), envM, ctx); // Tor → XX
+  var mj = await (await W.fetch(req("GET", "/api/visitors"), envM, ctx)).json();
+  check(mj.total_visits === 11, "microestados + XX no total: " + mj.total_visits);
+  check(mj.countries_count === 4, "SG/MT/MC contam como países (XX não): " + mj.countries_count);
+  check(mj.countries.map(function (c) { return c.code + c.visits; }).join() === "BR4,SG3,MT2,MC1", "ranking com microestados: " + JSON.stringify(mj.countries));
+  Object.keys(store).forEach(function (k) { delete store[k]; });
+  // o cliente só pinta/foca/mostra tooltip de <path> existente
+  var vjs = read("assets/js/visitors.js");
+  check(/var el = state\.svg\.querySelector\('path\[data-c="' \+ c\.code \+ '"\]'\);\s*if \(el\)/.test(vjs), "paintMap ignora país sem forma");
+  check(/if \(p\) showTip\(p\)/.test(vjs) && /function highlight[\s\S]*?if \(p\) p\.classList/.test(vjs), "ranking → mapa ignora país sem forma (sem tooltip, sem erro)");
+
+  // --- nomes de país: Intl.DisplayNames por idioma e fallbacks
+  var V = require(path.join(root, "assets/js/visitors.js"));
+  var nm = V.makeCountryNamer(Intl.DisplayNames);
+  check(nm("SG", "pt-BR") === "Singapura" && nm("MT", "pt-BR") === "Malta" && nm("MC", "pt-BR") === "Mônaco" && nm("BR", "pt-BR") === "Brasil", "pt-BR: " + [nm("SG", "pt-BR"), nm("MC", "pt-BR"), nm("BR", "pt-BR")]);
+  check(nm("SG", "en") === "Singapore" && nm("MC", "en") === "Monaco" && nm("DE", "en") === "Germany", "en: " + [nm("SG", "en"), nm("MC", "en"), nm("DE", "en")]);
+  check(nm("SG", "es") === "Singapur" && nm("MC", "es") === "Mónaco" && nm("DE", "es") === "Alemania", "es: " + [nm("SG", "es"), nm("MC", "es"), nm("DE", "es")]);
+  check(nm("QQ", "en") === "QQ" && nm("QQ", "pt-BR", "Fallback") === "Fallback", "código não reconhecido → fallback / código ISO");
+  ["en", "pt-BR", "es"].forEach(function (l) {
+    var none = V.makeCountryNamer(undefined);
+    check(none("SG", l) === "SG" && none("BR", l, "Brazil") === "Brazil", l + ": sem Intl.DisplayNames → código ISO (ou nome do SVG)");
+    var ctorThrows = V.makeCountryNamer(function () { throw new RangeError("unsupported"); });
+    check(ctorThrows("MT", l) === "MT", l + ": construtor lança → código ISO");
+    var ofThrows = V.makeCountryNamer(function () { this.of = function () { throw new RangeError("invalid"); }; });
+    check(ofThrows("MC", l) === "MC", l + ": .of() lança → código ISO");
+    var undef = V.makeCountryNamer(function () { this.of = function () { return undefined; }; });
+    check(undef("SG", l) === "SG", l + ": .of() sem resultado → código ISO");
+  });
+  check(V.level(0, 10) === 0 && V.level(10, 10) === 5 && V.level(1, 1) === 5 && V.level(1, 1000) >= 1, "escala do mapa 0–5");
+
   // --- rotas
   check((await W.fetch(req("GET", "/api/nada"), env, ctx)).status === 404, "rota /api/* desconhecida → 404");
   check(await (await W.fetch(req("GET", "/apps/"), env, ctx)).text() === "asset", "fora de /api/* cai nos assets");
@@ -154,8 +195,30 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
   });
   check(read("sitemap.xml").indexOf("https://lucksrei.com/visitors/") > 0, "sitemap inclui /visitors/");
   check(home.indexOf('data-i18n="footer.visitors"') > 0 && home.indexOf('href="/visitors/"') > 0, "index.html: link no rodapé");
+  // --- /privacy/ localizada (en no HTML estático; pt-BR e es pelos dicionários)
+  var vm = require("vm");
+  var dctx = { window: {} };
+  ["en", "pt-BR", "es"].forEach(function (l) { vm.runInNewContext(read("assets/i18n/" + l + ".js"), dctx); });
+  var D = dctx.window.LUCKSREI_I18N;
   var priv = read("privacy/index.html");
-  check(priv.indexOf("estatísticas agregadas de acesso por país") > 0 && /Não são armazenados IP, localização precisa/.test(priv.replace(/\s+/g, " ")), "política cita estatísticas agregadas");
+  check(/<html lang="en" data-seo="privacy">/.test(priv) && /canonical" href="https:\/\/lucksrei.com\/privacy\/"/.test(priv), "privacy com data-seo e canonical");
+  check(priv.indexOf("pt-only-notice") < 0 && /<main id="main">/.test(priv), "privacy sem aviso de 'só em português' e sem main fixo em pt-BR");
+  var pkeys = [];
+  priv.replace(/<(h1|h2|p|a|span)\b[^>]*data-i18n="(privacy\.site\.[^"]+)">([\s\S]*?)<\/\1>/g, function (_, tag, k, txt) { pkeys.push(k); check(txt === D.en[k], "privacy: texto estático em en igual ao dicionário (" + k + ")"); });
+  check(pkeys.length >= 20, "privacy: corpo, títulos e navegação via data-i18n (" + pkeys.length + ")");
+  ["en", "pt-BR", "es"].forEach(function (l) {
+    var d = D[l];
+    ["title", "description", "ogTitle", "ogDescription"].forEach(function (k) { check(d["seo.privacy." + k], l + ": seo.privacy." + k); });
+    pkeys.forEach(function (k) { check(d[k], l + ": " + k); });
+    check(d["privacy.site.p3b"].indexOf('href="/visitors/"') > 0, l + ": privacy linka o mapa de visitantes");
+    check(d["privacy.site.p5"].indexOf('href="/projects/match-queue/privacy/"') > 0, l + ": privacy linka a política do Match Queue");
+    check(/54\.868\.173\/0001-55/.test(d["privacy.site.p1"]) && /LUCAS DIOGO FRANCA/.test(d["privacy.site.p1"]), l + ": razão social e CNPJ preservados");
+  });
+  // mesmo conteúdo jurídico: estatística agregada e ausência de IP / localização precisa / identificadores
+  check(/estatísticas agregadas de acesso por país/.test(D["pt-BR"]["privacy.site.p3b"]) && /Não são armazenados IP, localização precisa ou identificadores pessoais/.test(D["pt-BR"]["privacy.site.p3b"]), "pt-BR: estatísticas agregadas sem IP");
+  check(/aggregated access statistics by country/.test(D.en["privacy.site.p3b"]) && /No IP address, precise location or personal identifiers are stored/.test(D.en["privacy.site.p3b"]), "en: estatísticas agregadas sem IP");
+  check(/estadísticas agregadas de acceso por país/.test(D.es["privacy.site.p3b"]) && /no se almacenan la dirección IP, la ubicación precisa ni identificadores personales/.test(D.es["privacy.site.p3b"]), "es: estatísticas agregadas sem IP");
+  check(D["pt-BR"]["privacy.notice"] && read("projects/aura/privacy/index.html").indexOf("privacy.notice") > 0, "aviso 'só em português' continua nas políticas dos apps");
   var main = read("assets/js/main.js");
   check(/sessionStorage\.getItem\("lk\.v"\)/.test(main) && /sendBeacon\("\/api\/visit"\)/.test(main) && !/document\.cookie/.test(main), "beacon por sessão de aba, sem cookie");
   var svg = read("assets/img/visitors/world.svg");

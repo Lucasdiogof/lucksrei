@@ -12,6 +12,16 @@
  * Privacidade: só se grava (mês UTC, país, contador). O país vem EXCLUSIVAMENTE de request.cf.country;
  * nada enviado pelo cliente é lido. IP, user-agent, headers, cidade, região e coordenadas nunca são
  * gravados nem devolvidos. O user-agent é testado em memória (filtro de robôs) e descartado.
+ *
+ * Cache:
+ *   /api/visitors  cache de borda (caches.default) de ~5 min: "public, max-age=300, s-maxage=300".
+ *                  No HIT a Cloudflare reescreve o max-age para 14400 (Browser Cache TTL da zona); o s-maxage fica.
+ *                  Não afeta o site: visitors.js busca com cache: "no-cache" (revalida sempre e recebe o cache de 5 min).
+ *                  Só quem abre o endpoint direto no navegador pode ver um JSON de até 4 h. Comportamento aceito.
+ *   /api/whoami    no-store.
+ *   /api/visit     no-store (também nas respostas de ruído/robô).
+ *
+ * Rate limiting pode ser adicionado futuramente se houver abuso real.
  */
 
 const VISITORS_TTL = 300; // s

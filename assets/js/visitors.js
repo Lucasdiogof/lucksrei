@@ -3,10 +3,36 @@
  * Dados: GET /api/visitors (agregados por país, cache 5 min) e GET /api/whoami (só o país do próprio visitante).
  * Mapa: /assets/img/visitors/world.svg (Natural Earth, local). A cor vem de variáveis CSS (--map-0…--map-5).
  * Usado em /visitors/ (completo, com ranking) e na home (resumo: sem ranking, #v-map[data-lazy] inicia perto do viewport).
+ * Países sem forma no SVG (microestados: SG, MT, MC…) entram nos totais e no ranking; o mapa simplesmente não os pinta.
  */
-(function () {
+(function (root) {
   "use strict";
-  var I = window.LucksreiI18n;
+
+  // Nome do país no idioma atual. Sem Intl.DisplayNames, com erro ou com código desconhecido:
+  // usa o fallback (nome em inglês do SVG, quando houver) e, por último, o próprio código ISO.
+  function makeCountryNamer(DisplayNames) {
+    var cache = { loc: null, dn: null };
+    return function (code, locale, fallback) {
+      if (cache.loc !== locale) {
+        cache.loc = locale;
+        try { cache.dn = DisplayNames ? new DisplayNames([locale], { type: "region" }) : null; } catch (e) { cache.dn = null; }
+      }
+      try { if (cache.dn) { var n = cache.dn.of(code); if (n && n !== code) return n; } } catch (e) { /* código inválido */ }
+      return fallback || code;
+    };
+  }
+
+  // 0 = neutro; 1–5 em escala logarítmica relativa ao país mais visitado
+  function level(v, max) {
+    if (!v) return 0;
+    if (max <= 1) return 5;
+    return 1 + Math.min(4, Math.floor(4.999 * Math.log(1 + v) / Math.log(1 + max)));
+  }
+
+  if (typeof module === "object" && module.exports) module.exports = { makeCountryNamer: makeCountryNamer, level: level };
+  if (!root.document) return;
+
+  var I = root.LucksreiI18n;
   var mapBox = document.getElementById("v-map");
   if (!I || !mapBox) return;
 
@@ -17,25 +43,11 @@
 
   function locale() { return I.getLocale(); }
 
-  var names = { loc: null, dn: null };
-  function countryName(code, fallback) {
-    if (names.loc !== locale()) {
-      names.loc = locale();
-      try { names.dn = new Intl.DisplayNames([locale()], { type: "region" }); } catch (e) { names.dn = null; }
-    }
-    try { if (names.dn) { var n = names.dn.of(code); if (n && n !== code) return n; } } catch (e) { /* código inválido */ }
-    return fallback || code;
-  }
+  var namer = makeCountryNamer(typeof Intl !== "undefined" ? Intl.DisplayNames : null);
+  function countryName(code, fallback) { return namer(code, locale(), fallback); }
 
   function visitsText(n) {
     return I.t(n === 1 ? "visitors.visits_one" : "visitors.visits_other", { n: I.formatNumber(n) });
-  }
-
-  // 0 = neutro; 1–5 em escala logarítmica relativa ao país mais visitado
-  function level(v, max) {
-    if (!v) return 0;
-    if (max <= 1) return 5;
-    return 1 + Math.min(4, Math.floor(4.999 * Math.log(1 + v) / Math.log(1 + max)));
   }
 
   function showTip(path, clientX, clientY) {
@@ -205,4 +217,4 @@
   }
 
   document.addEventListener("lucksrei:locale", render);
-})();
+})(typeof window !== "undefined" ? window : this);
