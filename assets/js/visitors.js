@@ -162,7 +162,8 @@
   }
 
   function getJSON(url) {
-    return fetch(url, { credentials: "omit" }).then(function (r) { if (!r.ok) throw new Error(String(r.status)); return r.json(); });
+    // "no-cache": revalida sempre; o edge da Cloudflare responde do cache de 5 min (a Cloudflare reescreve o max-age para 4 h)
+    return fetch(url, { credentials: "omit", cache: "no-cache" }).then(function (r) { if (!r.ok) throw new Error(String(r.status)); return r.json(); });
   }
 
   Promise.all([

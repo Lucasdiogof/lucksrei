@@ -824,7 +824,8 @@ html:not([lang="pt-BR"]) .pt-only-notice{ display: block; }
 .world path:hover, .world path.is-hl{ stroke: var(--text-dim); stroke-width: 1px; }
 .world path.is-you{ stroke: var(--text); stroke-width: 1.5px; }
 .world:focus, .world path:focus{ outline: none; }
-.world path:focus-visible{ stroke: var(--text); stroke-width: 2px; }
+.world path:focus-visible{ stroke: var(--text); stroke-width: 3px; }
+.world path.is-you:focus-visible{ stroke-dasharray: 6 3; } /* o país do visitante já tem contorno contínuo: o foco o diferencia pelo traço mais grosso e tracejado */
 .map-legend{ display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 10px; font-family: var(--font-mono); font-size: 11.5px; color: var(--text-faint); }
 .map-legend span{ margin: 0 6px; }
 .map-legend i{ width: 18px; height: 8px; display: block; border: 1px solid var(--border); }
