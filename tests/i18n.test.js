@@ -147,8 +147,18 @@ proj.forEach(function (p) {
 });
 // seleção por idioma e ausência de fallback silencioso
 check(Shots.blockFor("aprovaura", "b1", "pt-BR").length === 4, "aprovaura b1 pt-BR deve ter 4 telas");
-check(Shots.blockFor("aprovaura", "b1", "en").length === 0, "aprovaura b1 em en não pode reaproveitar imagens pt-BR");
-check(Shots.blockFor("aprovaura", "b1", "es").length === 0, "aprovaura b1 em es não pode reaproveitar imagens");
+check(Shots.blockFor("aprovaura", "b1", "en").map(function (s) { return s.id; }).join() === "practice,practice-more", "aprovaura b1 en: só as telas em inglês");
+check(Shots.blockFor("aprovaura", "b1", "es").map(function (s) { return s.id; }).join() === "practice", "aprovaura b1 es: só a tela em espanhol");
+["pt-BR", "en", "es"].forEach(function (l) {
+  ["b2", "b5"].forEach(function (b) { check(Shots.blockFor("aprovaura", b, l).every(function (s) { return s.src.indexOf("/screens/" + l + "/") > 0; }), "aprovaura " + b + " " + l + ": sem imagem de outro idioma"); });
+  ["home", "practice", "mock-build", "mock-question"].forEach(function (s) { check(Shots.slotFor("aprovaura", s, l), "aprovaura " + s + " existe em " + l); });
+  ["home", "practice"].forEach(function (s) { check(fs.existsSync(path.join(root, "assets/img/home/aura", l, s + ".webp")), "miniatura da home aprovaura " + l + "/" + s); });
+});
+var aprovBlocks = function (b, l) { return Shots.blockFor("aprovaura", b, l).map(function (s) { return s.id; }).join(); };
+check(aprovBlocks("b2", "pt-BR") === "mock-build,mock-question" && aprovBlocks("b5", "pt-BR") === "home,level-up" && aprovBlocks("b5", "en") === "home" && aprovBlocks("b5", "es") === "home", "aprovaura: só telas novas (tema escuro) em simulado e progresso");
+check(Shots.blockFor("aprovaura", "b3", "en").length === 0 && Shots.blockFor("aprovaura", "b4", "es").length === 0, "redação e mapas seguem só em pt-BR (sem fallback)");
+// telas de Perfil com e-mail pessoal nunca entram no manifesto
+check(!/"profile"|"perfil"/i.test(read("assets/js/screenshots-data.js").split('"aprovaura"')[1].split('"lapelve"')[0]), "aprovaura sem slot de perfil");
 check(Shots.blockFor("matchqueue", "b2", "en").length === 3 && Shots.blockFor("matchqueue", "b2", "pt-BR").length === 0, "match queue b2 só em en");
 check(Shots.slotFor("lapelve", "home", "en").src.indexOf("/screens/en/home.webp") > 0, "la pelve home en usa a versão en");
 check(Shots.slotFor("lapelve", "home", "pt-BR").src.indexOf("/screens/pt-BR/home.webp") > 0, "la pelve home pt-BR usa a versão pt-BR");

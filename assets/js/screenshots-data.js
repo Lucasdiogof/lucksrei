@@ -263,26 +263,60 @@
   "aprovaura": {
     "dir": "aura",
     "slots": {
-      "mock-review": {
-        "locales": ["pt-BR"],
-        "dims": { "pt-BR": [590, 1280] }
-      },
-      "essay-competencies": {
-        "locales": ["pt-BR"],
-        "dims": { "pt-BR": [590, 1280] }
+      "home": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ],
+          "en": [
+            590,
+            1280
+          ],
+          "es": [
+            590,
+            1280
+          ]
+        }
       },
       "practice": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            590,
+            1280
+          ],
+          "es": [
+            590,
+            1280
           ]
         }
       },
-      "quick": {
+      "practice-more": {
+        "locales": [
+          "en"
+        ],
+        "dims": {
+          "en": [
+            590,
+            1280
+          ]
+        }
+      },
+      "trail": {
         "locales": [
           "pt-BR"
         ],
@@ -293,7 +327,7 @@
           ]
         }
       },
-      "review": {
+      "trail-topics": {
         "locales": [
           "pt-BR"
         ],
@@ -304,7 +338,7 @@
           ]
         }
       },
-      "geography": {
+      "trail-question": {
         "locales": [
           "pt-BR"
         ],
@@ -317,21 +351,20 @@
       },
       "mock-build": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
-          ]
-        }
-      },
-      "mock-summary": {
-        "locales": [
-          "pt-BR"
-        ],
-        "dims": {
-          "pt-BR": [
+          ],
+          "en": [
+            590,
+            1280
+          ],
+          "es": [
             590,
             1280
           ]
@@ -339,16 +372,26 @@
       },
       "mock-question": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            590,
+            1280
+          ],
+          "es": [
+            590,
+            1280
           ]
         }
       },
-      "mock-result": {
+      "level-up": {
         "locales": [
           "pt-BR"
         ],
@@ -403,6 +446,28 @@
           ]
         }
       },
+      "essay-competencies": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "mock-review": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
       "map": {
         "locales": [
           "pt-BR"
@@ -426,17 +491,6 @@
         }
       },
       "topics": {
-        "locales": [
-          "pt-BR"
-        ],
-        "dims": {
-          "pt-BR": [
-            590,
-            1280
-          ]
-        }
-      },
-      "home": {
         "locales": [
           "pt-BR"
         ],
@@ -473,15 +527,14 @@
     "blocks": {
       "b1": [
         "practice",
-        "quick",
-        "review",
-        "geography"
+        "practice-more",
+        "trail",
+        "trail-topics",
+        "trail-question"
       ],
       "b2": [
         "mock-build",
-        "mock-summary",
-        "mock-question",
-        "mock-result"
+        "mock-question"
       ],
       "b3": [
         "essay-themes",
@@ -496,8 +549,7 @@
       ],
       "b5": [
         "home",
-        "theme-dark",
-        "language"
+        "level-up"
       ]
     }
   },
