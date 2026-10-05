@@ -86,6 +86,7 @@
   "home.experiencia.h34": "IZA",
   "home.experiencia.h35": "Freelancer",
   "home.experiencia.h36": "Memora",
+  "home.experiencia.h37": "Saneago",
   "home.experiencia.li1": "Financial sector",
   "home.experiencia.li2": "Corporate systems",
   "home.experiencia.li3": "System maintenance and modernization",
