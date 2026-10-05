@@ -19,6 +19,7 @@
 
   /* ---- footer ---- */
   "footer.about": "Portfólio de Lucas Diogo França, desenvolvedor mobile. Lucksrei é a marca dos meus apps.",
+  "footer.built": "HTML, CSS e JS estáticos no Cloudflare Workers.",
   "footer.connect_title": "Conecte-se",
   "footer.country": "Brasil",
   "footer.nav_title": "Navegação",

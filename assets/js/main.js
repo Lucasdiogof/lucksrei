@@ -3,6 +3,8 @@
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  document.querySelectorAll("[data-current-path]").forEach(function (el) { el.textContent = window.location.pathname; });
+
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
@@ -50,6 +52,34 @@
     });
   }
 
+  // indicador deslizante do menu: um único traço (transform) que segue o link ativo/hover/foco
+  var syncIndicator = null;
+  var navWrap = document.querySelector(".nav-links");
+  if (navWrap) {
+    var ind = document.createElement("span");
+    ind.className = "nav-indicator";
+    ind.setAttribute("aria-hidden", "true");
+    navWrap.appendChild(ind);
+    navWrap.classList.add("has-indicator");
+    var place = function (a) {
+      if (!a || !a.offsetWidth) { ind.style.opacity = "0"; return; }
+      ind.style.opacity = "1";
+      ind.style.transform = "translateX(" + a.offsetLeft + "px) scaleX(" + (a.offsetWidth / 100) + ")";
+    };
+    var activeLink = function () { return navWrap.querySelector("a[aria-current]"); };
+    syncIndicator = function () { place(activeLink()); };
+    navWrap.querySelectorAll("a").forEach(function (a) {
+      a.addEventListener("mouseenter", function () { place(a); });
+      a.addEventListener("focus", function () { place(a); });
+      a.addEventListener("blur", syncIndicator);
+    });
+    navWrap.addEventListener("mouseleave", syncIndicator);
+    window.addEventListener("resize", syncIndicator);
+    document.addEventListener("lucksrei:locale", function () { window.requestAnimationFrame(syncIndicator); });
+    syncIndicator();
+    window.requestAnimationFrame(function () { ind.classList.add("is-ready"); });
+  }
+
   var sections = Array.prototype.slice.call(document.querySelectorAll("main section[id]"));
   var navLinks = Array.prototype.slice.call(document.querySelectorAll(".nav-links a, .mobile-nav a"));
   if (sections.length && navLinks.length && "IntersectionObserver" in window) {
@@ -68,6 +98,7 @@
         if (entry.isIntersecting) {
           navLinks.forEach(function (a) { a.removeAttribute("aria-current"); });
           links.forEach(function (a) { a.setAttribute("aria-current", "true"); });
+          if (syncIndicator) syncIndicator();
         }
       });
     }, { rootMargin: "-40% 0px -55% 0px", threshold: 0 });

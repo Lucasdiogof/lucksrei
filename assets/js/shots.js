@@ -2,8 +2,10 @@
  *
  *   <div data-shots="projeto:bloco">          → <figure> por slot disponível no idioma
  *   <img data-shot-img="projeto:slot">        → imagem única (hero/vitrine); some se não existir no idioma
+ *   data-home                                 → usa a miniatura otimizada de /assets/img/home/
+ *   data-shot-neutral="projeto:slot:idioma"    → fallback neutro da vitrine (ver renderNeutrals)
  *
- * Sem fallback entre idiomas. Bloco sem nenhuma imagem no idioma esconde o .case-block inteiro.
+ * Sem fallback entre idiomas (exceto o fallback neutro explícito da vitrine). Bloco sem nenhuma imagem no idioma esconde o .case-block inteiro.
  */
 (function () {
   "use strict";
@@ -50,26 +52,64 @@
     if (wrap) wrap.hidden = slots.length === 0;
   }
 
-  function renderImg(img) {
-    var parts = img.getAttribute("data-shot-img").split(":");
-    var s = S.slotFor(parts[0], parts[1], I.getLocale());
-    var holder = img.closest(".case-hero, .showcase-row");
-    if (!s) {
-      img.hidden = true;
-      img.removeAttribute("src");
-      if (holder) holder.classList.add("no-visual");
-      return;
-    }
-    img.src = s.src;
+  // vitrine da home: miniaturas otimizadas em /assets/img/home/<projeto>/<idioma>/<slot>.webp (originais seguem nos cases)
+  function homeSrc(src) {
+    return src.replace(/\/assets\/img\/([^\/]+)\/screens\/([^\/]+)\/([^\/]+)$/, "/assets/img/home/$1/$2/$3");
+  }
+
+  function showImg(img, s) {
+    img.src = img.hasAttribute("data-home") ? homeSrc(s.src) : s.src;
     img.alt = decode(I.t(s.altKey));
     if (s.w && s.h) { img.width = s.w; img.height = s.h; }
     img.hidden = false;
-    if (holder) holder.classList.remove("no-visual");
+  }
+
+  function hideImg(img) {
+    img.hidden = true;
+    img.removeAttribute("src");
+  }
+
+  function renderImg(img) {
+    var parts = img.getAttribute("data-shot-img").split(":");
+    var s = S.slotFor(parts[0], parts[1], I.getLocale());
+    if (s) showImg(img, s); else hideImg(img);
+  }
+
+  // Fallback neutro (só na vitrine): se a placa não tem nenhuma imagem localizada no idioma atual,
+  // mostra telas reais do app (data-shot-neutral="projeto:slot:idioma-do-arquivo"). Nunca arte com headline de outro idioma.
+  function renderNeutrals() {
+    document.querySelectorAll(".work-plate").forEach(function (plate) {
+      var localized = plate.querySelectorAll("[data-shot-img]:not([hidden])").length;
+      plate.querySelectorAll("[data-shot-neutral]").forEach(function (img) {
+        if (localized) { hideImg(img); return; }
+        var p = img.getAttribute("data-shot-neutral").split(":");
+        var s = S.slotFor(p[0], p[1], p[2]);
+        if (s) showImg(img, s); else hideImg(img);
+      });
+    });
+  }
+
+  // holder sem nenhuma imagem no idioma atual perde o visual; as visíveis ganham índice (--k) para o escalonamento
+  function syncHolders() {
+    document.querySelectorAll(".case-hero, .work-item").forEach(function (h) {
+      var imgs = h.querySelectorAll("[data-shot-img], [data-shot-neutral]");
+      if (!imgs.length) return;
+      var k = 0;
+      imgs.forEach(function (i) {
+        if (i.hidden) { i.removeAttribute("data-k"); return; }
+        i.setAttribute("data-k", String(k));
+        i.style.setProperty("--k", k);
+        k++;
+      });
+      h.classList.toggle("no-visual", k === 0);
+    });
   }
 
   function renderAll() {
     document.querySelectorAll("[data-shots]").forEach(renderBlock);
     document.querySelectorAll("[data-shot-img]").forEach(renderImg);
+    renderNeutrals();
+    syncHolders();
   }
 
   renderAll();

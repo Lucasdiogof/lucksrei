@@ -208,17 +208,30 @@
 
 <footer class="site-footer">
   <div class="container">
-    <div class="footer-grid">
-      <div>
+    <div class="footer-top">
+      <div class="footer-id">
         <div class="footer-brand">Lucksrei</div>
         <p data-i18n="footer.about">Portfolio of Lucas Diogo França, mobile developer. Lucksrei is the brand behind my apps.</p>
+      </div>
+      <a class="footer-up" href="#main"><span aria-hidden="true">↑</span> <span data-i18n="common.voltar_ao_topo">Back to top</span></a>
+    </div>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <p class="footer-title" data-i18n="nav.projects">Projects</p>
+        <ul>
+          <li><a href="/projects/fan-hub/">Fan Hub</a></li>
+          <li><a href="/projects/match-queue/">Match Queue</a></li>
+          <li><a href="/projects/la-pelve/">La Pelve</a></li>
+          <li><a href="/projects/aura/">Aprovaura</a></li>
+          <li><a href="/apps/" data-i18n="nav.apps">Apps</a></li>
+        </ul>
       </div>
       <div class="footer-col">
         <p class="footer-title" data-i18n="footer.nav_title">Navigation</p>
         <ul>
-          <li><a href="/#projetos" data-i18n="nav.projects">Projects</a></li>
-          <li><a href="/apps/" data-i18n="nav.apps">Apps</a></li>
+          <li><a href="/#sobre" data-i18n="nav.about">About</a></li>
           <li><a href="/#experiencia" data-i18n="nav.experience">Experience</a></li>
+          <li><a href="/#tecnologias" data-i18n="nav.technologies">Technologies</a></li>
           <li><a href="/contact/" data-i18n="nav.contact">Contact</a></li>
           <li><a href="/privacy/" data-i18n="footer.privacy">Privacy</a></li>
         </ul>
@@ -226,15 +239,15 @@
       <div class="footer-col">
         <p class="footer-title" data-i18n="footer.connect_title">Connect</p>
         <ul>
-          <li><a href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener">LinkedIn</a></li>
-          <li><a href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub</a></li>
           <li><a href="mailto:marketing@lucksrei.com">marketing@lucksrei.com</a></li>
+          <li><a href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+          <li><a href="https://github.com/Lucasdiogof" target="_blank" rel="noopener">GitHub ↗</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© <span id="year">2026</span> Lucksrei — LUCAS DIOGO FRANCA · CNPJ 54.868.173/0001-55</span>
-      <span data-i18n="footer.country">Brazil</span>
+      <span>© <span id="year">2026</span> Lucksrei — LUCAS DIOGO FRANCA · CNPJ 54.868.173/0001-55 · <span data-i18n="footer.country">Brazil</span></span>
+      <span data-i18n="footer.built">Static HTML, CSS and JS on Cloudflare Workers.</span>
     </div>
   </div>
 </footer>
