@@ -851,3 +851,22 @@ html:not([lang="pt-BR"]) .pt-only-notice{ display: block; }
   .visitors-map{ padding: 12px 10px 8px; }
   .map-legend{ justify-content: flex-start; }
 }
+
+/* ---------- home: resumo do mapa de visitantes ---------- */
+.home-visitors{ padding: 72px 0 88px; border-top: 1px solid var(--border); }
+.hv-head{ display: flex; justify-content: space-between; align-items: flex-end; gap: 16px 40px; margin-bottom: 28px; }
+.hv-title{ font-size: clamp(24px, 3vw, 34px); letter-spacing: -.02em; line-height: 1.1; }
+.hv-lead{ margin-top: 8px; color: var(--text-dim); }
+.hv-link{ flex: none; font-family: var(--font-mono); font-size: 13.5px; color: var(--text-dim); text-decoration: none; padding-bottom: 2px; border-bottom: 1px solid var(--border-strong); }
+.hv-link:hover{ color: var(--text); border-color: var(--accent); }
+.hv-link:focus-visible{ outline: 2px solid var(--accent); outline-offset: 4px; }
+.hv-stats{ grid-template-columns: repeat(2, 1fr); margin-bottom: 24px; }
+.hv-stats > div{ padding-top: 16px; padding-bottom: 16px; }
+.home-visitors .visitors-map .world{ max-height: 360px; margin: 0 auto; }
+@media (max-width: 700px){
+  .home-visitors{ padding: 56px 0 64px; }
+  .hv-head{ flex-direction: column; align-items: flex-start; margin-bottom: 20px; }
+  .hv-stats{ grid-template-columns: 1fr 1fr; }
+  .hv-stats > div, .hv-stats > div + div{ flex-direction: column; justify-content: flex-start; padding: 12px 0; gap: 4px; border-top: 0; }
+  .hv-stats > div + div{ padding-left: 16px; border-left: 1px solid var(--border); }
+}

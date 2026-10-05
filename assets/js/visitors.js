@@ -2,7 +2,7 @@
  *
  * Dados: GET /api/visitors (agregados por país, cache 5 min) e GET /api/whoami (só o país do próprio visitante).
  * Mapa: /assets/img/visitors/world.svg (Natural Earth, local). A cor vem de variáveis CSS (--map-0…--map-5).
- * Só carrega nesta página.
+ * Usado em /visitors/ (completo, com ranking) e na home (resumo: sem ranking, #v-map[data-lazy] inicia perto do viewport).
  */
 (function () {
   "use strict";
@@ -11,6 +11,7 @@
   if (!I || !mapBox) return;
 
   var $ = function (id) { return document.getElementById(id); };
+  function setText(id, text) { var el = $(id); if (el) el.textContent = text; }
   var state = { data: null, you: null, svg: null, failed: false };
   var tip = $("v-tip");
 
@@ -88,9 +89,9 @@
 
   function renderStats() {
     var d = state.data;
-    $("v-total").textContent = d ? I.formatNumber(d.total_visits) : "—";
-    $("v-countries").textContent = d ? I.formatNumber(d.countries_count) : "—";
-    $("v-you").textContent = state.you ? countryName(state.you) : (state.data ? I.t("visitors.unknown_you") : "—");
+    setText("v-total", d ? I.formatNumber(d.total_visits) : "—");
+    setText("v-countries", d ? I.formatNumber(d.countries_count) : "—");
+    setText("v-you", state.you ? countryName(state.you) : (state.data ? I.t("visitors.unknown_you") : "—"));
     var meta = [];
     if (d && d.updated_at) meta.push(I.t("visitors.updated", { date: I.formatDate(new Date(d.updated_at), { dateStyle: "medium" }) }));
     if (d && d.since) {
@@ -102,12 +103,13 @@
         meta.push(I.t("visitors.since", { month: I.formatDate(new Date(Date.UTC(+p[0], +p[1] - 1, 1)), { month: "long", year: "numeric", timeZone: "UTC" }) }));
       }
     }
-    $("v-meta").textContent = meta.join(" · ");
-    $("v-status").textContent = state.failed ? I.t("visitors.error") : (d && d.total_visits === 0 ? I.t("visitors.empty") : "");
+    setText("v-meta", meta.join(" · "));
+    setText("v-status", state.failed ? I.t("visitors.error") : (d && d.total_visits === 0 ? I.t("visitors.empty") : ""));
   }
 
   function renderRank() {
     var ol = $("v-rank");
+    if (!ol) return; // a home mostra só o mapa e os totais
     ol.textContent = "";
     if (!state.data) return;
     state.data.countries.slice(0, 10).forEach(function (c, i) {
@@ -154,6 +156,10 @@
     svg.addEventListener("focusout", hideTip);
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") hideTip(); });
     var ol = $("v-rank");
+    if (ol) wireRank(svg, ol);
+  }
+
+  function wireRank(svg, ol) {
     function over(e, on) { var li = e.target.closest("li[data-c]"); if (li) { highlight(li.getAttribute("data-c"), on); if (on && e.type === "focusin") { var p = svg.querySelector('path[data-c="' + li.getAttribute("data-c") + '"]'); if (p) showTip(p); } if (!on) hideTip(); } }
     ol.addEventListener("pointerover", function (e) { over(e, true); });
     ol.addEventListener("pointerout", function (e) { over(e, false); });
@@ -166,25 +172,37 @@
     return fetch(url, { credentials: "omit", cache: "no-cache" }).then(function (r) { if (!r.ok) throw new Error(String(r.status)); return r.json(); });
   }
 
-  Promise.all([
-    fetch("/assets/img/visitors/world.svg").then(function (r) { if (!r.ok) throw new Error("svg"); return r.text(); }),
-    getJSON("/api/visitors").catch(function () { state.failed = true; return null; }),
-    getJSON("/api/whoami").then(function (j) { return j && j.country; }).catch(function () { return null; })
-  ]).then(function (res) {
-    var doc = new DOMParser().parseFromString(res[0], "image/svg+xml");
-    state.svg = document.importNode(doc.documentElement, true);
-    state.svg.setAttribute("class", "world");
-    state.svg.setAttribute("role", "group");
-    state.svg.setAttribute("tabindex", "-1"); // o <svg> raiz não deve ser uma parada de Tab
-    mapBox.insertBefore(state.svg, mapBox.firstChild);
-    state.data = res[1];
-    state.you = res[2];
-    wire();
-    render();
-  }).catch(function () {
-    state.failed = true;
-    render();
-  });
+  function start() {
+    Promise.all([
+      fetch("/assets/img/visitors/world.svg").then(function (r) { if (!r.ok) throw new Error("svg"); return r.text(); }),
+      getJSON("/api/visitors").catch(function () { state.failed = true; return null; }),
+      getJSON("/api/whoami").then(function (j) { return j && j.country; }).catch(function () { return null; })
+    ]).then(function (res) {
+      var doc = new DOMParser().parseFromString(res[0], "image/svg+xml");
+      state.svg = document.importNode(doc.documentElement, true);
+      state.svg.setAttribute("class", "world");
+      state.svg.setAttribute("role", "group");
+      state.svg.setAttribute("tabindex", "-1"); // o <svg> raiz não deve ser uma parada de Tab
+      mapBox.insertBefore(state.svg, mapBox.firstChild);
+      state.data = res[1];
+      state.you = res[2];
+      wire();
+      render();
+    }).catch(function () {
+      state.failed = true;
+      render();
+    });
+  }
+
+  // Na home o mapa só é buscado quando a seção chega perto do viewport.
+  if (mapBox.hasAttribute("data-lazy") && "IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      if (entries.some(function (en) { return en.isIntersecting; })) { io.disconnect(); start(); }
+    }, { rootMargin: "400px 0px" });
+    io.observe(mapBox);
+  } else {
+    start();
+  }
 
   document.addEventListener("lucksrei:locale", render);
 })();

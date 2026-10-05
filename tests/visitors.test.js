@@ -143,13 +143,17 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
   check(Array.isArray(al) && al.length >= 1, "assetlinks.json válido e presente");
   var page = read("visitors/index.html");
   check(/<html lang="en" data-seo="visitors">/.test(page) && /canonical" href="https:\/\/lucksrei.com\/visitors\/"/.test(page), "página com data-seo e canonical");
-  check(page.indexOf("visitors.js") > 0 && page.indexOf("apps.js") < 0, "visitors.js só na página de visitantes");
-  ["index.html", "apps/index.html", "contact/index.html", "projects/aura/index.html", "privacy/index.html"].forEach(function (f) {
+  check(page.indexOf("visitors.js") > 0 && page.indexOf("apps.js") < 0, "visitors.js na página de visitantes");
+  var home = read("index.html");
+  check(home.indexOf("visitors.js") > 0 && /id="v-map" data-lazy/.test(home) && home.indexOf('id="v-rank"') < 0, "home carrega visitors.js, mapa lazy e sem ranking");
+  check(home.indexOf('id="contato"') < home.indexOf('id="v-map"') && home.indexOf('id="v-map"') < home.indexOf("<footer"), "mapa da home fica depois do CTA e antes do rodapé");
+  ["apps/index.html", "contact/index.html", "projects/aura/index.html", "privacy/index.html"].forEach(function (f) {
     var t = read(f);
     check(t.indexOf('data-i18n="footer.visitors"') > 0 && t.indexOf('href="/visitors/"') > 0, f + ": link no rodapé");
     check(t.indexOf("visitors.js") < 0, f + ": não carrega visitors.js");
   });
   check(read("sitemap.xml").indexOf("https://lucksrei.com/visitors/") > 0, "sitemap inclui /visitors/");
+  check(home.indexOf('data-i18n="footer.visitors"') > 0 && home.indexOf('href="/visitors/"') > 0, "index.html: link no rodapé");
   var priv = read("privacy/index.html");
   check(priv.indexOf("estatísticas agregadas de acesso por país") > 0 && /Não são armazenados IP, localização precisa/.test(priv.replace(/\s+/g, " ")), "política cita estatísticas agregadas");
   var main = read("assets/js/main.js");

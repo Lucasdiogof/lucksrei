@@ -380,6 +380,31 @@
     </div>
   </section>
 
+  <section class="home-visitors" aria-labelledby="hv-title">
+    <div class="container">
+      <div class="hv-head">
+        <div>
+          <h2 class="hv-title" id="hv-title" data-i18n="home.visitors.title">Where visits come from</h2>
+          <p class="hv-lead" data-i18n="home.visitors.lead">Visits to lucksrei.com by country.</p>
+        </div>
+        <a class="hv-link" href="/visitors/" data-i18n="home.visitors.cta">See full map →</a>
+      </div>
+      <dl class="visitors-stats hv-stats">
+        <div><dt data-i18n="visitors.stat.visits">Visits</dt><dd id="v-total">—</dd></div>
+        <div><dt data-i18n="visitors.stat.countries">Countries</dt><dd id="v-countries">—</dd></div>
+      </dl>
+      <figure class="visitors-map" id="v-map" data-lazy aria-busy="true">
+        <div class="map-legend" aria-hidden="true">
+          <span data-i18n="visitors.legend.low">fewer</span>
+          <i class="lv0"></i><i class="lv1"></i><i class="lv2"></i><i class="lv3"></i><i class="lv4"></i><i class="lv5"></i>
+          <span data-i18n="visitors.legend.high">more</span>
+        </div>
+        <div class="map-tip" id="v-tip" role="tooltip" hidden></div>
+      </figure>
+      <p class="visitors-status" id="v-status" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+
 </main>
 
 <footer class="site-footer">
@@ -435,6 +460,7 @@
 <script src="/assets/js/shots.js"></script>
 <script src="/assets/js/apps-data.js"></script>
 <script src="/assets/js/apps-cta.js"></script>
+<script src="/assets/js/visitors.js"></script>
 <script src="/assets/js/main.js"></script>
 </body>
 </html>
