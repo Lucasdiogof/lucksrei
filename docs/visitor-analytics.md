@@ -72,10 +72,27 @@ Rate limiting pode ser adicionado futuramente se houver abuso real.
 - `visitors/index.html` e a seção `.home-visitors` de `index.html`.
 - `assets/img/visitors/world.svg` (+ `tools/build-world-svg.py`).
 - `migrations/0001_visits.sql` — schema do D1.
+- `tools/visitor-report.mjs` — relatório manual somente leitura (ver "Relatório manual").
 - `tests/visitors.test.js` — Worker, privacidade, microestados, fallback de nomes, privacy i18n. Rodar com `node tests/visitors.test.js` (junto com `tests/i18n.test.js` e `tests/apps-data.test.js`).
 - `privacy/index.html` — política do site.
 
 Testes com dados: usar D1 local (`wrangler d1 ... --local --persist-to <dir temporário>`). Nunca inserir, alterar ou apagar dados em produção.
+
+## Relatório manual
+
+```
+node tools/visitor-report.mjs
+```
+
+Rodar na raiz do repo, com o Wrangler já logado. Mostra:
+- total de visitas e mês atual;
+- países e "Desconhecido/Tor" à parte;
+- top 10 e % por país;
+- evolução mês a mês, comparação com o mês anterior (só quando há dados dos dois meses), primeiro mês e último update.
+
+- **Somente leitura:** consulta o D1 **remoto** `lucksrei-visits` com um único `SELECT ym, country, n, updated_at FROM visits_monthly` (o script recusa qualquer outra instrução). Não altera produção, não cria arquivos e não publica nada (`tools/` não é servido).
+- Só existem agregados; erros do Wrangler são mostrados com ids/tokens mascarados.
+- Cálculo e formatação têm testes com dados fictícios: `node tests/visitor-report.test.js`.
 
 ## 10. Não alterar sem revisão
 
