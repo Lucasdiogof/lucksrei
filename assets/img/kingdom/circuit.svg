@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240" fill="none" stroke="#f9d577" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Royal Circuit: trilhas de placa de circuito cujas junções viram formas reais (coroa, diamante, flor-de-lis abstrata).
+       Ladrilho contínuo nas bordas; opacidade final baixíssima via CSS. -->
+  <path d="M0 40h46l14 14h40M100 54l20-20h34l16 16h70"/>
+  <path d="M0 150h30l20 20v30l20 20h50M120 220l20-20h40l20 20h40"/>
+  <path d="M60 54v46l-16 16v34M154 34V0M154 240v-30M200 50v60l16 16h24"/>
+  <path d="M90 120h40l14-14h24l12 12v28l-12 12h-30"/>
+  <path d="M30 0v20M30 240v-24M120 220v20"/>
+  <!-- coroa (três pontas) sobre a junção -->
+  <path d="M112 50l4-9 4 6 4-10 4 10 4-6 4 9z"/>
+  <!-- diamante -->
+  <path d="M60 104l6 8-6 8-6-8z"/>
+  <!-- flor-de-lis abstrata: lóbulo central + dois laterais -->
+  <path d="M200 112c0-8 5-12 5-12s5 4 5 12M196 118c-6 0-8-4-8-4s4-2 8 0M214 118c6 0 8-4 8-4s-4-2-8 0M194 120h22"/>
+  <g fill="#f9d577" stroke="none">
+    <circle cx="100" cy="54" r="2"/><circle cx="170" cy="50" r="2"/><circle cx="44" cy="150" r="2"/>
+    <circle cx="120" cy="220" r="2"/><circle cx="130" cy="120" r="2"/><circle cx="168" cy="160" r="2"/>
+  </g>
+</svg>

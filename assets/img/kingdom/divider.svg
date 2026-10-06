@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="24" viewBox="0 0 640 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- divisor da marca: fio dourado que some nas pontas, trilhas de circuito curtas e a ponta da coroa no centro -->
+  <defs>
+    <linearGradient id="f" x1="0" x2="1">
+      <stop offset="0" stop-color="#d5911d" stop-opacity="0"/>
+      <stop offset=".42" stop-color="#d5911d" stop-opacity=".55"/>
+      <stop offset=".5" stop-color="#f9d577" stop-opacity=".9"/>
+      <stop offset=".58" stop-color="#d5911d" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#d5911d" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <path d="M0 14h296M344 14h296" stroke="url(#f)" stroke-width="1"/>
+  <path d="M250 14l8-8h18M390 14l-8-8h-18" stroke="#d5911d" stroke-opacity=".4" stroke-width="1"/>
+  <circle cx="276" cy="6" r="1.6" fill="#d5911d" fill-opacity=".55"/><circle cx="364" cy="6" r="1.6" fill="#d5911d" fill-opacity=".55"/>
+  <path d="M302 18l5-9 6 5 7-11 7 11 6-5 5 9z" stroke="#f9d577" stroke-opacity=".85" stroke-width="1.1"/>
+  <path d="M303 21h34" stroke="#d5911d" stroke-opacity=".6" stroke-width="1"/>
+</svg>

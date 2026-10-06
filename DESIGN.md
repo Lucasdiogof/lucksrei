@@ -75,7 +75,7 @@ Breakpoints: **980** (hero empilha) · **900** (vitrine empilha) · **860** (nav
 | `18px` (só cantos superiores) | screenshot recortada na placa |
 | `999px` | **apenas** seletor de idioma, chips de filtro e badge |
 
-Borda é sempre `1px`. Sombra: **nenhuma** (profundidade vem de tom e linha).
+Borda é sempre `1px`. Sombra só nos cards Obsidian (profunda e escura, com reflexo quente de 1px no topo) e no palco do hero.
 
 ## Regras de card
 
@@ -100,7 +100,7 @@ Borda é sempre `1px`. Sombra: **nenhuma** (profundidade vem de tom e linha).
 - Permitido: revelação curta dos blocos (`[data-reveal]`), entrada escalonada dos recortes, hover do projeto (recortes sobem 8px, seta anda 4px), indicador deslizante do menu, thumb do seletor de idioma, contadores das métricas, sublinhado do e-mail, linhas do terminal da 404.
 - `prefers-reduced-motion: reduce`: todas as transições/animações viram instantâneas, reveals ficam visíveis, hover não translada.
 - Royal Tech acrescenta: brilho do CTA primário (varredura 0,7s), cantos em "L" dourados que crescem no hover (retrato, cartões de produto), poeira dourada quase invisível no hero (opacidade 20–60%, 9s) e deriva lenta do halo (26s). Tudo em `opacity`/`transform`, desligado em reduced motion; no celular some o que for caro (halo, poeira, filtros).
-- Sem biblioteca de animação. Sem cursor customizado. Sem parallax, tilt, magnet ou scroll-jacking.
+- Sem biblioteca de animação. Sem cursor customizado. Sem parallax, tilt, magnet ou scroll-jacking. O "light follow" dos cards é só um brilho quente (≤5%) que acompanha o ponteiro fino, sem mover nada.
 
 ## Responsivo
 
@@ -126,3 +126,12 @@ Glassmorphism fora do header · gradientes e brilhos fora dos permitidos acima �
 - Texto: edite os 3 dicionários em `assets/i18n/` (chaves iguais nos 3) e rode `node tests/i18n.test.js`.
 - Screenshot nova: arquivo em `assets/img/<projeto>/screens/<idioma>/`, slot em `screenshots-data.js`, textos em `shots.<projeto>.<slot>` nos dicionários.
 - Novo projeto na vitrine: um `.work-item` com `data-product`, cor em `--p`, e `.work-plate` com `<img class="plate-shot" data-shot-img="projeto:slot">`.
+
+## Digital Kingdom (camada da marca)
+
+"Um reino construído por um programador": realeza abstrata + tecnologia, nunca medieval. Paleta tirada da logo: `--royal-gold` #d5911d (corpo das letras), `--royal-gold-soft` #f9d577 (brilho), `--royal-champagne` #fcf4dd (preenchimento), `--royal-gold-deep` #8d3f00 (contorno); `--metal` e `--royal-text` seguem preto → ouro escuro → ouro → champagne → branco quente só no centro.
+
+- **Elementos proprietários** (`assets/img/kingdom/`): `arch.svg` (sala do trono: arcos, pilares, vitral, piso em perspectiva, circuitos e ponta de coroa no ápice — atrás do palco do hero, ~19% de opacidade e máscara), `circuit.svg` (Royal Circuit: trilhas cujas junções viram coroa, diamante e flor-de-lis abstrata — processo e CTA, 3–6%), `divider.svg` (fio de ouro + circuito + ponta da coroa — `.kd-divider` entre blocos da home).
+- **Logo viva**: `lucksrei-royal-sm-base.webp` + `-crown.webp` (recortes do asset original, mesmo tamanho de tela). 1x por sessão: a palavra aparece, a coroa assenta no I, um reflexo passa; depois parada. Hover: reflexo único. Easter egg: digitar "rei"/"king"/"rey" faz a coroa saudar.
+- **Ritmo**: hero forte (arco + Royal Glow) → métricas (royal dashboard, números em ouro) → sobre/produtos mais limpos (cards Obsidian, cores dos apps intactas) → Royal Circuit no processo (a trilha "energiza" ao entrar) → experiência com linha metálica e pontos que acendem → CTA "sala final" (glow, circuito convergindo, coroa enorme a ~3%) → rodapé com a coroa sobre o fio de ouro.
+- Celular: sem animação do glow, opacidades menores, sem sombras grandes nos cards. Reduced motion: logo e glow estáticos, sem reflexos, sem energização, sem light follow.
