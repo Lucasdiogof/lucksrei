@@ -164,7 +164,7 @@ check(Shots.slotFor("lapelve", "home", "en").src.indexOf("/screens/en/home.webp"
 check(Shots.slotFor("lapelve", "home", "pt-BR").src.indexOf("/screens/pt-BR/home.webp") > 0, "la pelve home pt-BR usa a versão pt-BR");
 check(Shots.slotFor("lapelve", "home", "es") === null, "la pelve home es inexistente → null (sem fallback)");
 var model = Shots.buildScreenshots("fanhub", "b2", function (k, v, l) { return D[l][k]; });
-check(model["pt-BR"].length === 12 && model.en.length === 0 && model.es.length === 0, "modelo por locale do fan hub (só pt-BR: o app é em português)");
+check(model["pt-BR"].length === 12 && Shots.blockFor("fanhub", "b3", "pt-BR").length === 11 && Shots.blockFor("fanhub", "b4", "pt-BR").length === 7 && Shots.blockFor("fanhub", "b5", "pt-BR").length === 10 && Shots.blockFor("fanhub", "b5", "en").length === 0 && model.en.length === 0 && model.es.length === 0, "modelo por locale do fan hub (só pt-BR: o app é em português)");
 check(["play", "queue-search", "teams-explore", "central", "players", "player-detail", "market"].every(function (s) { return Shots.slotFor("matchqueue", s, "es") && fs.existsSync(path.join(root, "assets/img/match-queue/screens/es", s + ".webp")); }), "match queue: telas em espanhol existem no manifesto e em disco");
 check(Shots.blockFor("fanhub", "b2", "pt-BR").every(function (s) { return fs.existsSync(path.join(root, s.src.replace(/^\//, ""))); }), "fan hub b2: todo arquivo do manifesto existe");
 check(model["pt-BR"].every(function (x) { return x.src.indexOf("/pt-BR/") > 0 && x.alt; }), "itens do modelo têm src e alt do próprio idioma");

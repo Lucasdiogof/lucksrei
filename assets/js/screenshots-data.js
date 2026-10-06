@@ -200,6 +200,314 @@
             1280
           ]
         }
+      },
+      "club-home": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "titles": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "board": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "idols": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "squad": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "player": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "transparency": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "songs": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "document": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "partners": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "media": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "tickets": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "ticket-sectors": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "purchase": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "purchased": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "my-tickets": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "ticket": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "member-signup": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "arena": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "challenges": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "crowd": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "pitch": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "guess-lineup": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "who-wore": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "who-wore-hit": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "passport": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "trajectory": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "ranking": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
       }
     },
     "blocks": {
@@ -221,6 +529,40 @@
         "guess-player",
         "identity-quiz",
         "identity-result"
+      ],
+      "b3": [
+        "club-home",
+        "titles",
+        "board",
+        "idols",
+        "squad",
+        "player",
+        "transparency",
+        "songs",
+        "document",
+        "partners",
+        "media"
+      ],
+      "b4": [
+        "tickets",
+        "ticket-sectors",
+        "purchase",
+        "purchased",
+        "my-tickets",
+        "ticket",
+        "member-signup"
+      ],
+      "b5": [
+        "arena",
+        "challenges",
+        "crowd",
+        "pitch",
+        "guess-lineup",
+        "who-wore",
+        "who-wore-hit",
+        "passport",
+        "trajectory",
+        "ranking"
       ]
     }
   },
@@ -371,6 +713,22 @@
             1280
           ]
         }
+      },
+      "account": {
+        "locales": [
+          "en",
+          "es"
+        ],
+        "dims": {
+          "en": [
+            590,
+            1280
+          ],
+          "es": [
+            590,
+            1280
+          ]
+        }
       }
     },
     "blocks": {
@@ -387,7 +745,8 @@
         "central",
         "players",
         "player-detail",
-        "market"
+        "market",
+        "account"
       ]
     }
   },
