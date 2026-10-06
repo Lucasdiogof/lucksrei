@@ -1,11 +1,13 @@
-# Lucksrei — design system
+# Lucksrei — design system (Royal Tech)
 
 Portfólio de engenharia mobile. Site estático (HTML + CSS + JS, sem build, sem framework), servido por um Cloudflare Worker.
 Fonte única de tokens: `assets/css/style.css` (`:root`). Textos: `assets/i18n/{en,pt-BR,es}.js`. Screenshots por idioma: `assets/js/screenshots-data.js`.
 
 ## Direção
 
-**Ficha técnica editorial.** Parece um documento de engenharia bem diagramado, não uma landing page.
+**Ficha técnica editorial, com assinatura Royal Tech.** Parece um documento de engenharia bem diagramado, não uma landing page. A realeza aparece de forma moderna e controlada: o **dourado é a identidade da marca Lucksrei** (logo, coroa, CTA, rótulos, foco); o **azul é tecnologia** (código, stack, GitHub, uma luz distante no fundo). Proporção alvo: 70% escuro, 20% marfim/cinza, 8% dourado, 2% azul.
+
+Não pode parecer cassino, joalheria, RPG medieval, NFT, cyberpunk exagerado nem template de IA. A logo é sempre o **asset original** (`assets/img/brand/lucksrei-royal-*.webp`, derivados do arquivo original); nunca recriada em CSS/SVG. A coroa (`lucksrei-crown.webp`) é um recorte da própria logo e marca **só** produtos próprios (nº do case e cartão em /apps).
 
 - Estrutura por **linhas finas (1px), tipografia e índices**, não por caixas.
 - O **produto real** (screenshots) é o protagonista; o resto da interface é discreto.
@@ -14,22 +16,26 @@ Fonte única de tokens: `assets/css/style.css` (`:root`). Textos: `assets/i18n/{
 
 ## Cores
 
-Base escura, um único acento. Cores de produto só aparecem como **tom** (nunca como fundo saturado).
+Base escura, dourado como acento da interface e azul só para tecnologia. Cores de produto só aparecem como **tom** (nunca como fundo saturado).
 
 | Token | Valor | Uso |
 |---|---|---|
-| `--bg` | `#06080d` | fundo da página |
-| `--bg-soft` | `#0a0d14` | fundo de placas, terminal |
-| `--panel` / `--panel-2` / `--panel-hover` | `#0e131c` / `#121826` / `#151c2c` | superfícies (cards só quando clicáveis) |
-| `--border` / `--border-strong` | `#1d2532` / `#2a3446` | linhas finas / ênfase |
-| `--text` / `--text-dim` / `--text-faint` | `#eef1f7` / `#a7b1c4` / `#6d778c` | texto primário / corpo / metadados |
-| `--accent` | `#6ea8fe` | links, rótulos de seção, foco |
+| `--bg-void` / `--bg` | `#050607` / `#080a0e` | fundo da página (a atmosfera é `body::after`, fixa) |
+| `--bg-soft` / `--bg-elevated` | `#0d1016` / `#121620` | fundo de placas, terminal, elevações |
+| `--panel` / `--panel-2` / `--panel-hover` | `#0f131b` / `#121620` / `#171c28` | superfícies (cards só quando clicáveis) |
+| `--border` / `--border-strong` / `--border-subtle` | `#1b212c` / `#2a3140` / `rgba(255,255,255,.07)` | linhas finas / ênfase / borda de card |
+| `--border-gold` / `--border-gold-hover` | `rgba(214,167,44,.32)` / `rgba(255,215,106,.70)` | detalhe dourado e hover |
+| `--text` / `--ivory` / `--text-dim` / `--text-faint` | `#f5f5f2` / `#f8f4ea` / `#aeb4bf` / `#7b8290` | texto primário / marfim / corpo / metadados |
+| `--gold` (= `--accent`) | `#d6a72c` | links, rótulos de seção, foco, identidade |
+| `--gold-bright` / `--gold-soft` / `--gold-deep` / `--gold-dark` | `#ffd76a` / `#e6c56a` / `#9a6814` / `#5e3b08` | hover, rótulos, barra de rolagem |
+| `--btn-gold` / `--metal` | gradiente `#f0d27b → #d6a72c → #a87318` / gradiente metálico | CTA primário; **só** linhas, ícones e badges (nunca áreas grandes) |
+| `--tech` / `--tech-bright` / `--tech-cyan` | `#3c82ff` / `#63b3ff` / `#46d9ff` | tecnologia: pontos da stack, hover do GitHub, luz de fundo |
 | `--accent-2` | `#58d3a5` | cargo atual, status positivo |
 | `--accent-warn` | `#f2b56b` | avaliação, "em desenvolvimento" |
 | `--danger` | `#f2837c` | somente erro (404) |
 | `--p` (por projeto) | Fan Hub `#6fcf97` · Match Queue `#2ee88a` · La Pelve `#d59ab4` · Aprovaura `#7fbfe0` | tom da placa, número, link e hover do projeto |
 
-Regras: no máximo **um** acento por tela; cor de projeto só dentro do card daquele projeto; contraste mínimo AA para texto de corpo.
+Regras: o dourado é o acento da interface e o azul é pontual (nunca competem); o mapa de visitas é uma escala de dourado (`--map-*`); cor de projeto só dentro do card daquele projeto; contraste mínimo AA para texto de corpo.
 
 ## Tipografia
 
@@ -75,7 +81,7 @@ Borda é sempre `1px`. Sombra: **nenhuma** (profundidade vem de tom e linha).
 
 1. Card só existe quando o bloco inteiro é **um link ou tem estado** (projeto, app, filtro). Listas informativas usam **linhas finas**.
 2. Nunca quatro cards idênticos. Projetos têm três composições: **destaque** (placa à direita, 3 recortes), **faixa espelhada** (placa à esquerda, recortes invertidos) e **par compacto** (placa em cima).
-3. Sem ícone grande em círculo, sem gradiente de fundo, sem brilho.
+3. Sem ícone grande em círculo. Cartões usam `--card-bg` (gradiente escuro quase imperceptível) e borda `--border-subtle`; hover = borda dourada + `--shadow-lift`. Sem `backdrop-filter` nos cartões (sobre fundo opaco não mostra nada e custa no celular); o blur fica só no header.
 4. Hierarquia de tamanho comunica prioridade: 01 > 02 > 03/04.
 
 ## Screenshots
@@ -93,6 +99,7 @@ Borda é sempre `1px`. Sombra: **nenhuma** (profundidade vem de tom e linha).
 - Easing único: `--ease: cubic-bezier(.16,.8,.24,1)`.
 - Permitido: revelação curta dos blocos (`[data-reveal]`), entrada escalonada dos recortes, hover do projeto (recortes sobem 8px, seta anda 4px), indicador deslizante do menu, thumb do seletor de idioma, contadores das métricas, sublinhado do e-mail, linhas do terminal da 404.
 - `prefers-reduced-motion: reduce`: todas as transições/animações viram instantâneas, reveals ficam visíveis, hover não translada.
+- Royal Tech acrescenta: brilho do CTA primário (varredura 0,7s), cantos em "L" dourados que crescem no hover (retrato, cartões de produto), poeira dourada quase invisível no hero (opacidade 20–60%, 9s) e deriva lenta do halo (26s). Tudo em `opacity`/`transform`, desligado em reduced motion; no celular some o que for caro (halo, poeira, filtros).
 - Sem biblioteca de animação. Sem cursor customizado. Sem parallax, tilt, magnet ou scroll-jacking.
 
 ## Responsivo
@@ -100,6 +107,8 @@ Borda é sempre `1px`. Sombra: **nenhuma** (profundidade vem de tom e linha).
 Mobile é projeto próprio, não desktop encolhido: texto **antes** da foto; placas empilham (texto, depois recortes); 2 recortes; rodapé em 2 colunas (1 em ≤480); tabelas viram listas; alvo de toque ≥ 40px; nunca overflow horizontal.
 
 ## Navbar e rodapé
+
+- Logo Royal Tech (`lucksrei-royal-sm.webp`) 36px; ao rolar encolhe 14% (transform) e o header ganha fio dourado. Item ativo: sublinhado metálico. Rodapé: logo `-md`, fio dourado no topo e halo dourado discreto na base.
 
 - Navbar sticky, borda e blur (`10px`) só depois do scroll; altura constante. Um único indicador sublinhado desliza para o link ativo/hover/foco. Seletor EN/PT/ES é um controle segmentado com thumb deslizante (`:has`, com fallback).
 - Rodapé: marca, descrição, **3 colunas úteis** (projetos, navegação, contato), dados da empresa (razão social, CNPJ), país e uma linha factual de infraestrutura.
@@ -110,7 +119,7 @@ Skip link, `aria-label` traduzido, foco visível (`--accent`, offset 3px), `aria
 
 ## Proibido
 
-Glassmorphism fora do header · gradientes e brilhos decorativos · blobs/partículas · neon · sombras grandes · `rounded-2xl` em tudo · grids de cards idênticos · zigue-zague repetido · ícone Lucide dentro de círculo · selo piscando · cursor customizado · parallax/tilt · webfont pesada · biblioteca de animação · texto de marketing vago · números, avaliações ou clientes inventados · screenshot de outro idioma como fallback · dado pessoal real em screenshot.
+Glassmorphism fora do header · gradientes e brilhos fora dos permitidos acima · bolas borradas · neon · glow grande · dourado em texto pequeno sobre claro · metal em área grande · `rounded-2xl` em tudo · grids de cards idênticos · zigue-zague repetido · ícone Lucide dentro de círculo · selo piscando · cursor customizado · parallax/tilt · webfont pesada · biblioteca de animação · texto de marketing vago · números, avaliações ou clientes inventados · screenshot de outro idioma como fallback · dado pessoal real em screenshot.
 
 ## Como mudar
 

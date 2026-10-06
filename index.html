@@ -11,6 +11,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="stylesheet" href="/assets/css/style.css">
+<noscript><style>#hero-scene .hs-poster{content:url(/assets/img/hero/poster-final.png)}</style></noscript>
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lucksrei">
@@ -18,14 +19,14 @@
 <meta property="og:description" content="Senior Flutter Developer in Brazil: Android and iOS apps, architecture, backend, CI/CD and store publishing.">
 <meta property="og:url" content="https://lucksrei.com/">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://lucksrei.com/assets/img/og/lucksrei-og.jpg">
+<meta property="og:image" content="https://lucksrei.com/assets/img/og/lucksrei-og-royal.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Lucas Diogo França, Senior Mobile Developer. Portfólio de apps mobile, da arquitetura à loja.">
+<meta property="og:image:alt" content="Lucksrei — Lucas Diogo, Senior Mobile Developer · Mobile Engineering.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://lucksrei.com/assets/img/og/lucksrei-og.jpg">
-<meta name="twitter:image:alt" content="Lucas Diogo França, Senior Mobile Developer. Portfólio de apps mobile, da arquitetura à loja.">
+<meta name="twitter:image" content="https://lucksrei.com/assets/img/og/lucksrei-og-royal.jpg">
+<meta name="twitter:image:alt" content="Lucksrei — Lucas Diogo, Senior Mobile Developer · Mobile Engineering.">
 <meta name="twitter:title" content="Lucksrei — Senior Flutter Developer &amp; Mobile Engineer">
 <meta name="twitter:description" content="Senior Flutter Developer in Brazil: Android and iOS apps, architecture, backend, CI/CD and store publishing.">
 
@@ -58,7 +59,7 @@
 <header class="site-header">
   <div class="container">
     <nav class="nav" aria-label="Main" data-i18n-attr="aria-label:nav.aria">
-      <a class="nav-brand" href="/"><img src="/assets/img/brand/lucksrei-logo-sm.webp" alt="Lucksrei" width="102" height="30"></a>
+      <a class="nav-brand" href="/"><img src="/assets/img/brand/lucksrei-royal-sm.webp" alt="Lucksrei" width="111" height="36"></a>
       <div class="nav-links">
         <a href="#sobre" data-i18n="nav.about">About</a>
         <a href="#experiencia" data-i18n="nav.experience">Experience</a>
@@ -93,8 +94,13 @@
 <main id="main">
 
   <section class="hero lk-grid">
+    <span class="hero-dust" aria-hidden="true"></span>
     <div class="container hero-grid">
       <div class="hero-copy">
+        <div class="hero-mark">
+          <img class="hero-logo" src="/assets/img/brand/lucksrei-royal-lg.webp" alt="Lucksrei" width="1100" height="357" fetchpriority="high" decoding="async">
+          <p class="royal-rule" aria-hidden="true"><span class="rr-line"></span><i class="rr-gem"></i><span class="rr-text" data-i18n="home.hero.kicker">MOBILE · SOFTWARE · PRODUCTS</span><i class="rr-gem"></i><span class="rr-line"></span></p>
+        </div>
         <span class="badge" data-i18n="home.s1.span1"><span class="dot"></span> Portfolio · Senior Mobile Developer</span>
         <h1 data-i18n="home.s1.h11">Mobile apps,<br>from architecture <em>to the store.</em></h1>
         <p class="lead" data-i18n="home.s1.p1">I'm Lucas Diogo França, a mobile developer specializing in Flutter. I build Android and iOS apps and usually stay with the product beyond the code: architecture, integrations, CI/CD and store releases.</p>
@@ -103,9 +109,10 @@
       </div>
 
       <div class="hero-visual">
-        <figure class="portrait">
-          <img src="/assets/img/lucas/lucas-diogo.webp" width="720" height="900" fetchpriority="high"
-               alt="Lucas Diogo França, Senior Mobile Developer" data-i18n-attr="alt:home.a11y.img_alt1">
+        <figure class="hero-scene" id="hero-scene">
+          <div class="hs-stage" role="img" aria-label="Pixel art illustration of Lucas coding at his desk and testing an app on his phone" data-i18n-attr="aria-label:home.hero.scene_alt">
+            <img class="hs-poster" src="/assets/img/hero/poster-empty.png" data-final="/assets/img/hero/poster-final.png" width="240" height="150" alt="" decoding="async">
+          </div>
           <figcaption data-i18n="home.s1.figcaption1"><strong>Lucas Diogo</strong>Senior Mobile Developer</figcaption>
         </figure>
       </div>
@@ -136,7 +143,7 @@
     <div class="container">
       <div class="about-grid">
         <div class="about-body" data-reveal>
-          <span class="eyebrow" data-i18n="home.sobre.span1">About</span>
+          <span class="eyebrow" data-sec data-i18n="home.sobre.span1">About</span>
           <h2 data-i18n="home.sobre.h2">Mobile developer, focused on Flutter</h2>
           <p data-i18n="home.sobre.p2">I've worked with Flutter since 2019, on Android and iOS apps, using Clean Architecture, tests and BLoC/Cubit. The work doesn't stop at the UI: I also handle backend integration, offline data, flavors, the build pipeline and store releases. I've also been part of migrating native apps to Flutter.</p>
           <p data-i18n="home.sobre.p3">I've worked in fintech, agrotech, government systems and my own products. Before mobile I worked on Java backend and web systems, which helps me think about the app together with the API, the database and the release.</p>
@@ -159,7 +166,7 @@
   <section id="projetos">
     <div class="container">
       <div class="section-head" data-reveal>
-        <span class="eyebrow" data-i18n="home.projetos.span1">Featured projects</span>
+        <span class="eyebrow" data-sec data-i18n="home.projetos.span1">Featured projects</span>
         <h2 data-i18n="home.projetos.h21">Own products</h2>
         <p data-i18n="home.projetos.p1">Apps I created and maintain.</p>
       </div>
@@ -290,6 +297,7 @@
   <section id="tecnologias">
     <div class="container">
       <div class="section-head" data-reveal>
+        <span class="eyebrow" data-sec data-i18n="home.tecnologias.kicker">Engineering</span>
         <h2 data-i18n="home.tecnologias.h21">Technologies</h2>
       </div>
       <dl class="stack-matrix">
@@ -307,6 +315,7 @@
   <section id="experiencia">
     <div class="container">
       <div class="section-head" data-reveal>
+        <span class="eyebrow" data-sec data-i18n="home.experiencia.kicker">Career</span>
         <h2 data-i18n="home.experiencia.h21">Experience</h2>
       </div>
       <div class="timeline">
@@ -419,7 +428,7 @@
   <div class="container">
     <div class="footer-top">
       <div class="footer-id">
-        <div class="footer-brand"><img src="/assets/img/brand/lucksrei-logo.webp" alt="Lucksrei" width="190" height="56" loading="lazy" decoding="async"></div>
+        <div class="footer-brand"><img src="/assets/img/brand/lucksrei-royal-md.webp" alt="Lucksrei" width="172" height="56" loading="lazy" decoding="async"></div>
       </div>
       <a class="footer-up" href="#main"><span aria-hidden="true">↑</span> <span data-i18n="common.voltar_ao_topo">Back to top</span></a>
     </div>
@@ -467,6 +476,7 @@
 <script src="/assets/js/shots.js"></script>
 <script src="/assets/js/apps-data.js"></script>
 <script src="/assets/js/apps-cta.js"></script>
+<script src="/assets/js/hero-scene.js"></script>
 <script src="/assets/js/visitors.js"></script>
 <script src="/assets/js/main.js"></script>
 </body>

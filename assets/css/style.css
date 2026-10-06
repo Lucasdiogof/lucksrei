@@ -4,31 +4,53 @@
 :root{
   color-scheme: dark;
 
-  --bg: #06080d;
-  --bg-soft: #0a0d14;
-  --panel: #0e131c;
-  --panel-2: #121826;
-  --panel-hover: #151c2c;
-  --border: #1d2532;
-  --border-strong: #2a3446;
+  /* Royal Tech: base escura (70%), marfim/cinza (20%), dourado = identidade (8%), azul = tecnologia (2%) */
+  --bg-void: #050607;
+  --bg: #080a0e;
+  --bg-soft: #0d1016;
+  --bg-elevated: #121620;
+  --panel: #0f131b;
+  --panel-2: #121620;
+  --panel-hover: #171c28;
+  --border: #1b212c;
+  --border-strong: #2a3140;
+  --border-subtle: rgba(255,255,255,.07);
+  --border-gold: rgba(214,167,44,.32);
+  --border-gold-hover: rgba(255,215,106,.70);
 
-  --text: #eef1f7;
-  --text-dim: #a7b1c4;
-  --text-faint: #6d778c;
+  --ivory: #f8f4ea;
+  --text: #f5f5f2;
+  --text-dim: #aeb4bf;
+  --text-faint: #7b8290;
 
-  --accent: #6ea8fe;
-  --accent-strong: #8fbcff;
+  --gold-bright: #ffd76a;
+  --gold: #d6a72c;
+  --gold-deep: #9a6814;
+  --gold-dark: #5e3b08;
+  --gold-soft: #e6c56a;
+  --metal: linear-gradient(90deg, #8e6415, #f7dc84, #c99724, #fff0a5, #966713);   /* só em linhas/ícones/badges, nunca em áreas grandes */
+  --btn-gold: linear-gradient(135deg, #f0d27b, #d6a72c 48%, #a87318);
+
+  --tech: #3c82ff;
+  --tech-bright: #63b3ff;
+  --tech-cyan: #46d9ff;
+  --sapphire: #1856b8;
+
+  /* o acento da interface é o dourado (links, rótulos, foco); o azul fica para tecnologia (--tech) */
+  --accent: var(--gold);
+  --accent-strong: var(--gold-bright);
   --accent-2: #58d3a5;
   --accent-warn: #f2b56b;
   --danger: #f2837c;
 
-  --glow: rgba(110,168,254,.16);
-  --glow-soft: rgba(110,168,254,.08);
+  --glow: rgba(214,167,44,.18);
+  --glow-soft: rgba(214,167,44,.08);
+  --glow-blue: rgba(60,130,255,.13);
 
   /* fundo: malha técnica + halo discreto (ver DESIGN.md, "Fundo") */
-  --grid-line: rgba(150,172,212,.05);
+  --grid-line: rgba(214,190,130,.045);
   --grid-size: 64px;
-  --halo: rgba(110,168,254,.09);
+  --halo: rgba(214,167,44,.055);
 
   --radius-sm: 10px;
   --radius: 16px;
@@ -37,6 +59,9 @@
   --container: 1180px;
   --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Consolas, monospace;
+
+  --shadow-lift: 0 20px 60px rgba(0,0,0,.35), 0 0 30px rgba(214,167,44,.07);
+  --card-bg: linear-gradient(145deg, rgba(18,22,30,.90), rgba(10,12,17,.82));
 
   --ease: cubic-bezier(.16,.8,.24,1);
 }
@@ -50,7 +75,7 @@ html{ scroll-behavior: smooth; }
 
 body{
   margin: 0;
-  background: var(--bg);
+  background: var(--bg-void);
   color: var(--text);
   font-family: var(--font);
   -webkit-font-smoothing: antialiased;
@@ -72,7 +97,23 @@ button{ font: inherit; color: inherit; }
   padding: 0 24px;
 }
 
-::selection{ background: var(--glow); color: var(--text); }
+::selection{ background: rgba(214,167,44,.28); color: #fff; }
+
+/* barra de rolagem discreta: trilho escuro, polegar dourado escuro */
+html{ scrollbar-color: var(--gold-dark) var(--bg-void); scrollbar-width: thin; }
+::-webkit-scrollbar{ width: 10px; height: 10px; }
+::-webkit-scrollbar-track{ background: var(--bg-void); }
+::-webkit-scrollbar-thumb{ background: var(--gold-dark); border-radius: 999px; border: 2px solid var(--bg-void); }
+::-webkit-scrollbar-thumb:hover{ background: var(--gold-deep); }
+
+/* atmosfera: luz dourada no canto superior esquerdo, luz azul distante à direita; fixa na viewport (custo zero ao rolar) */
+body::after{
+  content: ""; position: fixed; inset: 0; z-index: -2; pointer-events: none;
+  background:
+    radial-gradient(circle at 18% 15%, rgba(214,167,44,.06), transparent 32%),
+    radial-gradient(circle at 82% 35%, rgba(60,130,255,.06), transparent 30%),
+    linear-gradient(145deg, #050607 0%, #080a0e 45%, #0b0e14 100%);
+}
 
 /* ---------- fundo: grão quase invisível em toda a página (tira o "preto chapado" sem pesar) ---------- */
 body::before{
@@ -126,14 +167,15 @@ a:focus-visible, button:focus-visible{
 .site-header{
   position: sticky; top: 0; z-index: 100;
   border-bottom: 1px solid transparent;
-  background: rgba(6,8,13,.5);
+  background: rgba(5,6,7,.45);
   backdrop-filter: blur(0px);
   transition: background .3s var(--ease), border-color .3s var(--ease), backdrop-filter .3s var(--ease);
 }
 .site-header.is-scrolled{
-  background: rgba(6,8,13,.78);
-  backdrop-filter: blur(10px) saturate(130%);
+  background: rgba(5,6,7,.82);
+  backdrop-filter: blur(12px) saturate(130%);
   border-bottom-color: var(--border);
+  box-shadow: 0 1px 0 rgba(214,167,44,.07), 0 14px 40px rgba(0,0,0,.28);
 }
 .nav{
   display: flex; align-items: center; justify-content: space-between;
@@ -144,15 +186,16 @@ a:focus-visible, button:focus-visible{
   font-weight: 700; font-size: 18px; letter-spacing: -.01em;
   text-decoration: none; transition: opacity .2s var(--ease);
 }
-.nav-brand img{ display: block; height: 30px; width: auto; }
-.nav-brand:hover{ opacity: .82; }
+.nav-brand img{ display: block; height: 36px; width: auto; transform-origin: 0 50%; transition: transform .35s var(--ease); }
+.site-header.is-scrolled .nav-brand img{ transform: scale(.86); }
+.nav-brand:hover{ opacity: .9; }
 .nav-brand:focus-visible{ outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
 .nav-links{
   position: relative; display: flex; align-items: center; gap: 28px;
 }
 .nav-links.has-indicator a::after{ display: none; }
 .nav-indicator{
-  position: absolute; left: 0; bottom: -2px; width: 100px; height: 1px; background: var(--accent);
+  position: absolute; left: 0; bottom: -2px; width: 100px; height: 1px; background: var(--metal);
   transform-origin: 0 0; transform: translateX(0) scaleX(0); opacity: 0; pointer-events: none;
 }
 .nav-indicator.is-ready{ transition: transform .35s var(--ease), opacity .2s var(--ease); }
@@ -205,14 +248,24 @@ a:focus-visible, button:focus-visible{
 }
 .btn:hover{ transform: translateY(-1px); }
 .btn-primary{
-  background: var(--text); color: var(--bg); border-color: var(--text);
+  position: relative; overflow: hidden; isolation: isolate;
+  background: var(--btn-gold); color: #17110a; border-color: rgba(255,215,106,.55);
 }
-.btn-primary:hover{ background: var(--accent-strong); border-color: var(--accent-strong); color: #06090f; }
+.btn-primary::after{
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.38) 50%, transparent 65%);
+  transform: translateX(-120%); transition: transform .7s var(--ease);
+}
+.btn-primary:hover{ border-color: var(--gold-bright); color: #17110a; }
+.btn-primary:hover::after{ transform: translateX(120%); }
 .btn-ghost{
-  background: rgba(255,255,255,.02); color: var(--text);
+  background: transparent; color: var(--ivory); border-color: var(--border-gold);
 }
-.btn-ghost:hover{ border-color: var(--text-dim); background: rgba(255,255,255,.05); }
+.btn-ghost:hover{ border-color: var(--border-gold-hover); background: rgba(214,167,44,.06); }
 .btn-sm{ padding: 9px 14px; font-size: 13.5px; }
+/* links de código/tecnologia levam o detalhe azul */
+.nav-actions > .btn-ghost{ border-color: var(--border-strong); }
+.nav-actions > .btn-ghost:hover{ border-color: var(--tech); background: rgba(60,130,255,.08); }
 
 /* ---------- badges / eyebrows ---------- */
 .badge{
@@ -234,10 +287,10 @@ a:focus-visible, button:focus-visible{
 }
 
 /* ---------- hero ---------- */
-.hero{ padding: 72px 0 80px; position: relative; overflow: clip; }
-.hero-grid{ display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,.7fr); gap: 72px; align-items: end; }
+.hero{ padding: 48px 0 80px; position: relative; overflow: clip; }
+.hero-grid{ display: grid; grid-template-columns: minmax(0,1fr) 480px; gap: 56px; align-items: center; }
 .hero-copy h1{
-  font-size: clamp(42px, 6vw, 76px); line-height: .99; margin: 22px 0 28px; letter-spacing: -.035em;
+  font-size: clamp(38px, 5.2vw, 64px); line-height: 1; margin: 22px 0 26px; letter-spacing: -.035em;
 }
 .hero-copy h1 em{ font-style: normal; color: var(--text-dim); }
 .hero-copy .lead{
@@ -252,21 +305,32 @@ a:focus-visible, button:focus-visible{
 .hero-links a:hover{ color: var(--text-dim); border-color: var(--border-strong); }
 
 .hero-visual{ position: relative; }
-.portrait{ position: relative; margin: 0 0 0 auto; max-width: 400px; }
-.portrait img{
-  position: relative; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 28%;
-  border-radius: 6px; filter: saturate(.9) contrast(1.03);
+/* cena pixel art: janela de escala inteira (480x300 no desktop; recorte 300x200 no celular), pixels nítidos */
+.hero-scene{
+  --hs-w: 480px; --hs-h: 300px; --hs-pw: 480px; --hs-ox: 0px; --hs-oy: 0px;
+  position: relative; margin: 0 0 0 auto; width: var(--hs-w); max-width: 100%;
 }
-.portrait figcaption{
+.hs-stage{ position: relative; width: var(--hs-w); height: var(--hs-h); overflow: hidden; border-radius: 6px; background: #0b1020; border: 1px solid var(--border); box-sizing: content-box; max-width: 100%; }
+.hs-poster, .hs-canvas{ image-rendering: pixelated; image-rendering: crisp-edges; image-rendering: pixelated; display: block; }
+.hs-poster{ position: absolute; left: var(--hs-ox); top: var(--hs-oy); width: var(--hs-pw); height: auto; max-width: none; }
+.hs-canvas{ position: absolute; left: 0; top: 0; width: var(--hs-w); height: var(--hs-h); }
+.hero-scene.is-live .hs-poster{ display: none; }
+/* cantos em "L" dourados (a linguagem do L da marca) */
+.hs-stage::before, .hs-stage::after{ content: ""; position: absolute; width: 20px; height: 20px; z-index: 2; pointer-events: none; }
+.hs-stage::before{ top: 8px; left: 8px; border-top: 1px solid rgba(214,167,44,.55); border-left: 1px solid rgba(214,167,44,.55); border-top-left-radius: 6px; }
+.hs-stage::after{ right: 8px; bottom: 8px; border-right: 1px solid rgba(214,167,44,.55); border-bottom: 1px solid rgba(214,167,44,.55); border-bottom-right-radius: 6px; }
+.hero-scene figcaption{
   display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
   margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border);
   font-family: var(--font-mono); font-size: 12px; color: var(--text-faint);
 }
-.portrait figcaption strong{ font-family: var(--font); font-size: 15px; font-weight: 600; color: var(--text); }
+.hero-scene figcaption strong{ font-family: var(--font); font-size: 15px; font-weight: 600; color: var(--text); }
+@media (max-width: 599px){
+  .hero-scene{ --hs-w: 300px; --hs-h: 200px; --hs-oy: -88px; margin: 0; }
+}
 
-@media (max-width: 980px){
-  .hero-grid{ grid-template-columns: 1fr; gap: 56px; }
-  .portrait{ margin: 0; max-width: 340px; }
+@media (max-width: 1060px){
+  .hero-grid{ grid-template-columns: 1fr; gap: 48px; }
 }
 
 /* ---------- metrics strip ---------- */
@@ -416,8 +480,8 @@ section{ padding: 88px 0; }
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
 }
 .stack-category{
-  border: 1px solid var(--border); border-radius: var(--radius); padding: 22px;
-  background: var(--panel);
+  border: 1px solid var(--border-subtle); border-radius: var(--radius); padding: 22px;
+  background: var(--card-bg);
 }
 .stack-category h3{
   font-size: 14px; text-transform: uppercase; letter-spacing: .04em;
@@ -673,10 +737,10 @@ figure.fig{ margin: 0; }
 .apps-grid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(236px, 1fr)); gap: 16px; }
 .app-card{
   position: relative; display: flex; flex-direction: column; gap: 14px; min-width: 0;
-  background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px;
-  transition: transform .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+  background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: var(--radius); padding: 18px;
+  transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
 }
-.app-card:hover, .app-card:focus-within{ transform: translateY(-3px); border-color: var(--border-strong); background: var(--panel-hover); }
+.app-card:hover, .app-card:focus-within{ transform: translateY(-3px); border-color: rgba(214,167,44,.3); box-shadow: var(--shadow-lift); }
 .app-top{ display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
 .app-logo{
   flex: none; width: 56px; height: 56px; border-radius: 14px; overflow: hidden;
@@ -746,9 +810,16 @@ figure.fig{ margin: 0; }
 .stack-row{ display: grid; grid-template-columns: 160px 1fr; gap: 12px 24px; padding: 18px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
 .stack-row dt{ font-family: var(--font-mono); font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-faint); }
 .stack-row dd{ margin: 0; }
-.stack-row ul{ display: flex; flex-wrap: wrap; gap: 6px 0; }
-.stack-row li{ font-size: 14px; color: var(--text-dim); }
-.stack-row li:not(:last-child)::after{ content: "/"; margin: 0 10px; color: var(--border-strong); }
+.stack-row ul{ display: flex; flex-wrap: wrap; gap: 8px; }
+.stack-row li{
+  display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--text-dim);
+  border: 1px solid var(--border-subtle); border-radius: 8px; padding: 5px 11px; background: rgba(255,255,255,.015);
+  transition: border-color .25s var(--ease), color .25s var(--ease);
+}
+/* ponto azul = tecnologia; o primeiro de cada linha (a ferramenta principal) leva o ponto dourado */
+.stack-row li::before{ content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--tech); opacity: .8; flex: none; }
+.stack-row li:first-child::before{ background: var(--gold); opacity: 1; }
+.stack-row li:hover{ color: var(--text); border-color: var(--border-gold); }
 @media (max-width: 640px){
   .stack-row{ grid-template-columns: 1fr; gap: 10px; }
 }
@@ -837,8 +908,8 @@ html:not([lang="pt-BR"]) .pt-only-notice{ display: block; }
 /* ---------- /visitors/ ---------- */
 :root{
   --map-0: var(--panel-2);
-  --map-c: #19243a; /* estados sem visita dentro de um país que já recebeu visitas */
-  --map-1: #202f47; --map-2: #324b72; --map-3: #44679b; --map-4: #5683c6; --map-5: #689ff3;
+  --map-c: #262421; /* estados sem visita dentro de um país que já recebeu visitas */
+  --map-1: #39311b; --map-2: #5d4c1f; --map-3: #826823; --map-4: #a68327; --map-5: #ca9e2b;
 }
 @supports (color: color-mix(in srgb, red, blue)){
   :root{
@@ -959,3 +1030,72 @@ html:not([lang="pt-BR"]) .pt-only-notice{ display: block; }
   .hv-stats > div, .hv-stats > div + div{ flex-direction: column; justify-content: flex-start; padding: 12px 0; gap: 4px; border-top: 0; }
   .hv-stats > div + div{ padding-left: 16px; border-left: 1px solid var(--border); }
 }
+
+/* =====================================================================
+   ROYAL TECH — identidade da marca (dourado = Lucksrei, azul = tecnologia)
+   Camada incremental sobre o design editorial: mesmos layouts, nova assinatura.
+   ===================================================================== */
+main{ counter-reset: sec; }
+
+/* rótulos de seção numerados: 01 / ABOUT */
+.eyebrow{ color: var(--gold-soft); }
+.eyebrow[data-sec]::before{ counter-increment: sec; content: "0" counter(sec) " / "; color: var(--text-faint); }
+
+/* divisor "──── ◇ texto ◇ ────": linhas douradas que somem nas pontas, com losangos */
+.royal-rule{ display: flex; align-items: center; gap: 12px; margin: 10px 0 0; max-width: 520px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--gold-soft); }
+.rr-line{ flex: 1 1 24px; height: 1px; background: linear-gradient(90deg, transparent, var(--border-gold)); }
+.rr-line:last-child{ background: linear-gradient(270deg, transparent, var(--border-gold)); }
+.rr-gem{ flex: none; width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); }
+.rr-text{ flex: none; white-space: nowrap; }
+
+/* hero: a logo original é a peça central, com halo dourado suave */
+.hero-mark{ position: relative; margin-bottom: 26px; max-width: 520px; isolation: isolate; }
+.hero-mark::before{
+  content: ""; position: absolute; z-index: -1; inset: -40% -18% -30% -18%; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(214,167,44,.09), transparent 72%);
+}
+.hero-logo{ width: 100%; height: auto; filter: drop-shadow(0 6px 22px rgba(214,167,44,.07)); }
+.hero-dust{
+  position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .35;
+  background:
+    radial-gradient(1px 1px at 12% 22%, var(--gold-bright), transparent),
+    radial-gradient(1.5px 1.5px at 47% 14%, var(--gold-bright), transparent),
+    radial-gradient(1px 1px at 78% 30%, var(--tech-bright), transparent),
+    radial-gradient(1px 1px at 22% 88%, var(--gold-soft), transparent);
+  animation: lk-twinkle 9s ease-in-out infinite alternate;
+}
+@keyframes lk-twinkle{ from{ opacity: .15; } to{ opacity: .4; } }
+.hero .badge .dot{ background: var(--gold); box-shadow: 0 0 8px rgba(214,167,44,.7); }
+
+/* produtos próprios: canto em L dourado + coroa (selo "isto é da Lucksrei"); a coroa é um recorte da logo original */
+.work-item::before{
+  content: ""; position: absolute; top: 10px; left: 10px; width: 22px; height: 22px; z-index: 2; pointer-events: none;
+  border-top: 1px solid rgba(214,167,44,.2); border-left: 1px solid rgba(214,167,44,.2); border-top-left-radius: 8px;
+  transition: width .35s var(--ease), height .35s var(--ease), border-color .35s var(--ease);
+}
+.work-item:hover::before{ width: 36px; height: 36px; border-color: var(--border-gold-hover); }
+.work-item:hover{ box-shadow: 0 20px 60px rgba(0,0,0,.35); }
+#projetos .eyebrow[data-sec]::after, #own .apps-group-head h2::after{
+  content: ""; display: inline-block; width: 21px; height: 14px; margin-left: 10px; vertical-align: -2px;
+  background: url("/assets/img/brand/lucksrei-crown.webp") center / contain no-repeat; opacity: .9;
+}
+
+.apps-filter[aria-pressed="true"]{ border-color: var(--border-gold-hover); }
+.site-footer{ position: relative; border-top: 0; background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(214,167,44,.035), transparent 70%); }
+.site-footer::before{ content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--border-gold) 30%, var(--border-gold) 70%, transparent); }
+.cta-arrow{ color: var(--gold); }
+
+/* seções com atmosfera própria (uma identidade, luz diferente): tecnologia = toque azul */
+#tecnologias{ position: relative; isolation: isolate; }
+#tecnologias::before{ content: ""; position: absolute; z-index: -1; inset: 0; pointer-events: none; background: radial-gradient(ellipse 38% 34% at 90% 38%, var(--glow-blue), transparent 100%); }
+
+/* celular: identidade sem efeitos caros */
+@media (max-width: 700px){
+  .hero-dust, .hero-mark::before{ display: none; }
+  .lk-grid::after{ animation: none; }
+  .hero-logo{ filter: none; }
+  .royal-rule{ letter-spacing: .14em; font-size: 10.5px; }
+  .hs-stage::before, .hs-stage::after{ display: none; }
+  #tecnologias::before{ display: none; }
+}
+@media (prefers-reduced-motion: reduce){ .hero-dust{ animation: none; } .btn-primary::after{ display: none; } }
