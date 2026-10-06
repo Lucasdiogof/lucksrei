@@ -266,6 +266,16 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
   check(fs.existsSync(path.join(root, "assets/img/visitors/admin1/PR.svg")) && !/data-r="PR"/.test(read("assets/img/visitors/admin1/US.svg")) &&
     fs.existsSync(path.join(root, "assets/img/visitors/admin1/SX.svg")) && !/data-r="SX"/.test(read("assets/img/visitors/admin1/NL.svg")),
     "território que é país no mapa (Porto Rico, Sint Maarten) fica no próprio arquivo");
+  // numeração antiga do Natural Earth que colide com a atual: o código sai do nome
+  var irS = read("assets/img/visitors/admin1/IR.svg"), maS = read("assets/img/visitors/admin1/MA.svg");
+  check(/data-r="23" data-n="Tehran"/.test(irS) && /data-r="04"[^>]*data-n="West Azarbaijan"/.test(irS) && codesIn("IR").split(",").length === 31, "IR: 31 províncias com a numeração ISO atual (Teerã = 23)");
+  check(codesIn("MA") === "01,02,03,04,05,06,07,08,09,10,11,12" && /data-r="06"[^>]*data-n="Casablanca-Settat"/.test(maS), "MA: 12 regiões de 2015 (regiões antigas fundidas)");
+  check(codesIn("LV").split(",").length === 43 && !/data-n="Alojas"|data-n="Engures"/.test(read("assets/img/visitors/admin1/LV.svg")), "LV: 36 novads + 7 cidades (2021), nada fundido em Riga pelo campo region");
+  check(/data-r="31" data-a="[^"]*\b43\b[^"]*" data-n="Rift Valley"/.test(read("assets/img/visitors/admin1/KE.svg")), "KE: província antiga soma os condados de 2013");
+  check(/data-r="WO" data-a="AW SA SO TO" data-n="Somaliland"/.test(read("assets/img/visitors/admin1/SO.svg")), "SO: Somalilândia no arquivo da Somália");
+  check(/data-r="SRP"/.test(read("assets/img/visitors/admin1/BA.svg")) && codesIn("BA") === "BIH,BRC,SRP", "BA: Federação, Brčko e República Sérvia");
+  check(/data-r="DZ-01"|data-r="01" data-a="[^"]*49 50/.test(read("assets/img/visitors/admin1/DZ.svg")), "DZ: wilayas de 2019 como alternativos da de origem");
+  check(fs.existsSync(path.join(root, "tools/check-admin1-coverage.py")), "checagem de cobertura ISO existe");
   var vjsA = read("assets/js/visitors.js");
   check(/function codesOf\(p\)/.test(vjsA) && /data-a/.test(vjsA) && /return codesOf\(p\)\.reduce/.test(vjsA), "cliente soma visitas do código principal + alternativos");
   check(/function mainBox\(paths\)/.test(vjsA), "zoom no território principal (sem Guiana/Alasca/Svalbard)");
