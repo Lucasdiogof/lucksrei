@@ -40,14 +40,14 @@ def ly(x0, y0, x):
 # ---------------------------------------------------------------- geometria do mundo (px lógicos)
 WALL = (87, 96)                       # um ponto da base da parede
 DESK_BL, DESK_FL = (86, 110), (98, 122)   # tampo: canto fundo-esquerdo e frente-esquerdo
-DESK_LEN, DESK_H = 126, 19            # comprimento ao longo da diagonal e altura das faces
+DESK_LEN, DESK_H = 92, 19            # comprimento ao longo da diagonal e altura das faces
 SLOT = (112, 125)                     # pés do Lucas em pé diante da cadeira (âncora de todos os frames sentado)
 SEAT = (SLOT[0] + hf.SEAT_HIP_CELL[0] - hc.FX, SLOT[1] + hf.SEAT_HIP_CELL[1] - hc.FY)   # chairSeatAnchor = (114, 109)
 ENTRY, PRESENT, WAYPOINT = (-14, 140), (66, 140), (84, 128)
-MUG = (133, 108)                      # canto superior esquerdo da caneca na mesa (alça em x-2), à frente dos monitores
+MUG = (95, 111)                       # canto superior esquerdo da caneca: à esquerda do teclado, ao alcance da mão esquerda
 # dois monitores lado a lado, JUNTOS, na frente do teclado (entre o teclado e a câmera), num V bem leve:
 # (x0, x1, base em x0, base em x1, altura, lado do filete aceso 'l'/'r')
-MONITORS = [(97, 112, 114, 115, 15, "l"), (114, 129, 116, 113, 15, "r")]
+MONITORS = [(113, 131, 116, 116, 17, "l"), (133, 151, 115, 112, 17, "r")]
 CROP_MOBILE = {"x": 40, "y": 14, "w": 160, "h": 136}
 HELLO = (62, 8)                       # canto superior esquerdo da legenda: faixa vazia da parede, acima de janela/quadro/prateleira
 HELLO_CROP = (44, 17)                # no recorte do celular: no topo, sobre a parede vazia
@@ -164,7 +164,7 @@ def build_bg():
                 if d < 1 and (x + y) % 2 == 0:
                     cv.tint(x, y, C["blue_l"], 0.10 * (1 - d))
     # tapete (alinhado à mesa), borda dourada apagada
-    P0, A, B = (60, 142), (156, -26), (-26, -26)
+    P0, A, B = (60, 142), (124, -21), (-26, -26)
     for y in range(80, H):
         for x in range(W):
             # coordenadas (s, t) no losango do tapete
@@ -187,10 +187,13 @@ def build_bg():
             cv.put(x, y, lerp(rgb("#0a1030"), rgb("#2a4a96"), (y - t0) / (HH - 4)))
     for sx, sy in ((17, 31), (24, 33), (34, 27), (45, 27), (20, 41), (40, 36)):
         cv.put(sx, sy, C["ivory"])
-    for yy in range(-4, 5):
-        for xx in range(-4, 5):
-            if xx * xx + yy * yy <= 14 and not ((xx + 2) ** 2 + (yy - 1) ** 2 <= 11):
-                cv.put(44 + xx, 33 + yy, rgb("#f3eccd"))
+    moon = ["..###..", ".###...", "###....", "##.....", "##.....", "##.....", "###....", ".###...", "..###.."]
+    for ry, row in enumerate(moon):                   # lua crescente (o claro à esquerda, a curva aberta à direita)
+        for rx, ch in enumerate(row):
+            if ch == "#":
+                cv.put(41 + rx, 28 + ry, rgb("#f3eccd") if rx > 0 or ry in (0, 8) else rgb("#d9d0ad"))
+    for gx, gy in ((40, 31), (40, 32), (40, 33), (48, 28), (48, 36)):
+        cv.tint(gx, gy, rgb("#f3eccd"), 0.18)
     for bx, bw, bh in ((14, 5, 11), (20, 5, 16), (26, 6, 9), (33, 5, 18), (39, 6, 12), (46, 6, 15)):
         for x in range(bx, bx + bw):
             gb = round(ly(X0, T0, x)) + HH - 3
@@ -206,7 +209,7 @@ def build_bg():
     cv.wallrect(X0 - 2, X1 + 2, ly(X0, T0 + HH, X0 - 2), 2, C["metal_hi"])   # parapeito
 
     # ---------- quadro com a coroa (o ÚNICO elemento de coroa da cena)
-    QX, QT = 64, 42
+    QX, QT = 98, 44
     cv.wallrect(QX, QX + 15, QT, 16, C["gold_d"])
     cv.wallrect(QX + 1, QX + 14, ly(QX, QT, QX + 1) + 1, 14, C["navy"])
     crown = ["..G..G..G.", ".GG.GG.GG.", ".GGGGGGGG.", "GGGGGGGGGG", "GlGGlGGlGG", "dddddddddd"]
@@ -216,49 +219,7 @@ def build_bg():
                 x = QX + 3 + rx
                 cv.put(x, round(ly(QX, QT, x)) + 4 + ry, {"G": C["gold"], "l": C["gold_l"], "d": C["gold_d"]}[ch])
 
-    # ---------- pôster de app (wireframe) atrás do Lucas
-    PX, PT = 98, 50
-    cv.wallrect(PX, PX + 13, PT, 18, C["blue"])
-    cv.wallrect(PX + 1, PX + 12, ly(PX, PT, PX + 1) + 1, 16, C["navy2"])
-    for i, (w_, col) in enumerate(((8, "blue_l"), (6, "metal_hi"), (9, "metal_hi"), (5, "gold"))):
-        x0 = PX + 3
-        for x in range(x0, x0 + w_):
-            cv.put(x, round(ly(PX, PT, x)) + 4 + i * 3, C[col])
-
-    # ---------- prateleira com livros e planta (acima da mesa)
-    SX0, SX1, SY = 146, 206, 60
-    for x in range(SX0, SX1 + 1):
-        y = round(ly(SX0, SY, x))
-        cv.put(x, y, C["wood_hi"]); cv.put(x, y + 1, C["wood"]); cv.put(x, y + 2, C["wood_dd"])
-    books = [(4, "#3c82ff", 12), (3, "#18214a", 14), (4, "#e8bc46", 11), (3, "#2a3a7a", 13), (5, "#63b3ff", 12), (3, "#18214a", 10)]
-    x = SX0 + 4
-    for bw, col, bh in books:
-        for xx in range(x, x + bw):
-            y0 = round(ly(SX0, SY, xx))
-            for yy in range(y0 - bh, y0):
-                cv.put(xx, yy, rgb(col))
-            cv.put(xx, y0 - bh, lerp(rgb(col), C["ivory"], 0.35))
-        x += bw + 1
-    px0 = 188
-    for xx in range(px0, px0 + 7):
-        y0 = round(ly(SX0, SY, xx))
-        for yy in range(y0 - 6, y0):
-            cv.put(xx, yy, C["pot"] if yy > y0 - 5 else C["pot_d"])
-    for lx, ly_ in ((189, 44), (192, 41), (194, 45), (190, 47), (193, 46), (187, 46), (195, 43)):
-        cv.rect(lx, ly_ - 3, lx + 1, ly_ - 1, C["leaf"] if (lx + ly_) % 2 else C["leaf_l"])
-
-    # ---------- planta de chão (canto da frente à esquerda)
-    pb = 134
-    cv.rect(4, pb - 14, 16, pb, C["pot"]); cv.rect(4, pb - 14, 16, pb - 12, C["pot_d"]); cv.rect(5, pb, 15, pb + 1, C["pot_d"])
-    for ang, ln, curve in [(-60, 22, 0.9), (-35, 26, 0.6), (-8, 28, 0.3), (18, 24, -0.4), (42, 20, -0.8), (-82, 15, 1.1), (66, 15, -1.0)]:
-        x, y = 10.0, pb - 14.0
-        for k in range(ln):
-            t = k / ln
-            a_ = math.radians(ang - 90 + curve * 40 * t)
-            x += math.cos(a_); y += math.sin(a_)
-            wid = max(1, int(round(3 * math.sin(math.pi * min(1, t * 1.15)))))
-            for w_ in range(-(wid // 2), wid - wid // 2):
-                cv.put(int(round(x)) + w_, int(round(y)), C["leaf_l"] if w_ < 0 else (C["leaf"] if t < 0.7 else C["leaf_d"]))
+    estante(cv)
 
     # ---------- luz da tela (ela está virada para o Lucas): sopro azul na parede atrás dele
     for y in range(52, 104):
@@ -269,6 +230,65 @@ def build_bg():
 
     chair(cv)
     return cv.im
+
+
+def estante(cv):
+    """Estante de parede inspirada na do quarto real, em versão menor e organizada: nichos brancos em zigue-zague com
+    painel preto ao centro. Nicho 1: almofada do Goiás + bola. Nicho 2: fotos + cartucho retrô. Nicho 3: quatro
+    bonequinhos. Tudo pregado na parede (topos inclinados como a parede)."""
+    X0, Y0, TIER = 158, 48, 11
+    WH, WM, WS, WD = rgb("#e9ebf1"), rgb("#c9cdd8"), rgb("#9aa0b2"), rgb("#5b6176")
+
+    def Y(x, yb):
+        return round(ly(X0, yb, x))
+
+    def hline(x0, x1, yb, c, dy=0):
+        for x in range(x0, x1 + 1):
+            cv.put(x, Y(x, yb) + dy, c)
+
+    def block(x0, x1, yb_top, h, c):
+        for x in range(x0, x1 + 1):
+            for y in range(Y(x, yb_top), Y(x, yb_top) + h):
+                cv.put(x, y, c)
+
+    def sprite(rows, x0, yb, dy, pal):
+        for ry, row in enumerate(rows):
+            for rx, ch in enumerate(row):
+                if ch != ".":
+                    cv.put(x0 + rx, Y(x0 + rx, yb) + dy + ry, pal[ch])
+
+    block(170, 182, Y0, TIER * 3, rgb("#0b0d16"))                      # painel preto central
+    for k in range(3):                                                 # sombra sob cada tábua
+        for x in range(158, 195):
+            for dy in range(1, 3):
+                cv.tint(x, Y(x, Y0 + k * TIER) + dy, rgb("#03040a"), 0.3 - dy * 0.1)
+    boards = [(161, 194), (158, 191), (161, 194), (158, 191)]
+    for k, (x0, x1) in enumerate(boards):
+        yb = Y0 + k * TIER
+        hline(x0, x1, yb, WH); hline(x0, x1, yb, WM, 1); hline(x0, x1, yb, WD, 2)
+    for k, side in enumerate(("r", "l", "r")):
+        x = 193 if side == "r" else 158
+        for xx in (x, x + 1):
+            for y in range(Y(xx, Y0 + k * TIER) + 3, Y(xx, Y0 + (k + 1) * TIER)):
+                cv.put(xx, y, WM if xx == x else WS)
+
+    G = {"w": rgb("#eef0ea"), "g": rgb("#1f8a4c")}
+    # nicho 1: almofada do Goiás (branca, faixa verde, G) e bola de futebol
+    sprite(["wwwwwww", "gwwwwww", "gwgggww", "gwgwwww", "gwgwggw", "gwgwwgw", "gwgggww", "wwwwwww"], 162, Y0, 3, G)
+    sprite([".KWWK.", "KWWWWK", "WWKKWW", "WWKKWW", "KWWWWK", ".KWWK."], 179, Y0, 5,
+           {"W": rgb("#f4f4f6"), "K": rgb("#22232c")})
+    # nicho 2: moldura com 4 fotos e cartucho retrô
+    yb2 = Y0 + TIER
+    sprite(["fffffff", "fpfqf.f"[:0] + "fpfqf f".replace(" ", "f"), "fpfqfff", "fffffff", "frfsfff", "frfsfff", "fffffff"],
+           162, yb2, 3, {"f": rgb("#f0f0ec"), "p": rgb("#c58a62"), "q": rgb("#6f86b8"), "r": rgb("#5f8f7a"), "s": rgb("#b07a6a")})
+    sprite(["cccccccc", "cLLLLLLc", "cLbbbbLc", "cLbybbLc", "cLLLLLLc", "cccccccc", "c.c..c.c"], 180, yb2, 3,
+           {"c": rgb("#8f939f"), "L": rgb("#5c6070"), "b": rgb("#3c82ff"), "y": rgb("#e8bc46")})
+    # nicho 3: quatro bonequinhos, espaçados
+    yb3 = Y0 + 2 * TIER
+    pops = [("#1a1a24", "#f0c08a", "#2a3a8a"), ("#f2d04a", "#f2d04a", "#d8a22a"),
+            ("#c8263a", "#c8263a", "#8e1a28"), ("#3a2a22", "#e8b088", "#2b2f3d")]
+    for i, (hair, face, body) in enumerate(pops):
+        sprite(["hhh", "fff", "fff", "bbb", "b.b"], 163 + i * 7, yb3, 4, {"h": rgb(hair), "f": rgb(face), "b": rgb(body)})
 
 
 def chair(cv):
@@ -351,7 +371,7 @@ def build_desk():
     # luz da tela no tampo (entre o monitor e o Lucas)
     for y in range(90, 120):
         for x in range(100, 170):
-            d = math.hypot((x - 116) / 34, (y - 110) / 9)
+            d = math.hypot((x - 116) / 30, (y - 111) / 8)
             if d < 1 and (x + y) % 2 == 0:
                 cv.tint(x, y, C["blue_l"], 0.10 * (1 - d))
 
@@ -367,7 +387,7 @@ def build_monitors():
 
 
 def keyboard(cv):
-    nl, length, depth = (104, 115), 26, 4
+    nl, length, depth = (100, 114), 26, 4
     pts = [nl, (nl[0] + length, ly(*nl, nl[0] + length)), (nl[0] + length - depth, ly(*nl, nl[0] + length) - depth), (nl[0] - depth, nl[1] - depth)]
     cv.poly([(p[0], p[1] + 1) for p in pts], rgb("#121830"))
     cv.poly(pts, rgb("#3b4468"))

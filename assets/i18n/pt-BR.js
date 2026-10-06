@@ -109,7 +109,7 @@
   "home.contato.h21": "Quer conversar sobre um projeto ou oportunidade?",
   "home.hero.scene_alt": "Ilustração em pixel art de Lucas chegando ao escritório, programando na mesa e tomando um café",
   "home.hero.hello_1": "Olá, eu sou Lucas Diogo França.",
-  "home.hero.hello_2": "Desenvolvedor mobile especializado em Flutter.",
+  "home.hero.hello_2": "Crio apps em Flutter, do protótipo à loja.",
   "home.hero.hello_3": "Explore meus projetos à vontade — enquanto isso, eu volto a programar.",
   "home.tecnologias.kicker": "Engenharia",
   "home.experiencia.kicker": "Carreira",

@@ -12,6 +12,7 @@ Vistas:
 """
 import math
 import hero_char as hc
+import hero_ref
 from hero_char import Cell, shoe, hand
 
 hc.THIGH, hc.SHIN = 11.5, 11.5      # 23 px: perna quase reta com o quadril a 22 px do tornozelo (antes 24 = sempre dobrada)
@@ -285,8 +286,8 @@ def add(name, frames):
 
 
 add("front_idle", [front(), front(bob=1), front(blink=True)])
-add("stand_r", [stand_profile(), stand_profile(blink=True)])
-add("walk_r", [walk(i) for i in range(8)])
+add("stand_r", [hero_ref.stand_frame(), hero_ref.stand_frame()])      # arte de referência (perfil)
+add("walk_r", hero_ref.walk_frames())                                  # arte de referência: 8 quadros
 add("turn_r", [sit_frame((32, 44), SIDES, head="34")])
 add("sit_down", path_frames(SIT_PATH))
 add("seated_idle", [seated(rest_pose(), head="frontd"), seated(rest_pose(), head="frontd", hdy=1), seated(rest_pose(), head="frontd", blink=True)])
@@ -301,10 +302,18 @@ add("scratch_neck", [seated(with_left((18, 36), (25, 28), "open")),
 add("celebrate", [seated(with_left((20, 41), (21, 33), "fist")),
                   seated(with_left((19, 37), (21, 27), "fist"), hdy=-1),
                   seated(with_left((20, 41), (21, 34), "fist"))])
-add("coffee_reach", [seated(with_right((47, 46), (49, 51), "open")),
-                     seated(with_right((48, 47), (53, 53), "grip"))])          # mão na caneca da mesa (MUG)
-add("coffee_hold", [seated(with_right((48, 45), (52, 49), "grip", (52, 47, 0)))])   # levantou 4 px, mesma posição
-add("coffee_drink", [seated(with_right((49, 35), (44, 28), "grip", (42, 23, 0)), hdx=1),
-                     seated(with_right((49, 34), (44, 27), "grip", (42, 22, 1)), head="34u", hdx=1, hdy=-1)])
-add("coffee_return", [seated(with_right((49, 41), (44, 38), "grip", (44, 36, 0)))])
+def with_left_mug(el, hd, kind="grip", mugpos=None):
+    p = with_left(el, hd, kind)
+    if mugpos:
+        p["mug"] = mugpos
+    return p
+
+
+# caneca da mesa em MUG = célula (15, 54): a mão a pega por cima, levanta 4 px, leva à boca e devolve no mesmo lugar
+add("coffee_reach", [seated(with_left((21, 47), (19, 53), "open")),
+                     seated(with_left((20, 48), (15, 56), "grip"))])
+add("coffee_hold", [seated(with_left_mug((20, 46), (15, 52), "grip", (15, 50, 0)))])
+add("coffee_drink", [seated(with_left_mug((19, 37), (26, 30), "grip", (26, 26, 0))),
+                     seated(with_left_mug((19, 36), (27, 29), "grip", (27, 25, 1)), hdy=-1)])
+add("coffee_return", [seated(with_left_mug((19, 42), (22, 38), "grip", (22, 36, 0)))])
 add("stand_up", path_frames(STAND_PATH))

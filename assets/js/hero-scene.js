@@ -21,7 +21,7 @@
   var mql = window.matchMedia("(prefers-reduced-motion: reduce)");
   if (mql.matches) { if (poster && poster.getAttribute("data-final")) poster.src = poster.getAttribute("data-final"); return; }
 
-  var DATA = /*FRAMES*/ {"cell":[72,72],"anchor":[32,68],"cols":10,"rows":7,"frames":{"front_idle":[0,3],"stand_r":[3,2],"stand_l":[5,2],"walk_r":[7,8],"walk_l":[15,8],"turn_r":[23,1],"turn_l":[24,1],"sit_down":[25,8],"seated_idle":[33,3],"typing":[36,4],"typing_down":[40,2],"scratch_head":[42,3],"scratch_neck":[45,3],"celebrate":[48,3],"coffee_reach":[51,2],"coffee_hold":[53,1],"coffee_drink":[54,2],"coffee_return":[56,1],"stand_up":[57,7]},"step":3,"entry":[-14,140],"present":[66,140],"waypoint":[84,128],"slot":[112,125],"seat":[114,109],"mug":[133,108],"monitors":[[96,98,11],[130,97,11]],"crop":{"x":40,"y":14,"w":160,"h":136},"hello":[62,8],"helloCrop":[44,17],"glow":[30,10,24,34]} /*END-FRAMES*/;
+  var DATA = /*FRAMES*/ {"cell":[72,72],"anchor":[32,68],"cols":10,"rows":7,"frames":{"front_idle":[0,3],"stand_r":[3,2],"stand_l":[5,2],"walk_r":[7,8],"walk_l":[15,8],"turn_r":[23,1],"turn_l":[24,1],"sit_down":[25,8],"seated_idle":[33,3],"typing":[36,4],"typing_down":[40,2],"scratch_head":[42,3],"scratch_neck":[45,3],"celebrate":[48,3],"coffee_reach":[51,2],"coffee_hold":[53,1],"coffee_drink":[54,2],"coffee_return":[56,1],"stand_up":[57,7]},"step":3,"entry":[-14,140],"present":[66,140],"waypoint":[84,128],"slot":[112,125],"seat":[114,109],"mug":[95,111],"monitors":[[112,98,13],[152,94,13]],"crop":{"x":40,"y":14,"w":160,"h":136},"hello":[62,8],"helloCrop":[44,17],"glow":[30,10,24,34]} /*END-FRAMES*/;
   var W = 240, H = 150, BASE = root.getAttribute("data-base") || "/assets/img/hero/";
   var CW = DATA.cell[0], CH = DATA.cell[1], AX = DATA.anchor[0], AY = DATA.anchor[1];
   var STEP = DATA.step, SLOT = DATA.slot, MUG = DATA.mug, MONS = DATA.monitors, GLOW = DATA.glow;
@@ -179,16 +179,7 @@
       // sombra no chão (fica escondida pela mesa quando ele está atrás dela)
       ctx.fillStyle = "rgba(0,0,0,0.28)"; ctx.fillRect(actor.x - 8, actor.y, 17, 1);
       ctx.fillStyle = "rgba(0,0,0,0.14)"; ctx.fillRect(actor.x - 11, actor.y + 1, 23, 1);
-      if (seated) {   // luz da tela no rosto e no peito, só nos pixels dele
-        cctx.globalCompositeOperation = "source-over"; cctx.clearRect(0, 0, CW, CH);
-        cctx.drawImage(spr, c[0], c[1], CW, CH, 0, 0, CW, CH);
-        cctx.globalCompositeOperation = "source-atop";
-        cctx.fillStyle = "rgba(110,175,255," + (0.13 + (actor.anim === "typing" ? 0.03 * Math.sin(t * 9) : 0)).toFixed(3) + ")";
-        cctx.fillRect(GLOW[0], GLOW[1], GLOW[2], GLOW[3]);
-        ctx.drawImage(cc, ox, oy);
-      } else {
-        ctx.drawImage(spr, c[0], c[1], CW, CH, ox, oy, CW, CH);
-      }
+      ctx.drawImage(spr, c[0], c[1], CW, CH, ox, oy, CW, CH);   // sem foco de luz no rosto: só a iluminação global da cena
     }
     ctx.drawImage(desk, 0, 0);
     if (!(on && actor.mugInHand)) drawMug(t);                                          // na mão, ela está no sprite

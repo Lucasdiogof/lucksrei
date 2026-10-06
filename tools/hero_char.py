@@ -11,14 +11,14 @@ FX, FY = 32, 68
 
 PAL = {
     "o": (10, 12, 26),       # contorno
-    "h": (92, 60, 38), "H": (128, 88, 56), "j": (66, 42, 28),   # cabelo / luz / sombra
-    "s": (233, 163, 98), "S": (192, 122, 72), "k": (247, 193, 138),   # pele
+    "h": (66, 44, 34), "H": (104, 70, 50), "j": (42, 28, 26),   # cabelo / luz / sombra
+    "s": (232, 171, 126), "S": (205, 140, 96), "k": (244, 192, 150),   # pele
     "g": (14, 16, 28), "G": (74, 84, 120),                         # armação / reflexo da lente
     "w": (246, 242, 234), "e": (38, 24, 18),
-    "b": (78, 52, 35), "B": (52, 35, 25), "m": (178, 86, 68), "t": (255, 252, 246),
-    "T": (31, 43, 94), "D": (20, 29, 70), "L": (50, 68, 148), "R": (62, 126, 255), "c": (132, 138, 164),
-    "P": (45, 50, 70), "Q": (30, 34, 50), "p": (64, 71, 98),
-    "F": (226, 230, 242), "f": (126, 132, 152),
+    "b": (72, 48, 36), "B": (46, 31, 26), "m": (178, 86, 68), "t": (255, 252, 246),
+    "T": (28, 45, 100), "D": (19, 31, 75), "L": (40, 63, 138), "R": (52, 80, 160), "c": (120, 132, 176),
+    "P": (40, 44, 60), "Q": (28, 32, 48), "p": (54, 58, 76),
+    "F": (214, 218, 230), "f": (140, 146, 170),
     "M": (30, 34, 52), "N": (132, 196, 255), "n": (72, 118, 220),
     "C": (240, 236, 226), "y": (47, 143, 106),
 }
@@ -109,6 +109,11 @@ HEAD_34U = _rows([
     "......bbbbbbb...",
 ])
 
+# Cabeça única: quando REF_HEAD está definida (tools/hero_ref.py), ela substitui todas as cabeças desenhadas abaixo,
+# para o rosto ser o MESMO em perfil, frente e sentado. {(dx, dy): (r, g, b)} numa caixa 16x16; REF_HEAD_BLINK = olhos fechados.
+REF_HEAD = None
+REF_HEAD_BLINK = None
+
 HEADS = {"front": HEAD_FRONT, "frontd": HEAD_FRONT, "34": HEAD_34, "34d": HEAD_34D, "34u": HEAD_34U}
 
 
@@ -179,6 +184,10 @@ class Cell:
                     self.put(x, y, k)
 
     def head(self, kind, x, y, blink=False):
+        if REF_HEAD is not None:
+            for (dx, dy), c in (REF_HEAD_BLINK if blink else REF_HEAD).items():
+                self.put(x + dx, y + dy, c)
+            return
         for ry, row in enumerate(HEADS[kind]):
             for rx, ch in enumerate(row):
                 if ch == ".":
@@ -216,7 +225,7 @@ class Cell:
             self.put(x + 4, y + 7, "g"); self.put(x + 3, y + 7, "g")
 
     def finish(self):
-        """Luz azul na borda superior de moletom/cabelo e contorno externo de 1px."""
+        """Realce discreto na borda superior do moletom (luz ambiente, sem foco da tela) e contorno externo de 1px."""
         px = self.px
         for (x, y), k in list(px.items()):
             if k in ("T", "D", "L") and (x, y - 1) not in px:
@@ -234,7 +243,7 @@ class Cell:
         im = Image.new("RGBA", (CW, CH), (0, 0, 0, 0))
         p = im.load()
         for (x, y), k in self.px.items():
-            p[x, y] = PAL[k] + (255,)
+            p[x, y] = (k if isinstance(k, tuple) else PAL[k]) + (255,)
         return im
 
 
