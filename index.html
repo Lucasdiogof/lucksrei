@@ -56,7 +56,7 @@
 <header class="site-header">
   <div class="container">
     <nav class="nav" aria-label="Main" data-i18n-attr="aria-label:nav.aria">
-      <a class="nav-brand" href="/">Lucksrei</a>
+      <a class="nav-brand" href="/"><img src="/assets/img/brand/lucksrei-wordmark-sm.svg" alt="Lucksrei" width="101" height="22"></a>
       <div class="nav-links">
         <a href="#sobre" data-i18n="nav.about">About</a>
         <a href="#experiencia" data-i18n="nav.experience">Experience</a>
@@ -90,7 +90,7 @@
 
 <main id="main">
 
-  <section class="hero">
+  <section class="hero lk-grid">
     <div class="container hero-grid">
       <div class="hero-copy">
         <span class="badge" data-i18n="home.s1.span1"><span class="dot"></span> Portfolio · Senior Mobile Developer</span>
@@ -137,7 +137,7 @@
           <span class="eyebrow" data-i18n="home.sobre.span1">About</span>
           <h2 data-i18n="home.sobre.h2">Mobile developer, focused on Flutter</h2>
           <p data-i18n="home.sobre.p2">I've worked with Flutter since 2019, on Android and iOS apps, using Clean Architecture, tests and BLoC/Cubit. The work doesn't stop at the UI: I also handle backend integration, offline data, flavors, the build pipeline and store releases. I've also been part of migrating native apps to Flutter.</p>
-          <p data-i18n="home.sobre.p3">I've worked in fintech, agritech, government systems and my own products. Before mobile I worked on Java backend and web systems, which helps me think about the app together with the API, the database and the release.</p>
+          <p data-i18n="home.sobre.p3">I've worked in fintech, agrotech, government systems and my own products. Before mobile I worked on Java backend and web systems, which helps me think about the app together with the API, the database and the release.</p>
         </div>
         <div class="fact-card" data-reveal>
           <dl>
@@ -368,7 +368,7 @@
     </div>
   </section>
 
-  <section id="contato" class="cta-section">
+  <section id="contato" class="cta-section lk-grid">
     <div class="container">
       <div class="cta" data-reveal>
         <h2 class="cta-title" data-i18n="home.contato.h21">Want to talk about a project or opportunity?</h2>
@@ -393,7 +393,12 @@
         <div><dt data-i18n="visitors.stat.visits">Visits</dt><dd id="v-total">—</dd></div>
         <div><dt data-i18n="visitors.stat.countries">Countries</dt><dd id="v-countries">—</dd></div>
       </dl>
-      <figure class="visitors-map" id="v-map" data-lazy aria-busy="true">
+      <figure class="visitors-map" id="v-map" data-lazy data-zoom aria-busy="true">
+        <div class="map-ctrl" role="group" aria-label="Zoom" data-i18n-attr="aria-label:visitors.zoom_aria">
+          <button type="button" id="v-zoom-in" aria-label="Zoom in" data-i18n-attr="aria-label:visitors.zoom_in;title:visitors.zoom_in" title="Zoom in">+</button>
+          <button type="button" id="v-zoom-out" aria-label="Zoom out" data-i18n-attr="aria-label:visitors.zoom_out;title:visitors.zoom_out" title="Zoom out" disabled>−</button>
+          <button type="button" id="v-zoom-reset" aria-label="Show the whole map" data-i18n-attr="aria-label:visitors.zoom_reset;title:visitors.zoom_reset" title="Show the whole map" disabled>⤢</button>
+        </div>
         <div class="map-legend" aria-hidden="true">
           <span data-i18n="visitors.legend.low">fewer</span>
           <i class="lv0"></i><i class="lv1"></i><i class="lv2"></i><i class="lv3"></i><i class="lv4"></i><i class="lv5"></i>
@@ -401,6 +406,7 @@
         </div>
         <div class="map-tip" id="v-tip" role="tooltip" hidden></div>
       </figure>
+      <p class="map-hint" id="v-map-hint" data-i18n="visitors.map_hint">Use the buttons, Ctrl + scroll or pinch to zoom. Click a country to zoom in.</p>
       <p class="visitors-status" id="v-status" role="status" aria-live="polite"></p>
     </div>
   </section>
@@ -411,8 +417,7 @@
   <div class="container">
     <div class="footer-top">
       <div class="footer-id">
-        <div class="footer-brand">Lucksrei</div>
-        <p data-i18n="footer.about">Portfolio of Lucas Diogo França, mobile developer. Lucksrei is the brand behind my apps.</p>
+        <div class="footer-brand"><img src="/assets/img/brand/lucksrei-wordmark.svg" alt="Lucksrei" width="184" height="40" loading="lazy" decoding="async"></div>
       </div>
       <a class="footer-up" href="#main"><span aria-hidden="true">↑</span> <span data-i18n="common.voltar_ao_topo">Back to top</span></a>
     </div>

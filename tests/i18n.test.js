@@ -26,7 +26,7 @@ Loc.SUPPORTED.forEach(function (l) {
   check(extra.length === 0, l + " com chaves extras: " + extra.slice(0, 5).join(", "));
 });
 // chaves obrigatórias
-["nav.about", "nav.experience", "nav.projects", "nav.apps", "nav.technologies", "nav.contact", "nav.lang_aria", "footer.about", "footer.privacy",
+["nav.about", "nav.experience", "nav.projects", "nav.apps", "nav.technologies", "nav.contact", "nav.lang_aria", "footer.privacy",
  "apps.filter.all", "apps.filter.own", "apps.filter.professional", "apps.filter.cooper", "apps.private", "apps.own_tag", "apps.ecosystem", "common.present",
  "seo.home.title", "seo.home.description", "seo.apps.title", "seo.contact.title", "seo.fanhub.title", "seo.matchqueue.title", "seo.aprovaura.title", "seo.lapelve.title", "seo.notfound.title"
 ].forEach(function (k) { Loc.SUPPORTED.forEach(function (l) { check(D[l][k], "chave obrigatória ausente em " + l + ": " + k); }); });

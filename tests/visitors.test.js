@@ -287,7 +287,7 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
   check(/"\/assets\/img\/visitors\/admin1\/" \+ cc \+ "\.svg"/.test(vjsz), "divisas carregadas sob demanda por país");
   var vz = read("visitors/index.html");
   check(/id="v-map" data-zoom/.test(vz) && /id="v-zoom-in"/.test(vz) && /id="v-zoom-out"/.test(vz) && /id="v-zoom-reset"/.test(vz) && /id="v-map-hint"/.test(vz), "/visitors/: mapa interativo com botões e dica");
-  check(!/data-zoom/.test(read("index.html")) && read("index.html").indexOf("map-ctrl") < 0, "home sem zoom nem divisas (peso igual)");
+  check(/id="v-map" data-lazy data-zoom/.test(read("index.html")) && /id="v-zoom-in"/.test(read("index.html")) && /id="v-map-hint"/.test(read("index.html")), "home: mesmo mapa interativo de /visitors/ (zoom + divisas), carregado perto do viewport");
   check(read(".assetsignore").split(/\r?\n/).indexOf("tools") >= 0 && fs.existsSync(path.join(root, "tools/build-admin1-svg.py")), "gerador das divisas em tools/ (não publicado)");
 
   var vpage = read("visitors/index.html");

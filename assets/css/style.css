@@ -25,6 +25,11 @@
   --glow: rgba(110,168,254,.16);
   --glow-soft: rgba(110,168,254,.08);
 
+  /* fundo: malha técnica + halo discreto (ver DESIGN.md, "Fundo") */
+  --grid-line: rgba(150,172,212,.05);
+  --grid-size: 64px;
+  --halo: rgba(110,168,254,.09);
+
   --radius-sm: 10px;
   --radius: 16px;
   --radius-lg: 22px;
@@ -69,6 +74,39 @@ button{ font: inherit; color: inherit; }
 
 ::selection{ background: var(--glow); color: var(--text); }
 
+/* ---------- fundo: grão quase invisível em toda a página (tira o "preto chapado" sem pesar) ---------- */
+body::before{
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .045;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* malha técnica: linhas de 1px que somem para as bordas (mask), só onde há hierarquia: hero, topo dos cases, CTA */
+.lk-grid{ position: relative; overflow: clip; isolation: isolate; }
+.lk-grid::before{
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size); background-position: calc(50% + 12px) -1px;
+  -webkit-mask-image: radial-gradient(ellipse 60% 85% at var(--gx, 78%) var(--gy, 0%), #000 0%, transparent 72%);
+          mask-image: radial-gradient(ellipse 60% 85% at var(--gx, 78%) var(--gy, 0%), #000 0%, transparent 72%);
+}
+/* halo: um só por bloco, azul do acento a 9%, deriva lenta (transform) e para com reduced motion */
+.lk-grid::after{
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  width: min(760px, 120vw); aspect-ratio: 1; left: var(--hx, 62%); top: var(--hy, -42%);
+  background: radial-gradient(closest-side, var(--halo), transparent);
+  animation: lk-drift 26s var(--ease) infinite alternate;
+}
+@keyframes lk-drift{ to{ transform: translate3d(-48px, 36px, 0) scale(1.06); } }
+.page-hero.lk-grid{ --gx: 85%; --hx: 70%; --hy: -70%; }
+.cta-section.lk-grid{ --gx: 18%; --gy: 100%; --hx: -18%; --hy: 10%; }
+@media (max-width: 700px){
+  :root{ --grid-size: 48px; }
+  .lk-grid::before{ -webkit-mask-image: radial-gradient(ellipse 90% 70% at 80% 0%, #000, transparent 75%); mask-image: radial-gradient(ellipse 90% 70% at 80% 0%, #000, transparent 75%); }
+  .lk-grid::after{ left: 30%; top: -30%; }
+}
+@media (prefers-reduced-motion: reduce){ .lk-grid::after{ animation: none; } }
+
 a:focus-visible, button:focus-visible{
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -102,10 +140,13 @@ a:focus-visible, button:focus-visible{
   gap: 20px; padding: 18px 0;
 }
 .nav-brand{
-  display: flex; align-items: baseline; gap: 8px;
+  display: flex; align-items: center; gap: 8px;
   font-weight: 700; font-size: 18px; letter-spacing: -.01em;
-  text-decoration: none;
+  text-decoration: none; transition: opacity .2s var(--ease);
 }
+.nav-brand img{ display: block; height: 22px; width: auto; }
+.nav-brand:hover{ opacity: .82; }
+.nav-brand:focus-visible{ outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
 .nav-links{
   position: relative; display: flex; align-items: center; gap: 28px;
 }
@@ -453,6 +494,7 @@ section{ padding: 88px 0; }
 .site-footer{ border-top: 1px solid var(--border); padding: 56px 0 32px; }
 .footer-top{ display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 44px; }
 .footer-brand{ font-weight: 700; font-size: clamp(28px, 4vw, 40px); letter-spacing: -.03em; line-height: 1; margin-bottom: 14px; }
+.footer-brand img{ display: block; height: clamp(28px, 4vw, 40px); width: auto; }
 .footer-id p{ color: var(--text-faint); font-size: 14px; line-height: 1.6; max-width: 360px; }
 .footer-up{ font-family: var(--font-mono); font-size: 12.5px; color: var(--text-faint); text-decoration: none; border-bottom: 1px solid transparent; }
 .footer-up:hover{ color: var(--text); border-color: var(--border-strong); }
@@ -910,7 +952,7 @@ html:not([lang="pt-BR"]) .pt-only-notice{ display: block; }
 .hv-link:focus-visible{ outline: 2px solid var(--accent); outline-offset: 4px; }
 .hv-stats{ grid-template-columns: repeat(2, 1fr); margin-bottom: 24px; }
 .hv-stats > div{ padding-top: 16px; padding-bottom: 16px; }
-.home-visitors .visitors-map .world{ max-height: 360px; margin: 0 auto; }
+/* o mapa da home é o mesmo de /visitors/ (tamanho, zoom e divisas) */
 @media (max-width: 700px){
   .home-visitors{ padding: 56px 0 64px; }
   .hv-head{ flex-direction: column; align-items: flex-start; margin-bottom: 20px; }
