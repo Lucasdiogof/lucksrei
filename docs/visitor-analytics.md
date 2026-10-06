@@ -1,14 +1,15 @@
-# Visitantes — estatísticas agregadas por país
+# Visitantes — estatísticas agregadas por país e por estado/região
 
 Nota de manutenção da feature de visitantes (mapa na home e em `/visitors/`). Documento interno: `docs/` está no `.assetsignore` e não é servido pelo site.
 
 ## 1. Arquitetura
 
 - O Worker `lucksrei-site` (`worker/index.mjs`) só roda em `/api/*` (`run_worker_first` em `wrangler.jsonc`); o resto é servido direto pelos assets.
-- `POST /api/visit` — conta uma visita no mês UTC e país atuais. Responde sempre `204`; falha de banco nunca afeta a página. Só conta chamada com `Origin` do próprio site e user-agent que não pareça robô (filtro de ruído, não segurança).
-- `GET /api/visitors` — agregados dos últimos 12 meses: `total_visits`, `countries_count`, `updated_at`, `since`, `window_months`, `countries[{code, visits}]`.
-- `GET /api/whoami` — `{ country }` do próprio visitante (ou `null`).
+- `POST /api/visit` — conta uma visita no mês UTC e país atuais e, em separado, no mês/país/estado. Responde sempre `204`; falha de banco nunca afeta a página. Só conta chamada com `Origin` do próprio site e user-agent que não pareça robô (filtro de ruído, não segurança).
+- `GET /api/visitors` — agregados dos últimos 12 meses: `total_visits`, `countries_count`, `updated_at`, `since`, `window_months`, `countries[{code, visits}]`, `regions_since` e `regions[{country, visits, unknown, items[{code, name, visits}]}]`.
+- `GET /api/whoami` — `{ country, region, region_name }` do próprio visitante (cada um pode ser `null`).
 - Banco: D1 `lucksrei-visits` (binding `DB`), tabela `visits_monthly` (`ym`, `country`, `n`, `updated_at`), chave `(ym, country)`. Upsert incrementa o contador; meses com mais de 13 meses são apagados ocasionalmente.
+- Tabela `visits_region_monthly` (`ym`, `country`, `region`, `name`, `n`, `updated_at`), chave `(ym, country, region)` — migration `0002`. Começou vazia no deploy da feature (sem histórico retroativo). A gravação é independente da de país: se a tabela faltar ou a escrita falhar, a contagem por país segue e `/api/visitors` devolve `regions: []`.
 
 ## 2. Contagem
 
@@ -22,10 +23,13 @@ Nota de manutenção da feature de visitantes (mapa na home e em `/visitors/`). 
 - Normalização para ISO 3166-1 alfa-2 maiúsculo (`normalizeCountry`).
 - Ausente, inválido, Tor (`T1`), `XX` ou `ZZ` → `XX`.
 - `XX` entra em `total_visits`, mas fica fora do mapa, do ranking e de `countries_count`.
+- Estado/região vem **apenas** de `request.cf.regionCode` (parte da subdivisão ISO 3166-2, 1–3 letras/dígitos, ex.: `GO`, `CA`, `ENG`) — `normalizeRegion`. Ausente ou inválido → `XX` ("sem estado identificado", fora do ranking de estados). Sem país, não se grava região.
+- O nome (`request.cf.region`) é guardado só para exibição, saneado (`cleanRegionName`, até 80 caracteres). No site, estados do Brasil usam a tabela `BR_STATES` de `visitors.js` (grafia oficial; DF traduzido); outros países usam o nome da Cloudflare ou `PAÍS-CÓDIGO`.
+- O estado é deduzido do IP pela Cloudflare: pode errar com VPN e algumas operadoras móveis.
 
 ## 4. Privacidade
 
-Nunca armazenar: IP, user-agent, headers, cidade, região, latitude, longitude ou qualquer identificador pessoal. Só se grava `(mês, país, contador, timestamp)`.
+Nunca armazenar: IP, user-agent, headers, cidade, CEP, latitude, longitude ou qualquer identificador pessoal. Só se grava `(mês, país, contador, timestamp)` e `(mês, país, estado/região, nome do estado, contador, timestamp)`. Estado/região é o nível mais fino permitido; cidade nunca.
 
 O user-agent pode ser lido **só em memória**, para filtrar robôs, e é descartado. A política em `/privacy/` (seção 3) descreve isso; se a coleta mudar, a política muda junto.
 
@@ -46,7 +50,8 @@ Rate limiting pode ser adicionado futuramente se houver abuso real.
 
 - `assets/js/visitors.js` atende as duas páginas:
   - **home**: versão resumida (visitas, países, mapa com o país atual destacado, link "Ver mapa completo"), sem ranking; `#v-map[data-lazy]` só busca SVG e API quando a seção chega perto do viewport.
-  - **`/visitors/`**: mapa completo, indicadores (incl. "Você está em"), top 10, "Dados desde…", notas sobre a métrica.
+  - **`/visitors/`**: mapa completo, indicadores (incl. "Você está em" com estado e país), top 10 de países, "Dados desde…", seção "Por estado ou região" (botões com até 8 países, top 10 estados do país escolhido, nota com "dados por estado desde…" e visitas sem estado), notas sobre a métrica.
+  - A home **não** mostra estados.
 - Mapa: `assets/img/visitors/world.svg` local (Natural Earth, gerado por `tools/build-world-svg.py`), sem cor fixa; cores vêm de `--map-0…--map-5`, escala logarítmica.
 - Países sem forma no SVG (microestados como SG, MT, MC) entram nos totais e no ranking; o mapa simplesmente não os pinta.
 - Nomes de país via `Intl.DisplayNames` no idioma atual (`makeCountryNamer`). Sem a API, com erro ou com código desconhecido: nome em inglês do SVG (quando há) e por último o código ISO.
@@ -60,6 +65,7 @@ Rate limiting pode ser adicionado futuramente se houver abuso real.
 
 - Países com visitas são focáveis (`tabindex="0"`, `role="img"`, `aria-label` com nome e visitas); ordem de Tab = ordem do ranking. O `<svg>` raiz não é parada de Tab.
 - Tab / Shift+Tab sem focus trap; Esc fecha o tooltip mantendo o foco.
+- Botões de país dos estados: `<button aria-pressed>` num grupo com `aria-label`; ao trocar, o foco volta para o botão escolhido; a nota usa `role="status"`.
 - `:focus-visible` com contorno de 3px; o país do visitante (`.is-you`) focado fica tracejado para se diferenciar do contorno contínuo.
 - Foco/hover no ranking destaca o país no mapa e mostra o tooltip.
 - `prefers-reduced-motion`: a regra global zera transições; o mapa não depende de animação.
@@ -71,7 +77,7 @@ Rate limiting pode ser adicionado futuramente se houver abuso real.
 - `assets/js/main.js` — beacon de visita (uma por sessão de aba).
 - `visitors/index.html` e a seção `.home-visitors` de `index.html`.
 - `assets/img/visitors/world.svg` (+ `tools/build-world-svg.py`).
-- `migrations/0001_visits.sql` — schema do D1.
+- `migrations/0001_visits.sql` e `migrations/0002_visits_region.sql` — schema do D1 (aplicar com `wrangler d1 migrations apply lucksrei-visits --remote`; 0002 só cria a tabela nova).
 - `tools/visitor-report.mjs` — relatório manual somente leitura (ver "Relatório manual").
 - `tests/visitors.test.js` — Worker, privacidade, microestados, fallback de nomes, privacy i18n. Rodar com `node tests/visitors.test.js` (junto com `tests/i18n.test.js` e `tests/apps-data.test.js`).
 - `privacy/index.html` — política do site.
@@ -87,10 +93,11 @@ node tools/visitor-report.mjs
 Rodar na raiz do repo, com o Wrangler já logado. Mostra:
 - total de visitas e mês atual;
 - países e "Desconhecido/Tor" à parte;
+- por estado/região: top 5 países, top 10 estados de cada um, % dentro do país e "sem estado identificado";
 - top 10 e % por país;
 - evolução mês a mês, comparação com o mês anterior (só quando há dados dos dois meses), primeiro mês e último update.
 
-- **Somente leitura:** consulta o D1 **remoto** `lucksrei-visits` com um único `SELECT ym, country, n, updated_at FROM visits_monthly` (o script recusa qualquer outra instrução). Não altera produção, não cria arquivos e não publica nada (`tools/` não é servido).
+- **Somente leitura:** consulta o D1 **remoto** `lucksrei-visits` com dois SELECTs simples — `SELECT ym, country, n, updated_at FROM visits_monthly` e `SELECT ym, country, region, name, n, updated_at FROM visits_region_monthly` (o script recusa qualquer outra instrução). Se a tabela de regiões não existir, a seção avisa e o resto do relatório sai normal. Não altera produção, não cria arquivos e não publica nada (`tools/` não é servido).
 - Só existem agregados; erros do Wrangler são mostrados com ids/tokens mascarados.
 - Cálculo e formatação têm testes com dados fictícios: `node tests/visitor-report.test.js`.
 
@@ -100,6 +107,7 @@ Rodar na raiz do repo, com o Wrangler já logado. Mostra:
 - Não chamar visitas de "visitantes únicos".
 - Não adicionar fingerprint, cookie ou identificador.
 - Não armazenar IP (nem user-agent, headers ou localização precisa).
-- Não aceitar país enviado pelo cliente.
+- Não aceitar país nem estado enviado pelo cliente.
+- Não descer abaixo de estado/região (nada de cidade, CEP ou coordenadas).
 - Não criar rate limiting agressivo sem observar tráfego real.
 - Não expor `worker/`, `migrations/`, `tests/`, `tools/`, `docs/` nem `DESIGN.md` no site (`.assetsignore`).

@@ -1,6 +1,6 @@
 /* Relatório manual de visitas (somente leitura). Rode na raiz do repo: node tools/visitor-report.mjs
  *
- * Consulta o D1 remoto lucksrei-visits com UM SELECT via Wrangler (login OAuth já existente) e
+ * Consulta o D1 remoto lucksrei-visits com dois SELECTs simples via Wrangler (login OAuth já existente) e
  * calcula tudo localmente. Nunca escreve no banco, não cria arquivos e não imprime configuração.
  * Só existem agregados (mês × país × contador): não há dado pessoal para expor.
  * Documentação: docs/visitor-analytics.md ("Relatório manual").
@@ -11,12 +11,13 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 const require = createRequire(import.meta.url);
-const { makeCountryNamer } = require("../assets/js/visitors.js");
+const { makeCountryNamer, regionLabel } = require("../assets/js/visitors.js");
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DATABASE = "lucksrei-visits";
 // Sem parênteses de propósito: o npx.cmd do Windows quebra com eles na linha de comando.
 export const QUERY = "SELECT ym, country, n, updated_at FROM visits_monthly";
+export const REGION_QUERY = "SELECT ym, country, region, name, n, updated_at FROM visits_region_monthly";
 const UNKNOWN = "XX";
 const WINDOW_MONTHS = 12; // o mesmo do site (/api/visitors)
 const LOCALE = "pt-BR";
@@ -164,6 +165,55 @@ export function formatReport(rep, namer = makeCountryNamer(typeof Intl !== "unde
   return out.join("\n");
 }
 
+// Estados/regiões: rows de visits_region_monthly → países (por visitas) com suas regiões; "XX" vira "desconhecido".
+// rows === null significa tabela indisponível (migration ainda não aplicada).
+export function buildRegions(rows) {
+  if (rows === null) return null;
+  const by = new Map();
+  let since = null;
+  for (const r of rows || []) {
+    const n = Number(r.n) || 0;
+    if (n <= 0 || r.country === UNKNOWN) continue;
+    if (since === null || r.ym < since) since = r.ym;
+    let c = by.get(r.country);
+    if (!c) by.set(r.country, (c = { country: r.country, visits: 0, unknown: 0, items: new Map() }));
+    c.visits += n;
+    if (r.region === UNKNOWN) { c.unknown += n; continue; }
+    const it = c.items.get(r.region) || { code: r.region, name: "", visits: 0, u: -1 };
+    it.visits += n;
+    if (r.name && Number(r.updated_at) > it.u) { it.name = r.name; it.u = Number(r.updated_at); }
+    c.items.set(r.region, it);
+  }
+  const countries = [...by.values()]
+    .map((c) => ({
+      country: c.country, visits: c.visits, unknown: c.unknown,
+      items: [...c.items.values()].map(({ code, name, visits }) => ({ code, name, visits, share: ratio(visits, c.visits) }))
+        .sort((a, b) => b.visits - a.visits || (a.code < b.code ? -1 : 1)),
+    }))
+    .sort((a, b) => b.visits - a.visits || (a.country < b.country ? -1 : 1));
+  return { since, countries };
+}
+
+export function formatRegions(reg, namer = makeCountryNamer(typeof Intl !== "undefined" ? Intl.DisplayNames : null)) {
+  const out = ["Por estado/região:"];
+  if (reg === null) { out.push("  indisponível (tabela visits_region_monthly ainda não existe no D1)."); return out.join("\n"); }
+  if (!reg.countries.length) { out.push("  ainda sem visitas com estado registrado."); return out.join("\n"); }
+  out[0] = "Por estado/região (desde " + monthLabel(reg.since) + "; % dentro do país):";
+  reg.countries.slice(0, 5).forEach((c) => {
+    out.push("  " + namer(c.country, LOCALE) + " (" + c.country + ") — " + visits(c.visits));
+    const rows = c.items.slice(0, 10).map((it, i) => ["    " + (i + 1) + ". " + regionLabel(c.country, it.code, it.name, "Distrito Federal") + " (" + it.code + ")", nf.format(it.visits), pct(it.share)]);
+    if (rows.length) {
+      const w = Math.max(...rows.map((r) => r[0].length)) + 3;
+      const wn = Math.max(...rows.map((r) => r[1].length));
+      rows.forEach((r) => out.push((r[0] + " ").padEnd(w, ".") + " " + r[1].padStart(wn) + "  " + r[2]));
+    }
+    if (c.items.length > rows.length) out.push("    … mais " + (c.items.length - rows.length) + " região(ões)");
+    if (c.unknown) out.push("    Sem estado identificado: " + nf.format(c.unknown) + " (" + pct(ratio(c.unknown, c.visits)) + ")");
+  });
+  if (reg.countries.length > 5) out.push("  … mais " + (reg.countries.length - 5) + " país(es) com dados por estado");
+  return out.join("\n");
+}
+
 // Mascara qualquer coisa que pareça id/token antes de mostrar um erro do Wrangler.
 export function sanitize(text) {
   return String(text || "")
@@ -171,8 +221,8 @@ export function sanitize(text) {
     .replace(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/gi, "[oculto]");
 }
 
-function fetchRows() {
-  const sql = assertReadOnly(QUERY);
+function fetchRows(query = QUERY) {
+  const sql = assertReadOnly(query);
   const npx = process.platform === "win32" ? "npx.cmd" : "npx";
   const cmd = `${npx} wrangler d1 execute ${DATABASE} --remote --json --command "${sql}"`;
   const run = () => spawnSync(cmd, { cwd: ROOT, shell: true, encoding: "utf8", maxBuffer: 16 * 1024 * 1024 });
@@ -192,7 +242,10 @@ function fetchRows() {
 const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
 if (isMain) {
   try {
-    console.log(formatReport(buildReport(fetchRows(), new Date())));
+    const report = formatReport(buildReport(fetchRows(), new Date()));
+    let regionRows = null;
+    try { regionRows = fetchRows(REGION_QUERY); } catch (e) { /* tabela ausente: a seção avisa */ }
+    console.log(report + "\n\n" + formatRegions(buildRegions(regionRows)));
   } catch (e) {
     console.error("Erro: " + sanitize(e.message));
     process.exit(1);

@@ -90,6 +90,26 @@ function check(ok, msg) { if (!ok) failures.push(msg); }
   var real = R.formatReport(R.buildReport([row("2026-10", "SG", 2), row("2026-10", "QQ", 1)], NOW));
   check(/Singapura \(SG\)/.test(real) && /QQ \(QQ\)/.test(real), "nomes em pt-BR e fallback ISO");
 
+  // --- estados/regiões
+  check(R.assertReadOnly(R.REGION_QUERY) === R.REGION_QUERY && /^SELECT ym, country, region, name, n, updated_at FROM visits_region_monthly$/.test(R.REGION_QUERY), "consulta de regiões é um SELECT simples");
+  check(R.buildRegions(null) === null && /indisponível/.test(R.formatRegions(null, namer)), "tabela ausente: aviso, sem erro");
+  var noReg = R.buildRegions([]);
+  check(noReg.countries.length === 0 && /ainda sem visitas com estado/.test(R.formatRegions(noReg, namer)), "sem dados por estado: aviso");
+  function rr(ym, c, r, name, n, u) { return { ym: ym, country: c, region: r, name: name, n: n, updated_at: u || 1791000000 }; }
+  var reg = R.buildRegions([rr("2026-10", "BR", "GO", "Goias", 3), rr("2026-10", "BR", "SP", "", 2), rr("2026-10", "BR", "XX", "", 1), rr("2026-10", "BR", "DF", "Federal District", 1),
+    rr("2026-10", "US", "CA", "California", 2), rr("2026-10", "XX", "XX", "", 4), rr("2026-10", "PT", "11", "Lisbon", 0)]);
+  check(reg.countries.map(function (c) { return c.country + c.visits; }).join() === "BR7,US2", "países com região, sem XX e sem n=0: " + JSON.stringify(reg.countries.map(function (c) { return c.country; })));
+  check(reg.countries[0].unknown === 1 && reg.countries[0].items.map(function (i) { return i.code; }).join() === "GO,SP,DF", "BR: ranking sem XX, desconhecido à parte");
+  check(Math.abs(reg.countries[0].items[0].share - 3 / 7) < 1e-12, "% dentro do país");
+  var tr = R.formatRegions(reg, namer);
+  check(/Goiás \(GO\)/.test(tr) && /São Paulo \(SP\)/.test(tr) && /Distrito Federal \(DF\)/.test(tr), "nomes oficiais dos estados do Brasil");
+  check(/California \(CA\)/.test(tr) && /Sem estado identificado: 1 \(14,3%\)/.test(tr) && /42,9%/.test(tr), "outros países pelo nome da Cloudflare; desconhecido com %");
+  check(!/XX/.test(tr), "XX nunca aparece como estado");
+  var manyR = []; for (var q = 0; q < 12; q++) manyR.push(rr("2026-10", "BR", "R" + String.fromCharCode(65 + q), "", 20 - q));
+  check(/mais 2 região/.test(R.formatRegions(R.buildRegions(manyR), namer)), "top 10 regiões + resto contado");
+  var manyC = ["AR", "BR", "CL", "DE", "ES", "FR", "GB"].map(function (c, i) { return rr("2026-10", c, "A", "", 10 - i); });
+  check(/mais 2 país/.test(R.formatRegions(R.buildRegions(manyC), namer)), "top 5 países + resto contado");
+
   if (failures.length) { console.error("FALHOU:\n - " + failures.join("\n - ")); process.exit(1); }
   console.log("ok — relatório: somente SELECT, vazio, 1/vários países, XX à parte, 1/vários meses, comparação, divisão por zero, janela de 12 meses");
 })().catch(function (e) { console.error(e); process.exit(1); });

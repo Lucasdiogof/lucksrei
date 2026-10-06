@@ -9,12 +9,15 @@ function check(ok, msg) { if (!ok) failures.push(msg); }
 function read(p) { return fs.readFileSync(path.join(root, p), "utf8"); }
 
 // D1 falso: reproduz só as 3 instruções do Worker (upsert, agregação, purge) em memória
-function fakeDb() {
+function fakeDb(opts) {
+  opts = opts || {};
   var rows = {}; // "ym|country" -> {ym,country,n,u}
+  var regions = {}; // "ym|country|region" -> {ym,country,region,name,n,updated_at}
   var log = [];
   return {
-    rows: rows, log: log,
+    rows: rows, regions: regions, log: log,
     prepare: function (sql) {
+      if (opts.noRegionTable && /visits_region_monthly/.test(sql)) throw new Error("no such table: visits_region_monthly");
       return {
         bind: function () {
           var a = Array.prototype.slice.call(arguments);
@@ -24,12 +27,22 @@ function fakeDb() {
               if (/^INSERT INTO visits_monthly/.test(sql)) {
                 var k = a[0] + "|" + a[1];
                 if (rows[k]) { rows[k].n += 1; rows[k].u = a[2]; } else rows[k] = { ym: a[0], country: a[1], n: 1, u: a[2] };
+              } else if (/^INSERT INTO visits_region_monthly/.test(sql)) {
+                var rk = a[0] + "|" + a[1] + "|" + a[2];
+                var cur = regions[rk];
+                if (cur) { cur.n += 1; cur.updated_at = a[4]; if (a[3]) cur.name = a[3]; }
+                else regions[rk] = { ym: a[0], country: a[1], region: a[2], name: a[3], n: 1, updated_at: a[4] };
               } else if (/^DELETE FROM visits_monthly/.test(sql)) {
                 Object.keys(rows).forEach(function (k) { if (rows[k].ym < a[0]) delete rows[k]; });
+              } else if (/^DELETE FROM visits_region_monthly/.test(sql)) {
+                Object.keys(regions).forEach(function (k) { if (regions[k].ym < a[0]) delete regions[k]; });
               }
               return Promise.resolve({ success: true });
             },
             all: function () {
+              if (/FROM visits_region_monthly/.test(sql)) {
+                return Promise.resolve({ results: Object.keys(regions).map(function (k) { return regions[k]; }).filter(function (r) { return r.ym >= a[0]; }) });
+              }
               var by = {};
               Object.keys(rows).forEach(function (k) {
                 var r = rows[k];
@@ -91,7 +104,7 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
   await W.fetch(forged, env, ctx);
   check(Object.keys(env.DB.rows).some(function (k) { return /\|DE$/.test(k); }) && !Object.keys(env.DB.rows).some(function (k) { return /\|JP$/.test(k); }), "país vem só de request.cf.country");
   // o que é gravado: só (ym, country, 1, ts)
-  env.DB.log.filter(function (l) { return /^INSERT/.test(l.sql); }).forEach(function (l) {
+  env.DB.log.filter(function (l) { return /^INSERT INTO visits_monthly/.test(l.sql); }).forEach(function (l) {
     check(l.args.length === 3 && /^\d{4}-\d{2}$/.test(l.args[0]) && /^[A-Z]{2}$/.test(l.args[1]) && typeof l.args[2] === "number", "insert só com mês, país e timestamp");
   });
 
@@ -103,14 +116,16 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
   check(vj.countries_count === 3, "XX não conta como país: " + vj.countries_count);
   check(vj.countries.every(function (c) { return c.code !== "XX"; }), "XX fora do ranking/mapa");
   check(vj.countries[0].visits >= vj.countries[1].visits, "ordenado por visitas");
-  check(Object.keys(vj).sort().join() === "countries,countries_count,since,total_visits,updated_at,window_months", "campos do endpoint: " + Object.keys(vj).join());
+  check(Object.keys(vj).sort().join() === "countries,countries_count,regions,regions_since,since,total_visits,updated_at,window_months", "campos do endpoint: " + Object.keys(vj).join());
   var flat = JSON.stringify(vj);
-  ["ip", "user-agent", "mozilla", "city", "region", "lat", "lon", "header"].forEach(function (w) { check(flat.toLowerCase().indexOf(w) < 0, "resposta sem '" + w + "'"); });
+  ["ip", "user-agent", "mozilla", "city", "lat", "lon", "header", "postal"].forEach(function (w) { check(flat.toLowerCase().indexOf(w) < 0, "resposta sem '" + w + "'"); });
 
   // --- /api/whoami
-  var wr = await W.fetch(req("GET", "/api/whoami", UA, { country: "pt", city: "Lisbon", latitude: "38.7", asn: 1 }), env, ctx);
+  var wr = await W.fetch(req("GET", "/api/whoami", UA, { country: "pt", regionCode: "11", region: "Lisbon", city: "Lisbon", postalCode: "1000", latitude: "38.7", asn: 1 }), env, ctx);
   var wj = await wr.json();
-  check(JSON.stringify(wj) === '{"country":"PT"}' && wr.headers.get("cache-control") === "no-store", "whoami devolve só o país, sem cache");
+  check(JSON.stringify(wj) === '{"country":"PT","region":"11","region_name":"Lisbon"}' && wr.headers.get("cache-control") === "no-store", "whoami devolve só país e região, sem cache: " + JSON.stringify(wj));
+  var wnr = await (await W.fetch(req("GET", "/api/whoami", UA, { country: "BR", regionCode: "??" }), env, ctx)).json();
+  check(wnr.country === "BR" && wnr.region === null && wnr.region_name === null, "whoami com região inválida → null");
   var wu = await (await W.fetch(req("GET", "/api/whoami", UA, {}), env, ctx)).json();
   check(wu.country === null, "whoami sem país → null");
 
@@ -169,6 +184,66 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
   });
   check(V.level(0, 10) === 0 && V.level(10, 10) === 5 && V.level(1, 1) === 5 && V.level(1, 1000) >= 1, "escala do mapa 0–5");
 
+  // --- estados/regiões
+  check(mod.normalizeRegion(" go ") === "GO" && mod.normalizeRegion("ENG") === "ENG" && mod.normalizeRegion("13") === "13", "região normalizada (ISO 3166-2, 1–3)");
+  ["", "SP-1", "ABCD", "g o", undefined, null, 7].forEach(function (v) { check(mod.normalizeRegion(v) === "XX", "região inválida vira XX: " + String(v)); });
+  check(mod.cleanRegionName("  São\u0007  Paulo <b> ") === "São Paulo b" && mod.cleanRegionName(5) === "" && mod.cleanRegionName("x".repeat(200)).length === 80, "nome da região saneado");
+  var envR = { DB: fakeDb(), ASSETS: env.ASSETS };
+  Object.keys(store).forEach(function (k) { delete store[k]; });
+  var seedR = [["BR", "GO", "Goias", 3], ["BR", "SP", "Sao Paulo", 2], ["BR", "??", "", 1], ["US", "CA", "California", 2], ["PT", undefined, "Lisbon", 1]];
+  for (var ri = 0; ri < seedR.length; ri++) for (var rj = 0; rj < seedR[ri][3]; rj++) {
+    await W.fetch(req("POST", "/api/visit", h, { country: seedR[ri][0], regionCode: seedR[ri][1], region: seedR[ri][2], city: "Goiania", latitude: "-16.6", postalCode: "74000" }), envR, ctx);
+  }
+  await W.fetch(req("POST", "/api/visit", h, { regionCode: "GO" }), envR, ctx); // sem país: conta no total, não cria região
+  var rIns = envR.DB.log.filter(function (l) { return /^INSERT INTO visits_region_monthly/.test(l.sql); });
+  check(rIns.length === 9, "uma linha de região por visita com país: " + rIns.length);
+  rIns.forEach(function (l) {
+    check(l.args.length === 5 && /^\d{4}-\d{2}$/.test(l.args[0]) && /^[A-Z]{2}$/.test(l.args[1]) && /^[A-Z0-9]{1,3}$/.test(l.args[2]) && typeof l.args[3] === "string" && l.args[3].length <= 80 && typeof l.args[4] === "number", "insert de região só com mês, país, região, nome e timestamp");
+    check(JSON.stringify(l.args).indexOf("Goiania") < 0 && JSON.stringify(l.args).indexOf("74000") < 0 && JSON.stringify(l.args).indexOf("-16.6") < 0, "cidade, CEP e coordenadas nunca gravados");
+  });
+  var rj2 = await (await W.fetch(req("GET", "/api/visitors"), envR, ctx)).json();
+  check(rj2.total_visits === 10 && rj2.countries_count === 3, "total e países seguem iguais com região: " + rj2.total_visits + "/" + rj2.countries_count);
+  var br = rj2.regions[0];
+  check(br.country === "BR" && br.visits === 6 && br.unknown === 1, "BR agrupado, com desconhecido à parte: " + JSON.stringify(br));
+  check(br.items.map(function (x) { return x.code + x.visits; }).join() === "GO3,SP2" && br.items[0].name === "Goias", "ranking de estados do BR, sem XX");
+  check(rj2.regions.map(function (g) { return g.country; }).join() === "BR,US,PT", "países com região ordenados por visitas");
+  check(rj2.regions[2].items.length === 0 && rj2.regions[2].unknown === 1, "PT sem regionCode → só desconhecido");
+  check(rj2.regions.every(function (g) { return g.items.every(function (it) { return Object.keys(it).sort().join() === "code,name,visits"; }); }), "item de região só com code, name, visits");
+  check(/^\d{4}-\d{2}$/.test(rj2.regions_since), "regions_since no formato AAAA-MM");
+  // tabela de região ausente (migration não aplicada): país continua contando e /api/visitors continua 200
+  var envNo = { DB: fakeDb({ noRegionTable: true }), ASSETS: env.ASSETS };
+  Object.keys(store).forEach(function (k) { delete store[k]; });
+  check((await W.fetch(req("POST", "/api/visit", h, { country: "BR", regionCode: "GO" }), envNo, ctx)).status === 204, "sem tabela de região: visit 204");
+  check(Object.keys(envNo.DB.rows).length === 1, "sem tabela de região: país contado mesmo assim");
+  var noJ = await W.fetch(req("GET", "/api/visitors"), envNo, ctx);
+  var noB = await noJ.json();
+  check(noJ.status === 200 && noB.total_visits === 1 && noB.regions.length === 0 && noB.regions_since === null, "sem tabela de região: visitors 200 sem regiões");
+  Object.keys(store).forEach(function (k) { delete store[k]; });
+  // purge também apaga regiões antigas
+  envR.DB.regions["2020-01|BR|GO"] = { ym: "2020-01", country: "BR", region: "GO", name: "", n: 5, updated_at: 1 };
+  var oldRand = Math.random; Math.random = function () { return 0; };
+  await W.fetch(req("POST", "/api/visit", h, { country: "BR", regionCode: "GO" }), envR, ctx);
+  Math.random = oldRand;
+  await Promise.all(waits);
+  check(!envR.DB.regions["2020-01|BR|GO"], "purge remove meses antigos da tabela de regiões");
+  Object.keys(store).forEach(function (k) { delete store[k]; });
+  // nomes de estado no cliente
+  var VR = require(path.join(root, "assets/js/visitors.js"));
+  check(VR.regionLabel("BR", "GO", "Goias") === "Goiás" && VR.regionLabel("BR", "SP", "") === "São Paulo" && VR.regionLabel("BR", "DF", "x", "Federal District") === "Federal District", "estados do Brasil com grafia oficial; DF por idioma");
+  check(Object.keys(VR.BR_STATES).length === 26, "26 estados + DF");
+  check(VR.regionLabel("US", "CA", "California") === "California" && VR.regionLabel("FR", "IDF", "") === "FR-IDF", "outros países: nome da Cloudflare ou PAÍS-CÓDIGO");
+  var vpage = read("visitors/index.html");
+  // inglês é o padrão: o HTML estático é o que aparece em EN, então tem de bater com o dicionário
+  var vctx = { window: {} };
+  require("vm").runInNewContext(read("assets/i18n/en.js"), vctx);
+  var EN = vctx.window.LUCKSREI_I18N.en;
+  var vcount = 0;
+  vpage.replace(/<(h1|h2|p|span|dt|a)\b[^>]*data-i18n="(visitors\.[^"]+)">([^<]*)<\/\1>/g, function (_, tag, k, txt) { vcount++; check(txt === EN[k], "visitors/index.html: texto estático em en igual ao dicionário (" + k + ")"); });
+  check(vcount >= 10, "visitors/index.html: textos estáticos conferidos (" + vcount + ")");
+  check(vpage.indexOf('content="' + EN["seo.visitors.description"] + '"') > 0, "visitors/index.html: meta description estática igual ao dicionário");
+  check(/id="v-regions"/.test(vpage) && /id="v-rg-filters"/.test(vpage) && read("index.html").indexOf('id="v-regions"') < 0, "estados só em /visitors/, não na home");
+  check(/0002_visits_region\.sql/.test(fs.readdirSync(path.join(root, "migrations")).join()) && /CREATE TABLE IF NOT EXISTS visits_region_monthly/.test(read("migrations/0002_visits_region.sql")) && !/visits_monthly\b(?!_)/.test(read("migrations/0002_visits_region.sql").replace(/visits_region_monthly/g, "").replace(/--.*$/gm, "")), "migration 0002 só cria a tabela nova");
+
   // --- rotas
   check((await W.fetch(req("GET", "/api/nada"), env, ctx)).status === 404, "rota /api/* desconhecida → 404");
   check(await (await W.fetch(req("GET", "/apps/"), env, ctx)).text() === "asset", "fora de /api/* cai nos assets");
@@ -215,9 +290,9 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
     check(/54\.868\.173\/0001-55/.test(d["privacy.site.p1"]) && /LUCAS DIOGO FRANCA/.test(d["privacy.site.p1"]), l + ": razão social e CNPJ preservados");
   });
   // mesmo conteúdo jurídico: estatística agregada e ausência de IP / localização precisa / identificadores
-  check(/estatísticas agregadas de acesso por país/.test(D["pt-BR"]["privacy.site.p3b"]) && /Não são armazenados IP, localização precisa ou identificadores pessoais/.test(D["pt-BR"]["privacy.site.p3b"]), "pt-BR: estatísticas agregadas sem IP");
-  check(/aggregated access statistics by country/.test(D.en["privacy.site.p3b"]) && /No IP address, precise location or personal identifiers are stored/.test(D.en["privacy.site.p3b"]), "en: estatísticas agregadas sem IP");
-  check(/estadísticas agregadas de acceso por país/.test(D.es["privacy.site.p3b"]) && /no se almacenan la dirección IP, la ubicación precisa ni identificadores personales/.test(D.es["privacy.site.p3b"]), "es: estatísticas agregadas sem IP");
+  check(/estatísticas agregadas de acesso por país e por estado ou região/.test(D["pt-BR"]["privacy.site.p3b"]) && /Não são armazenados IP, cidade, localização precisa ou identificadores pessoais/.test(D["pt-BR"]["privacy.site.p3b"]), "pt-BR: estatísticas agregadas (país e estado) sem IP/cidade");
+  check(/aggregated access statistics by country and by state or region/.test(D.en["privacy.site.p3b"]) && /No IP address, city, precise location or personal identifiers are stored/.test(D.en["privacy.site.p3b"]), "en: estatísticas agregadas (país e estado) sem IP/cidade");
+  check(/estadísticas agregadas de acceso por país y por estado o región/.test(D.es["privacy.site.p3b"]) && /no se almacenan la dirección IP, la ciudad, la ubicación precisa ni identificadores personales/.test(D.es["privacy.site.p3b"]), "es: estatísticas agregadas (país e estado) sem IP/cidade");
   check(D["pt-BR"]["privacy.notice"] && read("projects/aura/privacy/index.html").indexOf("privacy.notice") > 0, "aviso 'só em português' continua nas políticas dos apps");
   var main = read("assets/js/main.js");
   check(/sessionStorage\.getItem\("lk\.v"\)/.test(main) && /sendBeacon\("\/api\/visit"\)/.test(main) && !/document\.cookie/.test(main), "beacon por sessão de aba, sem cookie");

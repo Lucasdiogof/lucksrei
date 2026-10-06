@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script src="/assets/js/i18n-boot.js"></script>
 <title>Visitors | Lucksrei</title>
-<meta name="description" content="Map of the countries lucksrei.com received visits from over the last 12 months. Statistics aggregated by country, with no IP address or precise location.">
+<meta name="description" content="Map of the countries and states lucksrei.com received visits from over the last 12 months. Aggregated statistics, with no IP address, city or precise location.">
 <link rel="canonical" href="https://lucksrei.com/visitors/">
 <link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
 <link rel="stylesheet" href="/assets/css/style.css">
@@ -91,7 +91,12 @@
       <h2 class="visitors-rank-title" data-i18n="visitors.ranking">Ranking</h2>
       <ol class="visitors-rank" id="v-rank"></ol>
 
-      <p class="visitors-note" data-i18n="visitors.note">Statistics are aggregated by country. No IP address or precise location is shown on this page.</p>
+      <h2 class="visitors-rank-title" data-i18n="visitors.regions.title">By state or region</h2>
+      <div class="rg-filters" id="v-rg-filters" role="group" aria-label="Country" hidden></div>
+      <ol class="visitors-rank" id="v-regions"></ol>
+      <p class="visitors-note" id="v-regions-note" role="status" aria-live="polite"></p>
+
+      <p class="visitors-note" data-i18n="visitors.note">Statistics are aggregated by country and by state or region. No IP address, city or precise location is shown on this page.</p>
       <p class="visitors-note" data-i18n="visitors.note_metric">A visit is counted at most once per browser tab session; this is not a count of unique visitors.</p>
     </div>
   </section>

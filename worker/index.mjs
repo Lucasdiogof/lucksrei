@@ -1,17 +1,19 @@
-/* lucksrei-site — Worker de estatísticas agregadas de visitas por país.
+/* lucksrei-site — Worker de estatísticas agregadas de visitas por país e por estado/região.
  *
  * Só /api/* passa por aqui (run_worker_first em wrangler.jsonc); o resto é servido direto pelos assets.
  *
- *   POST /api/visit     conta UMA visita no mês/país atuais. 204 sempre (nunca quebra a página).
- *   GET  /api/visitors  agregados dos últimos 12 meses (cache de 5 min).
- *   GET  /api/whoami    { country } do próprio visitante, vindo só de request.cf.country (sem cache).
+ *   POST /api/visit     conta UMA visita no mês/país (e mês/país/região) atuais. 204 sempre (nunca quebra a página).
+ *   GET  /api/visitors  agregados dos últimos 12 meses, por país e por região dentro de cada país (cache de 5 min).
+ *   GET  /api/whoami    { country, region, region_name } do próprio visitante, vindos só de request.cf (sem cache).
  *
  * Métrica: "visitas" = no máximo UMA contagem por sessão de aba. Quem decide é o cliente
  * (sessionStorage; o servidor nunca vê esse marcador). Não é visitante único.
  *
- * Privacidade: só se grava (mês UTC, país, contador). O país vem EXCLUSIVAMENTE de request.cf.country;
- * nada enviado pelo cliente é lido. IP, user-agent, headers, cidade, região e coordenadas nunca são
- * gravados nem devolvidos. O user-agent é testado em memória (filtro de robôs) e descartado.
+ * Privacidade: só se grava (mês UTC, país, contador) e (mês UTC, país, região, nome da região, contador).
+ * País e região vêm EXCLUSIVAMENTE de request.cf (country, regionCode, region); nada enviado pelo cliente é lido.
+ * Região = estado/província (subdivisão ISO 3166-2), nunca cidade. IP, user-agent, headers, cidade, CEP e
+ * coordenadas nunca são gravados nem devolvidos. O user-agent é testado em memória (filtro de robôs) e descartado.
+ * A contagem por região é gravada à parte: se falhar, a contagem por país não é afetada.
  *
  * Cache:
  *   /api/visitors  cache de borda (caches.default) de ~5 min: "public, max-age=300, s-maxage=300".
@@ -41,6 +43,19 @@ export function normalizeCountry(raw) {
   if (!/^[A-Z]{2}$/.test(c)) return UNKNOWN;
   if (c === "T1" || c === "XX" || c === "ZZ") return UNKNOWN;
   return c;
+}
+
+// Parte da subdivisão ISO 3166-2 (request.cf.regionCode): 1–3 letras/dígitos. Ausente ou inválida → "XX".
+export function normalizeRegion(raw) {
+  if (typeof raw !== "string") return UNKNOWN;
+  const r = raw.trim().toUpperCase();
+  return /^[A-Z0-9]{1,3}$/.test(r) ? r : UNKNOWN;
+}
+
+// Nome da região vindo da Cloudflare (request.cf.region), só para exibição: sem caracteres de controle, até 80.
+export function cleanRegionName(raw) {
+  if (typeof raw !== "string") return "";
+  return raw.replace(/[\u0000-\u001f\u007f<>]/g, "").replace(/\s+/g, " ").trim().slice(0, 80);
 }
 
 export function monthKey(date, offsetMonths = 0) {
@@ -81,8 +96,61 @@ async function recordVisit(env, country, now) {
     .run();
 }
 
+async function recordRegion(env, country, region, name, now) {
+  const ym = monthKey(now);
+  const ts = Math.floor(now.getTime() / 1000);
+  await env.DB.prepare(
+    "INSERT INTO visits_region_monthly (ym, country, region, name, n, updated_at) VALUES (?1, ?2, ?3, ?4, 1, ?5) " +
+      "ON CONFLICT(ym, country, region) DO UPDATE SET n = n + 1, updated_at = excluded.updated_at, " +
+      "name = CASE WHEN excluded.name <> '' THEN excluded.name ELSE name END"
+  )
+    .bind(ym, country, region, name, ts)
+    .run();
+}
+
 async function purgeOld(env, now) {
-  await env.DB.prepare("DELETE FROM visits_monthly WHERE ym < ?1").bind(monthKey(now, -(KEEP_MONTHS - 1))).run();
+  const before = monthKey(now, -(KEEP_MONTHS - 1));
+  await env.DB.prepare("DELETE FROM visits_monthly WHERE ym < ?1").bind(before).run();
+  await env.DB.prepare("DELETE FROM visits_region_monthly WHERE ym < ?1").bind(before).run();
+}
+
+// Regiões por país na mesma janela de 12 meses. Tabela ausente ou erro → sem regiões (o resto da resposta segue).
+export async function readRegions(env, from) {
+  let rows;
+  try {
+    ({ results: rows } = await env.DB.prepare(
+      "SELECT ym, country, region, name, n, updated_at FROM visits_region_monthly WHERE ym >= ?1"
+    )
+      .bind(from)
+      .all());
+  } catch (e) {
+    return { regions: [], regions_since: null };
+  }
+  const byCountry = new Map();
+  let since = null;
+  for (const r of rows || []) {
+    if (!(r.n > 0) || r.country === UNKNOWN) continue;
+    if (since === null || r.ym < since) since = r.ym;
+    let c = byCountry.get(r.country);
+    if (!c) byCountry.set(r.country, (c = { country: r.country, visits: 0, unknown: 0, items: new Map() }));
+    c.visits += r.n;
+    if (r.region === UNKNOWN) { c.unknown += r.n; continue; }
+    const it = c.items.get(r.region) || { code: r.region, name: "", visits: 0, u: -1 };
+    it.visits += r.n;
+    if (r.name && r.updated_at > it.u) { it.name = r.name; it.u = r.updated_at; }
+    c.items.set(r.region, it);
+  }
+  const regions = [...byCountry.values()]
+    .map((c) => ({
+      country: c.country,
+      visits: c.visits,
+      unknown: c.unknown,
+      items: [...c.items.values()]
+        .map(({ code, name, visits }) => ({ code, name, visits }))
+        .sort((a, b) => b.visits - a.visits || (a.code < b.code ? -1 : 1)),
+    }))
+    .sort((a, b) => b.visits - a.visits || (a.country < b.country ? -1 : 1));
+  return { regions, regions_since: since };
 }
 
 export async function readVisitors(env, now) {
@@ -103,6 +171,7 @@ export async function readVisitors(env, now) {
     if (r.country !== UNKNOWN && r.n > 0) countries.push({ code: r.country, visits: r.n });
   }
   countries.sort((a, b) => b.visits - a.visits || (a.code < b.code ? -1 : 1));
+  const { regions, regions_since } = await readRegions(env, from);
   return {
     total_visits: total,
     countries_count: countries.length,
@@ -110,6 +179,8 @@ export async function readVisitors(env, now) {
     since,
     window_months: WINDOW_MONTHS,
     countries,
+    regions_since,
+    regions,
   };
 }
 
@@ -123,19 +194,35 @@ export default {
       const none = new Response(null, { status: 204, headers: { ...BASE_HEADERS, "cache-control": "no-store" } });
       if (!isSameOriginBrowserCall(request) || looksLikeBot(request)) return none;
       const now = new Date();
+      const cf = request.cf || {};
+      const country = normalizeCountry(cf.country);
       try {
-        await recordVisit(env, normalizeCountry(request.cf && request.cf.country), now);
+        await recordVisit(env, country, now);
         if (Math.random() < 0.02) ctx.waitUntil(purgeOld(env, now).catch(() => {}));
       } catch (e) {
         /* falha de banco nunca afeta a página */
+      }
+      if (country !== UNKNOWN) {
+        const region = normalizeRegion(cf.regionCode);
+        try {
+          await recordRegion(env, country, region, region === UNKNOWN ? "" : cleanRegionName(cf.region), now);
+        } catch (e) {
+          /* a contagem por região é independente: falha aqui não desfaz a do país */
+        }
       }
       return none;
     }
 
     if (path === "/api/whoami") {
       if (request.method !== "GET") return new Response(null, { status: 405, headers: { ...BASE_HEADERS, allow: "GET" } });
-      const c = normalizeCountry(request.cf && request.cf.country);
-      return json({ country: c === UNKNOWN ? null : c }, 200, "no-store");
+      const cf = request.cf || {};
+      const c = normalizeCountry(cf.country);
+      const r = c === UNKNOWN ? UNKNOWN : normalizeRegion(cf.regionCode);
+      return json({
+        country: c === UNKNOWN ? null : c,
+        region: r === UNKNOWN ? null : r,
+        region_name: r === UNKNOWN ? null : cleanRegionName(cf.region) || null,
+      }, 200, "no-store");
     }
 
     if (path === "/api/visitors") {
