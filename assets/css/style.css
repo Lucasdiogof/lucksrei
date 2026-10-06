@@ -315,6 +315,18 @@ a:focus-visible, button:focus-visible{
 .hs-poster{ position: absolute; left: var(--hs-ox); top: var(--hs-oy); width: var(--hs-pw); height: auto; max-width: none; }
 .hs-canvas{ position: absolute; left: 0; top: 0; width: var(--hs-w); height: var(--hs-h); }
 .hero-scene.is-live .hs-poster{ display: none; }
+/* apresentação da cena: HTML por cima do canvas (nítida e traduzível); navy, filete dourado, sem cara de HUD */
+.hs-hello{
+  position: absolute; left: var(--hs-hx, 168px); top: var(--hs-hy, 120px); z-index: 3; margin: 0;
+  display: flex; flex-direction: column; gap: 2px; padding: 7px 10px 8px;
+  background: rgba(10,15,36,.92); border: 1px solid rgba(214,167,44,.6); border-radius: 4px;
+  font-family: var(--font-mono); font-size: 11px; line-height: 1.4; color: var(--text);
+  width: max-content; max-width: calc(var(--hs-w) - var(--hs-hx) - 10px);
+  opacity: 0; transform: translateY(4px); transition: opacity .35s var(--ease), transform .35s var(--ease); pointer-events: none;
+}
+.hs-hello span + span{ color: #d7b766; }
+.hs-hello.is-on{ opacity: 1; transform: none; }
+.hero-scene.is-crop .hs-hello{ font-size: 10px; padding: 5px 8px 6px; }
 /* cantos em "L" dourados (a linguagem do L da marca) */
 .hs-stage::before, .hs-stage::after{ content: ""; position: absolute; width: 20px; height: 20px; z-index: 2; pointer-events: none; }
 .hs-stage::before{ top: 8px; left: 8px; border-top: 1px solid rgba(214,167,44,.55); border-left: 1px solid rgba(214,167,44,.55); border-top-left-radius: 6px; }
@@ -326,7 +338,7 @@ a:focus-visible, button:focus-visible{
 }
 .hero-scene figcaption strong{ font-family: var(--font); font-size: 15px; font-weight: 600; color: var(--text); }
 @media (max-width: 599px){
-  .hero-scene{ --hs-w: 300px; --hs-h: 200px; --hs-oy: -88px; margin: 0; }
+  .hero-scene{ --hs-w: 320px; --hs-h: 272px; --hs-ox: -80px; --hs-oy: -28px; margin: 0; }   /* recorte fixo (antes do JS) */
 }
 
 @media (max-width: 1060px){

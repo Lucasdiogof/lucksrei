@@ -1,9 +1,17 @@
-"""Gera os assets do hero em pixel art (cenário, folha de sprites e pôsteres) e injeta o mapa de frames no JS.
+"""Gera os assets do hero em pixel art (v2) e injeta o mapa de frames/geometria no JS.
 
 Uso (na raiz do site):  python tools/make-hero-scene.py
-Saída:  assets/img/hero/{scene.png, sprites.png, poster-empty.png, poster-final.png}
+Saída:  assets/img/hero/scene.png        cenário fixo (parede, chão, janela, quadro, prateleira, cadeira)
+        assets/img/hero/desk.png         mesa + teclado + monitor (RGBA, desenhada POR CIMA do corpo do Lucas)
+        assets/img/hero/sprites.png      frames: linha de cima = corpo; mesma grade deslocada de N = braços sobre a mesa
+        assets/img/hero/poster-empty.png escritório vazio (antes da animação e no fim)
+        assets/img/hero/poster-final.png Lucas sentado programando (prefers-reduced-motion e sem JS)
         + bloco FRAMES em assets/js/hero-scene.js (entre /*FRAMES*/ e /*END-FRAMES*/)
-Mundo: 240 x 150 px lógicos. Chão do personagem em y=138. Tudo desenhado por código: nada de arte de terceiros.
+
+Perspectiva: câmera na frente-esquerda olhando para o fundo-direita. A parede do fundo e a mesa são paralelas e sobem
+1 px a cada 6 px para a direita; a profundidade (da frente para o fundo) vai a 45° para cima-esquerda. O Lucas senta
+ATRÁS da mesa (entre ela e a parede), virado em 3/4 para o monitor, que fica de costas para o visitante.
+Tudo desenhado por código: nada de arte de terceiros.
 """
 import json
 import math
@@ -22,14 +30,27 @@ OUT = os.path.join(ROOT, "assets", "img", "hero")
 os.makedirs(OUT, exist_ok=True)
 
 W, H = 240, 150
-FLOOR_Y = 138
-CHAR_CX = 144           # x do mundo onde a célula de âncora (32) do sprite fica; quadril sentado = CHAR_CX - 2
-DESK_X0, DESK_X1, DESK_TOP = 148, 238, 111
-SCREEN_X0, SCREEN_X1 = 190, 220  # tela do monitor em perspectiva (26 colunas): ele está virado para o personagem
 
 
-MUG_X = 230
-PHONE = (148, 109, 6, 2)   # x, y, w, h do celular deitado na mesa
+def ly(x0, y0, x):
+    """Altura (y) de uma linha paralela à parede/mesa que passa por (x0, y0)."""
+    return y0 - (x - x0) / 6.0
+
+
+# ---------------------------------------------------------------- geometria do mundo (px lógicos)
+WALL = (87, 96)                       # um ponto da base da parede
+DESK_BL, DESK_FL = (86, 110), (98, 122)   # tampo: canto fundo-esquerdo e frente-esquerdo
+DESK_LEN, DESK_H = 126, 19            # comprimento ao longo da diagonal e altura das faces
+SLOT = (112, 125)                     # pés do Lucas em pé diante da cadeira (âncora de todos os frames sentado)
+SEAT = (SLOT[0] + hf.SEAT_HIP_CELL[0] - hc.FX, SLOT[1] + hf.SEAT_HIP_CELL[1] - hc.FY)   # chairSeatAnchor = (114, 109)
+ENTRY, PRESENT, WAYPOINT = (-14, 140), (66, 140), (84, 128)
+MUG = (133, 108)                      # canto superior esquerdo da caneca na mesa (alça em x-2), à frente dos monitores
+# dois monitores lado a lado, JUNTOS, na frente do teclado (entre o teclado e a câmera), num V bem leve:
+# (x0, x1, base em x0, base em x1, altura, lado do filete aceso 'l'/'r')
+MONITORS = [(97, 112, 114, 115, 15, "l"), (114, 129, 116, 113, 15, "r")]
+CROP_MOBILE = {"x": 40, "y": 14, "w": 160, "h": 136}
+HELLO = (62, 8)                       # canto superior esquerdo da legenda: faixa vazia da parede, acima de janela/quadro/prateleira
+HELLO_CROP = (44, 17)                # no recorte do celular: no topo, sobre a parede vazia
 
 
 def rgb(h):
@@ -38,11 +59,12 @@ def rgb(h):
 
 C = {
     "wall_t": rgb("#0b1020"), "wall_b": rgb("#141b36"), "base": rgb("#1c2646"), "base_hi": rgb("#2b3a6a"),
-    "floor": rgb("#141a30"), "floor2": rgb("#10162a"), "plank": rgb("#0c1122"), "floor_hi": rgb("#1b2342"),
-    "rug": rgb("#18254f"), "rug2": rgb("#1f2f63"), "gold": rgb("#e8bc46"), "gold_d": rgb("#96681a"), "gold_l": rgb("#ffe078"),
-    "wood": rgb("#5a4331"), "wood_hi": rgb("#7a5d44"), "wood_d": rgb("#3a2b21"), "wood_dd": rgb("#2a1f19"),
+    "floor": rgb("#121830"), "floor2": rgb("#0f1529"), "plank": rgb("#0b1022"),
+    "rug": rgb("#17234b"), "rug2": rgb("#1c2b5c"), "gold": rgb("#e8bc46"), "gold_d": rgb("#96681a"), "gold_l": rgb("#ffe078"),
+    "wood": rgb("#5a4331"), "wood_hi": rgb("#7d5f45"), "wood_d": rgb("#3f2f23"), "wood_dd": rgb("#2c2119"),
     "blue": rgb("#3c82ff"), "blue_l": rgb("#63b3ff"), "cyan": rgb("#46d9ff"), "ivory": rgb("#f5f0e4"),
-    "navy": rgb("#0e1530"), "navy2": rgb("#18214a"), "metal": rgb("#2a3150"), "metal_hi": rgb("#434d7a"),
+    "navy": rgb("#0e1530"), "navy2": rgb("#18214a"), "navy3": rgb("#222d5e"), "metal": rgb("#262d4c"), "metal_hi": rgb("#3c4675"),
+    "metal_d": rgb("#171c33"), "ink": rgb("#070a16"),
     "leaf": rgb("#2f8f6a"), "leaf_d": rgb("#1f6a50"), "leaf_l": rgb("#4fc08a"), "pot": rgb("#a35a3e"), "pot_d": rgb("#74402e"),
 }
 
@@ -51,306 +73,422 @@ def lerp(a, b, t):
     return tuple(int(round(a[i] + (b[i] - a[i]) * t)) for i in range(3))
 
 
-def px(d, x, y, c):
-    d.point((x, y), fill=c + (255,))
+class Canvas:
+    def __init__(self, base=None, mode="RGBA"):
+        self.im = Image.new(mode, (W, H), base if base else (0, 0, 0, 0))
+        self.p = self.im.load()
+
+    def put(self, x, y, c, a=255):
+        x, y = int(round(x)), int(round(y))
+        if 0 <= x < W and 0 <= y < H:
+            self.p[x, y] = c + (a,) if len(self.p[x, y]) == 4 else c
+
+    def get(self, x, y):
+        return self.p[x, y][:3]
+
+    def tint(self, x, y, c, t):
+        if 0 <= x < W and 0 <= y < H:
+            px = self.p[x, y]
+            if len(px) == 4 and px[3] == 0:
+                return
+            self.put(x, y, lerp(px[:3], c, t), px[3] if len(px) == 4 else 255)
+
+    def rect(self, x0, y0, x1, y1, c):
+        for y in range(int(y0), int(y1) + 1):
+            for x in range(int(x0), int(x1) + 1):
+                self.put(x, y, c)
+
+    def poly(self, pts, c):
+        ys = [p[1] for p in pts]
+        for y in range(int(math.floor(min(ys))), int(math.ceil(max(ys))) + 1):
+            xs = []
+            for i in range(len(pts)):
+                (xa, ya), (xb, yb) = pts[i], pts[(i + 1) % len(pts)]
+                if (ya <= y + 0.5 < yb) or (yb <= y + 0.5 < ya):
+                    xs.append(xa + (y + 0.5 - ya) / (yb - ya) * (xb - xa))
+            xs.sort()
+            for j in range(0, len(xs) - 1, 2):
+                for x in range(int(round(xs[j])), int(round(xs[j + 1]))):
+                    self.put(x, y, c)
+
+    def slant(self, x0, x1, y0, c):
+        """Linha de 1 px paralela à parede (sobe 1 a cada 6) de x0 a x1, passando por (x0, y0)."""
+        for x in range(int(x0), int(x1) + 1):
+            self.put(x, round(ly(x0, y0, x)), c)
+
+    def wallrect(self, x0, x1, ytop0, h, c):
+        """Retângulo 'pregado' na parede: lados verticais, topo/base inclinados."""
+        for x in range(int(x0), int(x1) + 1):
+            t = round(ly(x0, ytop0, x))
+            for y in range(t, t + h):
+                self.put(x, y, c)
 
 
-def rect(d, x0, y0, x1, y1, c):
-    d.rectangle([x0, y0, x1, y1], fill=c + (255,))
+def wall_base(x):
+    return ly(WALL[0], WALL[1], x)
 
 
+# ================================================================ cenário (fixo)
 def build_bg():
-    im = Image.new("RGBA", (W, H), (0, 0, 0, 255))
-    d = ImageDraw.Draw(im)
-    # parede: degradê em faixas (com dither xadrez entre faixas) até o rodapé
-    bands = 14
-    for y in range(0, 116):
-        t = y / 115
-        band = int(t * bands)
-        c0 = lerp(C["wall_t"], C["wall_b"], band / bands)
-        c1 = lerp(C["wall_t"], C["wall_b"], min(bands, band + 1) / bands)
-        for x in range(W):
-            frac = (t * bands) - band
-            use1 = (x + y) % 2 == 0 and frac > 0.5 or ((x + y) % 4 == 0 and frac > 0.25)
-            px(d, x, y, c1 if use1 else c0)
-    # faixa de luz do monitor (azul) na parede à direita, bem discreta
-    for y in range(40, 116):
-        for x in range(150, 240):
-            dist = math.hypot((x - 206) / 60, (y - 98) / 46)
-            if dist < 1 and (x + y) % 2 == 0:
-                base = im.getpixel((x, y))[:3]
-                px(d, x, y, lerp(base, C["blue"], 0.10 * (1 - dist)))
-    # rodapé
-    rect(d, 0, 116, W - 1, 119, C["base"])
-    rect(d, 0, 116, W - 1, 116, C["base_hi"])
-    # chão: tábuas
-    for y in range(120, H):
-        for x in range(W):
-            row = (y - 120) // 6
+    cv = Canvas((0, 0, 0, 255))
+    # parede em faixas com dither, até a base inclinada
+    for x in range(W):
+        wb = round(wall_base(x))
+        for y in range(0, wb):
+            t = y / 100
+            band = int(t * 12)
+            frac = t * 12 - band
+            c0 = lerp(C["wall_t"], C["wall_b"], min(1, band / 12))
+            c1 = lerp(C["wall_t"], C["wall_b"], min(1, (band + 1) / 12))
+            use1 = ((x + y) % 2 == 0 and frac > 0.5) or ((x + y) % 4 == 0 and frac > 0.25)
+            cv.put(x, y, c1 if use1 else c0)
+        # rodapé (3 px) e chão
+        for y in range(wb - 3, wb):
+            cv.put(x, y, C["base"])
+        cv.put(x, wb - 3, C["base_hi"])
+        for y in range(wb, H):
+            v = y + x / 6.0
+            row = int(v) // 7
             c = C["floor"] if row % 2 == 0 else C["floor2"]
-            if (y - 120) % 6 == 0:
+            if int(v) % 7 == 0:
                 c = C["plank"]
-            if (x + row * 37) % 59 == 0:
+            u = x - y + row * 23
+            if u % 53 == 0:
                 c = C["plank"]
-            px(d, x, y, c)
-    # brilho do chão (luz da janela)
-    for y in range(122, 146):
-        for x in range(14, 78):
-            if (x + y) % 2 == 0 and abs((x - 46) / 32) + abs((y - 134) / 14) < 1:
-                base = im.getpixel((x, y))[:3]
-                px(d, x, y, lerp(base, C["blue_l"], 0.12))
-    # tapete sob a mesa (azul, filete dourado fino)
-    for y in range(128, 148):
-        for x in range(112, 232):
-            inside = (x - 112) / 120, (y - 128) / 20
-            c = C["rug"] if (x // 2 + y // 2) % 2 == 0 else C["rug2"]
-            px(d, x, y, c)
-    for x in range(112, 232):
-        px(d, x, 128, C["gold_d"]); px(d, x, 147, C["gold_d"])
-    for y in range(128, 148):
-        px(d, 112, y, C["gold_d"]); px(d, 231, y, C["gold_d"])
+            cv.put(x, y, c)
+    # luar no chão (paralelogramo vindo da janela)
+    for y in range(110, 146):
+        for x in range(4, 80):
+            if y > wall_base(x) + 2:
+                d = abs((x - 34 - (y - 128) * 0.6) / 22) + abs((y - 128) / 14)
+                if d < 1 and (x + y) % 2 == 0:
+                    cv.tint(x, y, C["blue_l"], 0.10 * (1 - d))
+    # tapete (alinhado à mesa), borda dourada apagada
+    P0, A, B = (60, 142), (156, -26), (-26, -26)
+    for y in range(80, H):
+        for x in range(W):
+            # coordenadas (s, t) no losango do tapete
+            dx, dy = x - P0[0], y - P0[1]
+            det = A[0] * B[1] - A[1] * B[0]
+            s = (dx * B[1] - dy * B[0]) / det
+            t = (A[0] * dy - A[1] * dx) / det
+            if 0 <= s <= 1 and 0 <= t <= 1 and y > wall_base(x):
+                edge = s < 0.012 or s > 0.988 or t < 0.06 or t > 0.94
+                cv.put(x, y, C["gold_d"] if edge and (s < 0.012 or s > 0.988 or t < 0.035 or t > 0.965) else
+                       (C["rug"] if (int(s * 60) + int(t * 9)) % 2 == 0 else C["rug2"]))
 
-    # ---------- janela (noite, cidade ao longe)
-    rect(d, 19, 13, 67, 66, C["metal_hi"])
-    rect(d, 20, 14, 66, 65, C["metal"])
-    gx0, gy0, gx1, gy1 = 23, 17, 63, 61
-    for y in range(gy0, gy1 + 1):
-        t = (y - gy0) / (gy1 - gy0)
-        for x in range(gx0, gx1 + 1):
-            px(d, x, y, lerp(rgb("#0a1030"), rgb("#2a4a96"), t))
-    for sx, sy in ((27, 21), (34, 25), (45, 20), (57, 24), (30, 33), (51, 31), (40, 38)):
-        px(d, sx, sy, C["ivory"])
-    # lua
-    for yy in range(-5, 6):
-        for xx in range(-5, 6):
-            if xx * xx + yy * yy <= 20 and not ((xx + 2) ** 2 + (yy - 1) ** 2 <= 17):
-                px(d, 52 + xx, 28 + yy, rgb("#f3eccd"))
-    # skyline
-    for bx, bw, bh in ((23, 6, 12), (30, 5, 17), (36, 7, 10), (44, 5, 19), (50, 6, 13), (57, 7, 16)):
-        rect(d, bx, gy1 - bh + 1, bx + bw - 1, gy1, rgb("#0a1230"))
-        for wy in range(gy1 - bh + 3, gy1 - 1, 4):
-            for wx in range(bx + 1, bx + bw - 1, 3):
-                if (wx * 7 + wy * 3) % 5 < 2:
-                    px(d, wx, wy, C["gold"] if (wx + wy) % 4 else C["cyan"])
-    # travessas
-    rect(d, 43, 17, 43, 61, C["metal"])
-    rect(d, 23, 39, 63, 39, C["metal"])
-    rect(d, 17, 66, 69, 68, C["metal_hi"])
-    rect(d, 17, 69, 69, 69, C["wood_dd"])
+    # ---------- janela (noite, cidade)
+    X0, X1, T0, HH = 12, 54, 26, 46
+    cv.wallrect(X0 - 1, X1 + 1, ly(X0, T0, X0 - 1) - 1, HH + 2, C["metal_hi"])
+    cv.wallrect(X0, X1, T0, HH, C["metal"])
+    for x in range(X0 + 2, X1 - 1):
+        t0 = round(ly(X0, T0, x)) + 2
+        for y in range(t0, t0 + HH - 4):
+            cv.put(x, y, lerp(rgb("#0a1030"), rgb("#2a4a96"), (y - t0) / (HH - 4)))
+    for sx, sy in ((17, 31), (24, 33), (34, 27), (45, 27), (20, 41), (40, 36)):
+        cv.put(sx, sy, C["ivory"])
+    for yy in range(-4, 5):
+        for xx in range(-4, 5):
+            if xx * xx + yy * yy <= 14 and not ((xx + 2) ** 2 + (yy - 1) ** 2 <= 11):
+                cv.put(44 + xx, 33 + yy, rgb("#f3eccd"))
+    for bx, bw, bh in ((14, 5, 11), (20, 5, 16), (26, 6, 9), (33, 5, 18), (39, 6, 12), (46, 6, 15)):
+        for x in range(bx, bx + bw):
+            gb = round(ly(X0, T0, x)) + HH - 3
+            for y in range(gb - bh, gb):
+                cv.put(x, y, rgb("#0a1230"))
+            for wy in range(gb - bh + 2, gb - 1, 4):
+                if (x - bx) % 3 == 1 and (x * 7 + wy * 3) % 5 < 2:
+                    cv.put(x, wy, C["gold"] if (x + wy) % 4 else C["cyan"])
+    for x in range(X0, X1 + 1):                       # travessa horizontal
+        cv.put(x, round(ly(X0, T0 + HH // 2, x)), C["metal"])
+    for y in range(round(ly(X0, T0, 33)), round(ly(X0, T0, 33)) + HH):
+        cv.put(33, y, C["metal"])
+    cv.wallrect(X0 - 2, X1 + 2, ly(X0, T0 + HH, X0 - 2), 2, C["metal_hi"])   # parapeito
 
-    # ---------- quadro da coroa (detalhe da marca, discreto)
-    rect(d, 84, 20, 105, 42, C["gold_d"])
-    rect(d, 85, 21, 104, 41, C["gold"])
-    rect(d, 86, 22, 103, 40, C["navy"])
-    crown = ["..G..G..G..", ".GG.GGG.GG.", ".GGGGGGGGG.", "GGGGGGGGGGG", "GlGGGlGGGlG", "GGGGGGGGGGG", "ddddddddddd"]
-    cols = {"G": C["gold"], "l": C["gold_l"], "d": C["gold_d"]}
+    # ---------- quadro com a coroa (o ÚNICO elemento de coroa da cena)
+    QX, QT = 64, 42
+    cv.wallrect(QX, QX + 15, QT, 16, C["gold_d"])
+    cv.wallrect(QX + 1, QX + 14, ly(QX, QT, QX + 1) + 1, 14, C["navy"])
+    crown = ["..G..G..G.", ".GG.GG.GG.", ".GGGGGGGG.", "GGGGGGGGGG", "GlGGlGGlGG", "dddddddddd"]
     for ry, row in enumerate(crown):
         for rx, ch in enumerate(row):
             if ch != ".":
-                px(d, 89 + rx, 27 + ry, cols[ch])
-    for rx in range(5):
-        px(d, 91 + rx * 2, 36, C["gold_d"])
+                x = QX + 3 + rx
+                cv.put(x, round(ly(QX, QT, x)) + 4 + ry, {"G": C["gold"], "l": C["gold_l"], "d": C["gold_d"]}[ch])
 
-    # ---------- pôster de app (genérico): celular com UI abstrata
-    rect(d, 112, 22, 128, 42, C["blue"])
-    rect(d, 113, 23, 127, 41, C["navy2"])
-    rect(d, 117, 26, 123, 38, rgb("#0a0f24"))
-    rect(d, 118, 27, 122, 36, rgb("#1d3f8f"))
-    rect(d, 118, 27, 122, 28, C["blue_l"])
-    px(d, 120, 33, C["gold"]); px(d, 119, 31, C["cyan"]); px(d, 121, 31, C["cyan"])
-    px(d, 120, 38, C["ivory"])
+    # ---------- pôster de app (wireframe) atrás do Lucas
+    PX, PT = 98, 50
+    cv.wallrect(PX, PX + 13, PT, 18, C["blue"])
+    cv.wallrect(PX + 1, PX + 12, ly(PX, PT, PX + 1) + 1, 16, C["navy2"])
+    for i, (w_, col) in enumerate(((8, "blue_l"), (6, "metal_hi"), (9, "metal_hi"), (5, "gold"))):
+        x0 = PX + 3
+        for x in range(x0, x0 + w_):
+            cv.put(x, round(ly(PX, PT, x)) + 4 + i * 3, C[col])
 
-    # ---------- prateleira (livros, planta, controle)
-    rect(d, 150, 56, 232, 58, C["wood"]); rect(d, 150, 56, 232, 56, C["wood_hi"]); rect(d, 150, 59, 232, 59, C["wood_dd"])
-    for i, (bw, col) in enumerate([(4, "#3c82ff"), (3, "#18214a"), (4, "#e8bc46"), (3, "#2a3a7a"), (5, "#63b3ff"), (3, "#18214a")]):
-        x0 = 154 + sum(b for b, _ in [(4, 0), (3, 0), (4, 0), (3, 0), (5, 0), (3, 0)][:i]) + i
-        h = 12 + (i * 5) % 5
-        rect(d, x0, 56 - h, x0 + bw - 1, 55, rgb(col))
-        rect(d, x0, 56 - h, x0 + bw - 1, 56 - h, lerp(rgb(col), C["ivory"], 0.35))
-    # planta pequena
-    rect(d, 198, 49, 205, 55, C["pot"]); rect(d, 198, 49, 205, 50, C["pot_d"])
-    for lx, ly in ((199, 44), (202, 41), (204, 45), (200, 47), (203, 47), (197, 46), (205, 43)):
-        rect(d, lx, ly, lx + 1, ly + 2, C["leaf"] if (lx + ly) % 2 else C["leaf_l"])
-    # controle (detalhe gamer discreto)
-    rect(d, 214, 52, 226, 55, C["metal"]); rect(d, 215, 51, 218, 51, C["metal"]); rect(d, 222, 51, 225, 51, C["metal"])
-    px(d, 217, 53, C["blue_l"]); px(d, 223, 53, C["gold"]); px(d, 221, 54, C["cyan"])
+    # ---------- prateleira com livros e planta (acima da mesa)
+    SX0, SX1, SY = 146, 206, 60
+    for x in range(SX0, SX1 + 1):
+        y = round(ly(SX0, SY, x))
+        cv.put(x, y, C["wood_hi"]); cv.put(x, y + 1, C["wood"]); cv.put(x, y + 2, C["wood_dd"])
+    books = [(4, "#3c82ff", 12), (3, "#18214a", 14), (4, "#e8bc46", 11), (3, "#2a3a7a", 13), (5, "#63b3ff", 12), (3, "#18214a", 10)]
+    x = SX0 + 4
+    for bw, col, bh in books:
+        for xx in range(x, x + bw):
+            y0 = round(ly(SX0, SY, xx))
+            for yy in range(y0 - bh, y0):
+                cv.put(xx, yy, rgb(col))
+            cv.put(xx, y0 - bh, lerp(rgb(col), C["ivory"], 0.35))
+        x += bw + 1
+    px0 = 188
+    for xx in range(px0, px0 + 7):
+        y0 = round(ly(SX0, SY, xx))
+        for yy in range(y0 - 6, y0):
+            cv.put(xx, yy, C["pot"] if yy > y0 - 5 else C["pot_d"])
+    for lx, ly_ in ((189, 44), (192, 41), (194, 45), (190, 47), (193, 46), (187, 46), (195, 43)):
+        cv.rect(lx, ly_ - 3, lx + 1, ly_ - 1, C["leaf"] if (lx + ly_) % 2 else C["leaf_l"])
 
-    # ---------- planta de chão (folhas arqueadas) + aparador baixo com abajur
-    rect(d, 6, 118, 22, 134, C["pot"]); rect(d, 6, 118, 22, 120, C["pot_d"]); rect(d, 7, 134, 21, 135, C["pot_d"])
-    fronds = [(-60, 26, 0.9), (-35, 30, 0.6), (-8, 32, 0.3), (18, 28, -0.4), (42, 24, -0.8), (-82, 18, 1.1), (66, 18, -1.0)]
-    for ang, ln, curve in fronds:
-        x, y = 14.0, 118.0
+    # ---------- planta de chão (canto da frente à esquerda)
+    pb = 134
+    cv.rect(4, pb - 14, 16, pb, C["pot"]); cv.rect(4, pb - 14, 16, pb - 12, C["pot_d"]); cv.rect(5, pb, 15, pb + 1, C["pot_d"])
+    for ang, ln, curve in [(-60, 22, 0.9), (-35, 26, 0.6), (-8, 28, 0.3), (18, 24, -0.4), (42, 20, -0.8), (-82, 15, 1.1), (66, 15, -1.0)]:
+        x, y = 10.0, pb - 14.0
         for k in range(ln):
             t = k / ln
             a_ = math.radians(ang - 90 + curve * 40 * t)
-            x += math.cos(a_) * 1.0
-            y += math.sin(a_) * 1.0
+            x += math.cos(a_); y += math.sin(a_)
             wid = max(1, int(round(3 * math.sin(math.pi * min(1, t * 1.15)))))
             for w_ in range(-(wid // 2), wid - wid // 2):
-                col = C["leaf_l"] if w_ < 0 else (C["leaf"] if t < 0.7 else C["leaf_d"])
-                px(d, int(round(x)) + w_, int(round(y)), col)
-    rect(d, 92, 122, 121, 134, C["wood_d"]); rect(d, 92, 120, 121, 121, C["wood"]); rect(d, 92, 120, 121, 120, C["wood_hi"])
-    rect(d, 95, 125, 118, 131, C["wood"]); rect(d, 105, 128, 108, 128, C["gold"])
-    rect(d, 106, 112, 107, 119, C["metal"]); rect(d, 102, 105, 111, 111, rgb("#f0c968")); rect(d, 103, 105, 110, 106, rgb("#ffe9a8"))
-    for y in range(84, 118):
-        for x in range(84, 130):
-            dist = math.hypot((x - 107) / 22, (y - 108) / 22)
-            if dist < 1 and (x + y) % 3 == 0:
-                base = im.getpixel((x, y))[:3]
-                px(d, x, y, lerp(base, rgb("#f0c968"), 0.10 * (1 - dist)))
+                cv.put(int(round(x)) + w_, int(round(y)), C["leaf_l"] if w_ < 0 else (C["leaf"] if t < 0.7 else C["leaf_d"]))
 
-    # ---------- mesa
-    rect(d, DESK_X0, DESK_TOP - 1, DESK_X1, DESK_TOP - 1, C["wood_hi"])
-    rect(d, DESK_X0, DESK_TOP, DESK_X1, DESK_TOP + 3, C["wood"])
-    rect(d, DESK_X0, DESK_TOP + 4, DESK_X1, DESK_TOP + 4, C["wood_dd"])
-    rect(d, DESK_X0 + 2, DESK_TOP + 5, DESK_X0 + 5, 135, C["wood_d"])          # perna esquerda
-    rect(d, 208, DESK_TOP + 5, DESK_X1 - 2, 135, C["wood_d"])                    # gaveteiro
-    rect(d, 210, DESK_TOP + 8, DESK_X1 - 4, DESK_TOP + 16, C["wood"])
-    rect(d, 210, DESK_TOP + 19, DESK_X1 - 4, DESK_TOP + 27, C["wood"])
-    rect(d, 220, DESK_TOP + 12, 226, DESK_TOP + 12, C["gold"])
-    rect(d, 220, DESK_TOP + 23, 226, DESK_TOP + 23, C["gold"])
-    # ---------- cadeira (de perfil): quadril do personagem em x=CHAR_CX-2, y=123
-    hx = CHAR_CX - 2
-    rect(d, hx - 15, 96, hx - 10, 124, C["navy2"]); rect(d, hx - 15, 96, hx - 10, 96, C["blue"])   # encosto
-    rect(d, hx - 15, 97, hx - 15, 124, C["metal_hi"])
-    rect(d, hx - 11, 124, hx + 10, 127, C["navy2"]); rect(d, hx - 11, 124, hx + 10, 124, C["metal_hi"])  # assento
-    rect(d, hx - 1, 128, hx + 1, 135, C["metal"])
-    rect(d, hx - 12, 136, hx + 11, 136, C["metal"])
-    for wx in (hx - 11, hx - 6, hx - 1, hx + 4, hx + 9):
-        rect(d, wx, 137, wx + 1, 138, C["navy"])
-    # ---------- teclado e mouse
-    rect(d, 156, DESK_TOP - 2, 180, DESK_TOP - 1, C["metal"])
-    for kx in range(157, 180, 2):
-        px(d, kx, DESK_TOP - 2, C["metal_hi"])
-    rect(d, 156, DESK_TOP, 180, DESK_TOP, C["blue"])
-    rect(d, 183, DESK_TOP - 2, 186, DESK_TOP - 1, C["metal"])
-    # ---------- brilho azul da tela caindo na mesa e na parede, em direção a ele (só um sopro, em dither)
-    for y in range(80, 112):
-        for x in range(150, 192):
-            dist = math.hypot((x - 190) / 42, (y - 92) / 24)
-            if dist < 1 and (x + y) % 3 == 0:
-                base = im.getpixel((x, y))[:3]
-                px(d, x, y, lerp(base, C["blue"], 0.10 * (1 - dist)))
-    bezel(im)
-    return im
+    # ---------- luz da tela (ela está virada para o Lucas): sopro azul na parede atrás dele
+    for y in range(52, 104):
+        for x in range(80, 150):
+            d = math.hypot((x - 114) / 34, (y - 80) / 24)
+            if d < 1 and (x + y) % 3 == 0 and y < wall_base(x) - 3:
+                cv.tint(x, y, C["blue"], 0.09 * (1 - d))
+
+    chair(cv)
+    return cv.im
 
 
-SCREEN_TOP, SCREEN_SLOPE, SCREEN_H0, SCREEN_HSLOPE = 74, 0.2, 34, 0.3
+def chair(cv):
+    """Cadeira de escritório virada para a mesa (mesma diagonal): encosto atrás do Lucas, assento em 3/4."""
+    BX0, BX1, BT, BH = 99, 119, 82, 20
+    # base e pistão (ficam atrás da mesa, mas existem)
+    cx, fy = SEAT[0] - 1, SEAT[1] + 12
+    cv.rect(cx - 1, SEAT[1] + 2, cx + 1, fy - 2, C["metal"])
+    for dx, dy in ((-9, 1), (8, -1), (-4, 3), (5, 3), (0, -2)):
+        cv.put(cx + dx, fy + dy, C["ink"]); cv.put(cx + dx + 1, fy + dy, C["ink"])
+    # assento: losango alinhado (frente na diagonal, profundidade a 45°)
+    front_l, length, depth = (102, 110), 22, 6
+    pts = [front_l, (front_l[0] + length, ly(*front_l, front_l[0] + length)),
+           (front_l[0] + length - depth, ly(*front_l, front_l[0] + length) - depth), (front_l[0] - depth, front_l[1] - depth)]
+    cv.poly([(p[0], p[1] + 1) for p in pts], C["navy"])
+    cv.poly(pts, rgb("#26336c"))
+    cv.slant(front_l[0] - depth, front_l[0] - depth + length, front_l[1] - depth, rgb("#34449a"))
+    # encosto: almofada paralela à mesa (cantos arredondados, costura no meio), espessura à esquerda
+    cush, frame, lit = C["navy3"], C["navy"], rgb("#2c3a78")
+    for x in range(BX0 - 2, BX1 + 1):
+        t = round(ly(BX0, BT, x))
+        if x < BX0:                                                    # espessura (lado)
+            for y in range(t + 1, t + BH - 1):
+                cv.put(x, y, C["metal_d"])
+            continue
+        r = 2 if x in (BX0, BX1) else (1 if x in (BX0 + 1, BX1 - 1) else 0)
+        for y in range(t + r, t + BH - r):
+            cv.put(x, y, frame if x in (BX0, BX1) or y in (t + r, t + BH - r - 1) else (lit if x > BX1 - 6 else cush))
+    for y in range(round(ly(BX0, BT, BX0 + 10)) + 3, round(ly(BX0, BT, BX0 + 10)) + BH - 3):
+        cv.put(BX0 + 10, y, frame)                                     # costura
+    for x in range(BX0 + 3, BX1 - 2):
+        cv.put(x, round(ly(BX0, BT, x)) + 1, rgb("#3a4c96"))          # luz da tela na borda de cima
 
 
-def screen_columns():
-    """(x, topo, altura) de cada coluna da tela em perspectiva: a borda esquerda (mais perto do personagem) é a mais alta."""
-    return [(SCREEN_X0 + i, SCREEN_TOP + int(round(i * SCREEN_SLOPE)), int(round(SCREEN_H0 - i * SCREEN_HSLOPE))) for i in range(SCREEN_X1 - SCREEN_X0)]
+# ================================================================ mesa (camada por cima do corpo)
+def desk_corners():
+    BL, FL = DESK_BL, DESK_FL
+    BR = (BL[0] + DESK_LEN, ly(*BL, BL[0] + DESK_LEN))
+    FR = (FL[0] + DESK_LEN, ly(*FL, FL[0] + DESK_LEN))
+    return BL, FL, FR, BR
 
 
-def screen_quad(im, content):
-    cols = screen_columns()
-    n = len(cols)
-    for j, (x, top, hgt) in enumerate(cols):
-        sx = min(content.width - 1, int(j * content.width / n))
-        col = content.crop((sx, 0, sx + 1, content.height)).resize((1, hgt), Image.NEAREST)
-        im.alpha_composite(col.convert("RGBA"), (x, top))
+def build_desk():
+    cv = Canvas()
+    BL, FL, FR, BR = desk_corners()
+    hgt = DESK_H
+    # face lateral esquerda e face da frente: faixa superior (4 px), painel recuado mais escuro e pés nos cantos
+    cv.poly([BL, FL, (FL[0], FL[1] + hgt), (BL[0], BL[1] + hgt)], C["wood_dd"])
+    cv.poly([FL, FR, (FR[0], FR[1] + hgt), (FL[0], FL[1] + hgt)], rgb("#33261c"))
+    for x in range(int(FL[0]), int(FR[0]) + 1):
+        top = round(ly(*FL, x))
+        for y in range(top + 1, top + 5):
+            cv.put(x, y, C["wood_d"])                                  # faixa (tampo grosso)
+        cv.put(x, top + 5, C["wood_dd"])
+        cv.put(x, top + hgt, C["ink"])                                 # contato com o chão
+    for i in range(0, 13):                                             # faixa na lateral
+        for y in range(1, 5):
+            cv.put(BL[0] + i, BL[1] + i + y, C["wood_d"])
+    for lx in (int(FL[0]), int(FL[0]) + 1, int(FL[0]) + 2, int(FL[0]) + 3):   # pé da frente-esquerda (quina)
+        top = round(ly(*FL, lx))
+        for y in range(top + 5, top + hgt):
+            cv.put(lx, y, C["wood"] if lx < int(FL[0]) + 2 else C["wood_d"])
+    for i in range(0, 3):                                              # pé do fundo-esquerda (na lateral)
+        for y in range(BL[1] + 5 + i, BL[1] + hgt + i):
+            cv.put(BL[0] + i, y, C["wood_d"])
+    # tampo
+    cv.poly([BL, FL, FR, BR], C["wood"])
+    for x in range(int(FL[0]), int(FR[0]) + 1):                      # quina da frente iluminada
+        cv.put(x, round(ly(*FL, x)), C["wood_hi"])
+        cv.put(x, round(ly(*FL, x)) + 1, C["wood_d"])
+    for i in range(0, 13):                                           # quina lateral
+        cv.put(BL[0] + i, BL[1] + i, C["wood_hi"] if i % 2 == 0 else C["wood"])
+    for x in range(int(BL[0]), int(BR[0]) + 1):                      # borda do fundo
+        cv.put(x, round(ly(*BL, x)), C["wood_d"])
+    # veio da madeira (linhas tênues ao longo da diagonal)
+    for k, off in enumerate((4, 8)):
+        for x in range(int(BL[0]) + 6 + k * 9, int(BR[0]) - 8, 1):
+            if (x * 3 + k) % 11 < 6:
+                cv.put(x, round(ly(BL[0] + off, BL[1] + off, x)), C["wood_d"])
+    # luz da tela no tampo (entre o monitor e o Lucas)
+    for y in range(90, 120):
+        for x in range(100, 170):
+            d = math.hypot((x - 116) / 34, (y - 110) / 9)
+            if d < 1 and (x + y) % 2 == 0:
+                cv.tint(x, y, C["blue_l"], 0.10 * (1 - d))
+
+    keyboard(cv)
+    return cv.im
 
 
-def bezel(im):
-    """Monitor virado para o personagem: moldura fina à esquerda/em cima/embaixo e o corpo do aparelho (profundidade) à direita."""
-    d = ImageDraw.Draw(im)
-    cols = screen_columns()
-    (xl, tl, hl), (xr, tr, hr) = cols[0], cols[-1]
-    # corpo/traseira (aparece atrás da tela, à direita): mais escuro, com borda superior clara
-    back = [(xr + 1, tr - 2), (xr + 8, tr - 6), (xr + 8, tr + hr - 1), (xr + 1, tr + hr + 2)]
-    d.polygon(back, fill=rgb("#1b2240") + (255,))
-    d.line([back[0], back[1]], fill=C["metal_hi"] + (255,))
-    d.line([back[1], back[2]], fill=rgb("#10152c") + (255,))
-    # moldura da frente
-    m = 2
-    quad = [(xl - m, tl - m), (xr + 1, tr - m), (xr + 1, tr + hr + m), (xl - m, tl + hl + m)]
-    d.polygon(quad, fill=C["metal"] + (255,))
-    d.line([quad[0], quad[1]], fill=C["metal_hi"] + (255,))
-    d.line([quad[0], quad[3]], fill=C["metal_hi"] + (255,))
-    # tela apagada (a viva é desenhada por cima)
-    for x, top, hgt in cols:
-        d.line([(x, top), (x, top + hgt - 1)], fill=rgb("#070b1c") + (255,))
-    # haste e base
-    rect(d, xr + 2, tr + hr + 1, xr + 5, DESK_TOP - 3, C["metal"])
-    rect(d, xl + 6, DESK_TOP - 3, xr + 12, DESK_TOP - 1, C["metal"]); rect(d, xl + 6, DESK_TOP - 3, xr + 12, DESK_TOP - 3, C["metal_hi"])
+def build_monitors():
+    cv = Canvas()
+    for m in MONITORS:
+        monitor(cv, *m)
+    return cv.im
 
 
-def static_screen(lines=True):
-    s = Image.new("RGBA", (36, 24), rgb("#0a1028") + (255,))
-    d = ImageDraw.Draw(s)
-    rect(d, 0, 0, 35, 3, rgb("#161e3e"))
-    for i, col in enumerate((C["gold"], C["blue_l"], C["ivory"])):
-        px(d, 2 + i * 3, 1, col)
-    rect(d, 0, 4, 6, 23, rgb("#0e1634"))
-    if lines:
-        spec = [(1, [("b", 9), ("g", 5)]), (2, [("c", 7), ("i", 8)]), (2, [("b", 12)]), (3, [("i", 6), ("c", 9)]), (2, [("g", 4), ("b", 10)]), (1, [("c", 11)]), (2, [("b", 8), ("i", 6)]), (3, [("i", 10)])]
-        colmap = {"b": C["blue_l"], "g": C["gold"], "c": C["cyan"], "i": rgb("#8f9bc4")}
-        for li, (ind, segs) in enumerate(spec):
-            x = 8 + ind * 2
-            y = 5 + li * 2
-            for k, n in segs:
-                rect(d, x, y, min(34, x + n - 1), y, colmap[k])
-                x += n + 1
-        rect(d, 8, 21, 20, 22, rgb("#13284f"))
-        rect(d, 8, 21, 16, 22, C["blue"])
-    return s
+def keyboard(cv):
+    nl, length, depth = (104, 115), 26, 4
+    pts = [nl, (nl[0] + length, ly(*nl, nl[0] + length)), (nl[0] + length - depth, ly(*nl, nl[0] + length) - depth), (nl[0] - depth, nl[1] - depth)]
+    cv.poly([(p[0], p[1] + 1) for p in pts], rgb("#121830"))
+    cv.poly(pts, rgb("#3b4468"))
+    for r in range(1, 4):                                            # fileiras de teclas
+        for x in range(nl[0] - r + 1, nl[0] + length - r - 1):
+            if (x + r) % 2 == 0:
+                cv.put(x, round(ly(nl[0] - r, nl[1] - r, x)), rgb("#7e89b8"))
+    for x in range(nl[0], nl[0] + length):                           # filete na frente
+        cv.put(x, round(ly(*nl, x)) + 1, rgb("#262e52"))
 
 
-def draw_desk_props(im, phone=True):
-    d = ImageDraw.Draw(im)
-    if phone:
-        rect(d, PHONE[0], PHONE[1], PHONE[0] + PHONE[2] - 1, PHONE[1] + 1, rgb("#242a44"))
-        rect(d, PHONE[0] + 1, PHONE[1], PHONE[0] + PHONE[2] - 2, PHONE[1], C["blue_l"])
-    # caneca
-    rect(d, MUG_X, 104, MUG_X + 5, DESK_TOP - 2, C["ivory"]); rect(d, MUG_X, 106, MUG_X + 5, 106, C["gold"]); rect(d, MUG_X + 6, 106, MUG_X + 7, 108, C["ivory"])
-    rect(d, MUG_X, 104, MUG_X + 5, 104, rgb("#a37a50"))
+MON = {"back": rgb("#444c6e"), "hi": rgb("#7480b4"), "edge": rgb("#0a0d1c"), "vent": rgb("#2b3252"), "foot": rgb("#161b32")}
+
+
+def monitor(cv, x0, x1, b0, b1, h, rim):
+    """Monitor visto por trás (a tela é do lado do Lucas): traseira grafite com contorno, respiros e led, pescoço e pé; o
+    filete do lado de fora mostra a luz da tela vazando (o JS o acende)."""
+    def bot(x):
+        return round(b0 + (b1 - b0) * (x - x0) / max(1, x1 - x0))
+
+    sx = (x0 + x1) // 2
+    for dx in range(-5, 6):                                  # pé: base oval escura com contorno
+        y = bot(sx + dx)
+        cv.put(sx + dx, y - 1, MON["edge"]); cv.put(sx + dx, y, MON["foot"]); cv.put(sx + dx, y + 1, MON["edge"])
+    cv.rect(sx - 1, bot(sx) - 5, sx + 1, bot(sx) - 1, MON["foot"])           # pescoço
+    cv.put(sx - 2, bot(sx) - 3, MON["edge"]); cv.put(sx + 2, bot(sx) - 3, MON["edge"])
+    for x in range(x0, x1 + 1):                              # traseira
+        b = bot(x) - 4
+        top = bot(x) - h
+        for y in range(top, b + 1):
+            edge = y == top or y == b or x in (x0, x1)
+            cv.put(x, y, MON["edge"] if edge else MON["back"])
+        cv.put(x, top + 1, MON["hi"])                        # filete de luz no topo
+    for x in range(x0 + 3, x1 - 2):                          # respiros
+        if x % 2 == 0:
+            cv.put(x, bot(x) - h + 5, MON["vent"]); cv.put(x, bot(x) - h + 7, MON["vent"])
+    cv.put(sx, bot(sx) - 6, C["gold_d"])                     # led discreto
+    xr = x0 - 1 if rim == "l" else x1 + 1
+    for y in range(bot(xr + (1 if rim == "l" else -1)) - h + 1, bot(xr + (1 if rim == "l" else -1)) - 4):
+        cv.put(xr, y, C["blue_l"])
+
+
+# ================================================================ folha de sprites
+def mirror(im):
+    m = im.transpose(Image.FLIP_LEFT_RIGHT)
+    out = Image.new("RGBA", m.size, (0, 0, 0, 0))
+    out.alpha_composite(m, (-(hc.CW - 1 - 2 * hc.FX), 0))           # mantém a âncora dos pés em x=FX
+    return out
 
 
 def build_sheet():
-    cells = [(n, c) for n, cs in hf.ORDER for c in cs]
-    cols = 10
-    rows = (len(cells) + cols - 1) // cols
-    sheet = Image.new("RGBA", (cols * hc.CW, rows * hc.CH), (0, 0, 0, 0))
-    meta, idx = {}, 0
-    for name, cs in hf.ORDER:
-        meta[name] = [idx, len(cs)]
-        for c in cs:
-            sheet.alpha_composite(c.image(), ((idx % cols) * hc.CW, (idx // cols) * hc.CH))
-            idx += 1
-    return sheet, meta, cols
+    order = list(hf.ORDER)
+    # andar/parar para a esquerda = espelho
+    names = dict(order)
+    order.insert([n for n, _ in order].index("walk_r") + 1, ("walk_l", [(b, None) for b, _ in names["walk_r"]]))
+    order.insert([n for n, _ in order].index("stand_r") + 1, ("stand_l", [(b, None) for b, _ in names["stand_r"]]))
+    order.insert([n for n, _ in order].index("turn_r") + 1, ("turn_l", [(b, None) for b, _ in names["turn_r"]]))
+    imgs, meta = [], {}
+    for name, frames in order:
+        meta[name] = [len(imgs), len(frames)]
+        for b, o in frames:
+            bi = b.image()
+            oi = o.image() if o is not None else Image.new("RGBA", (hc.CW, hc.CH), (0, 0, 0, 0))
+            if name.endswith("_l"):
+                bi, oi = mirror(bi), mirror(oi)
+            imgs.append((bi, oi))
+    n, cols = len(imgs), 10
+    rows = (n + cols - 1) // cols
+    sheet = Image.new("RGBA", (cols * hc.CW, 2 * rows * hc.CH), (0, 0, 0, 0))
+    for i, (bi, oi) in enumerate(imgs):
+        x, y = (i % cols) * hc.CW, (i // cols) * hc.CH
+        sheet.alpha_composite(bi, (x, y))
+        sheet.alpha_composite(oi, (x, y + rows * hc.CH))
+    return sheet, meta, cols, rows, imgs
+
+
+def mug_layer(cv):
+    x, y = MUG
+    cv.rect(x - 1, y - 1, x + 4, y + 5, C["ink"])
+    cv.rect(x, y, x + 3, y + 4, C["ivory"])
+    cv.rect(x, y + 2, x + 3, y + 3, C["leaf"])                       # branca com faixa verde
+    cv.put(x, y + 3, C["leaf_d"]); cv.put(x + 1, y + 3, C["leaf_d"])
+    cv.put(x, y, rgb("#4e3423")); cv.put(x + 1, y, rgb("#4e3423"))
+    cv.put(x - 2, y + 1, C["ink"]); cv.put(x - 2, y + 2, C["ivory"]); cv.put(x - 2, y + 3, C["ink"])
 
 
 def main():
-    bg = build_bg()
+    bg, desk, mons = build_bg(), build_desk(), build_monitors()
     bg.convert("RGB").save(os.path.join(OUT, "scene.png"), optimize=True)
-    sheet, meta, cols = build_sheet()
-    q = sheet.quantize(colors=48, method=Image.Quantize.FASTOCTREE, dither=Image.Dither.NONE) if False else sheet
+    desk.save(os.path.join(OUT, "desk.png"), optimize=True)
+    mons.save(os.path.join(OUT, "monitors.png"), optimize=True)
+    sheet, meta, cols, rows, imgs = build_sheet()
     sheet.save(os.path.join(OUT, "sprites.png"), optimize=True)
 
-    def poster(with_char):
+    def compose(frame=None):
         im = bg.copy().convert("RGBA")
-        bezel(im)
-        screen_quad(im, static_screen(lines=with_char))
-        draw_desk_props(im)
-        if with_char:
-            start = meta["type"][0]
-            cell = sheet.crop(((start % cols) * hc.CW, (start // cols) * hc.CH, (start % cols + 1) * hc.CW, (start // cols + 1) * hc.CH))
-            im.alpha_composite(cell, (CHAR_CX - hc.FX, FLOOR_Y - hc.FY))
+        if frame is not None:
+            b, o = imgs[meta[frame][0]]
+            im.alpha_composite(b, (SLOT[0] - hc.FX, SLOT[1] - hc.FY))
+        im.alpha_composite(desk)
+        m = Canvas(); mug_layer(m); im.alpha_composite(m.im)
+        if frame is not None:
+            im.alpha_composite(o, (SLOT[0] - hc.FX, SLOT[1] - hc.FY))
+        im.alpha_composite(mons)
         return im.convert("RGB")
 
-    poster(False).save(os.path.join(OUT, "poster-empty.png"), optimize=True)
-    poster(True).save(os.path.join(OUT, "poster-final.png"), optimize=True)
+    compose().save(os.path.join(OUT, "poster-empty.png"), optimize=True)
+    compose("typing").save(os.path.join(OUT, "poster-final.png"), optimize=True)
 
+    data = {"cell": [hc.CW, hc.CH], "anchor": [hc.FX, hc.FY], "cols": cols, "rows": rows, "frames": meta,
+            "step": hf.STEP, "entry": ENTRY, "present": PRESENT, "waypoint": WAYPOINT, "slot": SLOT, "seat": list(SEAT),
+            "mug": MUG, "monitors": [[(m[1] + 1) if m[5] == "r" else (m[0] - 1), (m[3] if m[5] == "r" else m[2]) - m[4] - 1, m[4] - 4] for m in MONITORS],
+            "crop": CROP_MOBILE, "hello": HELLO, "helloCrop": HELLO_CROP, "glow": [30, 10, 24, 34]}
     js = os.path.join(ROOT, "assets", "js", "hero-scene.js")
     if os.path.exists(js):
         s = open(js, encoding="utf-8", newline="").read()
-        block = "/*FRAMES*/ " + json.dumps({"cell": [hc.CW, hc.CH], "anchor": [hc.FX, hc.FY], "cols": cols, "frames": meta, "floor": FLOOR_Y, "seatX": CHAR_CX, "cols_screen": [list(c) for c in screen_columns()], "phone": list(PHONE), "mug": [MUG_X, 104], "desk": [DESK_X0, DESK_X1, DESK_TOP]}, separators=(",", ":")) + " /*END-FRAMES*/"
-        s2 = re.sub(r"/\*FRAMES\*/.*?/\*END-FRAMES\*/", lambda m: block, s, flags=re.S)
-        open(js, "w", encoding="utf-8", newline="").write(s2)
-    for f in ("scene.png", "sprites.png", "poster-empty.png", "poster-final.png"):
+        block = "/*FRAMES*/ " + json.dumps(data, separators=(",", ":")) + " /*END-FRAMES*/"
+        open(js, "w", encoding="utf-8", newline="").write(re.sub(r"/\*FRAMES\*/.*?/\*END-FRAMES\*/", lambda m: block, s, flags=re.S))
+    for f in ("scene.png", "desk.png", "sprites.png", "poster-empty.png", "poster-final.png"):
         print(f, os.path.getsize(os.path.join(OUT, f)), "bytes")
-    print(json.dumps(meta))
+    print("seat (chairSeatAnchor):", SEAT, "frames:", sum(v[1] for v in meta.values()))
 
 
 if __name__ == "__main__":

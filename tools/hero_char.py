@@ -20,7 +20,7 @@ PAL = {
     "P": (45, 50, 70), "Q": (30, 34, 50), "p": (64, 71, 98),
     "F": (226, 230, 242), "f": (126, 132, 152),
     "M": (30, 34, 52), "N": (132, 196, 255), "n": (72, 118, 220),
-    "C": (240, 236, 226), "y": (232, 188, 70),
+    "C": (240, 236, 226), "y": (47, 143, 106),
 }
 
 # --------------------------------------------------------------------------- cabeças 16x16 (sem contorno)
@@ -109,7 +109,7 @@ HEAD_34U = _rows([
     "......bbbbbbb...",
 ])
 
-HEADS = {"front": HEAD_FRONT, "34": HEAD_34, "34d": HEAD_34D, "34u": HEAD_34U}
+HEADS = {"front": HEAD_FRONT, "frontd": HEAD_FRONT, "34": HEAD_34, "34d": HEAD_34D, "34u": HEAD_34U}
 
 
 class Cell:
@@ -188,8 +188,8 @@ class Cell:
 
     def glasses(self, kind, x, y, blink=False):
         """Óculos de armação fina (lentes vazadas com olho visível), desenhados por cima da cabeça."""
-        eyes = {"34d": "down", "34u": "up"}.get(kind, "fwd")
-        if kind == "front":
+        eyes = {"34d": "down", "34u": "up", "frontd": "down"}.get(kind, "fwd")
+        if kind in ("front", "frontd"):
             lenses = [(2, 5), (9, 5)]
         else:
             lenses = [(5, 5), (11, 4)]
@@ -207,12 +207,12 @@ class Cell:
                     for c_, ch in enumerate(line):
                         self.put(x + lx + 1 + c_, y + 7 + r_, ch)
             self.put(x + lx, y + 6, "G")
-        if kind == "front":
+        if kind in ("front", "frontd"):
             self.put(x + 7, y + 7, "g"); self.put(x + 8, y + 7, "g")
         else:
             self.put(x + 10, y + 7, "g")
         # haste da armação em direção à orelha (3/4)
-        if kind != "front":
+        if kind not in ("front", "frontd"):
             self.put(x + 4, y + 7, "g"); self.put(x + 3, y + 7, "g")
 
     def finish(self):
@@ -290,8 +290,9 @@ def hand(c, pos, kind="open", near=True):
         c.disc(x + 1, y, 3.0, "o"); c.disc(x + 1, y, 2.2, s); c.put(x, y - 1, sl); c.put(x + 2, y + 1, sd)
     elif kind == "fist":
         c.disc(x, y, 3.0, "o"); c.disc(x, y, 2.2, s); c.put(x - 1, y - 1, sl); c.put(x + 1, y + 1, sd)
-    else:
-        c.disc(x, y, 2.8, "o"); c.disc(x, y, 2.0, s); c.put(x - 1, y - 1, sl)
+    else:                   # mão aberta/relaxada: bloco 3x3 arredondado (o disco r=2 virava uma cruz)
+        c.rect(int(x) - 2, int(y) - 1, 5, 4, "o"); c.rect(int(x) - 1, int(y) - 2, 3, 6, "o")
+        c.rect(int(x) - 1, int(y) - 1, 3, 3, s); c.put(x - 1, y - 1, sl); c.put(x + 1, y + 1, sd)
 
 
 def arm(c, shoulder, handpos, near=True, bend=1, kind="open"):
