@@ -112,6 +112,94 @@
             1600
           ]
         }
+      },
+      "matches": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "standings": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "socio": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "store": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "guess-shirt": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "guess-player": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "identity-quiz": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "identity-result": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
       }
     },
     "blocks": {
@@ -121,10 +209,18 @@
         "art-quiz"
       ],
       "b2": [
+        "matches",
+        "standings",
         "home",
         "calendar",
+        "socio",
+        "store",
         "club",
-        "anthem"
+        "anthem",
+        "guess-shirt",
+        "guess-player",
+        "identity-quiz",
+        "identity-result"
       ]
     }
   },
@@ -166,78 +262,113 @@
       },
       "play": {
         "locales": [
-          "en"
+          "en",
+          "es"
         ],
         "dims": {
           "en": [
             738,
             1600
+          ],
+          "es": [
+            590,
+            1280
           ]
         }
       },
       "queue-search": {
         "locales": [
-          "en"
+          "en",
+          "es"
         ],
         "dims": {
           "en": [
             738,
             1600
+          ],
+          "es": [
+            590,
+            1280
           ]
         }
       },
       "teams-explore": {
         "locales": [
-          "en"
+          "en",
+          "es"
         ],
         "dims": {
           "en": [
             738,
             1600
+          ],
+          "es": [
+            590,
+            1280
           ]
         }
       },
       "central": {
         "locales": [
-          "en"
+          "en",
+          "es"
         ],
         "dims": {
           "en": [
             738,
             1600
+          ],
+          "es": [
+            590,
+            1280
           ]
         }
       },
       "players": {
         "locales": [
-          "en"
+          "en",
+          "es"
         ],
         "dims": {
           "en": [
             738,
             1600
+          ],
+          "es": [
+            590,
+            1280
           ]
         }
       },
       "player-detail": {
         "locales": [
-          "en"
+          "en",
+          "es"
         ],
         "dims": {
           "en": [
             738,
             1600
+          ],
+          "es": [
+            590,
+            1280
           ]
         }
       },
       "market": {
         "locales": [
-          "en"
+          "en",
+          "es"
         ],
         "dims": {
           "en": [
             738,
             1600
+          ],
+          "es": [
+            590,
+            1280
           ]
         }
       }
