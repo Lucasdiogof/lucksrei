@@ -249,6 +249,26 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
   var brCodes = (brSvg.match(/data-r="([A-Z]{2})"/g) || []).map(function (m) { return m.slice(8, 10); }).sort();
   check(brCodes.join() === Object.keys(VR.BR_STATES).concat("DF").sort().join(), "BR.svg: 26 estados + DF, códigos iguais ao regionCode: " + brCodes.join());
   check(/data-r="GO" data-n="Goiás"/.test(brSvg), "BR.svg: nomes com acento");
+  // 1º nível ISO (o nível do regionCode da Cloudflare), com as divisões menores do Natural Earth fundidas
+  function codesIn(cc) { return (read("assets/img/visitors/admin1/" + cc + ".svg").match(/data-r="([A-Z0-9]+)"/g) || []).map(function (m) { return m.slice(8, -1); }).sort().join(); }
+  check(codesIn("GB") === "ENG,NIR,SCT,WLS", "GB: 4 nações: " + codesIn("GB"));
+  check(!/<path (?![^>]*data-r=)/.test(read("assets/img/visitors/admin1/GB.svg")), "GB: nenhuma divisão sem código");
+  check(["ARA", "BFC", "BRE", "20R", "CVL", "GES", "HDF", "IDF", "NAQ", "NOR", "OCC", "PAC", "PDL"].every(function (c) { return codesIn("FR").split(",").indexOf(c) >= 0; }) && codesIn("FR").split(",").indexOf("75") < 0, "FR: 13 regiões metropolitanas (departamentos fundidos)");
+  check(/data-r="IDF" data-a="[^"]*\b75\b/.test(read("assets/img/visitors/admin1/FR.svg")), "FR: departamento antigo vale como alternativo da região");
+  check(/data-r="20R" data-a="[^"]*\bCOR\b/.test(read("assets/img/visitors/admin1/FR.svg")), "FR: Córsega aceita 20R e COR");
+  check(codesIn("IT").split(",").length === 20 && codesIn("IT").split(",").indexOf("25") >= 0, "IT: 20 regiões");
+  check(["AN", "CT", "MD", "PV", "VC"].every(function (c) { return codesIn("ES").split(",").indexOf(c) >= 0; }), "ES: comunidades autônomas");
+  check(codesIn("IE") === "C,L,M,U" && codesIn("BE") === "BRU,VLG,WAL", "IE províncias, BE regiões");
+  check(/data-r="CMX" data-a="DIF" data-n="Ciudad de México"/.test(read("assets/img/visitors/admin1/MX.svg")), "MX: Cidade do México com código atual e antigo");
+  check(/data-r="02" data-a="DS"/.test(read("assets/img/visitors/admin1/PL.svg")) && /data-r="10" data-a="PR"/.test(read("assets/img/visitors/admin1/CZ.svg")), "PL/CZ: códigos novos + antigos");
+  check(/data-r="31" data-a="01 30"/.test(read("assets/img/visitors/admin1/NO.svg")), "NO: condado de 2024 + códigos de 2020 e anteriores");
+  check(/data-r="43"/.test(read("assets/img/visitors/admin1/UA.svg")) && !/data-r="43"/.test(read("assets/img/visitors/admin1/RU.svg")), "Crimeia no arquivo da Ucrânia (como a Cloudflare classifica)");
+  check(fs.existsSync(path.join(root, "assets/img/visitors/admin1/PR.svg")) && !/data-r="PR"/.test(read("assets/img/visitors/admin1/US.svg")) &&
+    fs.existsSync(path.join(root, "assets/img/visitors/admin1/SX.svg")) && !/data-r="SX"/.test(read("assets/img/visitors/admin1/NL.svg")),
+    "território que é país no mapa (Porto Rico, Sint Maarten) fica no próprio arquivo");
+  var vjsA = read("assets/js/visitors.js");
+  check(/function codesOf\(p\)/.test(vjsA) && /data-a/.test(vjsA) && /return codesOf\(p\)\.reduce/.test(vjsA), "cliente soma visitas do código principal + alternativos");
+  check(/function mainBox\(paths\)/.test(vjsA), "zoom no território principal (sem Guiana/Alasca/Svalbard)");
   check(read("assets/img/visitors/world.svg").indexOf('viewBox="0 0 1000 439.1"') > 0, "world.svg com o viewBox de referência");
   var vjsz = read("assets/js/visitors.js");
   check(/var ZOOM = mapBox\.hasAttribute\("data-zoom"\)/.test(vjsz) && /if \(!ZOOM \|\| !state\.svg\) return Promise\.resolve\(null\)/.test(vjsz), "zoom e divisas só com data-zoom");

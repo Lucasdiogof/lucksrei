@@ -87,9 +87,18 @@
     return (k && p.getAttribute("data-" + k)) || p.getAttribute("data-n") || p.getAttribute("data-r") || "";
   }
 
-  function stateVisits(cc, code) {
+  // Códigos que valem para um estado no mapa: o principal (data-r, 1º nível ISO atual) e os alternativos (data-a:
+  // código antigo, reforma anterior…), para casar com qualquer versão que a Cloudflare informe.
+  function codesOf(p) {
+    var r = p.getAttribute("data-r");
+    var a = p.getAttribute("data-a");
+    return (r ? [r] : []).concat(a ? a.split(" ") : []);
+  }
+
+  function stateVisits(cc, p) {
     var g = state.regionsBy && state.regionsBy[cc];
-    return (g && code && g[code]) || 0;
+    if (!g) return 0;
+    return codesOf(p).reduce(function (n, c) { return n + (g[c] || 0); }, 0);
   }
 
   function tipText(path) {
@@ -98,7 +107,7 @@
       return countryName(code, path.getAttribute("data-n")) + ": " + visitsText((state.byCode && state.byCode[code]) || 0);
     }
     var cc = path.parentNode.getAttribute("data-c");
-    return stateName(path) + " · " + countryName(cc) + ": " + visitsText(stateVisits(cc, path.getAttribute("data-r")));
+    return stateName(path) + " · " + countryName(cc) + ": " + visitsText(stateVisits(cc, path));
   }
 
   function showTip(path, clientX, clientY) {
@@ -163,14 +172,13 @@
     g.setAttribute("data-lv", String(countryLv));
     var country = state.svg.querySelector('path[data-c="' + cc + '"]');
     if (country) country.classList.add("has-adm");
-    var m = (state.regionsBy && state.regionsBy[cc]) || {};
-    var max = 0;
-    Object.keys(m).forEach(function (k) { if (m[k] > max) max = m[k]; });
-    g.querySelectorAll("path").forEach(function (p) {
-      var code = p.getAttribute("data-r");
-      var v = (code && m[code]) || 0;
+    var paths = Array.prototype.slice.call(g.querySelectorAll("path"));
+    var vals = paths.map(function (p) { return stateVisits(cc, p); }); // principal + alternativos
+    var max = Math.max.apply(null, vals.concat(0));
+    paths.forEach(function (p, i) {
+      var v = vals[i];
       p.setAttribute("data-lv", String(level(v, max)));
-      p.classList.toggle("is-you", cc === state.you && !!code && code === state.youRegion);
+      p.classList.toggle("is-you", cc === state.you && !!state.youRegion && codesOf(p).indexOf(state.youRegion) >= 0);
       if (v) {
         p.setAttribute("tabindex", "0");
         p.setAttribute("role", "img");
@@ -277,9 +285,49 @@
     activateCountry(path.getAttribute("data-c"));
   }
 
+  // Caixa do território principal: parte do maior pedaço (subcaminho "M…Z") e junta só o que encosta nele,
+  // para a França não incluir a Guiana nem a Noruega incluir Svalbard (senão o zoom quase não aproxima).
+  function mainBox(paths) {
+    var boxes = [];
+    paths.forEach(function (p) {
+      (p.getAttribute("d") || "").split("M").forEach(function (sub) {
+        var n = sub.match(/-?\d+(?:\.\d+)?/g);
+        if (!n || n.length < 6) return;
+        var b = { x0: Infinity, y0: Infinity, x1: -Infinity, y1: -Infinity, a: 0 };
+        for (var i = 0; i + 1 < n.length; i += 2) {
+          var x = +n[i], y = +n[i + 1];
+          if (x < b.x0) b.x0 = x; if (x > b.x1) b.x1 = x; if (y < b.y0) b.y0 = y; if (y > b.y1) b.y1 = y;
+          var j = (i + 2) % n.length;
+          b.a += x * +n[j + 1] - +n[j] * y; // área real (fórmula do laço), não a da caixa
+        }
+        b.a = Math.abs(b.a) / 2;
+        boxes.push(b);
+      });
+    });
+    if (!boxes.length) return null;
+    // agrupa os pedaços que se encostam (folga de ~1° no mapa) e fica com o grupo de maior área total:
+    // os 48 estados contíguos dos EUA vencem o Alasca; a França continental vence a Guiana; a Noruega, Svalbard.
+    var PAD = 3, parent = boxes.map(function (b, i) { return i; });
+    function root(i) { while (parent[i] !== i) { parent[i] = parent[parent[i]]; i = parent[i]; } return i; }
+    for (var i = 0; i < boxes.length; i++) for (var j = i + 1; j < boxes.length; j++) {
+      var A = boxes[i], B = boxes[j];
+      if (A.x1 + PAD >= B.x0 && B.x1 + PAD >= A.x0 && A.y1 + PAD >= B.y0 && B.y1 + PAD >= A.y0) parent[root(i)] = root(j);
+    }
+    var groups = {};
+    boxes.forEach(function (b, i) {
+      var r = root(i), g = groups[r] || (groups[r] = { x0: Infinity, y0: Infinity, x1: -Infinity, y1: -Infinity, a: 0 });
+      g.x0 = Math.min(g.x0, b.x0); g.y0 = Math.min(g.y0, b.y0); g.x1 = Math.max(g.x1, b.x1); g.y1 = Math.max(g.y1, b.y1); g.a += b.a;
+    });
+    var m = Object.keys(groups).map(function (k) { return groups[k]; }).sort(function (a, b) { return b.a - a.a; })[0];
+    return { x: m.x0, y: m.y0, width: m.x1 - m.x0, height: m.y1 - m.y0 };
+  }
+
   function activateCountry(cc) {
     var country = state.svg.querySelector('path[data-c="' + cc + '"]');
-    if (country) zoomToBox(country.getBBox());
+    var a = state.adm[cc];
+    var src = a && a.g ? Array.prototype.slice.call(a.g.querySelectorAll("path")) : (country ? [country] : []);
+    var box = mainBox(src) || (country && country.getBBox());
+    if (box) zoomToBox(box);
     if (state.byCode && state.byCode[cc]) ensureAdm(cc);
   }
 
