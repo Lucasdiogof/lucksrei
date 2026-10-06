@@ -3,7 +3,7 @@
 Uso (na raiz do site):  python tools/make-hero-scene.py
 Saída:  assets/img/hero/{scene.png, sprites.png, poster-empty.png, poster-final.png}
         + bloco FRAMES em assets/js/hero-scene.js (entre /*FRAMES*/ e /*END-FRAMES*/)
-Mundo: 240 x 150 px lógicos. Chão do personagem em y=136. Tudo desenhado por código: nada de arte de terceiros.
+Mundo: 240 x 150 px lógicos. Chão do personagem em y=138. Tudo desenhado por código: nada de arte de terceiros.
 """
 import json
 import math
@@ -14,18 +14,22 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from PIL import Image, ImageDraw  # noqa: E402
 
-import build_frames as bf  # noqa: E402
-import hero_sprites as hs  # noqa: E402
+import hero_char as hc  # noqa: E402
+import hero_frames as hf  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "assets", "img", "hero")
 os.makedirs(OUT, exist_ok=True)
 
 W, H = 240, 150
-FLOOR_Y = 136
-CHAR_CX = 142           # x do mundo onde a célula (28) do sprite sentado fica
-DESK_X0, DESK_X1, DESK_TOP = 146, 236, 113
-SCREEN_X0, SCREEN_X1 = 188, 224  # quadrilátero da tela (36 colunas)
+FLOOR_Y = 138
+CHAR_CX = 144           # x do mundo onde a célula de âncora (32) do sprite fica; quadril sentado = CHAR_CX - 2
+DESK_X0, DESK_X1, DESK_TOP = 148, 238, 111
+SCREEN_X0, SCREEN_X1 = 190, 220  # tela do monitor em perspectiva (26 colunas): ele está virado para o personagem
+
+
+MUG_X = 230
+PHONE = (148, 109, 6, 2)   # x, y, w, h do celular deitado na mesa
 
 
 def rgb(h):
@@ -199,64 +203,77 @@ def build_bg():
     rect(d, DESK_X0, DESK_TOP - 1, DESK_X1, DESK_TOP - 1, C["wood_hi"])
     rect(d, DESK_X0, DESK_TOP, DESK_X1, DESK_TOP + 3, C["wood"])
     rect(d, DESK_X0, DESK_TOP + 4, DESK_X1, DESK_TOP + 4, C["wood_dd"])
-    rect(d, DESK_X0 + 2, DESK_TOP + 5, DESK_X0 + 5, 133, C["wood_d"])          # perna esquerda
-    rect(d, 206, DESK_TOP + 5, DESK_X1 - 2, 133, C["wood_d"])                    # gaveteiro
-    rect(d, 208, DESK_TOP + 8, DESK_X1 - 4, DESK_TOP + 15, C["wood"])
-    rect(d, 208, DESK_TOP + 18, DESK_X1 - 4, DESK_TOP + 25, C["wood"])
-    rect(d, 218, DESK_TOP + 11, 224, DESK_TOP + 11, C["gold"])
-    rect(d, 218, DESK_TOP + 21, 224, DESK_TOP + 21, C["gold"])
-    rect(d, DESK_X0 + 3, 134, DESK_X0 + 6, 134, C["wood_dd"])
-
-    # ---------- cadeira (de perfil)
-    rect(d, 126, 98, 131, 123, C["navy2"]); rect(d, 126, 98, 131, 98, C["blue"])            # encosto
-    rect(d, 126, 99, 126, 123, C["metal_hi"])
-    rect(d, 130, 124, 151, 127, C["navy2"]); rect(d, 130, 124, 151, 124, C["metal_hi"])      # assento
-    rect(d, 139, 128, 141, 134, C["metal"])
-    rect(d, 129, 135, 151, 135, C["metal"])
-    for wx in (130, 135, 140, 145, 150):
-        rect(d, wx, 136, wx + 1, 137, C["navy"])
-
-    # ---------- monitor (base/haste e carcaça; a tela é dinâmica)
-    rect(d, 197, DESK_TOP - 3, 215, DESK_TOP - 1, C["metal"]); rect(d, 197, DESK_TOP - 3, 215, DESK_TOP - 3, C["metal_hi"])
-    # teclado e mouse (dourado só no LED fino sob o teclado: detalhe da marca)
-    rect(d, 158, DESK_TOP - 2, 181, DESK_TOP - 1, C["metal"])
-    for kx in range(159, 181, 2):
+    rect(d, DESK_X0 + 2, DESK_TOP + 5, DESK_X0 + 5, 135, C["wood_d"])          # perna esquerda
+    rect(d, 208, DESK_TOP + 5, DESK_X1 - 2, 135, C["wood_d"])                    # gaveteiro
+    rect(d, 210, DESK_TOP + 8, DESK_X1 - 4, DESK_TOP + 16, C["wood"])
+    rect(d, 210, DESK_TOP + 19, DESK_X1 - 4, DESK_TOP + 27, C["wood"])
+    rect(d, 220, DESK_TOP + 12, 226, DESK_TOP + 12, C["gold"])
+    rect(d, 220, DESK_TOP + 23, 226, DESK_TOP + 23, C["gold"])
+    # ---------- cadeira (de perfil): quadril do personagem em x=CHAR_CX-2, y=123
+    hx = CHAR_CX - 2
+    rect(d, hx - 15, 96, hx - 10, 124, C["navy2"]); rect(d, hx - 15, 96, hx - 10, 96, C["blue"])   # encosto
+    rect(d, hx - 15, 97, hx - 15, 124, C["metal_hi"])
+    rect(d, hx - 11, 124, hx + 10, 127, C["navy2"]); rect(d, hx - 11, 124, hx + 10, 124, C["metal_hi"])  # assento
+    rect(d, hx - 1, 128, hx + 1, 135, C["metal"])
+    rect(d, hx - 12, 136, hx + 11, 136, C["metal"])
+    for wx in (hx - 11, hx - 6, hx - 1, hx + 4, hx + 9):
+        rect(d, wx, 137, wx + 1, 138, C["navy"])
+    # ---------- teclado e mouse
+    rect(d, 156, DESK_TOP - 2, 180, DESK_TOP - 1, C["metal"])
+    for kx in range(157, 180, 2):
         px(d, kx, DESK_TOP - 2, C["metal_hi"])
-    rect(d, 158, DESK_TOP, 181, DESK_TOP, C["blue"])
-    rect(d, 185, DESK_TOP - 2, 188, DESK_TOP - 1, C["metal"])
+    rect(d, 156, DESK_TOP, 180, DESK_TOP, C["blue"])
+    rect(d, 183, DESK_TOP - 2, 186, DESK_TOP - 1, C["metal"])
+    # ---------- brilho azul da tela caindo na mesa e na parede, em direção a ele (só um sopro, em dither)
+    for y in range(80, 112):
+        for x in range(150, 192):
+            dist = math.hypot((x - 190) / 42, (y - 92) / 24)
+            if dist < 1 and (x + y) % 3 == 0:
+                base = im.getpixel((x, y))[:3]
+                px(d, x, y, lerp(base, C["blue"], 0.10 * (1 - dist)))
     bezel(im)
     return im
 
 
-SCREEN_TOP, SCREEN_SLOPE, SCREEN_H0, SCREEN_HSLOPE = 84, 0.11, 27, 0.2
+SCREEN_TOP, SCREEN_SLOPE, SCREEN_H0, SCREEN_HSLOPE = 74, 0.2, 34, 0.3
 
 
 def screen_columns():
-    """(x, topo, altura) de cada coluna da tela projetada (perspectiva 3/4: borda esquerda mais alta)."""
-    out = []
-    for i in range(SCREEN_X1 - SCREEN_X0):
-        out.append((SCREEN_X0 + i, SCREEN_TOP + int(round(i * SCREEN_SLOPE)), int(round(SCREEN_H0 - i * SCREEN_HSLOPE))))
-    return out
+    """(x, topo, altura) de cada coluna da tela em perspectiva: a borda esquerda (mais perto do personagem) é a mais alta."""
+    return [(SCREEN_X0 + i, SCREEN_TOP + int(round(i * SCREEN_SLOPE)), int(round(SCREEN_H0 - i * SCREEN_HSLOPE))) for i in range(SCREEN_X1 - SCREEN_X0)]
 
 
 def screen_quad(im, content):
-    for i, (x, top, hgt) in enumerate(screen_columns()):
-        col = content.crop((i, 0, i + 1, content.height)).resize((1, hgt), Image.NEAREST)
+    cols = screen_columns()
+    n = len(cols)
+    for j, (x, top, hgt) in enumerate(cols):
+        sx = min(content.width - 1, int(j * content.width / n))
+        col = content.crop((sx, 0, sx + 1, content.height)).resize((1, hgt), Image.NEAREST)
         im.alpha_composite(col.convert("RGBA"), (x, top))
 
 
 def bezel(im):
+    """Monitor virado para o personagem: moldura fina à esquerda/em cima/embaixo e o corpo do aparelho (profundidade) à direita."""
     d = ImageDraw.Draw(im)
     cols = screen_columns()
     (xl, tl, hl), (xr, tr, hr) = cols[0], cols[-1]
-    m = 3
-    quad = [(xl - m, tl - m), (xr + m, tr - m), (xr + m, tr + hr + m), (xl - m, tl + hl + m)]
+    # corpo/traseira (aparece atrás da tela, à direita): mais escuro, com borda superior clara
+    back = [(xr + 1, tr - 2), (xr + 8, tr - 6), (xr + 8, tr + hr - 1), (xr + 1, tr + hr + 2)]
+    d.polygon(back, fill=rgb("#1b2240") + (255,))
+    d.line([back[0], back[1]], fill=C["metal_hi"] + (255,))
+    d.line([back[1], back[2]], fill=rgb("#10152c") + (255,))
+    # moldura da frente
+    m = 2
+    quad = [(xl - m, tl - m), (xr + 1, tr - m), (xr + 1, tr + hr + m), (xl - m, tl + hl + m)]
     d.polygon(quad, fill=C["metal"] + (255,))
     d.line([quad[0], quad[1]], fill=C["metal_hi"] + (255,))
     d.line([quad[0], quad[3]], fill=C["metal_hi"] + (255,))
-    # tela apagada (a tela viva é desenhada por cima pelo JS / pôster)
+    # tela apagada (a viva é desenhada por cima)
     for x, top, hgt in cols:
         d.line([(x, top), (x, top + hgt - 1)], fill=rgb("#070b1c") + (255,))
+    # haste e base
+    rect(d, xr + 2, tr + hr + 1, xr + 5, DESK_TOP - 3, C["metal"])
+    rect(d, xl + 6, DESK_TOP - 3, xr + 12, DESK_TOP - 1, C["metal"]); rect(d, xl + 6, DESK_TOP - 3, xr + 12, DESK_TOP - 3, C["metal_hi"])
 
 
 def static_screen(lines=True):
@@ -283,23 +300,23 @@ def static_screen(lines=True):
 def draw_desk_props(im, phone=True):
     d = ImageDraw.Draw(im)
     if phone:
-        rect(d, 150, DESK_TOP - 2, 156, DESK_TOP - 1, rgb("#242a44"))
-        rect(d, 151, DESK_TOP - 2, 155, DESK_TOP - 2, C["blue_l"])
+        rect(d, PHONE[0], PHONE[1], PHONE[0] + PHONE[2] - 1, PHONE[1] + 1, rgb("#242a44"))
+        rect(d, PHONE[0] + 1, PHONE[1], PHONE[0] + PHONE[2] - 2, PHONE[1], C["blue_l"])
     # caneca
-    rect(d, 227, 106, 232, DESK_TOP - 2, C["ivory"]); rect(d, 227, 108, 232, 108, C["gold"]); rect(d, 233, 108, 234, 110, C["ivory"])
-    rect(d, 227, 106, 232, 106, rgb("#a37a50"))
+    rect(d, MUG_X, 104, MUG_X + 5, DESK_TOP - 2, C["ivory"]); rect(d, MUG_X, 106, MUG_X + 5, 106, C["gold"]); rect(d, MUG_X + 6, 106, MUG_X + 7, 108, C["ivory"])
+    rect(d, MUG_X, 104, MUG_X + 5, 104, rgb("#a37a50"))
 
 
 def build_sheet():
-    cells = [(n, c) for n, cs in bf.ORDER for c in cs]
-    cols = 11
+    cells = [(n, c) for n, cs in hf.ORDER for c in cs]
+    cols = 10
     rows = (len(cells) + cols - 1) // cols
-    sheet = Image.new("RGBA", (cols * hs.CELL_W, rows * hs.CELL_H), (0, 0, 0, 0))
+    sheet = Image.new("RGBA", (cols * hc.CW, rows * hc.CH), (0, 0, 0, 0))
     meta, idx = {}, 0
-    for name, cs in bf.ORDER:
+    for name, cs in hf.ORDER:
         meta[name] = [idx, len(cs)]
         for c in cs:
-            sheet.alpha_composite(c.image(), ((idx % cols) * hs.CELL_W, (idx // cols) * hs.CELL_H))
+            sheet.alpha_composite(c.image(), ((idx % cols) * hc.CW, (idx // cols) * hc.CH))
             idx += 1
     return sheet, meta, cols
 
@@ -317,10 +334,9 @@ def main():
         screen_quad(im, static_screen(lines=with_char))
         draw_desk_props(im)
         if with_char:
-            fr = sheet.crop((0, 0, 0, 0))
             start = meta["type"][0]
-            cell = sheet.crop(((start % cols) * hs.CELL_W, (start // cols) * hs.CELL_H, (start % cols + 1) * hs.CELL_W, (start // cols + 1) * hs.CELL_H))
-            im.alpha_composite(cell, (CHAR_CX - hs.FX, FLOOR_Y - hs.FY))
+            cell = sheet.crop(((start % cols) * hc.CW, (start // cols) * hc.CH, (start % cols + 1) * hc.CW, (start // cols + 1) * hc.CH))
+            im.alpha_composite(cell, (CHAR_CX - hc.FX, FLOOR_Y - hc.FY))
         return im.convert("RGB")
 
     poster(False).save(os.path.join(OUT, "poster-empty.png"), optimize=True)
@@ -329,7 +345,7 @@ def main():
     js = os.path.join(ROOT, "assets", "js", "hero-scene.js")
     if os.path.exists(js):
         s = open(js, encoding="utf-8", newline="").read()
-        block = "/*FRAMES*/ " + json.dumps({"cell": [hs.CELL_W, hs.CELL_H], "anchor": [hs.FX, hs.FY], "cols": cols, "frames": meta}, separators=(",", ":")) + " /*END-FRAMES*/"
+        block = "/*FRAMES*/ " + json.dumps({"cell": [hc.CW, hc.CH], "anchor": [hc.FX, hc.FY], "cols": cols, "frames": meta, "floor": FLOOR_Y, "seatX": CHAR_CX, "cols_screen": [list(c) for c in screen_columns()], "phone": list(PHONE), "mug": [MUG_X, 104], "desk": [DESK_X0, DESK_X1, DESK_TOP]}, separators=(",", ":")) + " /*END-FRAMES*/"
         s2 = re.sub(r"/\*FRAMES\*/.*?/\*END-FRAMES\*/", lambda m: block, s, flags=re.S)
         open(js, "w", encoding="utf-8", newline="").write(s2)
     for f in ("scene.png", "sprites.png", "poster-empty.png", "poster-final.png"):

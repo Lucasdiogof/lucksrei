@@ -108,7 +108,6 @@
   "home.a11y.section_arialabel2": "Indicadores",
   "home.contato.h21": "¿Quieres hablar de un proyecto o una oportunidad?",
   "home.hero.scene_alt": "Ilustración en pixel art de Lucas programando en su escritorio y probando una app en el móvil",
-  "home.hero.kicker": "MOBILE · SOFTWARE · PRODUCTOS",
   "home.tecnologias.kicker": "Ingeniería",
   "home.experiencia.kicker": "Trayectoria",
   "home.visitors.title": "De dónde llegan las visitas",

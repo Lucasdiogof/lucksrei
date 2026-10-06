@@ -108,7 +108,6 @@
   "home.a11y.section_arialabel2": "Key figures",
   "home.contato.h21": "Want to talk about a project or opportunity?",
   "home.hero.scene_alt": "Pixel art illustration of Lucas coding at his desk and testing an app on his phone",
-  "home.hero.kicker": "MOBILE · SOFTWARE · PRODUCTS",
   "home.tecnologias.kicker": "Engineering",
   "home.experiencia.kicker": "Career",
   "home.visitors.title": "Where visits come from",
