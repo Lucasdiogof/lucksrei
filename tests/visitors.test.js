@@ -232,6 +232,34 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
   check(VR.regionLabel("BR", "GO", "Goias") === "Goiás" && VR.regionLabel("BR", "SP", "") === "São Paulo" && VR.regionLabel("BR", "DF", "x", "Federal District") === "Federal District", "estados do Brasil com grafia oficial; DF por idioma");
   check(Object.keys(VR.BR_STATES).length === 26, "26 estados + DF");
   check(VR.regionLabel("US", "CA", "California") === "California" && VR.regionLabel("FR", "IDF", "") === "FR-IDF", "outros países: nome da Cloudflare ou PAÍS-CÓDIGO");
+  // --- divisas de estados (admin1) e mapa interativo
+  var admDir = path.join(root, "assets/img/visitors/admin1");
+  var admFiles = fs.readdirSync(admDir).filter(function (f) { return /\.svg$/.test(f); });
+  check(admFiles.length >= 200, "divisas para os países do mundo: " + admFiles.length);
+  var admBytes = 0;
+  admFiles.forEach(function (f) {
+    var t = fs.readFileSync(path.join(admDir, f), "utf8");
+    admBytes += t.length;
+    var cc = f.replace(".svg", "");
+    check(/^[A-Z]{2}$/.test(cc) && t.indexOf('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 439.1" data-c="' + cc + '">') === 0, f + ": mesmo viewBox do world.svg e data-c");
+    check(!/fill="|style="|<script|on\w+=/i.test(t), f + ": sem cor fixa nem script");
+    (t.match(/data-r="([^"]*)"/g) || []).forEach(function (m) { check(/^data-r="[A-Z0-9]{1,3}"$/.test(m), f + ": código de estado inválido " + m); });
+  });
+  var brSvg = read("assets/img/visitors/admin1/BR.svg");
+  var brCodes = (brSvg.match(/data-r="([A-Z]{2})"/g) || []).map(function (m) { return m.slice(8, 10); }).sort();
+  check(brCodes.join() === Object.keys(VR.BR_STATES).concat("DF").sort().join(), "BR.svg: 26 estados + DF, códigos iguais ao regionCode: " + brCodes.join());
+  check(/data-r="GO" data-n="Goiás"/.test(brSvg), "BR.svg: nomes com acento");
+  check(read("assets/img/visitors/world.svg").indexOf('viewBox="0 0 1000 439.1"') > 0, "world.svg com o viewBox de referência");
+  var vjsz = read("assets/js/visitors.js");
+  check(/var ZOOM = mapBox\.hasAttribute\("data-zoom"\)/.test(vjsz) && /if \(!ZOOM \|\| !state\.svg\) return Promise\.resolve\(null\)/.test(vjsz), "zoom e divisas só com data-zoom");
+  check(/if \(!\(e\.ctrlKey \|\| e\.metaKey\)\)/.test(vjsz), "rolagem só amplia com Ctrl/⌘ (sem sequestrar a rolagem da página)");
+  check(/reduceMotion\.matches/.test(vjsz) && /animGuard = setTimeout/.test(vjsz), "reduced motion respeitado; zoom chega ao destino mesmo sem quadros");
+  check(/"\/assets\/img\/visitors\/admin1\/" \+ cc \+ "\.svg"/.test(vjsz), "divisas carregadas sob demanda por país");
+  var vz = read("visitors/index.html");
+  check(/id="v-map" data-zoom/.test(vz) && /id="v-zoom-in"/.test(vz) && /id="v-zoom-out"/.test(vz) && /id="v-zoom-reset"/.test(vz) && /id="v-map-hint"/.test(vz), "/visitors/: mapa interativo com botões e dica");
+  check(!/data-zoom/.test(read("index.html")) && read("index.html").indexOf("map-ctrl") < 0, "home sem zoom nem divisas (peso igual)");
+  check(read(".assetsignore").split(/\r?\n/).indexOf("tools") >= 0 && fs.existsSync(path.join(root, "tools/build-admin1-svg.py")), "gerador das divisas em tools/ (não publicado)");
+
   var vpage = read("visitors/index.html");
   // inglês é o padrão: o HTML estático é o que aparece em EN, então tem de bater com o dicionário
   var vctx = { window: {} };

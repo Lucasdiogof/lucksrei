@@ -77,7 +77,12 @@
         <div><dt data-i18n="visitors.stat.you">You are in</dt><dd id="v-you">—</dd></div>
       </dl>
 
-      <figure class="visitors-map" id="v-map" aria-busy="true">
+      <figure class="visitors-map" id="v-map" data-zoom aria-busy="true">
+        <div class="map-ctrl" role="group" aria-label="Zoom" data-i18n-attr="aria-label:visitors.zoom_aria">
+          <button type="button" id="v-zoom-in" aria-label="Zoom in" data-i18n-attr="aria-label:visitors.zoom_in;title:visitors.zoom_in" title="Zoom in">+</button>
+          <button type="button" id="v-zoom-out" aria-label="Zoom out" data-i18n-attr="aria-label:visitors.zoom_out;title:visitors.zoom_out" title="Zoom out" disabled>−</button>
+          <button type="button" id="v-zoom-reset" aria-label="Show the whole map" data-i18n-attr="aria-label:visitors.zoom_reset;title:visitors.zoom_reset" title="Show the whole map" disabled>⤢</button>
+        </div>
         <div class="map-legend" aria-hidden="true">
           <span data-i18n="visitors.legend.low">fewer</span>
           <i class="lv0"></i><i class="lv1"></i><i class="lv2"></i><i class="lv3"></i><i class="lv4"></i><i class="lv5"></i>
@@ -85,16 +90,17 @@
         </div>
         <div class="map-tip" id="v-tip" role="tooltip" hidden></div>
       </figure>
+      <p class="map-hint" id="v-map-hint" data-i18n="visitors.map_hint">Use the buttons, Ctrl + scroll or pinch to zoom. Click a country to zoom in.</p>
       <p class="visitors-meta" id="v-meta"></p>
       <p class="visitors-status" id="v-status" role="status" aria-live="polite"></p>
 
-      <h2 class="visitors-rank-title" data-i18n="visitors.ranking">Ranking</h2>
-      <ol class="visitors-rank" id="v-rank"></ol>
+      <h2 class="visitors-rank-title" id="v-rank-title" hidden data-i18n="visitors.ranking">Ranking</h2>
+      <ol class="visitors-rank" id="v-rank" hidden></ol>
 
-      <h2 class="visitors-rank-title" data-i18n="visitors.regions.title">By state or region</h2>
+      <h2 class="visitors-rank-title" id="v-regions-title" hidden data-i18n="visitors.regions.title">By state or region</h2>
       <div class="rg-filters" id="v-rg-filters" role="group" aria-label="Country" hidden></div>
-      <ol class="visitors-rank" id="v-regions"></ol>
-      <p class="visitors-note" id="v-regions-note" role="status" aria-live="polite"></p>
+      <ol class="visitors-rank" id="v-regions" hidden></ol>
+      <p class="visitors-note" id="v-regions-note" role="status" aria-live="polite" hidden></p>
 
       <p class="visitors-note" data-i18n="visitors.note">Statistics are aggregated by country and by state or region. No IP address, city or precise location is shown on this page.</p>
       <p class="visitors-note" data-i18n="visitors.note_metric">A visit is counted at most once per browser tab session; this is not a count of unique visitors.</p>

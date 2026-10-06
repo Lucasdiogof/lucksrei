@@ -50,9 +50,12 @@ Rate limiting pode ser adicionado futuramente se houver abuso real.
 
 - `assets/js/visitors.js` atende as duas páginas:
   - **home**: versão resumida (visitas, países, mapa com o país atual destacado, link "Ver mapa completo"), sem ranking; `#v-map[data-lazy]` só busca SVG e API quando a seção chega perto do viewport.
-  - **`/visitors/`**: mapa completo, indicadores (incl. "Você está em" com estado e país), top 10 de países, "Dados desde…", seção "Por estado ou região" (botões com até 8 países, top 10 estados do país escolhido, nota com "dados por estado desde…" e visitas sem estado), notas sobre a métrica.
+  - **`/visitors/`**: mapa completo, indicadores (incl. "Você está em" com estado e país), top 10 de países (só a partir do 2º país), "Dados desde…", seção "Por estado ou região" (só a partir do 2º estado registrado; botões com até 8 países quando há mais de um, top 10 estados do país escolhido, nota com "dados por estado desde…" e visitas sem estado), notas sobre a métrica.
   - A home **não** mostra estados.
 - Mapa: `assets/img/visitors/world.svg` local (Natural Earth, gerado por `tools/build-world-svg.py`), sem cor fixa; cores vêm de `--map-0…--map-5`, escala logarítmica.
+- **Mapa interativo (só `/visitors/`, `#v-map[data-zoom]`)**: zoom pelos botões (+, −, ver tudo), Ctrl/⌘ + rolagem (rolagem simples continua rolando a página), pinça, duplo clique e teclado (Enter no país/estado, + / − / 0, setas). Arraste só quando ampliado (`touch-action: pan-y` sem zoom, `none` com zoom). Clique num país aproxima nele; já ampliado, clique num estado aproxima no estado. Animação de ~320 ms no viewBox, instantânea com `prefers-reduced-motion` ou aba oculta, com timer de garantia se o navegador não rodar quadros. No celular (≤ 560 px) os botões ficam numa linha abaixo do mapa.
+- **Divisas de estados**: `assets/img/visitors/admin1/<PAÍS>.svg` (Natural Earth 1:10m, ~240 países, mesma projeção/viewBox do world.svg; gerados por `tools/build-admin1-svg.py`). Carregadas sob demanda só para países com visitas (os 12 com mais visitas de saída; os outros ao aproximar). Sem zoom, os estados herdam a cor do país; ampliado (≥ 2×), cada estado tem a própria cor pelas visitas dele (escala relativa ao estado mais visitado do país). Estados com visitas são focáveis e têm tooltip/aria com nome no idioma (`data-pt/es/en`) e visitas.
+- Limitação: o casamento estado ↔ visita usa o código ISO 3166-2 do Natural Earth e o `regionCode` da Cloudflare. Para a maioria dos países (BR, US, PT, IN…) os níveis coincidem; em alguns (ex.: Reino Unido, França) o Natural Earth tem divisões mais finas que as da Cloudflare, e esses estados aparecem no ranking mas não ganham cor no mapa.
 - Países sem forma no SVG (microestados como SG, MT, MC) entram nos totais e no ranking; o mapa simplesmente não os pinta.
 - Nomes de país via `Intl.DisplayNames` no idioma atual (`makeCountryNamer`). Sem a API, com erro ou com código desconhecido: nome em inglês do SVG (quando há) e por último o código ISO.
 
@@ -76,7 +79,7 @@ Rate limiting pode ser adicionado futuramente se houver abuso real.
 - `assets/js/visitors.js` — mapa, indicadores, ranking, tooltip, nomes de país.
 - `assets/js/main.js` — beacon de visita (uma por sessão de aba).
 - `visitors/index.html` e a seção `.home-visitors` de `index.html`.
-- `assets/img/visitors/world.svg` (+ `tools/build-world-svg.py`).
+- `assets/img/visitors/world.svg` (+ `tools/build-world-svg.py`) e `assets/img/visitors/admin1/` (+ `tools/build-admin1-svg.py <ne_110m_admin_0_countries.geojson> <ne_10m_admin_1_states_provinces.geojson>`; os GeoJSON brutos não ficam no repo).
 - `migrations/0001_visits.sql` e `migrations/0002_visits_region.sql` — schema do D1 (aplicar com `wrangler d1 migrations apply lucksrei-visits --remote`; 0002 só cria a tabela nova).
 - `tools/visitor-report.mjs` — relatório manual somente leitura (ver "Relatório manual").
 - `tests/visitors.test.js` — Worker, privacidade, microestados, fallback de nomes, privacy i18n. Rodar com `node tests/visitors.test.js` (junto com `tests/i18n.test.js` e `tests/apps-data.test.js`).
