@@ -446,28 +446,6 @@
           ]
         }
       },
-      "essay-competencies": {
-        "locales": [
-          "pt-BR"
-        ],
-        "dims": {
-          "pt-BR": [
-            590,
-            1280
-          ]
-        }
-      },
-      "mock-review": {
-        "locales": [
-          "pt-BR"
-        ],
-        "dims": {
-          "pt-BR": [
-            590,
-            1280
-          ]
-        }
-      },
       "map": {
         "locales": [
           "pt-BR"
@@ -496,28 +474,6 @@
         ],
         "dims": {
           "pt-BR": [
-            590,
-            1280
-          ]
-        }
-      },
-      "theme-dark": {
-        "locales": [
-          "pt-BR"
-        ],
-        "dims": {
-          "pt-BR": [
-            590,
-            1280
-          ]
-        }
-      },
-      "language": {
-        "locales": [
-          "en"
-        ],
-        "dims": {
-          "en": [
             590,
             1280
           ]
