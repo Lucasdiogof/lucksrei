@@ -71,10 +71,20 @@
       },
       "home": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
+            738,
+            1600
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
             738,
             1600
           ]
@@ -82,10 +92,20 @@
       },
       "calendar": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
+            738,
+            1600
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
             738,
             1600
           ]
@@ -93,10 +113,20 @@
       },
       "club": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "es",
+          "en"
         ],
         "dims": {
           "pt-BR": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
+          ],
+          "en": [
             738,
             1600
           ]
@@ -104,10 +134,20 @@
       },
       "anthem": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "es",
+          "en"
         ],
         "dims": {
           "pt-BR": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
+          ],
+          "en": [
             738,
             1600
           ]
@@ -115,210 +155,400 @@
       },
       "matches": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "standings": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "socio": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "store": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "guess-shirt": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "es",
+          "en"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "es": [
+            738,
+            1600
+          ],
+          "en": [
+            738,
+            1600
           ]
         }
       },
       "guess-player": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "identity-quiz": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "es",
+          "en"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "es": [
+            738,
+            1600
+          ],
+          "en": [
+            738,
+            1600
           ]
         }
       },
       "identity-result": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "club-home": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "titles": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "board": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "idols": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "squad": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "player": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "transparency": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "songs": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "document": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "partners": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "es",
+          "en"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "es": [
+            738,
+            1600
+          ],
+          "en": [
+            738,
+            1600
           ]
         }
       },
       "media": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
@@ -368,56 +598,106 @@
       },
       "my-tickets": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "ticket": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "member-signup": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "es",
+          "en"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "es": [
+            738,
+            1600
+          ],
+          "en": [
+            738,
+            1600
           ]
         }
       },
       "arena": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "challenges": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "es",
+          "en"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "es": [
+            738,
+            1600
+          ],
+          "en": [
+            738,
+            1600
           ]
         }
       },
@@ -445,67 +725,127 @@
       },
       "guess-lineup": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "who-wore": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "es",
+          "en"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "es": [
+            738,
+            1600
+          ],
+          "en": [
+            738,
+            1600
           ]
         }
       },
       "who-wore-hit": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "es",
+          "en"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "es": [
+            738,
+            1600
+          ],
+          "en": [
+            738,
+            1600
           ]
         }
       },
       "passport": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "es",
+          "en"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "es": [
+            738,
+            1600
+          ],
+          "en": [
+            738,
+            1600
           ]
         }
       },
       "trajectory": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "es",
+          "en"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "es": [
+            738,
+            1600
+          ],
+          "en": [
+            738,
+            1600
           ]
         }
       },
       "ranking": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       }
@@ -813,10 +1153,15 @@
       },
       "trail": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en"
         ],
         "dims": {
           "pt-BR": [
+            590,
+            1280
+          ],
+          "en": [
             590,
             1280
           ]
@@ -835,10 +1180,15 @@
       },
       "trail-question": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en"
         ],
         "dims": {
           "pt-BR": [
+            590,
+            1280
+          ],
+          "en": [
             590,
             1280
           ]
@@ -1013,10 +1363,15 @@
       },
       "essay-proposal": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en"
         ],
         "dims": {
           "pt-BR": [
+            590,
+            1280
+          ],
+          "en": [
             590,
             1280
           ]
@@ -1024,10 +1379,26 @@
       },
       "essay-correcting": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en"
         ],
         "dims": {
           "pt-BR": [
+            590,
+            1280
+          ],
+          "en": [
+            590,
+            1280
+          ]
+        }
+      },
+      "essay-list": {
+        "locales": [
+          "en"
+        ],
+        "dims": {
+          "en": [
             590,
             1280
           ]
@@ -1048,6 +1419,7 @@
         "mock-question"
       ],
       "b3": [
+        "essay-list",
         "essay-proposal",
         "essay-correcting",
         "essay-score"

@@ -147,7 +147,7 @@ proj.forEach(function (p) {
 });
 // seleção por idioma e ausência de fallback silencioso
 check(Shots.blockFor("aprovaura", "b1", "pt-BR").length === 5, "aprovaura b1 pt-BR deve ter 5 telas");
-check(Shots.blockFor("aprovaura", "b1", "en").map(function (s) { return s.id; }).join() === "practice,practice-more", "aprovaura b1 en: só as telas em inglês");
+check(Shots.blockFor("aprovaura", "b1", "en").map(function (s) { return s.id; }).join() === "practice,practice-more,trail,trail-question", "aprovaura b1 en: só as telas em inglês");
 check(Shots.blockFor("aprovaura", "b1", "es").map(function (s) { return s.id; }).join() === "practice", "aprovaura b1 es: só a tela em espanhol");
 ["pt-BR", "en", "es"].forEach(function (l) {
   ["b2", "b5"].forEach(function (b) { check(Shots.blockFor("aprovaura", b, l).every(function (s) { return s.src.indexOf("/screens/" + l + "/") > 0; }), "aprovaura " + b + " " + l + ": sem imagem de outro idioma"); });
@@ -158,7 +158,8 @@ var aprovBlocks = function (b, l) { return Shots.blockFor("aprovaura", b, l).map
 check(aprovBlocks("b2", "pt-BR") === "mock-build,mock-build-more,mock-question" && aprovBlocks("b2", "en") === "mock-build,mock-build-more,mock-question" && aprovBlocks("b2", "es") === "mock-build,mock-question", "aprovaura: telas do simulado por idioma");
 check(aprovBlocks("b3", "pt-BR") === "essay-proposal,essay-correcting,essay-score", "aprovaura: redação só com as telas do tema escuro");
 check(aprovBlocks("b5", "pt-BR") === "home,profile,level-up" && aprovBlocks("b5", "en") === "home,profile" && aprovBlocks("b5", "es") === "home,profile", "aprovaura: só telas novas (tema escuro) em progresso");
-check(Shots.blockFor("aprovaura", "b3", "en").length === 0 && Shots.blockFor("aprovaura", "b4", "es").length === 0, "redação e mapas seguem só em pt-BR (sem fallback)");
+check(aprovBlocks("b3", "en") === "essay-list,essay-proposal,essay-correcting", "aprovaura: redação em inglês (lista de temas, proposta, correção)");
+check(Shots.blockFor("aprovaura", "b3", "es").length === 0 && Shots.blockFor("aprovaura", "b4", "en").length === 0 && Shots.blockFor("aprovaura", "b4", "es").length === 0, "mapas seguem só em pt-BR e redação sem es (sem fallback)");
 // Perfil: o e-mail pessoal NUNCA aparece. As 3 telas de perfil publicadas têm a linha do e-mail coberta com a cor do
 // cartão (só nome e @usuário); qualquer tela de perfil nova precisa passar pela mesma máscara antes de entrar.
 check(["pt-BR", "en", "es"].every(function (l) { return Shots.slotFor("aprovaura", "profile", l); }), "aprovaura: perfil (e-mail mascarado) nos 3 idiomas");
@@ -167,7 +168,7 @@ check(Shots.slotFor("lapelve", "home", "en").src.indexOf("/screens/en/home.webp"
 check(Shots.slotFor("lapelve", "home", "pt-BR").src.indexOf("/screens/pt-BR/home.webp") > 0, "la pelve home pt-BR usa a versão pt-BR");
 check(Shots.slotFor("lapelve", "home", "es") === null, "la pelve home es inexistente → null (sem fallback)");
 var model = Shots.buildScreenshots("fanhub", "b2", function (k, v, l) { return D[l][k]; });
-check(model["pt-BR"].length === 12 && Shots.blockFor("fanhub", "b3", "pt-BR").length === 11 && Shots.blockFor("fanhub", "b4", "pt-BR").length === 7 && Shots.blockFor("fanhub", "b5", "pt-BR").length === 10 && Shots.blockFor("fanhub", "b5", "en").length === 0 && model.en.length === 0 && model.es.length === 0, "modelo por locale do fan hub (só pt-BR: o app é em português)");
+check(model["pt-BR"].length === 12 && Shots.blockFor("fanhub", "b3", "pt-BR").length === 11 && Shots.blockFor("fanhub", "b4", "pt-BR").length === 7 && Shots.blockFor("fanhub", "b5", "pt-BR").length === 10 && Shots.blockFor("fanhub", "b5", "en").length === 8 && model.en.length === 12 && Shots.blockFor("fanhub", "b3", "en").length === 11 && Shots.blockFor("fanhub", "b4", "en").map(function (s) { return s.id; }).join() === "my-tickets,ticket,member-signup" && model.es.length === 12 && Shots.blockFor("fanhub", "b3", "es").length === 11 && Shots.blockFor("fanhub", "b4", "es").map(function (s) { return s.id; }).join() === "my-tickets,ticket,member-signup" && Shots.blockFor("fanhub", "b5", "es").length === 8, "modelo por locale do fan hub (pt-BR completo, en e es parciais)");
 check(["play", "queue-search", "teams-explore", "central", "players", "player-detail", "market"].every(function (s) { return Shots.slotFor("matchqueue", s, "es") && fs.existsSync(path.join(root, "assets/img/match-queue/screens/es", s + ".webp")); }), "match queue: telas em espanhol existem no manifesto e em disco");
 check(Shots.blockFor("fanhub", "b2", "pt-BR").every(function (s) { return fs.existsSync(path.join(root, s.src.replace(/^\//, ""))); }), "fan hub b2: todo arquivo do manifesto existe");
 check(model["pt-BR"].every(function (x) { return x.src.indexOf("/pt-BR/") > 0 && x.alt; }), "itens do modelo têm src e alt do próprio idioma");
