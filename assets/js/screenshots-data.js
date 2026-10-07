@@ -517,9 +517,9 @@
         "art-quiz"
       ],
       "b2": [
+        "home",
         "matches",
         "standings",
-        "home",
         "calendar",
         "socio",
         "store",

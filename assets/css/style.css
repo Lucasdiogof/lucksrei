@@ -1342,3 +1342,6 @@ html[data-amb="visitors"] .amb{ opacity: .55; }
 
 /* contato: só os canais (e-mail, LinkedIn, GitHub) num cartão estreito */
 .contact-only .fact-card{ max-width: 560px; }
+
+/* case study: o filme do produto roda no topo (quadrado, como na vitrine da home) */
+.case-hero .case-video{ max-width: 460px; aspect-ratio: 1 / 1; height: auto; object-fit: cover; }
