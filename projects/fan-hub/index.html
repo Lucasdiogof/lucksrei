@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <script src="/assets/js/i18n-boot.js"></script>
 <title>Goiás App — Case Study | Lucksrei</title>
-<meta name="description" content="Goiás App: a Flutter app for Goiás fans, built on Fan Hub, a multi-club base with independent flavors, a games Arena and real-time features via Supabase.">
+<meta name="description" content="Goiás App: a Flutter app for Goiás fans, with matches, club, a mini-games Arena, the Fans' Lineup and real-time features via Supabase.">
 <link rel="canonical" href="https://lucksrei.com/projects/fan-hub/">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
@@ -14,7 +14,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lucksrei">
 <meta property="og:title" content="Goiás App — Case Study | Lucksrei">
-<meta property="og:description" content="Flutter app for Goiás fans, built on the multi-club Fan Hub base, with real-time features via Supabase.">
+<meta property="og:description" content="Flutter app for Goiás fans, with a mini-games Arena and real-time features via Supabase.">
 <meta property="og:url" content="https://lucksrei.com/projects/fan-hub/">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://lucksrei.com/assets/img/fan-hub/screens/pt-BR/art-overview.webp">
@@ -65,7 +65,7 @@
         <div class="breadcrumb" data-i18n="fanhub.s1.div1"><a href="/">Lucksrei</a> / <a href="/#projetos">Projects</a> / Goiás App</div>
         <span class="eyebrow" data-i18n="common.case_study_produto_proprio">Case study — Own product</span>
         <h1>Goiás App</h1>
-        <p class="lead" data-i18n="fanhub.s1.p1">An app for Goiás fans, built on Fan Hub, a multi-club Flutter base with independent flavors. Each club gets its own configuration, assets and Supabase project.</p>
+        <p class="lead" data-i18n="fanhub.s1.p1">An app for Goiás fans: matches, club, content, a mini-games Arena and the Fans' Lineup in one place.</p>
         <div class="page-meta">
           <span class="badge">Android</span>
           <span class="badge">iOS</span>
@@ -82,9 +82,9 @@
   <section>
     <div class="container">
       <div class="case-block" data-reveal>
-        <span class="eyebrow" data-i18n="fanhub.s2.span1">Goiás flavor</span>
+        <span class="eyebrow" data-i18n="fanhub.s2.span1">For the fans</span>
         <h2 data-i18n="fanhub.s2.h21">What fans use</h2>
-        <p class="case-intro" data-i18n="fanhub.s2.p1">The Goiás flavor puts matches, club, content and interaction in one app.</p>
+        <p class="case-intro" data-i18n="fanhub.s2.p1">Goiás App puts matches, club, content and interaction in one app.</p>
         <div class="art-grid" data-shots="fanhub:b1"></div>
       </div>
 
@@ -114,13 +114,12 @@
 
       <div class="case-block" data-reveal>
         <span class="eyebrow" data-i18n="common.arquitetura">Architecture</span>
-        <h2 data-i18n="fanhub.s2.h23">Fan Hub architecture</h2>
-        <p data-i18n="fanhub.s2.p2">The club configuration is injected at startup through the flavor and applies from the domain layer down to the data layer. In Supabase, each club has its own project and dedicated RLS policies.</p>
-        <p data-i18n="fanhub.s2.p4">The base was built to support multiple clubs. The screens and examples on this page show only the Goiás experience.</p>
+        <h2 data-i18n="fanhub.s2.h23">How the app is built</h2>
+        <p data-i18n="fanhub.s2.p2">Layered Clean Architecture (domain, data and presentation), with Supabase as the backend and RLS policies protecting each fan's data.</p>
         <div class="arch-diagram">
-          <div class="arch-core" data-i18n="fanhub.s2.div1">Fan Hub base — shared core: Flutter · Clean Architecture · Arena engine · Design system</div>
+          <div class="arch-core" data-i18n="fanhub.s2.div1">App core: Flutter · Clean Architecture · Arena engine · Design system</div>
           <div class="arch-flavors" style="grid-template-columns:1fr">
-            <div class="arch-flavor" data-i18n="fanhub.s2.div2"><strong>Goiás flavor</strong><span>Own identity, content and data</span></div>
+            <div class="arch-flavor" data-i18n="fanhub.s2.div2"><strong>Goiás App</strong><span>Goiás identity, content and data</span></div>
           </div>
         </div>
       </div>
@@ -144,7 +143,7 @@
         <div class="stack-grid">
           <div class="stack-category">
             <h3>Mobile</h3>
-            <ul><li>Flutter</li><li>Dart</li><li>Flavors</li><li>Android</li><li>iOS</li><li>Web / PWA</li></ul>
+            <ul><li>Flutter</li><li>Dart</li><li>Android</li><li>iOS</li><li>Web / PWA</li></ul>
           </div>
           <div class="stack-category">
             <h3>Backend</h3>
@@ -152,10 +151,10 @@
           </div>
           <div class="stack-category">
             <h3>Delivery</h3>
-            <ul><li>CI/CD</li><li data-i18n="fanhub.s2.li1">Per-flavor build pipeline</li></ul>
+            <ul><li>CI/CD</li><li data-i18n="fanhub.s2.li1">Automated build pipeline</li></ul>
           </div>
         </div>
-        <p class="disclosure" data-i18n="fanhub.s2.p3">Goiás App is a Lucksrei product, built on the Fan Hub base. It does not represent a partnership, contract or official endorsement by Goiás Esporte Clube.</p>
+        <p class="disclosure" data-i18n="fanhub.s2.p3">Goiás App is a Lucksrei product. It does not represent a partnership, contract or official endorsement by Goiás Esporte Clube.</p>
       </div>
 
       <div class="case-footer-nav" data-i18n="fanhub.s2.div11"><a class="btn btn-ghost" href="/#projetos">← All projects</a> <a class="btn btn-primary" href="/projects/match-queue/">Next: Match Queue →</a></div>
@@ -204,7 +203,6 @@
     </div>
     <div class="footer-bottom">
       <span>© <span id="year">2026</span> Lucksrei — LUCAS DIOGO FRANCA · CNPJ 54.868.173/0001-55 · <span data-i18n="footer.country">Brazil</span></span>
-      <span data-i18n="footer.built">Static HTML, CSS and JS on Cloudflare Workers.</span>
     </div>
   </div>
 </footer>

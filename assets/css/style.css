@@ -1065,16 +1065,6 @@ main{ counter-reset: sec; }
 .eyebrow{ color: var(--gold-soft); }
 .eyebrow[data-sec]::before{ counter-increment: sec; content: "0" counter(sec) " / "; color: var(--text-faint); }
 
-.hero-dust{
-  position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .35;
-  background:
-    radial-gradient(1px 1px at 12% 22%, var(--gold-bright), transparent),
-    radial-gradient(1.5px 1.5px at 47% 14%, var(--gold-bright), transparent),
-    radial-gradient(1px 1px at 78% 30%, var(--tech-bright), transparent),
-    radial-gradient(1px 1px at 22% 88%, var(--gold-soft), transparent);
-  animation: lk-twinkle 9s ease-in-out infinite alternate;
-}
-@keyframes lk-twinkle{ from{ opacity: .15; } to{ opacity: .4; } }
 .hero .badge .dot{ background: var(--gold); box-shadow: 0 0 8px rgba(214,167,44,.7); }
 
 /* produtos próprios: canto em L dourado + coroa (selo "isto é da Lucksrei"); a coroa é um recorte da logo original */
@@ -1092,7 +1082,7 @@ main{ counter-reset: sec; }
 
 .apps-filter[aria-pressed="true"]{ border-color: var(--border-gold-hover); }
 .site-footer{ position: relative; border-top: 0; background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(214,167,44,.035), transparent 70%); }
-.site-footer::before{ content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--border-gold) 30%, var(--border-gold) 70%, transparent); }
+.site-footer::before{ content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--border-gold) 30%, var(--border-gold) calc(50% - 17px), transparent calc(50% - 17px), transparent calc(50% + 17px), var(--border-gold) calc(50% + 17px), var(--border-gold) 70%, transparent); }   /* vão no centro para a coroa */
 .cta-arrow{ color: var(--gold); }
 
 /* seções com atmosfera própria (uma identidade, luz diferente): tecnologia = toque azul */
@@ -1101,26 +1091,12 @@ main{ counter-reset: sec; }
 
 /* celular: identidade sem efeitos caros */
 @media (max-width: 700px){
-  .hero-dust{ display: none; }
   .lk-grid::after{ animation: none; }
   .hs-stage::before, .hs-stage::after{ display: none; }
   #tecnologias::before{ display: none; }
 }
-@media (prefers-reduced-motion: reduce){ .hero-dust{ animation: none; } .btn-primary::after{ display: none; } }
+@media (prefers-reduced-motion: reduce){ .btn-primary::after{ display: none; } }
 
-/* =====================================================================
-   Realeza no fundo: brilhos dourados como os da logo, raios de luz e coroa em marca d'água.
-   Camadas fixas na viewport (custo zero ao rolar), só opacity animada; somem no celular e com reduced motion.
-   ===================================================================== */
-html::before, html::after{
-  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .5;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffe08a' d='M8 0l1.2 6.8L16 8l-6.8 1.2L8 16l-1.2-6.8L0 8l6.8-1.2z'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffe08a' d='M8 0l1.2 6.8L16 8l-6.8 1.2L8 16l-1.2-6.8L0 8l6.8-1.2z'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffe08a' d='M8 0l1.2 6.8L16 8l-6.8 1.2L8 16l-1.2-6.8L0 8l6.8-1.2z'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffe08a' d='M8 0l1.2 6.8L16 8l-6.8 1.2L8 16l-1.2-6.8L0 8l6.8-1.2z'/%3E%3C/svg%3E"); background-size: 14px, 15px, 16px, 13px; background-position: 8% 16%, 31% 84%, 77% 21%, 94% 70%; background-repeat: no-repeat;
-  animation: lk-glint 7s ease-in-out infinite alternate;
-}
-html::after{
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffe08a' d='M8 0l1.2 6.8L16 8l-6.8 1.2L8 16l-1.2-6.8L0 8l6.8-1.2z'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffe08a' d='M8 0l1.2 6.8L16 8l-6.8 1.2L8 16l-1.2-6.8L0 8l6.8-1.2z'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23ffe08a' d='M8 0l1.2 6.8L16 8l-6.8 1.2L8 16l-1.2-6.8L0 8l6.8-1.2z'/%3E%3C/svg%3E"); background-size: 12px, 12px, 12px; background-position: 19% 52%, 62% 12%, 88% 92%; background-repeat: no-repeat;
-  animation-duration: 9s; animation-delay: -3.5s; opacity: .4;
-}
 @keyframes lk-glint{ 0%{ opacity: .2; } 55%{ opacity: .9; } 100%{ opacity: .35; } }
 
 /* raios de luz dourados saindo do alto do hero (leque suave atrás do título) */
@@ -1140,12 +1116,11 @@ html::after{
 }
 
 @media (max-width: 700px){
-  html::after, .hero-rays{ display: none; }
-  html::before{ opacity: .35; animation-duration: 10s; }
+  .hero-rays{ display: none; }
   .cta-section .container::before{ width: 170px; height: 114px; top: -24px; opacity: .06; }
 }
 @media (prefers-reduced-motion: reduce){
-  html::before, html::after, .hero-rays{ display: none; }
+  .hero-rays{ display: none; }
 }
 
 /* =====================================================================
@@ -1336,7 +1311,7 @@ html::after{
 }
 .site-footer::after{
   content: ""; position: absolute; top: -9px; left: 50%; width: 40px; height: 18px; margin-left: -20px; pointer-events: none;
-  background: url("/assets/img/brand/lucksrei-crown.webp") center / contain no-repeat, var(--royal-black);
+  background: url("/assets/img/brand/lucksrei-crown.webp") center / contain no-repeat;
   background-origin: content-box; padding: 0 8px; opacity: .85;
 }
 
