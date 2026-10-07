@@ -148,7 +148,7 @@ proj.forEach(function (p) {
 // seleção por idioma e ausência de fallback silencioso
 check(Shots.blockFor("aprovaura", "b1", "pt-BR").length === 5, "aprovaura b1 pt-BR deve ter 5 telas");
 check(Shots.blockFor("aprovaura", "b1", "en").map(function (s) { return s.id; }).join() === "practice,practice-more,trail,trail-question", "aprovaura b1 en: só as telas em inglês");
-check(Shots.blockFor("aprovaura", "b1", "es").map(function (s) { return s.id; }).join() === "practice", "aprovaura b1 es: só a tela em espanhol");
+check(Shots.blockFor("aprovaura", "b1", "es").map(function (s) { return s.id; }).join() === "practice,practice-more,trail,trail-topics,trail-question", "aprovaura b1 es: trilha completa em espanhol");
 ["pt-BR", "en", "es"].forEach(function (l) {
   ["b2", "b5"].forEach(function (b) { check(Shots.blockFor("aprovaura", b, l).every(function (s) { return s.src.indexOf("/screens/" + l + "/") > 0; }), "aprovaura " + b + " " + l + ": sem imagem de outro idioma"); });
   ["home", "practice", "mock-build", "mock-question"].forEach(function (s) { check(Shots.slotFor("aprovaura", s, l), "aprovaura " + s + " existe em " + l); });
@@ -157,9 +157,9 @@ check(Shots.blockFor("aprovaura", "b1", "es").map(function (s) { return s.id; })
 var aprovBlocks = function (b, l) { return Shots.blockFor("aprovaura", b, l).map(function (s) { return s.id; }).join(); };
 check(aprovBlocks("b2", "pt-BR") === "mock-build,mock-build-more,mock-question" && aprovBlocks("b2", "en") === "mock-build,mock-build-more,mock-question" && aprovBlocks("b2", "es") === "mock-build,mock-build-more,mock-question", "aprovaura: telas do simulado por idioma");
 check(aprovBlocks("b3", "pt-BR") === "essay-proposal,essay-correcting,essay-score", "aprovaura: redação só com as telas do tema escuro");
-check(aprovBlocks("b5", "pt-BR") === "home,profile,level-up" && aprovBlocks("b5", "en") === "home,profile" && aprovBlocks("b5", "es") === "home,profile", "aprovaura: só telas novas (tema escuro) em progresso");
+check(aprovBlocks("b5", "pt-BR") === "home,profile,level-up" && aprovBlocks("b5", "en") === "home,profile,level-up" && aprovBlocks("b5", "es") === "home,profile", "aprovaura: só telas novas (tema escuro) em progresso");
 check(aprovBlocks("b3", "en") === "essay-list,essay-proposal,essay-correcting,essay-score", "aprovaura: redação em inglês (lista de temas, proposta, correção, nota)");
-check(aprovBlocks("b3", "es") === "essay-proposal,essay-correcting,essay-score" && aprovBlocks("b4", "en") === "topics" && aprovBlocks("b4", "es") === "topics", "redação em espanhol e tópicos de geografia em en/es");
+check(aprovBlocks("b3", "es") === "essay-proposal,essay-correcting,essay-score" && aprovBlocks("b4", "en") === "map,topics" && aprovBlocks("b4", "es") === "map,topics", "redação em espanhol e tópicos de geografia em en/es");
 // Perfil: o e-mail pessoal NUNCA aparece. As 3 telas de perfil publicadas têm a linha do e-mail coberta com a cor do
 // cartão (só nome e @usuário); qualquer tela de perfil nova precisa passar pela mesma máscara antes de entrar.
 check(["pt-BR", "en", "es"].every(function (l) { return Shots.slotFor("aprovaura", "profile", l); }), "aprovaura: perfil (e-mail mascarado) nos 3 idiomas");

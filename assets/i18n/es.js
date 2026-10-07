@@ -402,7 +402,7 @@
   "shots.aprovaura.map-done.alt": "Pantalla de conclusión con la mascota Aurudo, 6 de 17 aciertos y +10 Aura",
   "shots.aprovaura.map-done.caption": "Resultado de la ronda con la mascota de la app y la recompensa en Aura.",
   "shots.aprovaura.map-done.title": "Conclusión",
-  "shots.aprovaura.map.alt": "Mapa de Brasil con puntos para ubicar la Llanura Costera",
+  "shots.aprovaura.map.alt": "Mapa de América del Sur para ubicar los países: Guyana marcada como respuesta y los países acertados en verde",
   "shots.aprovaura.map.caption": "Mapa interactivo con pregunta y puntos clicables.",
   "shots.aprovaura.map.title": "Ubica en el mapa",
   "shots.aprovaura.mock-build-more.alt": "Crear simulacro con más materias para elegir, cada una con su nivel y cantidad de preguntas",
