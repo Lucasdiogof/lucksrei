@@ -445,6 +445,8 @@ section{ padding: 88px 0; }
 /* vitrine com vídeo em loop (Goiás App): o vídeo ocupa a placa inteira, sem o recuo das capturas */
 .work-plate.has-video{ padding: 0; align-items: stretch; background: #04140b; }
 .plate-video{ display: block; width: 100%; height: 100%; object-fit: cover; }
+/* La Pelve: vídeo quadrado (720×720) sem corte; fundo escuro do app em vez do verde do Goiás */
+.work-item[data-product="la-pelve"] .work-plate.has-video{ height: auto; aspect-ratio: 1 / 1; padding: 0; background: #161314; }
 
 .work-wide{ grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr); }
 .work-wide .work-copy{ order: 2; }
