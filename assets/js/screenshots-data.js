@@ -25,50 +25,6 @@
   "fanhub": {
     "dir": "fan-hub",
     "slots": {
-      "art-overview": {
-        "locales": [
-          "pt-BR"
-        ],
-        "dims": {
-          "pt-BR": [
-            924,
-            2000
-          ]
-        }
-      },
-      "art-arena": {
-        "locales": [
-          "pt-BR"
-        ],
-        "dims": {
-          "pt-BR": [
-            924,
-            2000
-          ]
-        }
-      },
-      "art-lineup": {
-        "locales": [
-          "pt-BR"
-        ],
-        "dims": {
-          "pt-BR": [
-            924,
-            2000
-          ]
-        }
-      },
-      "art-quiz": {
-        "locales": [
-          "pt-BR"
-        ],
-        "dims": {
-          "pt-BR": [
-            924,
-            2000
-          ]
-        }
-      },
       "home": {
         "locales": [
           "pt-BR",
@@ -901,11 +857,6 @@
       }
     },
     "blocks": {
-      "b1": [
-        "art-arena",
-        "art-lineup",
-        "art-quiz"
-      ],
       "b2": [
         "home",
         "matches",
@@ -959,39 +910,6 @@
   "matchqueue": {
     "dir": "match-queue",
     "slots": {
-      "art-queue": {
-        "locales": [
-          "pt-BR"
-        ],
-        "dims": {
-          "pt-BR": [
-            924,
-            2000
-          ]
-        }
-      },
-      "art-teams": {
-        "locales": [
-          "pt-BR"
-        ],
-        "dims": {
-          "pt-BR": [
-            924,
-            2000
-          ]
-        }
-      },
-      "art-central": {
-        "locales": [
-          "pt-BR"
-        ],
-        "dims": {
-          "pt-BR": [
-            924,
-            2000
-          ]
-        }
-      },
       "play": {
         "locales": [
           "en",
@@ -1122,10 +1040,6 @@
       }
     },
     "blocks": {
-      "b1": [
-        "art-teams",
-        "art-central"
-      ],
       "b2": [
         "play",
         "queue-search",

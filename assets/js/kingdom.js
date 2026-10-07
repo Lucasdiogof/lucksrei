@@ -30,6 +30,7 @@
     amb.className = "amb";
     amb.setAttribute("aria-hidden", "true");
     amb.appendChild(Object.assign(document.createElement("div"), { className: "amb-glow" }));
+    amb.appendChild(Object.assign(document.createElement("div"), { className: "amb-beam" }));   // feixe de luz diagonal (parado)
     for (var i = 0; i < n; i++) {
       var p = document.createElement("i");
       var gold = i % 4 === 3;
