@@ -27,7 +27,7 @@
  * Nenhum número de downloads/avaliação foi confirmado até aqui: tudo null.
  *
  * TOTAIS ESPERADOS (conferidos por tests/apps-data.test.js e no console da página):
- *   own 4 + professional 7 + cooper 20 = 31.
+ *   own 4 + professional 8 + cooper 20 = 32.
  */
 (function () {
   "use strict";
@@ -42,7 +42,7 @@
   }
 
   window.LUCKSREI_APPS = {
-    expected: { own: 4, professional: 7, cooper: 20, total: 31 },
+    expected: { own: 4, professional: 8, cooper: 20, total: 32 },
     featured: ['fan-hub', 'toro', 'iza', 'aprovaura', 'cooper-pay'],
     // textos dos grupos: apps.filter.<id>, apps.group.<id>.title|intro (assets/i18n)
     groups: [{ id: 'own' }, { id: 'professional' }, { id: 'cooper' }],
@@ -77,7 +77,12 @@
         logo: '/assets/img/apps/boosteragro.webp', platforms: ['android', 'ios'],
         androidUrl: 'https://play.google.com/store/apps/details?id=com.boosteragtech.boosteragro&hl=pt_BR',
         iosUrl: 'https://apps.apple.com/br/app/boosteragro/id1268230658',
-        downloads: null, rating: null, reviewCount: null },
+        downloads: null, rating: null, reviewCount: null, period: '2022-01/2023-06', technologies: ['Flutter', 'Cubit/BLoC', 'Offline-first'] },
+      { id: 'agrosmart', name: 'Agrosmart', subtitle: { en: 'Now BoosterPRO · climate intelligence', 'pt-BR': 'Atualmente BoosterPRO · inteligência climática', es: 'Actualmente BoosterPRO · inteligencia climática' }, group: 'professional', sector: 'agtech',
+        logo: '/assets/img/apps/agrosmart.webp', platforms: ['android', 'ios'],
+        androidUrl: 'https://play.google.com/store/apps/details?id=br.com.agrosmart.app_agrosmart&hl=pt_BR',
+        iosUrl: 'https://apps.apple.com/br/app/boosterpro/id1539190452',
+        downloads: null, rating: null, reviewCount: null, period: '2022-01/2023-06', technologies: ['Flutter', 'Cubit/BLoC', 'Offline-first'] },
       { id: 'emater-go-mobi', name: 'EMATER-GO Mobi', subtitle: { en: 'Rural technicians and producers', 'pt-BR': 'Técnicos e produtores rurais', es: 'Técnicos y productores rurales' }, group: 'professional', sector: 'govtech',
         logo: '/assets/img/apps/emater-go-mobi.webp', platforms: ['android', 'ios'],
         androidUrl: 'https://play.google.com/store/apps/details?id=br.gov.go.emater_mob_tecnico&hl=en_US',

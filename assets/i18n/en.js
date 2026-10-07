@@ -204,7 +204,7 @@
   "apps.s1.p1": "Apps I've worked on, from my own products to white-label brands. The case studies for my own products are under <a href=\"/#projetos\">Projects</a>.",
   "apps.s1.span1": "Breadth",
   "apps.s1.span2": "Sectors · Android &amp; iOS",
-  "apps.s2.p1": "Enable JavaScript to see the full list of apps. Summary: Goiás App, Match Queue, Aprovaura, La Pelve; Toro Investimentos (now Santander Corretora), IZA Seguradora, BoosterAGRO, EMATER-GO Mobi, AGR Fiscal, Vai, GPOL; and 20 apps from the Cooper Pay ecosystem.",
+  "apps.s2.p1": "Enable JavaScript to see the full list of apps. Summary: Goiás App, Match Queue, Aprovaura, La Pelve; Toro Investimentos (now Santander Corretora), IZA Seguradora, BoosterAGRO, Agrosmart (now BoosterPRO), EMATER-GO Mobi, AGR Fiscal, Vai, GPOL; and 20 apps from the Cooper Pay ecosystem.",
   "apps.s2.p2": "Logos and store links belong to the respective apps and their companies. Third-party names and brands appear only to identify the projects I worked on.",
   "apps.sector.agtech": "AgroTech",
   "apps.sector.banking": "Banking white-label",
