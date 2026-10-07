@@ -399,7 +399,7 @@
   "shots.aprovaura.level-up.alt": "End-of-activity screen for Colonial Brazil: 2 of 8 correct, 25% score and +20 Aura, with the Aurudo mascot and a Try again button",
   "shots.aprovaura.level-up.caption": "At the end of an activity: correct answers, score, Aura earned and the new level.",
   "shots.aprovaura.level-up.title": "Level up",
-  "shots.aprovaura.map-done.alt": "Completion screen with the Aurudo mascot, 6 of 17 correct and +10 Aura",
+  "shots.aprovaura.map-done.alt": "Completion screen for the Major cities of Asia map with the Aurudo mascot: Nice work!, 9 of 15 correct and +10 Aura",
   "shots.aprovaura.map-done.caption": "Round result with the app mascot and the Aura reward.",
   "shots.aprovaura.map-done.title": "Completion",
   "shots.aprovaura.map.alt": "Map of South America to locate the countries, starting with Guyana",

@@ -159,7 +159,7 @@ check(aprovBlocks("b2", "pt-BR") === "mock-build,mock-build-more,mock-question" 
 check(aprovBlocks("b3", "pt-BR") === "essay-proposal,essay-correcting,essay-score", "aprovaura: redação só com as telas do tema escuro");
 check(aprovBlocks("b5", "pt-BR") === "home,profile,level-up" && aprovBlocks("b5", "en") === "home,profile,level-up" && aprovBlocks("b5", "es") === "home,profile,level-up", "aprovaura: só telas novas (tema escuro) em progresso");
 check(aprovBlocks("b3", "en") === "essay-list,essay-proposal,essay-correcting,essay-score", "aprovaura: redação em inglês (lista de temas, proposta, correção, nota)");
-check(aprovBlocks("b3", "es") === "essay-proposal,essay-correcting,essay-score" && aprovBlocks("b4", "en") === "map,topics" && aprovBlocks("b4", "es") === "map,map-done,topics", "redação em espanhol e tópicos de geografia em en/es");
+check(aprovBlocks("b3", "es") === "essay-proposal,essay-correcting,essay-score" && aprovBlocks("b4", "en") === "map,map-done,topics" && aprovBlocks("b4", "es") === "map,map-done,topics", "redação em espanhol e tópicos de geografia em en/es");
 // Perfil: o e-mail pessoal NUNCA aparece. As 3 telas de perfil publicadas têm a linha do e-mail coberta com a cor do
 // cartão (só nome e @usuário); qualquer tela de perfil nova precisa passar pela mesma máscara antes de entrar.
 check(["pt-BR", "en", "es"].every(function (l) { return Shots.slotFor("aprovaura", "profile", l); }), "aprovaura: perfil (e-mail mascarado) nos 3 idiomas");
