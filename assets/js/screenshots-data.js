@@ -1321,10 +1321,15 @@
       },
       "essay-score": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en"
         ],
         "dims": {
           "pt-BR": [
+            590,
+            1280
+          ],
+          "en": [
             590,
             1280
           ]

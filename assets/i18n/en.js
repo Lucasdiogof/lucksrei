@@ -384,7 +384,7 @@
   "shots.aprovaura.essay-proposal.alt": "Essay prompt on \"The limits of privacy in the age of data\", with the Start writing button",
   "shots.aprovaura.essay-proposal.caption": "Each topic comes with the full prompt, in ENEM format, before writing starts.",
   "shots.aprovaura.essay-proposal.title": "Prompt",
-  "shots.aprovaura.essay-score.alt": "Graded essay with an estimated score of 1000 out of 1000 and every competency at 200 out of 200",
+  "shots.aprovaura.essay-score.alt": "Graded essay with an estimated score of 880 out of 1000 and each competency scored out of 200",
   "shots.aprovaura.essay-score.caption": "Score from 0 to 1000 and the five competencies, each with its own score.",
   "shots.aprovaura.essay-score.title": "Estimated score",
   "shots.aprovaura.essay-submit.alt": "Confirmation to submit the essay for grading, with a privacy notice",

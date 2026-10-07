@@ -158,7 +158,7 @@ var aprovBlocks = function (b, l) { return Shots.blockFor("aprovaura", b, l).map
 check(aprovBlocks("b2", "pt-BR") === "mock-build,mock-build-more,mock-question" && aprovBlocks("b2", "en") === "mock-build,mock-build-more,mock-question" && aprovBlocks("b2", "es") === "mock-build,mock-question", "aprovaura: telas do simulado por idioma");
 check(aprovBlocks("b3", "pt-BR") === "essay-proposal,essay-correcting,essay-score", "aprovaura: redação só com as telas do tema escuro");
 check(aprovBlocks("b5", "pt-BR") === "home,profile,level-up" && aprovBlocks("b5", "en") === "home,profile" && aprovBlocks("b5", "es") === "home,profile", "aprovaura: só telas novas (tema escuro) em progresso");
-check(aprovBlocks("b3", "en") === "essay-list,essay-proposal,essay-correcting", "aprovaura: redação em inglês (lista de temas, proposta, correção)");
+check(aprovBlocks("b3", "en") === "essay-list,essay-proposal,essay-correcting,essay-score", "aprovaura: redação em inglês (lista de temas, proposta, correção, nota)");
 check(Shots.blockFor("aprovaura", "b3", "es").length === 0 && Shots.blockFor("aprovaura", "b4", "en").length === 0 && Shots.blockFor("aprovaura", "b4", "es").length === 0, "mapas seguem só em pt-BR e redação sem es (sem fallback)");
 // Perfil: o e-mail pessoal NUNCA aparece. As 3 telas de perfil publicadas têm a linha do e-mail coberta com a cor do
 // cartão (só nome e @usuário); qualquer tela de perfil nova precisa passar pela mesma máscara antes de entrar.
