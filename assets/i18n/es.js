@@ -372,7 +372,7 @@
   "lapelve.whatsapp.title": "Recordatorios por WhatsApp — en desarrollo",
 
   /* ---- shots ---- */
-  "shots.aprovaura.essay-correcting.alt": "Redacción \"Desinformación y el derecho a saber\" con el estado Corrigiendo y el texto enviado",
+  "shots.aprovaura.essay-correcting.alt": "Redacción \"La salud mental de los estudiantes en el año del examen de ingreso a la universidad\" con el estado Corrigiendo y el texto enviado",
   "shots.aprovaura.essay-correcting.caption": "La corrección se hace en segundo plano: se puede salir de la app y volver después para ver el resultado.",
   "shots.aprovaura.essay-correcting.title": "Corrección en curso",
   "shots.aprovaura.essay-feedback.alt": "Comentario general, puntos fuertes y próximos pasos para la redacción",
@@ -381,7 +381,7 @@
   "shots.aprovaura.essay-list.alt": "Lista de temas de redacción, con la última nota de los temas ya escritos",
   "shots.aprovaura.essay-list.caption": "Temas para practicar la escritura; los ya escritos muestran la última nota.",
   "shots.aprovaura.essay-list.title": "Temas de redacción",
-  "shots.aprovaura.essay-proposal.alt": "Propuesta de redacción sobre \"Desinformación y el derecho a saber\", con el botón Empezar redacción",
+  "shots.aprovaura.essay-proposal.alt": "Propuesta de redacción sobre \"La salud mental de los estudiantes en el año del examen de ingreso a la universidad\", con el botón Empezar redacción",
   "shots.aprovaura.essay-proposal.caption": "Cada tema trae la propuesta completa, en el formato del ENEM, antes de empezar a escribir.",
   "shots.aprovaura.essay-proposal.title": "Propuesta",
   "shots.aprovaura.essay-score.alt": "Redacción corregida con nota estimada de 1000 sobre 1000 y todas las competencias con 200 sobre 200",
