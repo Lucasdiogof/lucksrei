@@ -85,10 +85,10 @@ check(fake.store[Loc.STORAGE_KEY] === "es" && Object.keys(fake.store).length ===
 var actx = { window: {} };
 vm.runInNewContext(read("assets/js/apps-data.js"), actx);
 var A = actx.window.LUCKSREI_APPS;
-check(A.apps.length === 32, "dataset deve continuar com 32 apps, tem " + A.apps.length);
+check(A.apps.length === 33, "dataset deve continuar com 33 apps, tem " + A.apps.length);
 var ids = {};
 A.apps.forEach(function (a) { check(!ids[a.id], "app duplicado: " + a.id); ids[a.id] = 1; });
-check(Object.keys(ids).length === 32, "idiomas não devem duplicar apps");
+check(Object.keys(ids).length === 33, "idiomas não devem duplicar apps");
 A.apps.forEach(function (a) {
   if (a.subtitle && typeof a.subtitle === "object") Loc.SUPPORTED.forEach(function (l) { check(typeof a.subtitle[l] === "string" && a.subtitle[l], a.id + ": subtitle sem " + l); });
   if (a.subtitleKey) Loc.SUPPORTED.forEach(function (l) { check(D[l][a.subtitleKey], a.id + ": subtitleKey ausente em " + l); });
@@ -168,10 +168,10 @@ check(Shots.slotFor("lapelve", "home", "en").src.indexOf("/screens/en/home.webp"
 check(Shots.slotFor("lapelve", "home", "pt-BR").src.indexOf("/screens/pt-BR/home.webp") > 0, "la pelve home pt-BR usa a versão pt-BR");
 check(Shots.slotFor("lapelve", "home", "es") === null, "la pelve home es inexistente → null (sem fallback)");
 var model = Shots.buildScreenshots("fanhub", "b2", function (k, v, l) { return D[l][k]; });
-check(model["pt-BR"].length === 12 && Shots.blockFor("fanhub", "b3", "pt-BR").length === 11 && Shots.blockFor("fanhub", "b4", "pt-BR").length === 7 && Shots.blockFor("fanhub", "b5", "pt-BR").length === 10 && Shots.blockFor("fanhub", "b5", "en").length === 8 && model.en.length === 12 && Shots.blockFor("fanhub", "b3", "en").length === 11 && Shots.blockFor("fanhub", "b4", "en").map(function (s) { return s.id; }).join() === "my-tickets,ticket,member-signup" && model.es.length === 12 && Shots.blockFor("fanhub", "b3", "es").length === 11 && Shots.blockFor("fanhub", "b4", "es").map(function (s) { return s.id; }).join() === "my-tickets,ticket,member-signup" && Shots.blockFor("fanhub", "b5", "es").length === 8, "modelo por locale do fan hub (pt-BR completo, en e es parciais)");
+check(model["pt-BR"].length === 12 && Shots.blockFor("fanhub", "b3", "pt-BR").length === 11 && Shots.blockFor("fanhub", "b4", "pt-BR").length === 7 && Shots.blockFor("fanhub", "b5", "pt-BR").length === 10 && Shots.blockFor("fanhub", "b5", "en").length === 8 && model.en.length === 12 && Shots.blockFor("fanhub", "b3", "en").length === 11 && Shots.blockFor("fanhub", "b4", "en").map(function (s) { return s.id; }).join() === "tickets,ticket-sectors,purchase,purchased,my-tickets,ticket,member-signup" && model.es.length === 12 && Shots.blockFor("fanhub", "b3", "es").length === 11 && Shots.blockFor("fanhub", "b4", "es").map(function (s) { return s.id; }).join() === "tickets,ticket-sectors,purchase,purchased,my-tickets,ticket,member-signup" && Shots.blockFor("fanhub", "b5", "es").length === 10, "modelo por locale do fan hub (pt-BR e es completos; en sem crowd/pitch)");
 check(["play", "queue-search", "teams-explore", "central", "players", "player-detail", "market"].every(function (s) { return Shots.slotFor("matchqueue", s, "es") && fs.existsSync(path.join(root, "assets/img/match-queue/screens/es", s + ".webp")); }), "match queue: telas em espanhol existem no manifesto e em disco");
 check(Shots.blockFor("fanhub", "b2", "pt-BR").every(function (s) { return fs.existsSync(path.join(root, s.src.replace(/^\//, ""))); }), "fan hub b2: todo arquivo do manifesto existe");
 check(model["pt-BR"].every(function (x) { return x.src.indexOf("/pt-BR/") > 0 && x.alt; }), "itens do modelo têm src e alt do próprio idioma");
 
 if (failures.length) { console.error("FALHOU:\n - " + failures.join("\n - ")); process.exit(1); }
-console.log("ok — i18n: " + enKeys.length + " strings × 3 locales; " + proj.length + " projetos de screenshots; 32 apps");
+console.log("ok — i18n: " + enKeys.length + " strings × 3 locales; " + proj.length + " projetos de screenshots; 33 apps");

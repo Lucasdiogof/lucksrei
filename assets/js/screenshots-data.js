@@ -554,45 +554,85 @@
       },
       "tickets": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "ticket-sectors": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "purchase": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "purchased": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
@@ -703,23 +743,33 @@
       },
       "crowd": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
       "pitch": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },

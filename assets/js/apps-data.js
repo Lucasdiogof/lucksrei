@@ -8,7 +8,7 @@
  *   subtitle    contexto/empresa. String (nome próprio) ou { en, 'pt-BR', es }
  *   subtitleKey chave i18n alternativa ao subtitle (ex.: 'apps.ecosystem')
  *   group       'own' (meus produtos) | 'professional' | 'cooper'
- *   sector      id do setor (fintech, insurtech, agtech, govtech, mobility, management, education, health, sports, games, banking) → apps.sector.<id>
+ *   sector      id do setor (fintech, insurtech, agtech, govtech, retailtech, mobility, management, education, health, sports, games, banking) → apps.sector.<id>
  *   logo        caminho do logo; null = placeholder com iniciais.
  *               Para trocar o fallback: salve o arquivo em assets/img/apps/<id>.webp
  *               (128x128) e escreva aqui '/assets/img/apps/<id>.webp'.
@@ -27,7 +27,7 @@
  * Nenhum número de downloads/avaliação foi confirmado até aqui: tudo null.
  *
  * TOTAIS ESPERADOS (conferidos por tests/apps-data.test.js e no console da página):
- *   own 4 + professional 8 + cooper 20 = 32.
+ *   own 4 + professional 9 + cooper 20 = 33.
  */
 (function () {
   "use strict";
@@ -42,7 +42,7 @@
   }
 
   window.LUCKSREI_APPS = {
-    expected: { own: 4, professional: 8, cooper: 20, total: 32 },
+    expected: { own: 4, professional: 9, cooper: 20, total: 33 },
     featured: ['fan-hub', 'toro', 'iza', 'aprovaura', 'cooper-pay'],
     // textos dos grupos: apps.filter.<id>, apps.group.<id>.title|intro (assets/i18n)
     groups: [{ id: 'own' }, { id: 'professional' }, { id: 'cooper' }],
@@ -73,6 +73,11 @@
         androidUrl: 'https://play.google.com/store/apps/details?id=vc.com.iza.izaapp&hl=pt_BR',
         iosUrl: 'https://apps.apple.com/br/app/iza-seguradora-s-a/id1526181722',
         downloads: null, rating: null, reviewCount: null, period: '2020-10/2021-03', technologies: ['Flutter', 'Firebase'] },
+      { id: 'tabela-fone', name: 'Tabela Fone', subtitle: { en: 'Price intelligence for used phone retailers', 'pt-BR': 'Inteligência de preços para lojistas de celulares usados', es: 'Inteligencia de precios para tiendas de celulares usados' }, group: 'professional', sector: 'retailtech',
+        logo: '/assets/img/apps/tabela-fone.webp', platforms: ['android', 'ios'],
+        androidUrl: 'https://play.google.com/store/apps/details?id=com.tabelafone.app&hl=pt_BR',
+        iosUrl: 'https://apps.apple.com/br/app/tabela-fone/id6781041082',
+        downloads: null, rating: null, reviewCount: null, period: '2026-03/2026-09', technologies: ['Flutter', 'Supabase', 'Cubit/BLoC'] },
       { id: 'boosteragro', name: 'BoosterAGRO', subtitle: { en: 'Digital agriculture', 'pt-BR': 'Agricultura digital', es: 'Agricultura digital' }, group: 'professional', sector: 'agtech',
         logo: '/assets/img/apps/boosteragro.webp', platforms: ['android', 'ios'],
         androidUrl: 'https://play.google.com/store/apps/details?id=com.boosteragtech.boosteragro&hl=pt_BR',
