@@ -106,7 +106,6 @@
   "home.a11y.a_arialabel3": "See all the apps I've worked on",
   "home.a11y.img_alt1": "Lucas Diogo França, Senior Mobile Developer",
   "home.a11y.section_arialabel2": "Key figures",
-  "home.contato.h21": "Want to talk about a project or opportunity?",
   "home.hero.scene_alt": "Pixel art illustration of Lucas arriving at his office, coding at his desk and drinking a coffee",
   "home.hero.hello_1": "Hi, I'm Lucas Diogo França.",
   "home.hero.hello_2": "I'm a mobile developer specialized in Flutter.",
@@ -255,13 +254,10 @@
   "visitors.visits_other": "{n} visits",
 
   /* ---- contact ---- */
+  "contact.label.email": "Email",
+  "contact.lead": "Professional contact and online presence.",
+  "contact.title": "Contact",
   "contact.s1.div1": "<a href=\"/\">Lucksrei</a> / Contact",
-  "contact.s1.h11": "Let's talk",
-  "contact.s1.span1": "Contact",
-  "contact.s2.dd1": "<a href=\"https://www.linkedin.com/in/lucas-diogo-aa39b9174/\" target=\"_blank\" rel=\"noopener\">linkedin.com/in/lucas-diogo</a>",
-  "contact.s2.dd2": "<a href=\"https://github.com/Lucasdiogof\" target=\"_blank\" rel=\"noopener\">github.com/Lucasdiogof</a>",
-  "contact.s2.dt1": "Email",
-  "contact.s2.dt2": "LinkedIn",
 
   /* ---- notfound ---- */
   "notfound.s1.div1": "<a class=\"btn btn-primary\" href=\"/\">Back to home</a> <a class=\"btn btn-ghost\" href=\"/#projetos\">View projects</a>",

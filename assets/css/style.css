@@ -1335,8 +1335,6 @@ html[data-amb="visitors"] .amb{ opacity: .55; }
   .fx-ring{ transition: none; }
 }
 
-/* contato: só os canais (e-mail, LinkedIn, GitHub) num cartão estreito */
-.contact-only .fact-card{ max-width: 560px; }
 
 /* case study: o filme do produto roda no topo (quadrado, como na vitrine da home) */
 .case-hero .case-video{ max-width: 460px; aspect-ratio: 1 / 1; height: auto; object-fit: cover; }
@@ -1385,48 +1383,63 @@ html[data-amb="visitors"] .amb{ opacity: .55; }
 }
 .has-fx:hover{ box-shadow: inset 0 1px 0 rgba(255,246,223,.07), 0 26px 70px rgba(0,0,0,.5), 0 0 46px color-mix(in srgb, var(--p) 14%, transparent) !important; }
 
-/* ---------- CTA final: e-mail com brilho dourado contido ---------- */
-.cta-section .cta-title{ text-wrap: balance; }
-.cta-mail{ text-shadow: 0 0 34px rgba(219,178,80,.18); }
-
-/* ---------- contato: cartão técnico, preto e branco, com a assinatura do corte dourado ---------- */
-html[data-amb="contact"] .page-hero h1{ position: relative; padding-bottom: 20px; }
+/* ---------- contato (home e /contact/): canais profissionais, composição editorial ----------
+   Sem card: rótulo mono + valor + seta em linhas separadas por fios. Hover: o valor clareia, um corte dourado
+   (o do "L" da logo) entra no começo da linha, o fio de cima ganha ouro e a seta anda 2 px. */
+.cta-section{ padding: 72px 0 84px; }
+.contact-block{ display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 32px 72px; align-items: start; }
+.contact-title{ position: relative; font-size: clamp(26px, 2.6vw, 34px); line-height: 1.1; letter-spacing: -.02em; padding-top: 18px; }
+.contact-title::before{                                  /* corte dourado do "L" acima do título */
+  content: ""; position: absolute; left: 3px; top: 0; width: 26px; height: 4px; transform: skewX(-50deg); transform-origin: 0 100%;
+  background: linear-gradient(90deg, #b18535, #eecc6d 60%, #dbb250);
+}
+.contact-lead{ margin-top: 10px; color: var(--text-dim); font-size: 15.5px; line-height: 1.6; max-width: 26em; }
+.channels{ list-style: none; margin: 0; padding: 0; border-bottom: 1px solid rgba(255,255,255,.08); }
+.channels li{ margin: 0; }
+.channel{
+  position: relative; display: grid; grid-template-columns: 120px minmax(0, 1fr) auto; align-items: baseline; gap: 6px 24px;
+  padding: 20px 4px 20px 0; text-decoration: none; color: var(--text);
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.channel::before{                                        /* fio dourado que acende sobre o fio da linha */
+  content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, rgba(238,204,109,.75), rgba(238,204,109,0) 70%);
+  opacity: 0; transition: opacity .3s var(--ease);
+}
+.channel::after{                                         /* corte dourado do "L" no começo da linha */
+  content: ""; position: absolute; left: 1px; top: -2px; width: 18px; height: 3px; pointer-events: none;
+  background: linear-gradient(90deg, #b18535, #eecc6d 60%, #dbb250); transform: skewX(-50deg) scaleX(0); transform-origin: 0 0;
+  transition: transform .3s var(--ease);
+}
+.ch-label{ font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-faint); transition: color .25s var(--ease); }
+.ch-value{ font-size: clamp(17px, 1.7vw, 20px); font-weight: 600; letter-spacing: -.01em; color: rgba(246,239,224,.82); overflow-wrap: anywhere; transition: color .25s var(--ease), transform .3s var(--ease); }
+.channel.is-primary .ch-value{ font-size: clamp(20px, 2.3vw, 27px); color: var(--royal-champagne); }
+.ch-arrow{ color: var(--text-faint); font-size: 15px; transition: color .25s var(--ease), transform .3s var(--ease); }
+.channel:hover .ch-value, .channel:focus-visible .ch-value{ color: #fff; transform: translateX(4px); }
+.channel:hover .ch-label, .channel:focus-visible .ch-label{ color: var(--royal-gold-soft); }
+.channel:hover .ch-arrow, .channel:focus-visible .ch-arrow{ color: var(--royal-gold-soft); transform: translate(2px, -2px); }
+.channel:hover::before, .channel:focus-visible::before{ opacity: 1; }
+.channel:hover::after, .channel:focus-visible::after{ transform: skewX(-50deg) scaleX(1); }
+.channel:focus-visible{ outline: 1px solid rgba(238,204,109,.5); outline-offset: 4px; }
+/* página /contact/: título "Contato" com o corte dourado embaixo; lista editorial em largura de leitura */
+html[data-amb="contact"] .page-hero h1{ position: relative; padding-bottom: 20px; margin-bottom: 14px; }
 html[data-amb="contact"] .page-hero h1::after{
-  content: ""; position: absolute; left: 3px; bottom: 0; width: 200px; height: 3px; transform: skewX(-50deg); transform-origin: 0 100%;
+  content: ""; position: absolute; left: 3px; bottom: 0; width: 200px; height: 4px; transform: skewX(-50deg); transform-origin: 0 100%;
   background:
-    linear-gradient(90deg, #b18535, #eecc6d 60%, #dbb250) 0 0 / 28px 3px no-repeat,
-    linear-gradient(90deg, rgba(255,255,255,.28), rgba(255,255,255,0)) 38px 1px / calc(100% - 38px) 1px no-repeat;
+    linear-gradient(90deg, #b18535, #eecc6d 60%, #dbb250) 0 0 / 28px 4px no-repeat,
+    linear-gradient(90deg, rgba(255,255,255,.28), rgba(255,255,255,0)) 38px 2px / calc(100% - 38px) 1px no-repeat;
 }
-.contact-only{ position: relative; isolation: isolate; }
-.contact-only::before{                                   /* luz quente bem fraca atrás do cartão */
-  content: ""; position: absolute; z-index: -1; pointer-events: none; left: 0; top: -20%; width: min(720px, 100%); height: 140%;
-  background: radial-gradient(ellipse 60% 55% at 30% 45%, rgba(219,178,80,.05), transparent 70%);
+.contact-page{ padding-top: 8px; padding-bottom: 24px; }
+.contact-page .channels{ max-width: 860px; }
+.contact-page .channel{ padding: 26px 4px 26px 0; }
+@media (max-width: 860px){ .contact-block{ grid-template-columns: 1fr; } }
+@media (max-width: 560px){
+  .channel{ grid-template-columns: minmax(0, 1fr) auto; padding: 18px 2px 18px 0; }
+  .contact-page .channel{ padding: 20px 2px 20px 0; }
+  .ch-label{ grid-column: 1 / -1; }
+  .ch-value{ grid-column: 1; }
+  .ch-arrow{ grid-column: 2; grid-row: 2; }
 }
-.contact-only .fact-card{
-  position: relative; overflow: hidden; max-width: 640px; padding: 34px 40px 30px;
-  border: 1px solid rgba(255,255,255,.1); border-radius: 6px;
-  background: linear-gradient(160deg, rgba(18,18,21,.96), rgba(8,8,10,.94));
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 30px 80px rgba(0,0,0,.45);
-}
-.contact-only .fact-card::before{                        /* selo: corte dourado do "L" na borda de cima */
-  content: ""; position: absolute; left: 40px; top: 0; width: 28px; height: 3px; pointer-events: none;
-  background: linear-gradient(90deg, #b18535, #eecc6d 60%, #dbb250); transform: skewX(-50deg); transform-origin: 0 0;
-}
-.contact-only .fact-card::after{                         /* canto técnico embaixo à direita */
-  content: ""; position: absolute; right: 10px; bottom: 10px; width: 14px; height: 14px; pointer-events: none;
-  border-right: 1px solid rgba(255,255,255,.35); border-bottom: 1px solid rgba(255,255,255,.35);
-}
-.contact-only .fact-card dl{ gap: 0; }
-.contact-only .fact-card dl > div{ padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,.06); }
-.contact-only .fact-card dl > div:last-child{ border-bottom: 0; padding-bottom: 4px; }
-.contact-only .fact-card dt{ color: var(--royal-gold-soft); letter-spacing: .12em; font-size: 11.5px; }
-.contact-only .fact-card dd{ font-size: clamp(17px, 2.2vw, 21px); font-weight: 600; letter-spacing: -.01em; }
-.contact-only .fact-card dd a{
-  color: var(--text); text-decoration: none; padding-bottom: 3px;
-  background: linear-gradient(var(--royal-gold-soft), var(--royal-gold-soft)) 0 100% / 0 1px no-repeat;
-  transition: background-size .35s var(--ease), color .25s var(--ease);
-}
-.contact-only .fact-card dd a:hover, .contact-only .fact-card dd a:focus-visible{ background-size: 100% 1px; color: var(--royal-champagne); }
-@media (max-width: 560px){ .contact-only .fact-card{ padding: 26px 22px 22px; } .contact-only .fact-card::before{ left: 22px; } }
+@media (prefers-reduced-motion: reduce){ .channel *, .channel::after, .channel::before{ transition: none !important; } }
 
 @media (max-width: 700px){ .hero-scene::before{ right: 20%; } }

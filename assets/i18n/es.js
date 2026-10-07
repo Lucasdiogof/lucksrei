@@ -106,7 +106,6 @@
   "home.a11y.a_arialabel3": "Ver todas las apps en las que trabajé",
   "home.a11y.img_alt1": "Lucas Diogo França, Senior Mobile Developer",
   "home.a11y.section_arialabel2": "Indicadores",
-  "home.contato.h21": "¿Quieres hablar de un proyecto o una oportunidad?",
   "home.hero.scene_alt": "Ilustración en pixel art de Lucas llegando a su oficina, programando en su escritorio y tomando un café",
   "home.hero.hello_1": "Hola, soy Lucas Diogo França.",
   "home.hero.hello_2": "Soy desarrollador mobile,<br>especializado en Flutter.",
@@ -255,13 +254,10 @@
   "visitors.visits_other": "{n} visitas",
 
   /* ---- contact ---- */
+  "contact.label.email": "Correo electrónico",
+  "contact.lead": "Contacto profesional y presencia online.",
+  "contact.title": "Contacto",
   "contact.s1.div1": "<a href=\"/\">Lucksrei</a> / Contacto",
-  "contact.s1.h11": "Conversemos",
-  "contact.s1.span1": "Contacto",
-  "contact.s2.dd1": "<a href=\"https://www.linkedin.com/in/lucas-diogo-aa39b9174/\" target=\"_blank\" rel=\"noopener\">linkedin.com/in/lucas-diogo</a>",
-  "contact.s2.dd2": "<a href=\"https://github.com/Lucasdiogof\" target=\"_blank\" rel=\"noopener\">github.com/Lucasdiogof</a>",
-  "contact.s2.dt1": "Correo electrónico",
-  "contact.s2.dt2": "LinkedIn",
 
   /* ---- notfound ---- */
   "notfound.s1.div1": "<a class=\"btn btn-primary\" href=\"/\">Volver al inicio</a> <a class=\"btn btn-ghost\" href=\"/#projetos\">Ver proyectos</a>",
