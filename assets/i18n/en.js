@@ -590,6 +590,9 @@
   "shots.matchqueue.teams-explore.alt": "Teams tab with the list of teams to explore",
   "shots.matchqueue.teams-explore.caption": "Explore teams, see invites and manage your own teams.",
   "shots.matchqueue.teams-explore.title": "Teams",
+  "shots.matchqueue.team-detail.alt": "Root team detail with 3 players, an Invite player button and the member list with Owner, Manager and Player roles",
+  "shots.matchqueue.team-detail.caption": "Members with roles (owner, manager, player) and invites for new players.",
+  "shots.matchqueue.team-detail.title": "Team",
   "shots.matchqueue.account.alt": "Account screen with appearance, language and notification preferences, privacy policy and terms of use",
   "shots.matchqueue.account.caption": "Appearance, language and notifications in one place.",
   "shots.matchqueue.account.title": "Account"

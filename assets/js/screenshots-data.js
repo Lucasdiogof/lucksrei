@@ -922,10 +922,15 @@
     "slots": {
       "play": {
         "locales": [
+          "pt-BR",
           "en",
           "es"
         ],
         "dims": {
+          "pt-BR": [
+            738,
+            1600
+          ],
           "en": [
             738,
             1600
@@ -938,10 +943,15 @@
       },
       "queue-search": {
         "locales": [
+          "pt-BR",
           "en",
           "es"
         ],
         "dims": {
+          "pt-BR": [
+            738,
+            1600
+          ],
           "en": [
             738,
             1600
@@ -954,10 +964,15 @@
       },
       "teams-explore": {
         "locales": [
+          "pt-BR",
           "en",
           "es"
         ],
         "dims": {
+          "pt-BR": [
+            738,
+            1600
+          ],
           "en": [
             738,
             1600
@@ -968,12 +983,28 @@
           ]
         }
       },
+      "team-detail": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1600
+          ]
+        }
+      },
       "central": {
         "locales": [
+          "pt-BR",
           "en",
           "es"
         ],
         "dims": {
+          "pt-BR": [
+            738,
+            1600
+          ],
           "en": [
             738,
             1600
@@ -986,10 +1017,15 @@
       },
       "players": {
         "locales": [
+          "pt-BR",
           "en",
           "es"
         ],
         "dims": {
+          "pt-BR": [
+            738,
+            1600
+          ],
           "en": [
             738,
             1600
@@ -1002,10 +1038,15 @@
       },
       "player-detail": {
         "locales": [
+          "pt-BR",
           "en",
           "es"
         ],
         "dims": {
+          "pt-BR": [
+            738,
+            1600
+          ],
           "en": [
             738,
             1600
@@ -1018,10 +1059,15 @@
       },
       "market": {
         "locales": [
+          "pt-BR",
           "en",
           "es"
         ],
         "dims": {
+          "pt-BR": [
+            738,
+            1600
+          ],
           "en": [
             738,
             1600
@@ -1034,10 +1080,15 @@
       },
       "account": {
         "locales": [
+          "pt-BR",
           "en",
           "es"
         ],
         "dims": {
+          "pt-BR": [
+            738,
+            1600
+          ],
           "en": [
             590,
             1280
@@ -1053,7 +1104,8 @@
       "b2": [
         "play",
         "queue-search",
-        "teams-explore"
+        "teams-explore",
+        "team-detail"
       ],
       "b3": [
         "central",

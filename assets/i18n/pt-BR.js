@@ -590,6 +590,9 @@
   "shots.matchqueue.teams-explore.alt": "Aba Times com a lista de equipes para explorar",
   "shots.matchqueue.teams-explore.caption": "Explorar equipes, ver convites e gerenciar os próprios times.",
   "shots.matchqueue.teams-explore.title": "Times",
+  "shots.matchqueue.team-detail.alt": "Detalhe do time Root com 3 jogadores, botão Convidar jogador e a lista de membros com os papéis Dono, Gerente e Jogador",
+  "shots.matchqueue.team-detail.caption": "Membros com papéis (dono, gerente, jogador) e convite de novos jogadores.",
+  "shots.matchqueue.team-detail.title": "Time",
   "shots.matchqueue.account.alt": "Tela de conta com preferências de aparência, idioma e notificações, política de privacidade e termos de uso",
   "shots.matchqueue.account.caption": "Aparência, idioma e notificações em um só lugar.",
   "shots.matchqueue.account.title": "Conta"

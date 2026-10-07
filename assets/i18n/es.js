@@ -590,6 +590,9 @@
   "shots.matchqueue.teams-explore.alt": "Pestaña Equipos con la lista de equipos para explorar",
   "shots.matchqueue.teams-explore.caption": "Explorar equipos, ver invitaciones y gestionar los propios equipos.",
   "shots.matchqueue.teams-explore.title": "Equipos",
+  "shots.matchqueue.team-detail.alt": "Detalle del equipo Root con 3 jugadores, botón Invitar jugador y la lista de miembros con los roles Dueño, Gerente y Jugador",
+  "shots.matchqueue.team-detail.caption": "Miembros con roles (dueño, gerente, jugador) e invitaciones a nuevos jugadores.",
+  "shots.matchqueue.team-detail.title": "Equipo",
   "shots.matchqueue.account.alt": "Pantalla de cuenta con preferencias de apariencia, idioma y notificaciones, política de privacidad y términos de uso",
   "shots.matchqueue.account.caption": "Apariencia, idioma y notificaciones en un solo lugar.",
   "shots.matchqueue.account.title": "Cuenta"

@@ -163,7 +163,11 @@ check(aprovBlocks("b3", "es") === "essay-proposal,essay-correcting,essay-score" 
 // Perfil: o e-mail pessoal NUNCA aparece. As 3 telas de perfil publicadas têm a linha do e-mail coberta com a cor do
 // cartão (só nome e @usuário); qualquer tela de perfil nova precisa passar pela mesma máscara antes de entrar.
 check(["pt-BR", "en", "es"].every(function (l) { return Shots.slotFor("aprovaura", "profile", l); }), "aprovaura: perfil (e-mail mascarado) nos 3 idiomas");
-check(Shots.blockFor("matchqueue", "b2", "en").length === 3 && Shots.blockFor("matchqueue", "b2", "pt-BR").length === 0, "match queue b2 só em en");
+var mqIds = function (b, l) { return Shots.blockFor("matchqueue", b, l).map(function (x) { return x.id; }).join(","); };
+check(mqIds("b2", "pt-BR") === "play,queue-search,teams-explore,team-detail", "match queue b2 pt-BR com detalhe do time");
+check(mqIds("b2", "en") === "play,queue-search,teams-explore" && mqIds("b2", "es") === "play,queue-search,teams-explore", "match queue b2 en/es sem detalhe do time");
+check(["pt-BR", "en", "es"].every(function (l) { return mqIds("b3", l) === "central,players,player-detail,market,account"; }), "match queue b3 completo nos 3 idiomas");
+check(["play", "queue-search", "teams-explore"].every(function (n) { return fs.existsSync(path.join(root, "assets/img/home/match-queue/pt-BR", n + ".webp")); }), "match queue: 3 miniaturas pt-BR da home existem");
 check(Shots.slotFor("lapelve", "home", "en").src.indexOf("/screens/en/home.webp") > 0, "la pelve home en usa a versão en");
 check(Shots.slotFor("lapelve", "home", "pt-BR").src.indexOf("/screens/pt-BR/home.webp") > 0, "la pelve home pt-BR usa a versão pt-BR");
 check(Shots.slotFor("lapelve", "schedule", "pt-BR") === null, "la pelve agenda pt-BR inexistente → null (sem fallback)");
