@@ -429,7 +429,7 @@
   "shots.aprovaura.trail-question.alt": "Question 1 of 9 in Antiquity about the rivers that watered Mesopotamia, with four options",
   "shots.aprovaura.trail-question.caption": "Questions from each topic, with options to bookmark or report.",
   "shots.aprovaura.trail-question.title": "Question",
-  "shots.aprovaura.trail-topics.alt": "History of Brazil split into subtopics: Indigenous peoples, Colonial Brazil, Independence of Brazil, Empire of Brazil and First Republic",
+  "shots.aprovaura.trail-topics.alt": "History of Brazil split into subtopics: Indigenous peoples, Colonial Brazil, Independence of Brazil, Empire of Brazil and Old Republic",
   "shots.aprovaura.trail-topics.caption": "Each topic opens into subtopics, each with its own progress bar.",
   "shots.aprovaura.trail-topics.title": "Subtopics",
   "shots.aprovaura.trail.alt": "History path by period: History of Brazil, Antiquity, Middle Ages, Early Modern and Contemporary periods, with a difficulty filter",

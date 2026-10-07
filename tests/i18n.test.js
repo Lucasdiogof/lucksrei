@@ -147,7 +147,7 @@ proj.forEach(function (p) {
 });
 // seleção por idioma e ausência de fallback silencioso
 check(Shots.blockFor("aprovaura", "b1", "pt-BR").length === 5, "aprovaura b1 pt-BR deve ter 5 telas");
-check(Shots.blockFor("aprovaura", "b1", "en").map(function (s) { return s.id; }).join() === "practice,practice-more,trail,trail-question", "aprovaura b1 en: só as telas em inglês");
+check(Shots.blockFor("aprovaura", "b1", "en").map(function (s) { return s.id; }).join() === "practice,practice-more,trail,trail-topics,trail-question", "aprovaura b1 en: trilha completa em inglês");
 check(Shots.blockFor("aprovaura", "b1", "es").map(function (s) { return s.id; }).join() === "practice,practice-more,trail,trail-topics,trail-question", "aprovaura b1 es: trilha completa em espanhol");
 ["pt-BR", "en", "es"].forEach(function (l) {
   ["b2", "b5"].forEach(function (b) { check(Shots.blockFor("aprovaura", b, l).every(function (s) { return s.src.indexOf("/screens/" + l + "/") > 0; }), "aprovaura " + b + " " + l + ": sem imagem de outro idioma"); });
