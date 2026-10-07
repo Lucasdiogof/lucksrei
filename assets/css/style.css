@@ -325,8 +325,17 @@ a:focus-visible, button:focus-visible{
   opacity: 0; transform: translateY(4px); transition: opacity .35s var(--ease), transform .35s var(--ease); pointer-events: none;
 }
 .hs-hello span + span{ color: #d7b766; }
+.hs-hello:first-of-type span{ text-wrap: balance; }   /* 1ª fala: linhas equilibradas, sem palavra sozinha na última */
 .hs-hello.is-on{ opacity: 1; transform: none; }
 .hero-scene.is-crop .hs-hello{ font-size: 10px; padding: 5px 8px 6px; }
+/* no recorte do celular a legenda vai para a frente da mesa (canto inferior direito), sem cobrir estante nem quadro,
+   e usa a versão curta da 2ª linha */
+.hs-hello .hs-short{ display: none; }
+.hero-scene.is-crop .hs-hello{ left: auto; top: auto; right: 8px; bottom: 8px; max-width: 72%; }
+/* 2ª fala (ele já está atrás da mesa): um pouco mais larga para caber em 2 linhas */
+.hero-scene.is-crop .hs-hello + .hs-hello{ max-width: 82%; }
+.hero-scene.is-crop .hs-hello .hs-long{ display: none; }
+.hero-scene.is-crop .hs-hello .hs-short{ display: block; }
 /* cantos em "L" dourados (a linguagem do L da marca) */
 .hs-stage::before, .hs-stage::after{ content: ""; position: absolute; width: 20px; height: 20px; z-index: 2; pointer-events: none; }
 .hs-stage::before{ top: 8px; left: 8px; border-top: 1px solid rgba(214,167,44,.55); border-left: 1px solid rgba(214,167,44,.55); border-top-left-radius: 6px; }

@@ -109,6 +109,67 @@ HEAD_34U = _rows([
     "......bbbbbbb...",
 ])
 
+# Cabeça de FRENTE desenhada à mão no estilo da arte de referência (para encarar o visitante na apresentação e olhar os
+# monitores à frente). Paleta própria (cores RGB da referência), contorno escuro e sombra à esquerda.
+FRONT_PAL = {
+    "o": (14, 12, 20), "h": (66, 44, 34), "H": (104, 70, 50), "j": (42, 28, 26),
+    "s": (232, 171, 126), "S": (200, 134, 92), "k": (246, 196, 152),
+    "g": (16, 16, 26), "w": (244, 240, 232), "e": (40, 28, 26), "l": (196, 210, 230),
+    "b": (70, 46, 34), "B": (46, 30, 24), "t": (252, 250, 244), "m": (150, 70, 60),
+}
+FRONT_HEAD = [
+    ".....oooooo.....",
+    "...oohHHHhhoo...",
+    "..ohHHhhhhhhho..",
+    ".ohhhhhhhhhhhhho",
+    ".ohhssssssssshho",
+    "ohssssssssssssho",
+    "oSgggggssgggggSo",
+    "oSgwewggggwewgSo",
+    "oSglllgssglllgSo",
+    ".ogggggksgggggo.",
+    ".obsssskSssssbo.",
+    ".obbssbbbbssbbo.",
+    ".obbbmttttmbbbo.",
+    "..obbbmmmmbbbo..",
+    "...obbbbbbbbo...",
+    ".....obbbbo.....",
+]
+FRONT_HEAD_DOWN = list(FRONT_HEAD)
+FRONT_HEAD_DOWN[7] = "oSglllgggglllgSo"
+FRONT_HEAD_DOWN[8] = "oSgwewgssgwewgSo"
+FRONT_HEAD_BLINK = list(FRONT_HEAD)
+FRONT_HEAD_BLINK[7] = "oSgSSSggggSSSgSo"
+FRONT_HEAD_BLINK[8] = "oSgsssgssgsssgSo"
+# 3/4 para a direita (perfil, caminhada, giro, sentado olhando para o lado): mesmo cabelo, óculos, barba e sorriso
+SIDE_HEAD = [
+    "....oooooo......",
+    "..oohhHHHhoo....",
+    ".ohhhHHhhhhhoo..",
+    "ohhhhhhhhhhhhho.",
+    "ohhhhhhssssssho.",
+    "ohhhhsssssssssso",
+    "ohhhsggggsgggggo",
+    "ohhSggwegggwewgo",
+    "ohhSsgllgsglllgs",
+    "ohSSsggggsgggggs",
+    "ohbbsssssskSssso",
+    ".obbbsssbbbbbsso",
+    ".obbbbbbmttttbo.",
+    "..obbbbbbmmmbo..",
+    "...obbbbbbbbo...",
+    ".....obbbbbo....",
+]
+SIDE_HEAD_DOWN = list(SIDE_HEAD)
+SIDE_HEAD_DOWN[7] = "ohhSgglggggllllgo"[:16]
+SIDE_HEAD_DOWN[8] = "ohhSsgwegsgwewgs"
+SIDE_HEAD_BLINK = list(SIDE_HEAD)
+SIDE_HEAD_BLINK[7] = "ohhSggSSgggSSSgo"
+SIDE_HEAD_BLINK[8] = "ohhSsgssgsgsssgs"
+for _rows in (FRONT_HEAD, FRONT_HEAD_DOWN, FRONT_HEAD_BLINK, SIDE_HEAD, SIDE_HEAD_DOWN, SIDE_HEAD_BLINK):
+    assert all(len(r) == 16 for r in _rows)
+
+
 # Cabeça única: quando REF_HEAD está definida (tools/hero_ref.py), ela substitui todas as cabeças desenhadas abaixo,
 # para o rosto ser o MESMO em perfil, frente e sentado. {(dx, dy): (r, g, b)} numa caixa 16x16; REF_HEAD_BLINK = olhos fechados.
 REF_HEAD = None
@@ -184,6 +245,15 @@ class Cell:
                     self.put(x, y, k)
 
     def head(self, kind, x, y, blink=False):
+        if kind in ("front", "frontd"):
+            rows = FRONT_HEAD_BLINK if blink else (FRONT_HEAD_DOWN if kind == "frontd" else FRONT_HEAD)
+        else:
+            rows = SIDE_HEAD_BLINK if blink else (SIDE_HEAD_DOWN if kind == "34d" else SIDE_HEAD)
+        for ry, row in enumerate(rows):
+            for rx, ch in enumerate(row):
+                if ch != ".":
+                    self.put(x + rx, y + ry, FRONT_PAL[ch])
+        return
         if REF_HEAD is not None:
             for (dx, dy), c in (REF_HEAD_BLINK if blink else REF_HEAD).items():
                 self.put(x + dx, y + dy, c)

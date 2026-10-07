@@ -209,7 +209,7 @@ def build_bg():
     cv.wallrect(X0 - 2, X1 + 2, ly(X0, T0 + HH, X0 - 2), 2, C["metal_hi"])   # parapeito
 
     # ---------- quadro com a coroa (o ÚNICO elemento de coroa da cena)
-    QX, QT = 98, 44
+    QX, QT = 98, 48
     cv.wallrect(QX, QX + 15, QT, 16, C["gold_d"])
     cv.wallrect(QX + 1, QX + 14, ly(QX, QT, QX + 1) + 1, 14, C["navy"])
     crown = ["..G..G..G.", ".GG.GG.GG.", ".GGGGGGGG.", "GGGGGGGGGG", "GlGGlGGlGG", "dddddddddd"]
@@ -236,7 +236,7 @@ def estante(cv):
     """Estante de parede inspirada na do quarto real, em versão menor e organizada: nichos brancos em zigue-zague com
     painel preto ao centro. Nicho 1: almofada do Goiás + bola. Nicho 2: fotos + cartucho retrô. Nicho 3: quatro
     bonequinhos. Tudo pregado na parede (topos inclinados como a parede)."""
-    X0, Y0, TIER = 158, 48, 11
+    X0, Y0, TIER = 158, 53, 10
     WH, WM, WS, WD = rgb("#e9ebf1"), rgb("#c9cdd8"), rgb("#9aa0b2"), rgb("#5b6176")
 
     def Y(x, yb):
@@ -272,10 +272,20 @@ def estante(cv):
             for y in range(Y(xx, Y0 + k * TIER) + 3, Y(xx, Y0 + (k + 1) * TIER)):
                 cv.put(xx, y, WM if xx == x else WS)
 
+    # topo: três troféus (taça dourada maior no centro, prata e bronze nas pontas), de pé sobre a tábua de cima
+    cup = [".YYYYY.", "YyYYYYY", "YyYYYYY", ".YYYYY.", "..YYY..", "...Y...", "..DDD..", ".DDDDD."]
+    small = [".YYY.", "YyYYY", ".YYY.", "..Y..", ".DDD."]
+    TR = {"Y": rgb("#e3b04b"), "y": rgb("#fff0b8"), "D": rgb("#3a2c22")}
+    SV = {"Y": rgb("#b8bfcc"), "y": rgb("#f2f4f8"), "D": rgb("#2c303c")}
+    BZ = {"Y": rgb("#b8743a"), "y": rgb("#f0c08a"), "D": rgb("#3a2c22")}
+    sprite(cup, 174, Y0, -8, TR)
+    sprite(small, 165, Y0, -5, SV)
+    sprite(small, 186, Y0, -5, BZ)
+
     G = {"w": rgb("#eef0ea"), "g": rgb("#1f8a4c")}
     # nicho 1: almofada do Goiás (branca, faixa verde, G) e bola de futebol
     sprite(["wwwwwww", "gwwwwww", "gwgggww", "gwgwwww", "gwgwggw", "gwgwwgw", "gwgggww", "wwwwwww"], 162, Y0, 3, G)
-    sprite([".KWWK.", "KWWWWK", "WWKKWW", "WWKKWW", "KWWWWK", ".KWWK."], 179, Y0, 5,
+    sprite([".KWWK.", "KWWWWK", "WWKKWW", "WWKKWW", "KWWWWK", ".KWWK."], 179, Y0, 3,
            {"W": rgb("#f4f4f6"), "K": rgb("#22232c")})
     # nicho 2: moldura com 4 fotos e cartucho retrô
     yb2 = Y0 + TIER

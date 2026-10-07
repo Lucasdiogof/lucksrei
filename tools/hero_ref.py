@@ -97,27 +97,53 @@ def stand_frame():
     return walk_frames()[STAND_FRAME]
 
 
-def _install_head():
-    """Recorta a cabeça (16 linhas do topo até o queixo, sem o capuz) do quadro 0 e a registra em hero_char como a
-    cabeça de TODAS as poses. Piscar = brancos dos olhos trocados pelo tom de sombra da pele."""
-    a = np.asarray(_frames()[0]).astype(int)
-    ys = np.where(a[..., 3].any(axis=1))[0]
+# cores do corpo (as mesmas dos quadros desenhados por código): cada pixel da referência vai para a mais próxima
+BODY_KEYS = ("o", "D", "T", "L", "c", "Q", "P", "p", "F", "f", "s", "S", "k")
+
+
+def _unify(cell):
+    """Troca a cabeça da referência pela SIDE_HEAD (mesma linguagem da cabeça de frente) e leva o corpo para a paleta comum."""
+    a = np.asarray(cell).astype(int).copy()
+    op = a[..., 3] > 0
+    ys = np.where(op.any(axis=1))[0]
     top = ys.min()
     rows = a[top:top + 16]
     xs = np.where(rows[:14, :, 3].any(axis=0))[0]
     x0 = xs.min() - (16 - (xs.max() - xs.min() + 1)) // 2
-    head, blink = {}, {}
     for dy in range(16):
-        for x in range(x0 - 1, x0 + 17):
-            r, g, b, al = rows[dy, x]
-            if not al:
-                continue
-            if dy >= 11 and b > r + 25 and b > 60:      # capuz/moletom: fica com o corpo
-                continue
-            head[(x - x0, dy)] = (int(r), int(g), int(b))
-            light = r + g + b > 540 and 6 <= dy <= 10
-            blink[(x - x0, dy)] = (205, 140, 96) if light else (int(r), int(g), int(b))
-    hc.REF_HEAD, hc.REF_HEAD_BLINK = head, blink
+        for x in range(x0 - 2, x0 + 18):
+            r, g, b, al = a[top + dy, x]
+            if al and not (dy >= 11 and b > r + 25 and b > 60):
+                a[top + dy, x] = 0
+    pal = np.array([hc.PAL[k] for k in BODY_KEYS])
+    nos = np.array([hc.PAL[k] for k in BODY_KEYS if k not in ("s", "S", "k")])   # pés/pernas: sem tons de pele
+    m = a[..., 3] > 0
+    feet = np.zeros_like(m); feet[ys.max() - 9:, :] = True
+    for mask, pp in ((m & ~feet, pal), (m & feet, nos)):
+        px = a[mask][:, :3]
+        if len(px):
+            idx = ((px[:, None, :] - pp[None, :, :]) ** 2).sum(axis=2).argmin(axis=1)
+            a[mask, :3] = pp[idx]
+    a[m, 3] = 255
+    out = Image.fromarray(a.astype("uint8"), "RGBA")
+    head = Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+    for ry, row in enumerate(hc.SIDE_HEAD):
+        for rx, ch in enumerate(row):
+            if ch != ".":
+                head.putpixel((rx, ry), hc.FRONT_PAL[ch] + (255,))
+    out.alpha_composite(head, (int(x0), int(top)))
+    return out
 
 
-_install_head()
+_UNIFIED = None
+
+
+def walk_frames():
+    global _UNIFIED
+    if _UNIFIED is None:
+        _UNIFIED = [_unify(c) for c in _frames()]
+    return [ImgFrame(c) for c in _UNIFIED]
+
+
+def stand_frame():
+    return walk_frames()[STAND_FRAME]

@@ -12,7 +12,7 @@ Vistas:
 """
 import math
 import hero_char as hc
-import hero_ref
+import hero_side
 from hero_char import Cell, shoe, hand
 
 hc.THIGH, hc.SHIN = 11.5, 11.5      # 23 px: perna quase reta com o quadril a 22 px do tornozelo (antes 24 = sempre dobrada)
@@ -118,14 +118,14 @@ def front(thumb=None, blink=False, bob=0):
     for dx in (-4, 4):
         c.capsule((cx + dx, hipy + 2), (cx + dx, ANK - 2), 6.4, ("p", "P", "Q"))
         shoe(c, (cx + dx - 2, ANK))
-    c.capsule((cx + 9, shy + 3), (cx + 11, shy + 13), 6.0, ("T", "D", "D"))
-    c.capsule((cx + 11, shy + 13), (cx + 10, shy + 19), 5.4, ("T", "D", "D"))
-    c.disc(cx + 10, shy + 21, 2.4, "S", halo=True)
+    c.capsule((cx + 9, shy + 3), (cx + 11, shy + 13), 5.6, ("T", "D", "D"))
+    c.capsule((cx + 11, shy + 13), (cx + 10, shy + 19), 5.0, ("T", "D", "D"))
+    c.disc(cx + 10, shy + 21, 2.3, "S", halo=True)
     torso_front(c, cx, shy, hipy)
     if thumb is None:            # braço esquerdo do espectador solto ao lado do corpo
-        c.capsule((cx - 9, shy + 3), (cx - 11, shy + 13), 6.0, ("L", "T", "D"))
-        c.capsule((cx - 11, shy + 13), (cx - 10, shy + 19), 5.4, ("L", "T", "D"))
-        c.disc(cx - 10, shy + 21, 2.4, "s", halo=True)
+        c.capsule((cx - 9, shy + 3), (cx - 11, shy + 13), 5.6, ("L", "T", "D"))
+        c.capsule((cx - 11, shy + 13), (cx - 10, shy + 19), 5.0, ("L", "T", "D"))
+        c.disc(cx - 10, shy + 21, 2.3, "s", halo=True)
     else:
         sh, el, hd = (cx - 9, shy + 3), (cx - 16, shy + 11 + thumb), (cx - 15, shy + 2 + thumb)
         c.capsule(sh, el, 6.0, ("L", "T", "D"))
@@ -140,16 +140,17 @@ def front(thumb=None, blink=False, bob=0):
 
 
 def torso_front(c, cx, shy, hipy):
-    """Tronco do moletom de frente (com sombra à esquerda, luz à direita, barra, bolso, gola e cordões)."""
-    c.poly([(cx - 10, shy - 1), (cx + 10, shy - 1), (cx + 11, hipy + 3), (cx - 11, hipy + 3)], "o")
-    c.poly([(cx - 9, shy), (cx + 9, shy), (cx + 10, hipy + 2), (cx - 10, hipy + 2)], "T")
-    c.poly([(cx - 9, shy), (cx - 6, shy), (cx - 7, hipy + 2), (cx - 10, hipy + 2)], "D")
-    c.poly([(cx + 6, shy + 2), (cx + 9, shy + 2), (cx + 10, hipy + 2), (cx + 7, hipy + 2)], "L")
-    c.rect(cx - 10, hipy - 1, 21, 3, "D")
-    c.rect(cx - 5, hipy - 9, 11, 1, "D")
-    c.rect(cx - 3, shy - 2, 7, 5, "D")
-    c.rect(cx - 4, shy + 2, 1, 8, "c"); c.rect(cx + 4, shy + 2, 1, 8, "c")
-    c.rect(cx - 1, shy - 3, 3, 3, "S")
+    """Moletom de frente, mais esguio (proporção da arte de referência): ombros arredondados, capuz dobrado em volta do
+    pescoço, cordões, bolso canguru e barra; sombra à esquerda e luz à direita."""
+    c.poly([(cx - 7, shy - 2), (cx + 7, shy - 2), (cx + 10, shy + 1), (cx + 10, hipy + 3), (cx - 10, hipy + 3), (cx - 10, shy + 1)], "o")
+    c.poly([(cx - 6, shy - 1), (cx + 6, shy - 1), (cx + 9, shy + 2), (cx + 9, hipy + 2), (cx - 9, hipy + 2), (cx - 9, shy + 2)], "T")
+    c.poly([(cx - 9, shy + 2), (cx - 6, shy + 2), (cx - 7, hipy + 2), (cx - 9, hipy + 2)], "D")
+    c.poly([(cx + 6, shy + 3), (cx + 9, shy + 3), (cx + 9, hipy + 2), (cx + 7, hipy + 2)], "L")
+    c.rect(cx - 9, hipy, 19, 2, "D")                                   # barra
+    c.rect(cx - 4, hipy - 8, 9, 1, "D"); c.rect(cx - 4, hipy - 8, 1, 6, "D"); c.rect(cx + 4, hipy - 8, 1, 6, "D")   # bolso
+    c.rect(cx - 5, shy - 2, 11, 3, "D"); c.rect(cx - 4, shy - 2, 9, 1, "L")   # capuz dobrado na gola
+    c.rect(cx - 2, shy + 1, 1, 7, "c"); c.rect(cx + 2, shy + 1, 1, 7, "c")   # cordões
+    c.rect(cx - 1, shy - 3, 3, 3, "S")                                 # pescoço
 
 
 # ============================================================ SENTADO (3/4)
@@ -218,10 +219,13 @@ def seated(pose, hip=SEAT_HIP_CELL, head="front", hdx=0, hdy=0, blink=False, leg
     return base.finish(), over
 
 
-# --- posições (célula). Teclado: mãos em L(29,54) R(43,52); caneca da mesa: mão em (53,53)
-KEYS = [((24, 47), (31, 54), (44, 46), (40, 53)), ((24, 47), (32, 54), (44, 45), (40, 52)),
-        ((24, 48), (31, 55), (44, 46), (41, 53)), ((24, 47), (32, 54), (44, 46), (39, 53))]
-REST = ((24, 47), (30, 54), (44, 46), (41, 53))
+# --- posições (célula; cena = célula + (80, 57)). O teclado vai de x 96 a 126 na cena, mas a metade direita fica atrás
+# do monitor da esquerda (x >= 112): as mãos digitam no MEIO da parte visível (mão esquerda ~x 105, direita ~x 111,
+# entrando por trás do monitor), na altura do meio das fileiras de teclas (y ~109), não na borda da frente.
+# Cotovelos junto ao corpo com leve flexão: ombro→mão ~17 px na tela (antes ~22, braço esticado para baixo).
+KEYS = [((21, 45), (25, 52), (42, 46), (31, 51)), ((21, 45), (26, 51), (42, 45), (31, 50)),
+        ((21, 46), (25, 53), (42, 46), (32, 51)), ((21, 45), (26, 52), (42, 46), (30, 52))]
+REST = ((21, 45), (25, 52), (42, 46), (31, 51))
 
 
 def type_pose(i):
@@ -250,8 +254,8 @@ def with_right(el, hd, kind="grip", mugpos=None):
 
 
 # --- sentar / levantar (de frente, mesmas coordenadas: pés em FEET_CX, o quadril desce até SEAT_HIP_CELL)
-SIDES = ((22, 54), (24, 61), (42, 54), (40, 61))             # braços soltos ao lado do corpo (cotovelo/mão E, cotovelo/mão D)
-DESKH = ((24, 47), (31, 54), (44, 46), (40, 53))             # mãos no teclado
+SIDES = ((23, 38), (24, 45), (43, 38), (42, 45))             # braços soltos ao lado do corpo, mão na altura do quadril (em pé)
+DESKH = REST                                                 # mãos no teclado (= pose de repouso da digitação)
 
 
 def _mix(a, b, t):
@@ -275,7 +279,12 @@ STAND_PATH = [((34, 52), 1.0, 1, "front"), ((34, 52), 0.85, 2, "front"), ((34, 4
 
 
 def path_frames(path):
-    return [sit_frame(hip, _mix(SIDES, DESKH, k), head=hd, hdy=dy, on_desk=k > 0.75) for hip, k, dy, hd in path]
+    out = []
+    for hip, k, dy, hd in path:
+        drop = hip[1] - 44                                  # os braços descem junto com o tronco
+        sides = tuple((x, y + drop) for x, y in SIDES)
+        out.append(sit_frame(hip, _mix(sides, DESKH, k), head=hd, hdy=dy, on_desk=k > 0.75))
+    return out
 
 
 ORDER = []
@@ -286,8 +295,8 @@ def add(name, frames):
 
 
 add("front_idle", [front(), front(bob=1), front(blink=True)])
-add("stand_r", [hero_ref.stand_frame(), hero_ref.stand_frame()])      # arte de referência (perfil)
-add("walk_r", hero_ref.walk_frames())                                  # arte de referência: 8 quadros
+add("stand_r", hero_side.stand_frames())                               # perfil desenhado pixel a pixel (hero_side.py)
+add("walk_r", hero_side.walk_frames())                                 # 8 quadros, pé de apoio fixo no chão
 add("turn_r", [sit_frame((32, 44), SIDES, head="34")])
 add("sit_down", path_frames(SIT_PATH))
 add("seated_idle", [seated(rest_pose(), head="frontd"), seated(rest_pose(), head="frontd", hdy=1), seated(rest_pose(), head="frontd", blink=True)])

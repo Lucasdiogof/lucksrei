@@ -43,14 +43,13 @@
   function rep(frames, counts) { var o = []; for (var q = 0; q < frames.length; q++) for (var r = 0; r < counts[q]; r++) o.push(frames[q]); return o; }
   var TYPE = [0, 1, 2, 3];
 
-  // ---- introdução: entra, para, vira para o visitante, joinha + 1ª fala
+  // ---- introdução: entra, para, vira de frente e encara o visitante — sem gesto — enquanto a 1ª fala aparece
   var ph = walk("INTRO_WALK", "walk_r", E, P);
-  hold("INTRO_IDLE", "stand_r", 0.25);
-  hold("INTRO_IDLE", "turn_r", 0.2);
-  hold("INTRO_IDLE", "front_idle", 0.6, { seq: [0, 1], fps: 3 });
-  hold("INTRO_THUMBS", "front_idle", 0.6, { seq: [0, 0, 1], fps: 5, loop: false });     // olha para o visitante
-  hold("INTRO_TEXT", "front_idle", 6.0, { seq: [0, 0, 1, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 2, 0], fps: 2.5 });   // parado, respira e pisca; 1ª fala
-  hold("INTRO_TEXT", "front_idle", 0.5, { seq: [0, 1], fps: 3 });
+  hold("INTRO_IDLE", "stand_r", 0.35);                                      // para
+  hold("INTRO_IDLE", "turn_r", 0.2);                                        // gira o corpo
+  hold("INTRO_THUMBS", "front_idle", 0.5, { seq: [0], fps: 2 });           // encara o visitante
+  hold("INTRO_TEXT", "front_idle", 5.4, { seq: [0, 0, 1, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0, 2, 0], fps: 2.9 });   // parado, respira e pisca; 1ª fala
+  hold("INTRO_TEXT", "front_idle", 0.4, { seq: [0], fps: 2 });
 
   // ---- caminha até a cadeira (pelo lado esquerdo da mesa), vira e senta
   hold("WALK_TO_DESK", "turn_r", 0.2);
@@ -62,39 +61,33 @@
   hold("SIT", "sit_down", 1.1, { seq: rep([0, 1, 2, 3, 4, 5, 6, 7], [4, 3, 2, 2, 2, 2, 3, 4]), fps: 20, loop: false });
   hold("SIT", "seated_idle", 0.7, { seq: [0, 1, 0], fps: 3 });             // acomoda e olha os monitores
 
-  // ---- trabalho: digita, trava, coça a cabeça, resolve, comemora pouco, digita ~8 s, coça a nuca, comemora, café
-  hold("TYPE_1", "typing", 2.2, { seq: TYPE, fps: 6 });
-  hold("TYPE_1", "typing_down", 1.0, { seq: [0, 1], fps: 5 });
-  hold("TYPE_1", "seated_idle", 0.4, { seq: [0, 2, 0], fps: 4 });
-  hold("TYPE_1", "typing", 1.8, { seq: TYPE, fps: 6 });
-  hold("SCRATCH_1", "seated_idle", 0.45, { seq: [0], fps: 2 });           // para de digitar e olha o monitor: "não funcionou…"
-  hold("SCRATCH_1", "seated_idle", 0.3, { seq: [1, 0], fps: 4 });         // pequena pausa
-  hold("SCRATCH_1", "scratch_head", 0.2, { seq: [0], fps: 2 });           // a mão sobe
-  hold("SCRATCH_1", "scratch_head", 0.22, { seq: [1], fps: 2 });
-  hold("SCRATCH_1", "scratch_head", 1.0, { seq: [1, 2, 1, 2, 1], fps: 5 });
-  hold("SCRATCH_1", "scratch_head", 0.2, { seq: [0], fps: 2 });           // a mão desce
-  hold("SCRATCH_1", "seated_idle", 0.35, { seq: [0], fps: 2 });           // olha o monitor de novo
-  hold("FIX", "typing", 1.5, { seq: TYPE, fps: 9 });                      // digita rápido: achou
-  hold("CELEBRATE_1", "seated_idle", 0.3, { seq: [0, 2], fps: 4 });       // percebe que funcionou
-  hold("CELEBRATE_1", "celebrate", 0.4, { seq: [0, 1], fps: 5, loop: false });   // soquinho curto
-  hold("CELEBRATE_1", "celebrate", 0.3, { seq: [1], fps: 2 });
-  hold("CELEBRATE_1", "celebrate", 0.25, { seq: [2], fps: 2 });
-  hold("CELEBRATE_1", "seated_idle", 0.45, { seq: [0, 1], fps: 3 });
-  hold("TYPE_2", "typing", 2.2, { seq: TYPE, fps: 6 });                   // ~8 s digitando
-  hold("TYPE_2", "seated_idle", 0.5, { seq: [0, 2, 0], fps: 4 });
-  hold("TYPE_2", "typing_down", 1.0, { seq: [0, 1], fps: 5 });
-  hold("TYPE_2", "typing", 2.4, { seq: TYPE, fps: 7 });
-  hold("TYPE_2", "seated_idle", 0.4, { seq: [0, 1, 0], fps: 3 });
-  hold("TYPE_2", "typing", 1.6, { seq: TYPE, fps: 6 });
-  hold("SCRATCH_2", "seated_idle", 0.4, { seq: [0], fps: 2 });            // variação: coça a nuca
-  hold("SCRATCH_2", "seated_idle", 0.25, { seq: [1, 0], fps: 4 });
-  hold("SCRATCH_2", "scratch_neck", 0.2, { seq: [0], fps: 2 });
-  hold("SCRATCH_2", "scratch_neck", 0.9, { seq: [1, 2, 1, 2], fps: 4 });
-  hold("SCRATCH_2", "scratch_neck", 0.2, { seq: [0], fps: 2 });
-  hold("SCRATCH_2", "seated_idle", 0.35, { seq: [0], fps: 2 });
-  hold("CELEBRATE_2", "seated_idle", 0.25, { seq: [0, 2], fps: 4 });
-  hold("CELEBRATE_2", "celebrate", 0.5, { seq: [0, 1, 2], fps: 6, loop: false });   // mais contido
-  hold("CELEBRATE_2", "seated_idle", 0.5, { seq: [0, 1], fps: 3 });
+  for (var i = 0; i < STEPS.length; i++) { STEPS[i].t0 = T; T += STEPS[i].d; }
+  var INTRO = STEPS, TI = T;            // intro: toca uma vez por carregamento e termina com ele sentado
+
+  // ---- trabalho em LOOP infinito (sempre sentado): programa ~10 s → comemora → programa ~10 s → café →
+  //      programa ~10 s → coça a cabeça → recomeça. Cada ação tem pausa antes/depois e volta limpa à digitação.
+  STEPS = []; T = 0;
+  // programa (~10 s): digitação com variações (olhar baixo, pausas curtas, piscadas) e, no fim, digita rápido: achou
+  hold("TYPE_A", "typing", 3.0, { seq: TYPE, fps: 6 });
+  hold("TYPE_A", "seated_idle", 0.4, { seq: [0, 2, 0], fps: 4 });
+  hold("TYPE_A", "typing_down", 1.2, { seq: [0, 1], fps: 5 });
+  hold("TYPE_A", "typing", 2.4, { seq: TYPE, fps: 7 });
+  hold("TYPE_A", "seated_idle", 0.5, { seq: [0, 1, 0], fps: 3 });
+  hold("TYPE_A", "typing", 2.5, { seq: TYPE, fps: 9 });
+  // comemora: percebe que funcionou, soquinho curto, volta
+  hold("CELEBRATE", "seated_idle", 0.3, { seq: [0, 2], fps: 4 });
+  hold("CELEBRATE", "celebrate", 0.4, { seq: [0, 1], fps: 5, loop: false });
+  hold("CELEBRATE", "celebrate", 0.3, { seq: [1], fps: 2 });
+  hold("CELEBRATE", "celebrate", 0.25, { seq: [2], fps: 2 });
+  hold("CELEBRATE", "seated_idle", 0.45, { seq: [0, 1], fps: 3 });
+  // programa (~10 s)
+  hold("TYPE_B", "typing", 2.4, { seq: TYPE, fps: 6 });
+  hold("TYPE_B", "typing_down", 1.0, { seq: [0, 1], fps: 5 });
+  hold("TYPE_B", "typing", 2.2, { seq: TYPE, fps: 7 });
+  hold("TYPE_B", "seated_idle", 0.5, { seq: [0, 2, 0], fps: 4 });
+  hold("TYPE_B", "typing", 2.0, { seq: TYPE, fps: 6 });
+  hold("TYPE_B", "typing_down", 0.9, { seq: [1, 0], fps: 5 });
+  hold("TYPE_B", "typing", 1.0, { seq: TYPE, fps: 6 });
   // café: mesa → mão → boca → mão → mesa (mesma caneca, mesmo desenho)
   hold("COFFEE", "seated_idle", 0.3, { seq: [0], fps: 2 });
   hold("COFFEE", "coffee_reach", 0.2);
@@ -102,36 +95,50 @@
   hold("COFFEE", "coffee_hold", 0.25, { mug: "hand" });                   // levanta: a caneca passa para a mão
   hold("COFFEE", "coffee_return", 0.2, { mug: "hand" });
   hold("COFFEE", "coffee_drink", 0.3, { mug: "hand" });
-  hold("COFFEE", "coffee_drink", 0.8, { seq: [1, 1, 0, 1, 1], fps: 6, loop: false, mug: "hand" });   // bebe e baixa um instante (nada fica congelado)
+  hold("COFFEE", "coffee_drink", 0.8, { seq: [1, 1, 0, 1, 1], fps: 6, loop: false, mug: "hand" });   // bebe e baixa um instante
   hold("COFFEE", "coffee_drink", 0.25, { mug: "hand" });
   hold("COFFEE", "coffee_return", 0.25, { mug: "hand" });
   hold("COFFEE", "coffee_hold", 0.2, { mug: "hand" });
   hold("COFFEE", "coffee_reach", 0.25, { seq: [1] });                     // devolve na mesma posição
   hold("COFFEE", "coffee_reach", 0.2);
   hold("COFFEE", "seated_idle", 0.3, { seq: [0], fps: 2 });
-
-  // ---- levanta (impulso, tronco à frente, pernas, postura) e sai pelo mesmo caminho
-  hold("STAND", "stand_up", 1.3, { seq: rep([0, 1, 2, 3, 4, 5, 6], [3, 4, 3, 3, 3, 4, 4]), fps: 20, loop: false });
-  hold("STAND", "turn_l", 0.25);
-  hold("STAND", "stand_l", 0.2);
-  ph = walk("EXIT", "walk_l", SLOT, WP, 0);
-  walk("EXIT", "walk_l", WP, E, ph);
-  for (var i = 0; i < STEPS.length; i++) { STEPS[i].t0 = T; T += STEPS[i].d; }
-  // [entra, sai] de cada fala (s), amarradas aos passos: 1ª durante o joinha; 2ª ao ir para a mesa e sentar
-  function stepAt(id, last) { var r = null; for (var q = 0; q < STEPS.length; q++) if (STEPS[q].id === id) { r = STEPS[q]; if (!last) break; } return r; }
+  // programa (~10 s)
+  hold("TYPE_C", "typing", 2.6, { seq: TYPE, fps: 6 });
+  hold("TYPE_C", "seated_idle", 0.4, { seq: [0, 1, 0], fps: 4 });
+  hold("TYPE_C", "typing", 2.4, { seq: TYPE, fps: 7 });
+  hold("TYPE_C", "typing_down", 1.0, { seq: [0, 1], fps: 5 });
+  hold("TYPE_C", "typing", 2.0, { seq: TYPE, fps: 6 });
+  hold("TYPE_C", "seated_idle", 0.4, { seq: [0, 2, 0], fps: 4 });
+  hold("TYPE_C", "typing", 1.2, { seq: TYPE, fps: 6 });
+  // coça a cabeça: para de digitar e olha o monitor ("não funcionou…"), coça, volta a olhar e retoma (o loop recomeça digitando)
+  hold("SCRATCH", "seated_idle", 0.45, { seq: [0], fps: 2 });
+  hold("SCRATCH", "seated_idle", 0.3, { seq: [1, 0], fps: 4 });
+  hold("SCRATCH", "scratch_head", 0.2, { seq: [0], fps: 2 });             // a mão sobe
+  hold("SCRATCH", "scratch_head", 0.22, { seq: [1], fps: 2 });
+  hold("SCRATCH", "scratch_head", 1.0, { seq: [1, 2, 1, 2, 1], fps: 5 });
+  hold("SCRATCH", "scratch_head", 0.2, { seq: [0], fps: 2 });             // a mão desce
+  hold("SCRATCH", "seated_idle", 0.35, { seq: [0], fps: 2 });             // olha o monitor de novo
+  for (i = 0; i < STEPS.length; i++) { STEPS[i].t0 = T; T += STEPS[i].d; }
+  var LOOP = STEPS, TL = T;
+  STEPS = INTRO; T = TI;
+  // [entra, sai] de cada fala (s, no relógio absoluto: só na intro): 1ª de frente para o visitante; 2ª ao ir para a mesa e sentar
+  function stepAt(id, last) { var r = null; for (var q = 0; q < INTRO.length; q++) if (INTRO[q].id === id) { r = INTRO[q]; if (!last) break; } return r; }
   var TALK = [[stepAt("INTRO_THUMBS").t0 + 0.5, stepAt("INTRO_TEXT", true).t0 + 0.4],
     [stepAt("WALK_TO_DESK").t0 + 0.2, stepAt("SIT", true).t0 + 0.9]];
 
   /* ---------------------------------------------------------------- estado */
   var state = { running: false, visible: false, hidden: document.hidden, started: false, loaded: false, done: false };
   var bg, desk, mon, spr, canvas, ctx, cc, cctx, view = { x: 0, y: 0, w: W, h: H, scale: 2 };
-  var raf = 0, last = 0, clock = 0, cursor = 0;
+  var raf = 0, last = 0, clock = 0, cursors = [0, 0];
   var actor = { x: E[0], y: E[1], anim: "walk_r", frame: 0, visible: true, mugInHand: false };
 
+  // t = relógio absoluto desde o começo; depois da intro, o tempo dá voltas no LOOP (nunca termina)
   function sample(t) {
-    while (cursor > 0 && STEPS[cursor].t0 > t) cursor--;
-    while (cursor < STEPS.length - 1 && STEPS[cursor].t0 + STEPS[cursor].d <= t) cursor++;
-    var s = STEPS[cursor], lt = Math.max(0, t - s.t0);
+    var L = t < TI ? INTRO : LOOP, w = t < TI ? 0 : 1, tt = t < TI ? t : (t - TI) % TL, cursor = cursors[w];
+    while (cursor > 0 && L[cursor].t0 > tt) cursor--;
+    while (cursor < L.length - 1 && L[cursor].t0 + L[cursor].d <= tt) cursor++;
+    cursors[w] = cursor;
+    var s = L[cursor], lt = Math.max(0, tt - s.t0);
     actor.anim = s.anim;
     actor.mugInHand = s.mug === "hand";
     if (s.walk) {
@@ -143,7 +150,7 @@
       var fi = Math.floor(lt * s.fps), n = s.seq.length;
       actor.frame = s.seq[s.loop ? fi % n : Math.min(n - 1, fi)];
     }
-    actor.visible = t < T;
+    actor.visible = true;
   }
 
   /* ---------------------------------------------------------------- desenho */
@@ -195,9 +202,8 @@
   }
 
   function update(dt) {
-    clock = Math.min(T, clock + dt);
+    clock += dt;
     sample(clock);
-    if (clock >= T) state.done = true;
   }
 
   /* ---------------------------------------------------------------- laço (~25 fps; pausa fora da tela / aba oculta) */
@@ -207,7 +213,6 @@
     if (now - last >= 40) {
       var dt = Math.min(0.1, (now - last) / 1000);
       last = now; update(dt); draw(clock);
-      if (state.done) { state.running = false; return; }   // fim: escritório vazio, sem recomeçar
     }
     raf = requestAnimationFrame(frame);
   }
@@ -282,5 +287,5 @@
     });
   }
   if (document.readyState === "complete") init(); else window.addEventListener("load", init);
-  root.__heroScene = { duration: T, steps: STEPS, time: function () { return clock; } };   // leitura (QA/gravação)
+  root.__heroScene = { duration: TI, intro: TI, loop: TL, steps: INTRO, loopSteps: LOOP, time: function () { return clock; } };   // leitura (QA/gravação)
 })();
