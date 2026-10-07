@@ -562,6 +562,8 @@
   "shots.lapelve.home.caption": "Próximos atendimentos, atalhos e visão geral da clínica.",
   "shots.lapelve.home.title": "Início",
   "shots.lapelve.login.alt": "La Pelve: tela de entrada com a mensagem Feito para sua rotina clínica",
+  "shots.lapelve.login.caption": "Acesso com e-mail e senha, com criação de conta na mesma tela.",
+  "shots.lapelve.login.title": "Entrar",
   "shots.lapelve.patient-form.alt": "Cadastro de paciente em etapas, passo 1 de 9: dados pessoais",
   "shots.lapelve.patient-form.caption": "Anamnese guiada em 9 passos, com barra de progresso.",
   "shots.lapelve.patient-form.title": "Cadastro em etapas",

@@ -1485,12 +1485,22 @@
     "slots": {
       "login": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             924,
             2000
+          ],
+          "en": [
+            738,
+            1600
+          ],
+          "es": [
+            738,
+            1600
           ]
         }
       },
@@ -1572,6 +1582,7 @@
     },
     "blocks": {
       "b1": [
+        "login",
         "home",
         "schedule",
         "patients",
