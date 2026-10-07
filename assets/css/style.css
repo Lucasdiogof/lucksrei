@@ -131,14 +131,14 @@ body::before{
   -webkit-mask-image: radial-gradient(ellipse 60% 85% at var(--gx, 78%) var(--gy, 0%), #000 0%, transparent 72%);
           mask-image: radial-gradient(ellipse 60% 85% at var(--gx, 78%) var(--gy, 0%), #000 0%, transparent 72%);
 }
-/* halo: um só por bloco, azul do acento a 9%, deriva lenta (transform) e para com reduced motion */
+/* halo: um só por bloco, azul do acento a 9%. Parado no meio do antigo trajeto: animar algo dentro de um bloco com
+   overflow: clip obriga o navegador a refazer o quadro na thread principal a cada vsync (medido: ~100 ms/s a 240 Hz). */
 .lk-grid::after{
   content: ""; position: absolute; z-index: -1; pointer-events: none;
   width: min(760px, 120vw); aspect-ratio: 1; left: var(--hx, 62%); top: var(--hy, -42%);
   background: radial-gradient(closest-side, var(--halo), transparent);
-  animation: lk-drift 26s var(--ease) infinite alternate;
+  transform: translate3d(-24px, 18px, 0) scale(1.03);
 }
-@keyframes lk-drift{ to{ transform: translate3d(-48px, 36px, 0) scale(1.06); } }
 .page-hero.lk-grid{ --gx: 85%; --hx: 70%; --hy: -70%; }
 .cta-section.lk-grid{ --gx: 18%; --gy: 100%; --hx: -18%; --hy: 10%; }
 @media (max-width: 700px){
@@ -146,7 +146,6 @@ body::before{
   .lk-grid::before{ -webkit-mask-image: radial-gradient(ellipse 90% 70% at 80% 0%, #000, transparent 75%); mask-image: radial-gradient(ellipse 90% 70% at 80% 0%, #000, transparent 75%); }
   .lk-grid::after{ left: 30%; top: -30%; }
 }
-@media (prefers-reduced-motion: reduce){ .lk-grid::after{ animation: none; } }
 
 a:focus-visible, button:focus-visible{
   outline: 2px solid var(--accent);
@@ -168,12 +167,10 @@ a:focus-visible, button:focus-visible{
   position: sticky; top: 0; z-index: 100;
   border-bottom: 1px solid transparent;
   background: rgba(5,6,7,.45);
-  backdrop-filter: blur(0px);
-  transition: background .3s var(--ease), border-color .3s var(--ease), backdrop-filter .3s var(--ease);
+  transition: background .3s var(--ease), border-color .3s var(--ease);
 }
-.site-header.is-scrolled{
-  background: rgba(5,6,7,.82);
-  backdrop-filter: blur(12px) saturate(130%);
+.site-header.is-scrolled{                                /* sem backdrop-filter: borrar o que passa por baixo custava a cada quadro de scroll */
+  background: rgba(6,7,10,.94);
   border-bottom-color: var(--border);
   box-shadow: 0 1px 0 rgba(214,167,44,.07), 0 14px 40px rgba(0,0,0,.28);
 }
@@ -377,7 +374,6 @@ section{ padding: 88px 0; }
 .section-head{ max-width: 620px; margin-bottom: 48px; }
 .section-head h2{ font-size: clamp(26px, 3.6vw, 38px); margin-bottom: 14px; }
 .section-head p{ color: var(--text-dim); font-size: 16px; line-height: 1.65; }
-.section-foot{ margin-top: 40px; }
 
 [data-reveal]{ opacity: 0; transform: translateY(16px); transition: opacity .6s var(--ease), transform .6s var(--ease); }
 [data-reveal].is-visible{ opacity: 1; transform: translateY(0); }
@@ -420,8 +416,6 @@ section{ padding: 88px 0; }
   color: color-mix(in srgb, var(--p) 65%, var(--text-faint));
 }
 .showcase-tagline{ color: var(--p); font-size: 13.5px; font-family: var(--font-mono); margin-bottom: 14px; display: block; }
-.showcase-meta{ display: flex; flex-wrap: wrap; gap: 4px 0; margin-bottom: 20px; font-family: var(--font-mono); font-size: 12px; color: var(--text-faint); }
-.showcase-meta span:not(:last-child)::after{ content: "·"; margin: 0 8px; color: var(--border-strong); }
 .showcase-go{ display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; color: var(--p); font-weight: 600; }
 .showcase-go-arrow{ display: inline-block; transition: transform .2s var(--ease); }
 .work-item:hover .showcase-go{ text-decoration: underline; }
@@ -483,8 +477,6 @@ section{ padding: 88px 0; }
   .work-pair{ grid-template-columns: 1fr; }
 }
 @media (max-width: 560px){
-  .showcase-meta{ gap: 4px 14px; }
-  .showcase-meta span::after{ display: none; }
   .plate-shot[data-k="2"]{ display: none; }
   .plate-shot, .work-half .plate-shot{ width: 46%; }
   .plate-shot:not([data-k="0"]){ margin-left: -5%; }
@@ -544,19 +536,7 @@ section{ padding: 88px 0; }
 .timeline-item li{ font-size: 13px; color: var(--text-faint); }
 .timeline-item li:not(:last-child)::after{ content: "·"; margin: 0 8px; color: var(--border-strong); }
 
-/* ---------- other projects (hairline list) ---------- */
-.legacy-grid{ border-top: 1px solid var(--border); }
-.legacy-item{
-  display: grid; grid-template-columns: 150px minmax(0,1fr) auto; gap: 4px 24px; align-items: baseline;
-  padding: 14px 0; border-bottom: 1px solid var(--border);
-}
-.legacy-item h3{ font-size: 15px; }
-.legacy-item p{ color: var(--text-dim); font-size: 13.5px; line-height: 1.55; }
-.legacy-item .chips{ display: flex; flex-wrap: wrap; }
 .chip{ font-family: var(--font-mono); font-size: 12px; color: var(--text-faint); border: 1px solid var(--border); border-radius: 6px; padding: 4px 8px; }
-.legacy-item .chip{ border: 0; padding: 0; border-radius: 0; }
-.legacy-item .chip:not(:last-child)::after{ content: "·"; margin: 0 8px; color: var(--border-strong); }
-@media (max-width: 700px){ .legacy-item{ grid-template-columns: 1fr; gap: 4px; } }
 
 /* ---------- closing CTA (open, typographic) ---------- */
 .cta-section{ padding: 96px 0 104px; border-top: 1px solid var(--border); }
@@ -716,14 +696,32 @@ figure.fig{ margin: 0; }
 
 /* ---------- metrics footer (home) ---------- */
 .metric .label strong{ display: block; color: var(--text-dim); font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+/* convite para o portfólio completo: um painel inteiro clicável (texto + logos + botão) que puxa para /apps/ */
 .metrics-foot{
-  display: flex; align-items: center; justify-content: space-between; gap: 16px 28px; flex-wrap: wrap;
-  margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border);
-  color: var(--text-faint); font-size: 13.5px;
+  position: relative; display: flex; align-items: center; justify-content: space-between; gap: 16px 28px; flex-wrap: wrap;
+  margin-top: 28px; padding: 18px 22px; border: 1px solid rgba(99,179,255,.14); border-radius: 14px;
+  background: linear-gradient(100deg, rgba(60,130,255,.08), rgba(213,145,29,.05) 70%, rgba(213,145,29,.025)), #0b0e14;
+  color: var(--text-faint); font-size: 13.5px; text-decoration: none; overflow: hidden; isolation: isolate;
+  transition: border-color .2s var(--ease), transform .2s var(--ease);
 }
-.metrics-foot a:not(.link-arrow){ color: var(--text-dim); text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 3px; }
-.metrics-foot a:not(.link-arrow):hover{ color: var(--text); }
-.metrics-foot .sep{ margin: 0 10px; color: var(--border-strong); }
+.metrics-foot:hover{ border-color: rgba(249,213,119,.32); transform: translateY(-2px); }
+.apps-cta-copy{ max-width: 560px; line-height: 1.5; }
+.apps-cta-copy strong{ display: block; margin-bottom: 2px; color: var(--royal-champagne, #fcf4dd); font-size: 16px; font-weight: 700; }
+.apps-cta-side{ display: inline-flex; align-items: center; gap: 12px; flex-wrap: wrap; row-gap: 10px; }
+.apps-cta .apps-stack img{ width: 36px; height: 36px; }
+.apps-cta-btn{
+  padding: 9px 16px; border: 1px solid rgba(249,213,119,.45); border-radius: 999px;
+  background: rgba(213,145,29,.10); color: var(--gold-bright, #f9d577) !important;
+  transition: background .25s var(--ease), border-color .25s var(--ease);
+}
+.metrics-foot:hover .apps-cta-btn{ background: rgba(213,145,29,.2); border-color: rgba(249,213,119,.75); }
+.metrics-foot.apps-cta{ display: flex; width: 100%; }
+@media (max-width: 700px){
+  .metrics-foot{ padding: 16px; }
+  .apps-cta-side{ width: 100%; }
+  .apps-cta-btn{ width: 100%; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce){ .metrics-foot:hover{ transform: none; } }
 .link-arrow{
   display: inline-flex; align-items: center; gap: 8px; color: var(--accent); text-decoration: none;
   font-weight: 600; font-size: 14.5px;
@@ -762,9 +760,9 @@ figure.fig{ margin: 0; }
 .app-card{
   position: relative; display: flex; flex-direction: column; gap: 14px; min-width: 0;
   background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: var(--radius); padding: 18px;
-  transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+  transition: transform .2s var(--ease), border-color .2s var(--ease);
 }
-.app-card:hover, .app-card:focus-within{ transform: translateY(-3px); border-color: rgba(214,167,44,.3); box-shadow: var(--shadow-lift); }
+.app-card:hover, .app-card:focus-within{ transform: translateY(-3px); border-color: rgba(214,167,44,.3); }
 .app-top{ display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
 .app-logo{
   flex: none; width: 56px; height: 56px; border-radius: 14px; overflow: hidden;
@@ -1074,7 +1072,6 @@ main{ counter-reset: sec; }
   transition: width .35s var(--ease), height .35s var(--ease), border-color .35s var(--ease);
 }
 .work-item:hover::before{ width: 36px; height: 36px; border-color: var(--border-gold-hover); }
-.work-item:hover{ box-shadow: 0 20px 60px rgba(0,0,0,.35); }
 #projetos .eyebrow[data-sec]::after, #own .apps-group-head h2::after{
   content: ""; display: inline-block; width: 21px; height: 14px; margin-left: 10px; vertical-align: -2px;
   background: url("/assets/img/brand/lucksrei-crown.webp") center / contain no-repeat; opacity: .9;
@@ -1091,46 +1088,18 @@ main{ counter-reset: sec; }
 
 /* celular: identidade sem efeitos caros */
 @media (max-width: 700px){
-  .lk-grid::after{ animation: none; }
   .hs-stage::before, .hs-stage::after{ display: none; }
   #tecnologias::before{ display: none; }
 }
 @media (prefers-reduced-motion: reduce){ .btn-primary::after{ display: none; } }
 
-@keyframes lk-glint{ 0%{ opacity: .2; } 55%{ opacity: .9; } 100%{ opacity: .35; } }
-
-/* raios de luz dourados saindo do alto do hero (leque suave atrás do título) */
-.hero-rays{
-  position: absolute; z-index: -2; pointer-events: none; left: -10%; top: -70%; width: 80%; aspect-ratio: 1;
-  background: repeating-conic-gradient(from 160deg at 38% 40%, rgba(255,215,106,.12) 0 3deg, transparent 3deg 12deg);
-  -webkit-mask-image: radial-gradient(closest-side at 38% 40%, #000 0%, transparent 78%);
-          mask-image: radial-gradient(closest-side at 38% 40%, #000 0%, transparent 78%);
-  animation: lk-glint 11s ease-in-out infinite alternate;
-}
-
-/* coroa em marca d'água no CTA final (recorte da própria logo) */
-.cta-section .container{ position: relative; }
-.cta-section .container::before{
-  content: ""; position: absolute; right: 0; top: -36px; width: 300px; height: 201px; pointer-events: none; z-index: -1;
-  background: url("/assets/img/brand/lucksrei-crown.webp") center / contain no-repeat; opacity: .07;
-}
-
-@media (max-width: 700px){
-  .hero-rays{ display: none; }
-  .cta-section .container::before{ width: 170px; height: 114px; top: -24px; opacity: .06; }
-}
-@media (prefers-reduced-motion: reduce){
-  .hero-rays{ display: none; }
-}
-
 /* =====================================================================
    DIGITAL KINGDOM — "um reino construído por um programador"
    Camada final sobre o Royal Tech. Paleta tirada da própria logo (lucksrei-royal-lg.webp):
    ouro do corpo das letras #d5911d · brilho #f9d577 · champagne/marfim do preenchimento #fcf4dd · contorno #8d3f00.
-   Elementos proprietários: arco da sala do trono (kingdom/arch.svg), Royal Circuit (kingdom/circuit.svg),
-   divisor com ponta de coroa (kingdom/divider.svg) e a coroa recortada da logo.
-   Ritmo: hero forte → métricas/sobre/produtos mais limpos → circuitos no processo/stack → profundidade na
-   experiência → CTA cinematográfico → rodapé que fecha o universo. Só opacity/transform animados.
+   Elementos proprietários: a coroa recortada da logo (assinatura) e o AMBIENTE VIVO (fim do arquivo).
+   Ritmo: hero forte → métricas/sobre/produtos mais limpos → processo que energiza → profundidade na
+   experiência → CTA com glow → rodapé que fecha o universo. Só opacity/transform animados.
    ===================================================================== */
 :root{
   --royal-black: #050607;
@@ -1175,7 +1144,7 @@ main{ counter-reset: sec; }
   background: linear-gradient(90deg, transparent, rgba(213,145,29,.35) 30%, rgba(249,213,119,.7) 50%, rgba(213,145,29,.35) 70%, transparent);
   transition: opacity .4s var(--ease);
 }
-.site-header.is-scrolled{ border-bottom-color: transparent; background: rgba(6,7,10,.84); }
+.site-header.is-scrolled{ border-bottom-color: transparent; background: rgba(6,7,10,.95); }
 .site-header.is-scrolled::after{ opacity: .8; }
 /* indicador do menu: fio metálico com a ponta da coroa (losango) no centro */
 .nav-indicator{ height: 1px; overflow: visible; }
@@ -1186,34 +1155,10 @@ main{ counter-reset: sec; }
 .nav-links a{ transition: color .25s var(--ease); }
 .nav-links a:hover, .nav-links a[aria-current]{ color: var(--royal-champagne); }
 
-/* ---------- hero: sala do trono digital atrás do personagem ---------- */
+/* ---------- hero: palco da cena (o entorno vivo fica no bloco AMBIENTE VIVO) ---------- */
 .hero-visual{ isolation: isolate; }
-.hero-visual::before{                                  /* arcos, pilares, vitral, piso em perspectiva e circuitos */
-  content: ""; position: absolute; z-index: -1; pointer-events: none;
-  left: 50%; top: 46%; width: 156%; aspect-ratio: 1000 / 820; transform: translate(-50%, -54%);
-  background: url("/assets/img/kingdom/arch.svg") center / contain no-repeat; opacity: .19;
-  -webkit-mask-image: radial-gradient(ellipse 60% 62% at 50% 48%, #000 40%, transparent 78%);
-          mask-image: radial-gradient(ellipse 60% 62% at 50% 48%, #000 40%, transparent 78%);
-}
-.hero-visual::after{                                   /* Royal Glow: ouro aquecido atrás do personagem, com raios suaves */
-  content: ""; position: absolute; z-index: -1; pointer-events: none;
-  left: 50%; top: 40%; width: 128%; aspect-ratio: 1; transform: translate(-50%, -50%);
-  background:
-    radial-gradient(closest-side, rgba(249,213,119,.10), rgba(213,145,29,.07) 38%, rgba(141,63,0,.035) 58%, transparent 74%),
-    repeating-conic-gradient(from 180deg at 50% 54%, rgba(249,213,119,.07) 0 2.2deg, transparent 2.2deg 13deg);
-  -webkit-mask-image: radial-gradient(closest-side, #000 30%, transparent 72%);
-          mask-image: radial-gradient(closest-side, #000 30%, transparent 72%);
-  animation: kd-breathe 14s ease-in-out infinite alternate;
-}
-@keyframes kd-breathe{ from{ opacity: .75; } to{ opacity: 1; } }
 .hs-stage{ box-shadow: 0 34px 90px rgba(0,0,0,.55), 0 0 0 1px rgba(249,213,119,.07), 0 0 70px rgba(213,145,29,.07); }
 .hero h1 em{ background: var(--royal-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
-
-/* ---------- divisores da marca (fio de ouro + circuito + ponta da coroa) ---------- */
-.kd-divider{
-  display: block; height: 24px; width: min(640px, 82%); margin: 0 auto; pointer-events: none;
-  background: url("/assets/img/kingdom/divider.svg") center / contain no-repeat; opacity: .85;
-}
 
 /* ---------- métricas: royal dashboard ---------- */
 .metrics{ border-top-color: transparent; border-bottom-color: transparent; position: relative; }
@@ -1234,21 +1179,13 @@ main{ counter-reset: sec; }
 /* ---------- cards: Obsidian — superfície quase preta, reflexo quente na borda, luz que segue o cursor ---------- */
 .work-item, .app-card{
   background:
-    radial-gradient(520px circle at var(--mx, 50%) var(--my, -20%), rgba(249,213,119,var(--lf, 0)), transparent 46%),
     linear-gradient(180deg, rgba(255,246,223,.025), transparent 26%),
     linear-gradient(145deg, rgba(16,19,26,.94), rgba(8,10,14,.9));
   border-color: rgba(255,255,255,.06);
   box-shadow: inset 0 1px 0 rgba(255,246,223,.05), 0 18px 50px rgba(0,0,0,.28);
 }
-.work-item:hover, .app-card:hover{ --lf: .05; border-color: rgba(213,145,29,.34); box-shadow: inset 0 1px 0 rgba(255,246,223,.07), 0 24px 64px rgba(0,0,0,.42), 0 0 34px rgba(213,145,29,.06); }
-.work-item::after, .app-card::after{                    /* reflexo dourado que atravessa a borda no hover */
-  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; pointer-events: none; z-index: 3; opacity: 0;
-  background: linear-gradient(115deg, transparent 42%, rgba(249,213,119,.9) 50%, transparent 58%) 140% 0 / 260% 100% no-repeat;
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
-          mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-}
-.work-item:hover::after, .app-card:hover::after{ animation: kd-edge 1.2s var(--ease) both; }
-@keyframes kd-edge{ 0%{ opacity: 1; background-position: 140% 0; } 100%{ opacity: 0; background-position: -40% 0; } }
+/* hover: só a borda acende (sombra fixa: trocar sombra grande no hover obriga a repintar o card) */
+.work-item:hover, .app-card:hover{ border-color: rgba(213,145,29,.34); }
 .app-card{ position: relative; }
 
 /* ---------- produtos próprios: o reino emoldura, o app mantém a própria cor ---------- */
@@ -1258,14 +1195,8 @@ main{ counter-reset: sec; }
   background: radial-gradient(ellipse 50% 30% at 50% 0%, rgba(213,145,29,.045), transparent 70%);
 }
 
-/* ---------- processo: Royal Circuit aparece e a trilha "energiza" ao entrar na tela ---------- */
+/* ---------- processo: a trilha "energiza" ao entrar na tela ---------- */
 #processo{ position: relative; isolation: isolate; }
-#processo::before{
-  content: ""; position: absolute; z-index: -1; inset: -30px 0; pointer-events: none;
-  background: url("/assets/img/kingdom/circuit.svg") 37px -61px / 240px 240px; opacity: .04;
-  -webkit-mask-image: radial-gradient(ellipse 55% 90% at 22% 55%, #000 15%, transparent 72%);
-          mask-image: radial-gradient(ellipse 55% 90% at 22% 55%, #000 15%, transparent 72%);
-}
 #processo .flow-row{ position: relative; }
 #processo .flow-arrow{ color: rgba(213,145,29,.45); transition: color .4s var(--ease), text-shadow .4s var(--ease); }
 #processo .flow-node{ transition: color .4s var(--ease); }
@@ -1292,19 +1223,12 @@ main{ counter-reset: sec; }
 .timeline-item.is-visible::before{ border-color: var(--royal-gold-soft); box-shadow: 0 0 0 3px rgba(213,145,29,.10), 0 0 10px rgba(249,213,119,.35); }
 .timeline-item.is-current.is-visible::before{ box-shadow: 0 0 0 4px rgba(213,145,29,.16), 0 0 16px rgba(249,213,119,.5); }
 
-/* ---------- CTA final: a "sala final" — glow atrás, circuito convergindo e a coroa enorme quase invisível ---------- */
+/* ---------- CTA final: glow quente atrás do e-mail ---------- */
 .cta-section{ --halo: rgba(213,145,29,.10); border-top: 0; }
-.cta-section .container::before{ width: 460px; height: 308px; top: 50%; right: -40px; transform: translateY(-58%); opacity: .032; }
-.cta-section .container::after{
-  content: ""; position: absolute; z-index: -2; inset: -90px -10%; pointer-events: none;
-  background: url("/assets/img/kingdom/circuit.svg") center / 240px 240px; opacity: .06;
-  -webkit-mask-image: radial-gradient(ellipse 50% 60% at 72% 50%, #000 10%, transparent 70%);
-          mask-image: radial-gradient(ellipse 50% 60% at 72% 50%, #000 10%, transparent 70%);
-}
 .cta-mail{ text-shadow: 0 0 30px rgba(213,145,29,.18); }
 .cta-mail .cta-arrow{ color: var(--royal-gold-soft); }
 
-/* ---------- rodapé: fecha o universo — fio de ouro com a coroa da logo no centro e circuito quase invisível ---------- */
+/* ---------- rodapé: fecha o universo — fio de ouro com a coroa da logo no centro ---------- */
 .site-footer{
   background:
     radial-gradient(ellipse 60% 100% at 50% 100%, rgba(213,145,29,.045), transparent 70%);
@@ -1315,25 +1239,104 @@ main{ counter-reset: sec; }
   background-origin: content-box; padding: 0 8px; opacity: .85;
 }
 
-/* ---------- revelação um pouco mais macia (desktop): opacity + translate + blur mínimo ---------- */
-@media (min-width: 900px) and (prefers-reduced-motion: no-preference){
-  [data-reveal]{ filter: blur(3px); transition: opacity .7s var(--ease), transform .7s var(--ease), filter .7s var(--ease); }
-  [data-reveal].is-visible{ filter: none; }
-}
 
 /* ---------- celular: a identidade continua, os efeitos caros saem ---------- */
 @media (max-width: 700px){
-  .hero-visual::before{ width: 130%; opacity: .12; }
-  .hero-visual::after{ animation: none; width: 110%; }
   .hs-stage{ box-shadow: 0 20px 50px rgba(0,0,0,.45), 0 0 0 1px rgba(249,213,119,.07); }
-  #processo::before, .cta-section .container::after{ opacity: .035; }
-  .cta-section .container::before{ width: 220px; height: 147px; right: -20px; opacity: .028; }
   .work-item, .app-card{ box-shadow: inset 0 1px 0 rgba(255,246,223,.05); }
 }
-@media (hover: none){ .work-item:hover::after, .app-card:hover::after{ animation: none; } }
 @media (prefers-reduced-motion: reduce){
-  .hero-visual::after{ animation: none; }
   .brand-intro .brand-logo > img, .brand-intro .brand-logo .brand-crown, .brand-logo::after{ animation: none !important; }
-  .work-item:hover::after, .app-card:hover::after{ animation: none; }
   #processo .flow-row.is-visible .flow-node, #processo .flow-row.is-visible .flow-arrow{ animation: none; }
 }
+
+/* =====================================================================
+   AMBIENTE VIVO (versão leve) — fundo navy, luz azul/dourada parada e poucas partículas nas margens.
+   Um único sistema animado (as partículas: só opacity/transform, no compositor). Nada de fios, pulsos, molduras
+   girando ou brilhos nos cards. Celular (<= 600px): sem partículas, só o fundo estático.
+   Densidade por página em html[data-amb] (kingdom.js). Reduced motion: partículas paradas a meia intensidade.
+   ===================================================================== */
+.amb{ position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; contain: strict; }
+.amb-glow{                                              /* luz ambiente parada: uma camada só, pintada uma vez */
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 48vmax 44vmax at 78% 22%, rgba(60,130,255,.075), transparent 70%),
+    radial-gradient(ellipse 36vmax 32vmax at 18% 82%, rgba(213,145,29,.045), transparent 70%);
+}
+html[data-amb="case"] .amb-glow, html[data-amb="quiet"] .amb-glow{ opacity: .7; }
+html[data-amb="visitors"] .amb{ opacity: .55; }
+
+/* partículas: ponto azul (maioria) e dourado (poucos), só nas margens; acendem, sobem um pouco e somem.
+   O elemento guarda posição/tamanho/intensidade; o ::before anima com keyframes de valores fixos. */
+.amb-p{ position: absolute; left: var(--x); top: var(--y); width: var(--s); height: var(--s); opacity: var(--o); }
+.amb-p::before{
+  content: ""; position: absolute; inset: 0; border-radius: 50%; opacity: 0;
+  background: #9fd0ff; box-shadow: 0 0 5px rgba(99,179,255,.55);
+  animation: amb-tw1 var(--d) ease-in-out var(--dl) infinite;
+}
+.amb-p.v2::before{ animation-name: amb-tw2; }
+.amb-p.is-gold::before{ background: #f9d577; box-shadow: 0 0 5px rgba(249,213,119,.5); }
+@keyframes amb-tw1{ 0%{ opacity: 0; transform: translate3d(0,0,0) scale(.6); } 30%, 70%{ opacity: 1; } 100%{ opacity: 0; transform: translate3d(8px,-16px,0) scale(1); } }
+@keyframes amb-tw2{ 0%{ opacity: 0; transform: translate3d(0,0,0) scale(.6); } 30%, 70%{ opacity: 1; } 100%{ opacity: 0; transform: translate3d(-10px,-12px,0) scale(1); } }
+@media (max-width: 600px){ .amb-p{ display: none; } }
+
+/* ---------- hero: o entorno da cena (a cena em si não muda) — malha fina e luz azul, ambas paradas ---------- */
+.hero-visual{ isolation: isolate; }
+.hero-visual::before{
+  content: ""; position: absolute; z-index: -1; pointer-events: none; inset: -18% -12%;
+  background-image: linear-gradient(rgba(99,179,255,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(99,179,255,.07) 1px, transparent 1px);
+  background-size: 28px 28px; background-position: center;
+  -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 46%, #000 20%, transparent 70%);
+          mask-image: radial-gradient(ellipse 50% 50% at 50% 46%, #000 20%, transparent 70%);
+}
+.hero-visual::after{
+  content: ""; position: absolute; z-index: -1; pointer-events: none; left: 50%; top: 42%; width: 120%; aspect-ratio: 1.5;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgba(60,130,255,.14), rgba(60,130,255,.05) 50%, rgba(213,145,29,.03) 68%, transparent 78%);
+}
+@media (max-width: 700px){ .hero-visual::after{ width: 110%; } }
+
+/* ---------- divisor: fio azul com o centro dourado (parado) ---------- */
+.kd-divider{ position: relative; display: block; height: 24px; width: min(640px, 82%); margin: 0 auto; pointer-events: none; }
+.kd-divider::before{
+  content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(99,179,255,.22) 25%, rgba(249,213,119,.36) 50%, rgba(99,179,255,.22) 75%, transparent);
+}
+
+/* ---------- os 4 apps principais: halo da cor do app + moldura fina parada que acende no hover ----------
+   Home: .work-item[data-product] · /apps/: .app-card.is-own. A identidade vem da cor e do desenho da moldura:
+   Goiás App = energia (luz forte num canto) · Match Queue = conexão (dois cantos opostos) ·
+   Aprovaura = progresso (luz subindo de baixo) · La Pelve = delicadeza (rosado e marfim, bem suave). */
+.app-card.is-own[data-app="fan-hub"]{ --p: #6fcf97; }
+.app-card.is-own[data-app="match-queue"]{ --p: #2ee88a; }
+.app-card.is-own[data-app="aprovaura"]{ --p: #7fbfe0; }
+.app-card.is-own[data-app="la-pelve"]{ --p: #d59ab4; }
+.has-fx{ isolation: isolate; }
+.fx-back, .fx-front{ position: absolute; inset: 0; border-radius: inherit; pointer-events: none; overflow: hidden; }
+.fx-back{ z-index: -1; }
+.fx-front{ z-index: 4; }
+.fx-halo{
+  position: absolute; width: 70%; aspect-ratio: 1; left: var(--hx, 62%); top: var(--hy, 50%); transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--p) 16%, transparent), transparent 72%); opacity: .85;
+}
+.app-card .fx-halo{ --hx: 24%; --hy: 18%; width: 90%; }
+.fx-ring{
+  position: absolute; inset: 0; border-radius: inherit; padding: 1px; opacity: .45; transition: opacity .2s var(--ease);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  --c: color-mix(in srgb, var(--p) 75%, transparent);
+  background: linear-gradient(135deg, var(--c), rgba(249,213,119,.5) 18%, transparent 42%);
+}
+.has-fx:hover .fx-ring, .has-fx:focus-visible .fx-ring{ opacity: 1; }
+[data-fx="mq"] .fx-ring{ background: linear-gradient(135deg, var(--c), transparent 30%, transparent 70%, var(--c)); }
+[data-fx="aura"] .fx-ring{ background: linear-gradient(0deg, var(--c), rgba(249,213,119,.4) 22%, transparent 55%); }
+[data-fx="pelve"] .fx-ring{ opacity: .35; background: linear-gradient(135deg, color-mix(in srgb, var(--p) 55%, transparent), rgba(252,244,221,.45) 20%, transparent 45%); }
+
+/* reduced motion: a mesma composição, parada */
+@media (prefers-reduced-motion: reduce){
+  .amb-p::before{ animation: none !important; opacity: .5; }
+  .fx-ring{ transition: none; }
+}
+
+/* contato: só os canais (e-mail, LinkedIn, GitHub) num cartão estreito */
+.contact-only .fact-card{ max-width: 560px; }

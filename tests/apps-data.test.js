@@ -11,10 +11,10 @@ var failures = [];
 function check(ok, msg) { if (!ok) failures.push(msg); }
 function count(g) { return d.apps.filter(function (a) { return a.group === g; }).length; }
 
-check(d.apps.length === 32, "total deve ser 32, é " + d.apps.length);
+check(d.apps.length === 31, "total deve ser 31, é " + d.apps.length);
 check(count("own") === 4, "own deve ser 4, é " + count("own"));
 check(count("professional") === 7, "professional deve ser 7, é " + count("professional"));
-check(count("cooper") === 21, "cooper deve ser 21, é " + count("cooper"));
+check(count("cooper") === 20, "cooper deve ser 20, é " + count("cooper"));
 var ids = {};
 d.apps.forEach(function (a) {
   check(!ids[a.id], "id duplicado: " + a.id);
@@ -34,20 +34,20 @@ d.apps.forEach(function (a) {
   });
 });
 
-// logos publicadas: 25 WebP, todas referenciadas, nenhuma via /src/
+// logos publicadas: 31 WebP, todas referenciadas, nenhuma via /src/
 var published = fs.readdirSync(path.join(root, "assets/img/apps")).filter(function (n) { return /\.webp$/.test(n); });
-check(published.length === 29, "logos publicadas devem ser 29, são " + published.length);
+check(published.length === 31, "logos publicadas devem ser 31, são " + published.length);
 var referenced = d.apps.filter(function (a) { return a.logo; }).map(function (a) { return path.basename(a.logo); });
-check(referenced.length === 29, "apps com logo devem ser 29, são " + referenced.length);
+check(referenced.length === 31, "apps com logo devem ser 31, são " + referenced.length);
 published.forEach(function (n) { check(referenced.indexOf(n) >= 0, "logo publicada sem app: " + n); });
 d.apps.forEach(function (a) {
   if (a.logo && a.group === "cooper") check(path.basename(a.logo, ".webp") === a.id, "logo/id divergem em " + a.id);
   if (a.logo) check(a.logo.indexOf("/src/") < 0, "logo aponta para /src/: " + a.id);
 });
 var noLogo = d.apps.filter(function (a) { return !a.logo; }).map(function (a) { return a.id; }).sort().join(",");
-check(noLogo === "agr-fiscal,gpol,vai", "fallbacks esperados: agr-fiscal,gpol,vai; atual: " + noLogo);
+check(noLogo === "", "todos os apps devem ter logo; sem logo: " + noLogo);
 var agr = d.apps.filter(function (a) { return a.id === "agr-fiscal"; })[0];
-check(agr && !agr.androidUrl && !agr.iosUrl, "AGR Fiscal não deve ter URL de loja");
+check(agr && /id=tests\.com\.example\.aplicativo_fiscalizacao1&/.test(agr.androidUrl) && !agr.iosUrl, "AGR Fiscal: só Google Play, id com 1 no final (sem o 1 dá 404)");
 var ignore = fs.readFileSync(path.join(root, ".assetsignore"), "utf8");
 check(/assets\/img\/apps\/src/.test(ignore), "originais devem estar no .assetsignore");
 // lojas: nada do app fora do portfólio e links Cooper só do publisher Cooper Card (br.com.cooper.*)

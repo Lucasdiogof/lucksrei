@@ -85,10 +85,10 @@ check(fake.store[Loc.STORAGE_KEY] === "es" && Object.keys(fake.store).length ===
 var actx = { window: {} };
 vm.runInNewContext(read("assets/js/apps-data.js"), actx);
 var A = actx.window.LUCKSREI_APPS;
-check(A.apps.length === 32, "dataset deve continuar com 32 apps, tem " + A.apps.length);
+check(A.apps.length === 31, "dataset deve continuar com 31 apps, tem " + A.apps.length);
 var ids = {};
 A.apps.forEach(function (a) { check(!ids[a.id], "app duplicado: " + a.id); ids[a.id] = 1; });
-check(Object.keys(ids).length === 32, "idiomas não devem duplicar apps");
+check(Object.keys(ids).length === 31, "idiomas não devem duplicar apps");
 A.apps.forEach(function (a) {
   if (a.subtitle && typeof a.subtitle === "object") Loc.SUPPORTED.forEach(function (l) { check(typeof a.subtitle[l] === "string" && a.subtitle[l], a.id + ": subtitle sem " + l); });
   if (a.subtitleKey) Loc.SUPPORTED.forEach(function (l) { check(D[l][a.subtitleKey], a.id + ": subtitleKey ausente em " + l); });
@@ -170,4 +170,4 @@ check(Shots.blockFor("fanhub", "b2", "pt-BR").every(function (s) { return fs.exi
 check(model["pt-BR"].every(function (x) { return x.src.indexOf("/pt-BR/") > 0 && x.alt; }), "itens do modelo têm src e alt do próprio idioma");
 
 if (failures.length) { console.error("FALHOU:\n - " + failures.join("\n - ")); process.exit(1); }
-console.log("ok — i18n: " + enKeys.length + " strings × 3 locales; " + proj.length + " projetos de screenshots; 32 apps");
+console.log("ok — i18n: " + enKeys.length + " strings × 3 locales; " + proj.length + " projetos de screenshots; 31 apps");

@@ -55,6 +55,7 @@
 
   function card(app) {
     var li = el("li", "app-card" + (app.group === "own" ? " is-own" : ""));
+    li.setAttribute("data-app", app.id);
 
     var top = el("div", "app-top");
     var logo = el("div", "app-logo");

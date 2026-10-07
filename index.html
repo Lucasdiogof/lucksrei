@@ -94,7 +94,6 @@
 <main id="main">
 
   <section class="hero lk-grid">
-    <span class="hero-rays" aria-hidden="true"></span>
     <div class="container hero-grid">
       <div class="hero-copy">
         <span class="badge" data-i18n="home.s1.span1"><span class="dot"></span> Portfolio · Senior Mobile Developer</span>
@@ -126,14 +125,14 @@
         <div class="metric"><div class="value"><span data-counter="100" data-counter-suffix="k+" data-i18n-suffix="home.metrics.reviews.suffix">100k+</span></div><div class="label" data-i18n="home.s2.div3"><strong>Reviews</strong>Added up across those apps' stores</div></div>
         <div class="metric"><div class="value"><span data-counter="10" data-counter-suffix="+" data-i18n-suffix="home.metrics.years.suffix">10+</span></div><div class="label" data-i18n="home.s2.div4"><strong>Years</strong>Writing software since 2015</div></div>
       </div>
-      <div class="metrics-foot">
-        <p data-i18n="home.s2.p1">Android · iOS · Web/PWA<span class="sep" aria-hidden="true">/</span>My own products: <a href="#projetos">Goiás App, Match Queue, Aprovaura and La Pelve</a></p>
-        <a class="apps-cta" href="/apps/" aria-label="See all the apps I've worked on" data-i18n-attr="aria-label:home.a11y.a_arialabel3">
+      <a class="metrics-foot apps-cta" href="/apps/" aria-label="See all the apps I've worked on" data-i18n-attr="aria-label:home.a11y.a_arialabel3">
+        <span class="apps-cta-copy" data-i18n="home.s2.p1"><strong>Explore the full portfolio</strong>Fintech, insurance, agro, government, mobility and more: every app I've worked on, with store links.</span>
+        <span class="apps-cta-side">
           <span class="apps-stack" id="apps-stack" aria-hidden="true"><img src="/assets/img/apps/fan-hub.webp" alt="" width="32" height="32" loading="lazy"><img src="/assets/img/apps/toro-investimentos.webp" alt="" width="32" height="32" loading="lazy"><img src="/assets/img/apps/iza.webp" alt="" width="32" height="32" loading="lazy"><img src="/assets/img/apps/aprovaura.webp" alt="" width="32" height="32" loading="lazy"><img src="/assets/img/apps/cooper-pay.webp" alt="" width="32" height="32" loading="lazy"></span>
-          <span class="apps-more" id="apps-more" aria-hidden="true">+27</span>
-          <span class="link-arrow" data-i18n="home.s2.span1">See all apps <span aria-hidden="true">→</span></span>
-        </a>
-      </div>
+          <span class="apps-more" id="apps-more" aria-hidden="true">+26</span>
+          <span class="link-arrow apps-cta-btn" data-i18n="home.s2.span1">See all apps <span aria-hidden="true">→</span></span>
+        </span>
+      </a>
     </div>
   </section>
 
@@ -180,7 +179,7 @@
             <span class="showcase-go" data-i18n="home.projetos.span3">View case study <span class="showcase-go-arrow">→</span></span>
           </div>
           <div class="work-plate has-video">
-            <video class="plate-video" data-loop-video data-src="/assets/video/goias-app-loop.mp4" poster="/assets/video/goias-app-loop-poster.webp" width="720" height="720" muted loop playsinline preload="none" aria-hidden="true"></video>
+            <video class="plate-video" data-loop-video data-src="/assets/video/goias-app-loop.mp4" poster="/assets/video/goias-app-loop-poster-v2.webp" width="720" height="720" muted loop playsinline preload="none" aria-hidden="true"></video>
           </div>
         </a>
 
@@ -241,31 +240,6 @@
         </div>
       </div>
 
-      <div class="section-foot" data-reveal>
-        <span class="eyebrow" data-i18n="home.projetos.span10">Other professional projects</span>
-        <div class="legacy-grid">
-          <div class="legacy-item">
-            <h3>Emater</h3>
-            <p data-i18n="home.projetos.p6">App for rural technicians and producers.</p>
-            <div class="chips"><span class="chip">Flutter</span><span class="chip">ObjectDB</span><span class="chip">REST API</span></div>
-          </div>
-          <div class="legacy-item">
-            <h3>AGR Fiscal</h3>
-            <p data-i18n="home.projetos.p7">App for regulatory agency inspectors.</p>
-            <div class="chips"><span class="chip">Flutter</span><span class="chip">ObjectDB</span><span class="chip">REST API</span></div>
-          </div>
-          <div class="legacy-item">
-            <h3>Vai</h3>
-            <p data-i18n="home.projetos.p8">Urban mobility app.</p>
-            <div class="chips"><span class="chip">Flutter</span><span class="chip">Firebase RTDB</span></div>
-          </div>
-          <div class="legacy-item">
-            <h3>GPOL</h3>
-            <p data-i18n="home.projetos.p9">Political management app.</p>
-            <div class="chips"><span class="chip">Flutter</span><span class="chip">Firestore</span></div>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -428,7 +402,7 @@
           <li><a href="/projects/match-queue/">Match Queue</a></li>
           <li><a href="/projects/la-pelve/">La Pelve</a></li>
           <li><a href="/projects/aura/">Aprovaura</a></li>
-          <li><a href="/apps/" data-i18n="nav.apps">Apps</a></li>
+          <li><a href="/apps/" data-i18n="footer.other_apps">Other apps</a></li>
         </ul>
       </div>
       <div class="footer-col">

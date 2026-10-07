@@ -207,19 +207,32 @@
   }
 
   /* ---------------------------------------------------------------- laço (~25 fps; pausa fora da tela / aba oculta) */
+  // 25 fps sem acordar o navegador a cada vsync: espera o próximo quadro com setTimeout e só então pede um rAF
+  // (em telas de 120–240 Hz um rAF contínuo forçava o recálculo de todas as animações CSS da página a cada vsync).
+  // Celular/toque: rAF contínuo (60–120 Hz; lá o despertar por timer perdia metade dos quadros com CPU lenta).
+  var tmr = 0, useTimer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   function frame(now) {
     raf = 0;
     if (!state.running) return;
     if (now - last >= 40) {
       var dt = Math.min(0.1, (now - last) / 1000);
       last = now; update(dt); draw(clock);
+      if (useTimer) { schedule(); return; }
     }
     raf = requestAnimationFrame(frame);
   }
+  function schedule() {
+    var wait = Math.max(0, 40 - (performance.now() - last) - 12);
+    tmr = setTimeout(function () { tmr = 0; if (state.running && !raf) raf = requestAnimationFrame(frame); }, wait);
+  }
+  function stopLoop() {
+    if (raf) { cancelAnimationFrame(raf); raf = 0; }
+    if (tmr) { clearTimeout(tmr); tmr = 0; }
+  }
   function sync() {
     var should = state.loaded && state.visible && !state.hidden && !state.done;
-    if (should && !state.running) { state.running = true; last = performance.now(); if (!state.started) { state.started = true; showCanvas(); } if (!raf) raf = requestAnimationFrame(frame); }
-    else if (!should && state.running) { state.running = false; if (raf) { cancelAnimationFrame(raf); raf = 0; } }
+    if (should && !state.running) { state.running = true; last = performance.now(); if (!state.started) { state.started = true; showCanvas(); } if (!raf && !tmr) raf = requestAnimationFrame(frame); }
+    else if (!should && state.running) { state.running = false; stopLoop(); }
   }
 
   /* ---------------------------------------------------------------- layout: câmera fixa (cena inteira; recorte fixo no celular) */
@@ -280,7 +293,7 @@
     window.addEventListener("resize", layout);
     if (mql.addEventListener) mql.addEventListener("change", function (e) {
       if (!e.matches) return;
-      state.running = false; state.done = true; if (raf) cancelAnimationFrame(raf);
+      state.running = false; state.done = true; stopLoop();
       if (canvas && canvas.parentNode) canvas.parentNode.removeChild(canvas);
       root.classList.remove("is-live"); for (var k = 0; k < hellos.length; k++) hellos[k].classList.remove("is-on");
       if (poster) poster.src = poster.getAttribute("data-final");

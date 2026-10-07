@@ -27,7 +27,7 @@
  * Nenhum número de downloads/avaliação foi confirmado até aqui: tudo null.
  *
  * TOTAIS ESPERADOS (conferidos por tests/apps-data.test.js e no console da página):
- *   own 4 + professional 7 + cooper 21 = 32.
+ *   own 4 + professional 7 + cooper 20 = 31.
  */
 (function () {
   "use strict";
@@ -42,7 +42,7 @@
   }
 
   window.LUCKSREI_APPS = {
-    expected: { own: 4, professional: 7, cooper: 21, total: 32 },
+    expected: { own: 4, professional: 7, cooper: 20, total: 31 },
     featured: ['fan-hub', 'toro', 'iza', 'aprovaura', 'cooper-pay'],
     // textos dos grupos: apps.filter.<id>, apps.group.<id>.title|intro (assets/i18n)
     groups: [{ id: 'own' }, { id: 'professional' }, { id: 'cooper' }],
@@ -84,17 +84,17 @@
         iosUrl: 'https://apps.apple.com/br/app/emater-go-mobi/id1525305265',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'ObjectDB', 'REST API'] },
       { id: 'agr-fiscal', name: 'AGR Fiscal', subtitle: { en: 'Regulatory agency inspectors', 'pt-BR': 'Fiscais de agência reguladora', es: 'Fiscales de agencia reguladora' }, group: 'professional', sector: 'govtech',
-        logo: null, platforms: [],
-        androidUrl: null, /* URL antiga do Google Play retornava 404 (2026-10-03); sem link público por enquanto */
+        logo: '/assets/img/apps/agr-fiscal.webp', platforms: ['android'],
+        androidUrl: 'https://play.google.com/store/apps/details?id=tests.com.example.aplicativo_fiscalizacao1&hl=en_US', /* na loja como "AGR-F"; o id sem o 1 final dá 404 */
         iosUrl: null, downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'ObjectDB', 'REST API'] },
       { id: 'vai', name: 'Vai', subtitle: { en: 'Private urban mobility platform', 'pt-BR': 'Plataforma privada de mobilidade urbana', es: 'Plataforma privada de movilidad urbana' }, group: 'professional', sector: 'mobility',
-        logo: null, platforms: [], androidUrl: null, iosUrl: null, downloads: null, rating: null, reviewCount: null,
+        logo: '/assets/img/apps/vai.webp', platforms: [], androidUrl: null, iosUrl: null, downloads: null, rating: null, reviewCount: null,
         private: true, period: '2019-02/2019-08', technologies: ['Flutter', 'Firebase RTDB'] },
       { id: 'gpol', name: 'GPOL', subtitle: { en: 'Online political career management', 'pt-BR': 'Gestão online de carreira política', es: 'Gestión en línea de carrera política' }, group: 'professional', sector: 'management',
-        logo: null, platforms: [], androidUrl: null, iosUrl: null, downloads: null, rating: null, reviewCount: null,
+        logo: '/assets/img/apps/gpol.webp', platforms: [], androidUrl: null, iosUrl: null, downloads: null, rating: null, reviewCount: null,
         private: true, period: '2019-01/2019-03', technologies: ['Flutter', 'Firestore'] },
 
-      /* ---- ecossistema Cooper Pay (21) ---- */
+      /* ---- ecossistema Cooper Pay (20) ---- */
       cooper('sol-cooper-pay', 'Sol Cooper Pay', null, { android: 'https://play.google.com/store/apps/details?id=br.com.cooper.sol', ios: 'https://apps.apple.com/br/app/sol-cooper-pay/id6502643583' }),
       cooper('bom-dia-cooper-pay', 'Bom Dia Cooper Pay', null, { android: 'https://play.google.com/store/apps/details?id=br.com.cooper.bomdiabank', ios: 'https://apps.apple.com/br/app/bom-dia-cooper-pay/id6740144337' }),
       cooper('gooroo-cooper-pay', 'Gooroo Cooper Pay', null, { android: 'https://play.google.com/store/apps/details?id=br.com.cooper.gooroo', ios: 'https://apps.apple.com/br/app/gooroopay/id6747404164' }),
@@ -114,8 +114,7 @@
       cooper('medprev-cooper-pay', 'Medprev Cooper Pay', null, { android: 'https://play.google.com/store/apps/details?id=br.com.cooper.medprev', ios: 'https://apps.apple.com/br/app/medprev-pay/id6737420094' }),
       cooper('cooper-multi', 'Cooper Multi', null, { android: 'https://play.google.com/store/apps/details?id=br.com.cooper.multi', ios: 'https://apps.apple.com/br/app/cooper-multi/id6757078607' }),
       cooper('appeldorn-cooper-pay', 'Appeldorn Cooper Pay', null, { android: 'https://play.google.com/store/apps/details?id=br.com.cooper.appeldorn', ios: 'https://apps.apple.com/br/app/appeldorn-cooper-pay/id6767218369' }),
-      cooper('cooper-beneficios', 'Cooper Benefícios'),
-      cooper('dazam-cooper-pay', 'Dazam Cooper Pay')
+      cooper('cooper-beneficios', 'Cooper Benefícios')
     ]
   };
 })();
