@@ -797,10 +797,15 @@
       },
       "practice-more": {
         "locales": [
+          "pt-BR",
           "en"
         ],
         "dims": {
           "en": [
+            590,
+            1280
+          ],
+          "pt-BR": [
             590,
             1280
           ]
@@ -968,6 +973,65 @@
             1280
           ]
         }
+      },
+      "mock-build-more": {
+        "locales": [
+          "pt-BR",
+          "en"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ],
+          "en": [
+            590,
+            1280
+          ]
+        }
+      },
+      "profile": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ],
+          "en": [
+            590,
+            1280
+          ],
+          "es": [
+            590,
+            1280
+          ]
+        }
+      },
+      "essay-proposal": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
+      },
+      "essay-correcting": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1280
+          ]
+        }
       }
     },
     "blocks": {
@@ -980,13 +1044,13 @@
       ],
       "b2": [
         "mock-build",
+        "mock-build-more",
         "mock-question"
       ],
       "b3": [
-        "essay-themes",
-        "essay-submit",
-        "essay-score",
-        "essay-feedback"
+        "essay-proposal",
+        "essay-correcting",
+        "essay-score"
       ],
       "b4": [
         "map",
@@ -995,6 +1059,7 @@
       ],
       "b5": [
         "home",
+        "profile",
         "level-up"
       ]
     }
