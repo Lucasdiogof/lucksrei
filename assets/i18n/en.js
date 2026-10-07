@@ -565,7 +565,7 @@
   "shots.lapelve.patient-form.alt": "Step-by-step patient registration, step 1 of 9: personal data",
   "shots.lapelve.patient-form.caption": "Guided anamnesis in 9 steps, with a progress bar.",
   "shots.lapelve.patient-form.title": "Step-by-step registration",
-  "shots.lapelve.patients.alt": "La Pelve: Patients screen with an empty state and a New patient button",
+  "shots.lapelve.patients.alt": "La Pelve: Patients screen with the patient list and a button to add a new patient",
   "shots.lapelve.patients.caption": "Patient registration and management in one place.",
   "shots.lapelve.patients.title": "Patients",
   "shots.lapelve.schedule.alt": "Schedule with the day's appointments and a button to create an appointment",

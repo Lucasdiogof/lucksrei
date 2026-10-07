@@ -565,7 +565,7 @@
   "shots.lapelve.patient-form.alt": "Registro de paciente por etapas, paso 1 de 9: datos personales",
   "shots.lapelve.patient-form.caption": "Anamnesis guiada en 9 pasos, con barra de progreso.",
   "shots.lapelve.patient-form.title": "Registro por etapas",
-  "shots.lapelve.patients.alt": "La Pelve: pantalla Pacientes con estado vacío y botón Nuevo paciente",
+  "shots.lapelve.patients.alt": "La Pelve: pantalla Pacientes con la lista de pacientes y un botón para agregar uno nuevo",
   "shots.lapelve.patients.caption": "Registro y gestión de pacientes en un solo lugar.",
   "shots.lapelve.patients.title": "Pacientes",
   "shots.lapelve.schedule.alt": "Agenda con las atenciones del día y botón para crear una atención",
