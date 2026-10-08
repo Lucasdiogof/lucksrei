@@ -13,6 +13,7 @@
  * País e região vêm EXCLUSIVAMENTE de request.cf (country, regionCode, region); nada enviado pelo cliente é lido.
  * Região = estado/província (subdivisão ISO 3166-2), nunca cidade. IP, user-agent, headers, cidade, CEP e
  * coordenadas nunca são gravados nem devolvidos. O user-agent é testado em memória (filtro de robôs) e descartado.
+ * A rede de origem (request.cf.asn) também: se for de nuvem/hospedagem, a visita é ignorada; o ASN nunca é gravado.
  * A contagem por região é gravada à parte: se falhar, a contagem por país não é afetada.
  *
  * Cache:
@@ -21,7 +22,7 @@
  *                  Não afeta o site: visitors.js busca com cache: "no-cache" (revalida sempre e recebe o cache de 5 min).
  *                  Só quem abre o endpoint direto no navegador pode ver um JSON de até 4 h. Comportamento aceito.
  *   /api/whoami    no-store.
- *   /api/visit     no-store (também nas respostas de ruído/robô).
+ *   /api/visit     no-store (também nas respostas de ruído/robô/nuvem).
  *
  * Rate limiting pode ser adicionado futuramente se houver abuso real.
  */
@@ -30,6 +31,29 @@ const VISITORS_TTL = 300; // s
 const WINDOW_MONTHS = 12;
 const KEEP_MONTHS = 13;
 const UNKNOWN = "XX"; // sem país, Tor ("T1") ou código inválido: entra no total, fora de mapa/ranking/contagem de países
+// Redes de nuvem e hospedagem (request.cf.asn). Navegadores automatizados — agentes de IA, scanners, testes
+// com Playwright — rodam nelas com user-agent de Chrome comum e furam o BOT_UA; gente de verdade quase nunca.
+// Ficam DE FORA de propósito: Cloudflare (13335, WARP), Akamai (20940, 16625) e Fastly (54113), que são saída
+// do iCloud Private Relay e de VPNs de consumidor usadas por pessoas reais.
+const DATACENTER_ASNS = new Set([
+  16509, 14618, 8987, 38895, // Amazon AWS
+  15169, 396982, 19527, // Google / Google Cloud
+  8075, 8068, 8069, // Microsoft Azure
+  31898, // Oracle Cloud
+  32934, // Meta
+  14061, // DigitalOcean
+  63949, // Linode (Akamai Cloud)
+  20473, // Vultr
+  16276, // OVH
+  24940, 213230, // Hetzner
+  51167, // Contabo
+  12876, // Scaleway
+  36351, // IBM Cloud (SoftLayer)
+  60781, 28753, // Leaseweb
+  45102, 37963, // Alibaba Cloud
+  132203, 45090, // Tencent Cloud
+  136907, // Huawei Cloud
+]);
 const BOT_UA = /bot|crawl|spider|slurp|preview|facebookexternalhit|headless|phantom|lighthouse|pagespeed|pingdom|uptime|monitor|curl|wget|python-requests|httpclient|axios|node-fetch|go-http|java\//i;
 
 const BASE_HEADERS = {
@@ -76,6 +100,11 @@ export function isSameOriginBrowserCall(request) {
 
 export function looksLikeBot(request) {
   return BOT_UA.test(request.headers.get("user-agent") || "");
+}
+
+export function fromDatacenter(request) {
+  const asn = Number((request.cf || {}).asn);
+  return DATACENTER_ASNS.has(asn);
 }
 
 function json(body, status, cacheControl) {
@@ -192,7 +221,7 @@ export default {
     if (path === "/api/visit") {
       if (request.method !== "POST") return new Response(null, { status: 405, headers: { ...BASE_HEADERS, allow: "POST" } });
       const none = new Response(null, { status: 204, headers: { ...BASE_HEADERS, "cache-control": "no-store" } });
-      if (!isSameOriginBrowserCall(request) || looksLikeBot(request)) return none;
+      if (!isSameOriginBrowserCall(request) || looksLikeBot(request) || fromDatacenter(request)) return none;
       const now = new Date();
       const cf = request.cf || {};
       const country = normalizeCountry(cf.country);
