@@ -261,9 +261,6 @@ a:focus-visible, button:focus-visible{
 }
 .btn-ghost:hover{ border-color: var(--border-gold-hover); background: rgba(219,178,80,.06); }
 .btn-sm{ padding: 9px 14px; font-size: 13.5px; }
-/* links de código/tecnologia levam o detalhe azul */
-.nav-actions > .btn-ghost{ border-color: var(--border-strong); }
-.nav-actions > .btn-ghost:hover{ border-color: var(--tech); background: rgba(60,130,255,.08); }
 
 /* ---------- badges / eyebrows ---------- */
 .badge{
@@ -881,9 +878,6 @@ html.i18n-pending body{ visibility: hidden; }
   .lang-switch:has(.lang-btn:nth-child(3)[aria-pressed="true"])::before{ transform: translateX(200%); }
 }
 .nav-actions{ display: flex; align-items: center; gap: 10px; }
-@media (max-width: 560px){
-  .nav-actions > .btn{ display: none; }
-}
 .pt-only-notice-wrap{ padding-top: 20px; }
 .pt-only-notice{ display: none; font-size: 13px; color: var(--text-dim); border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--panel); padding: 10px 14px; }
 html:not([lang="pt-BR"]) .pt-only-notice{ display: block; }
@@ -1423,6 +1417,18 @@ html[data-amb="visitors"] .amb{ opacity: .55; }
 .channel:hover::before, .channel:focus-visible::before{ opacity: 1; }
 .channel:hover::after, .channel:focus-visible::after{ transform: skewX(-50deg) scaleX(1); }
 .channel:focus-visible{ outline: 1px solid rgba(238,204,109,.5); outline-offset: 4px; }
+/* currículo: mesma linha editorial, com duas ações discretas (visualizar / baixar) no lugar da seta */
+.ch-actions{ display: flex; gap: 22px; align-self: center; }
+.ch-action{
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; color: var(--text-dim); text-decoration: none; white-space: nowrap;
+  transition: color .25s var(--ease);
+}
+.ch-action .ch-ic{ display: inline-block; margin-left: 4px; color: var(--text-faint); transition: color .25s var(--ease), transform .3s var(--ease); }
+.ch-action:hover, .ch-action:focus-visible{ color: var(--royal-gold-soft); }
+.ch-action:hover .ch-ic, .ch-action:focus-visible .ch-ic{ color: var(--royal-gold-soft); }
+.ch-action:focus-visible{ outline: 1px solid rgba(238,204,109,.5); outline-offset: 4px; }
+.channel-cv:focus-within::before{ opacity: 1; }
+.channel-cv:focus-within::after{ transform: skewX(-50deg) scaleX(1); }
 /* página /contact/: título "Contato" com o corte dourado embaixo; lista editorial em largura de leitura */
 html[data-amb="contact"] .page-hero h1{ position: relative; padding-bottom: 20px; margin-bottom: 14px; }
 html[data-amb="contact"] .page-hero h1::after{
@@ -1441,6 +1447,7 @@ html[data-amb="contact"] .page-hero h1::after{
   .ch-label{ grid-column: 1 / -1; }
   .ch-value{ grid-column: 1; }
   .ch-arrow{ grid-column: 2; grid-row: 2; }
+  .ch-actions{ grid-column: 1 / -1; margin-top: 4px; }
 }
 @media (prefers-reduced-motion: reduce){ .channel *, .channel::after, .channel::before{ transition: none !important; } }
 
