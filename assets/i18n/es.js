@@ -255,6 +255,10 @@
 
   /* ---- contact ---- */
   "contact.label.email": "Correo electrónico",
+  "contact.label.cv": "Currículum",
+  "contact.cv.desc": "Currículum profesional · PDF",
+  "contact.cv.view": "Ver",
+  "contact.cv.download": "Descargar",
   "contact.lead": "Contacto profesional y presencia online.",
   "contact.title": "Contacto",
   "contact.s1.div1": "<a href=\"/\">Lucksrei</a> / Contacto",
