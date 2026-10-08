@@ -255,6 +255,10 @@
 
   /* ---- contact ---- */
   "contact.label.email": "Email",
+  "contact.label.cv": "Resume / CV",
+  "contact.cv.desc": "Professional resume · PDF",
+  "contact.cv.view": "View",
+  "contact.cv.download": "Download",
   "contact.lead": "Professional contact and online presence.",
   "contact.title": "Contact",
   "contact.s1.div1": "<a href=\"/\">Lucksrei</a> / Contact",
