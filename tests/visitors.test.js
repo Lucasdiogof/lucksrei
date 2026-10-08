@@ -95,10 +95,24 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
   await W.fetch(req("POST", "/api/visit", Object.assign({}, UA, { origin: "https://evil.example" }), { country: "BR" }), env, ctx);
   await W.fetch(req("POST", "/api/visit", { origin: "https://lucksrei.com", "user-agent": "Googlebot/2.1" }, { country: "BR" }), env, ctx);
   await W.fetch(req("POST", "/api/visit", { origin: "https://lucksrei.com", "user-agent": "curl/8.0" }, { country: "BR" }), env, ctx);
+  await W.fetch(req("POST", "/api/visit", h, { country: "US", regionCode: "IA", asn: 396982 }), env, ctx); // Google Cloud
+  await W.fetch(req("POST", "/api/visit", h, { country: "US", regionCode: "VA", asn: 16509 }), env, ctx); // AWS
+  await W.fetch(req("POST", "/api/visit", h, { country: "IE", asn: 8075 }), env, ctx); // Azure
   check((await W.fetch(req("GET", "/api/visit", h, { country: "BR" }), env, ctx)).status === 405, "GET em /api/visit → 405");
   var total = Object.keys(env.DB.rows).reduce(function (s, k) { return s + env.DB.rows[k].n; }, 0);
   check(total === 4, "só 4 visitas válidas contadas, contou " + total);
   check(Object.keys(env.DB.rows).length === before, "ruído não cria linhas");
+  // rede de nuvem/hospedagem → ignorada; operadora comum e saída do Private Relay/WARP → contam
+  check(mod.fromDatacenter({ cf: { asn: 14618 } }) && mod.fromDatacenter({ cf: { asn: "8075" } }), "ASN de nuvem é detectado");
+  [{ asn: 28573 }, { asn: 26599 }, { asn: 13335 }, { asn: 20940 }, { asn: 54113 }, {}, undefined].forEach(function (cf) {
+    check(!mod.fromDatacenter({ cf: cf }), "rede comum não é nuvem: " + JSON.stringify(cf));
+  });
+  var dcEnv = { DB: fakeDb(), ASSETS: env.ASSETS };
+  await W.fetch(req("POST", "/api/visit", h, { country: "US", asn: 15169 }), dcEnv, ctx);
+  check(dcEnv.DB.log.length === 0, "visita de nuvem não toca o banco");
+  await W.fetch(req("POST", "/api/visit", h, { country: "BR", regionCode: "GO", asn: 28573 }), dcEnv, ctx);
+  check(dcEnv.DB.log.length > 0, "visita de operadora comum conta");
+  check(dcEnv.DB.log.every(function (l) { return l.args.indexOf(28573) === -1; }), "ASN nunca é gravado");
   // país vindo do cliente é ignorado
   var forged = req("POST", "/api/visit?country=JP", Object.assign({ "cf-ipcountry": "JP", "x-country": "JP" }, h), { country: "DE" });
   await W.fetch(forged, env, ctx);

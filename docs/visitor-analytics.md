@@ -5,7 +5,7 @@ Nota de manutenção da feature de visitantes (mapa na home e em `/visitors/`). 
 ## 1. Arquitetura
 
 - O Worker `lucksrei-site` (`worker/index.mjs`) só roda em `/api/*` (`run_worker_first` em `wrangler.jsonc`); o resto é servido direto pelos assets.
-- `POST /api/visit` — conta uma visita no mês UTC e país atuais e, em separado, no mês/país/estado. Responde sempre `204`; falha de banco nunca afeta a página. Só conta chamada com `Origin` do próprio site e user-agent que não pareça robô (filtro de ruído, não segurança).
+- `POST /api/visit` — conta uma visita no mês UTC e país atuais e, em separado, no mês/país/estado. Responde sempre `204`; falha de banco nunca afeta a página. Só conta chamada com `Origin` do próprio site, user-agent que não pareça robô e rede de origem (`request.cf.asn`) que não seja de nuvem/hospedagem (filtro de ruído, não segurança).
 - `GET /api/visitors` — agregados dos últimos 12 meses: `total_visits`, `countries_count`, `updated_at`, `since`, `window_months`, `countries[{code, visits}]`, `regions_since` e `regions[{country, visits, unknown, items[{code, name, visits}]}]`.
 - `GET /api/whoami` — `{ country, region, region_name }` do próprio visitante (cada um pode ser `null`).
 - Banco: D1 `lucksrei-visits` (binding `DB`), tabela `visits_monthly` (`ym`, `country`, `n`, `updated_at`), chave `(ym, country)`. Upsert incrementa o contador; meses com mais de 13 meses são apagados ocasionalmente.
@@ -31,7 +31,9 @@ Nota de manutenção da feature de visitantes (mapa na home e em `/visitors/`). 
 
 Nunca armazenar: IP, user-agent, headers, cidade, CEP, latitude, longitude ou qualquer identificador pessoal. Só se grava `(mês, país, contador, timestamp)` e `(mês, país, estado/região, nome do estado, contador, timestamp)`. Estado/região é o nível mais fino permitido; cidade nunca.
 
-O user-agent pode ser lido **só em memória**, para filtrar robôs, e é descartado. A política em `/privacy/` (seção 3) descreve isso; se a coleta mudar, a política muda junto.
+O user-agent e o ASN (`request.cf.asn`) podem ser lidos **só em memória**, para filtrar robôs, e são descartados.
+
+Filtro de nuvem (`DATACENTER_ASNS` em `worker/index.mjs`): visitas vindas de AWS, Google Cloud, Azure, Oracle, Meta, DigitalOcean, Linode, Vultr, OVH, Hetzner, Contabo, Scaleway, IBM, Leaseweb, Alibaba, Tencent e Huawei são ignoradas. Navegadores automatizados (agentes de IA, scanners, Playwright) rodam nessas redes com user-agent de Chrome comum e furam o filtro de user-agent; antes do filtro, Virgínia, Iowa, Washington e Irlanda apareciam inflados. Cloudflare, Akamai e Fastly ficam de fora de propósito: são saída do iCloud Private Relay e do WARP, usados por pessoas. Efeito colateral aceito: quem navega por VPN hospedada numa dessas nuvens não é contado. O filtro vale só para visitas novas; o histórico já gravado não muda. A política em `/privacy/` (seção 3) descreve isso; se a coleta mudar, a política muda junto.
 
 ## 5. Cache
 
