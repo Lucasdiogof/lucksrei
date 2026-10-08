@@ -1,7 +1,8 @@
 # Match Queue — filme do produto (fonte da versão final)
 
-Versão publicada: **V8** → `assets/video/match-queue-loop.mp4`
-(47,3 s · 720×720 · 30 fps · H.264 High · yuv420p · ~200 kbps · 1,2 MB · mudo · loop) e pôster
+Versão publicada: **V8** → `assets/video/match-queue-loop.av1.mp4` (AV1, 1,3 MB, servido a quem toca AV1)
+e `assets/video/match-queue-loop.mp4` (H.264 High, ~250 kbps, 1,5 MB, fallback);
+ambos 47,3 s · 720×720 · 30 fps · yuv420p · mudo · loop; pôster
 `assets/video/match-queue-loop-poster.webp` (frame de 7,8 s: MATCH FOUND com a fila).
 Usado na home (card do Match Queue) e no topo de `projects/match-queue/`, pelo mesmo
 `<video data-loop-video>` + `assets/js/loop-video.js` do Goiás App e do La Pelve.
@@ -30,8 +31,10 @@ ffmpeg -framerate 120 -i <dir>/f%05d.jpg \
   -vf "tmix=frames=2,select='not(mod(n\,4))',setpts=N/(30*TB),scale=720:720:flags=lanczos,format=yuv420p" \
   -r 30 -c:v libx264 -profile:v high -preset slow -crf 19 -movflags +faststart -an master.mp4
 ```
-O arquivo publicado sai dos mesmos frames em 2 passes, ~200 kbps (≈1,2 MB, como Goiás App e La Pelve):
-`… -c:v libx264 -profile:v high -preset veryslow -b:v 195k -maxrate 450k -bufsize 900k -pass 1|2 …`
+O arquivo publicado sai dos mesmos frames em 2 passes, ~250 kbps (≈1,5 MB; Goiás App e La Pelve ficam em ~1–1,25 MB):
+`… -c:v libx264 -profile:v high -preset veryslow -b:v 248k -maxrate 560k -bufsize 1120k -pass 1|2 …`
+AV1 (mesmos frames, via um intermediário sem perdas `-c:v libx264 -qp 0`):
+`ffmpeg -i master-lossless.mkv -c:v libsvtav1 -preset 4 -crf 38 -g 300 -svtav1-params tune=0 -pix_fmt yuv420p -movflags +faststart -an match-queue-loop.av1.mp4`
 120 fps + tmix + decimação = motion blur leve. Fonte: Inter / Inter Display instaladas no sistema.
 Por volta de 19,1 s (foco da carta na Database) o Chromium às vezes compõe um único quadro
 de transição de forma diferente entre renders; não é mudança de conteúdo.
