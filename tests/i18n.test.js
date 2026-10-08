@@ -164,8 +164,7 @@ check(aprovBlocks("b3", "es") === "essay-list,essay-proposal,essay-correcting,es
 // cartão (só nome e @usuário); qualquer tela de perfil nova precisa passar pela mesma máscara antes de entrar.
 check(["pt-BR", "en", "es"].every(function (l) { return Shots.slotFor("aprovaura", "profile", l); }), "aprovaura: perfil (e-mail mascarado) nos 3 idiomas");
 var mqIds = function (b, l) { return Shots.blockFor("matchqueue", b, l).map(function (x) { return x.id; }).join(","); };
-check(mqIds("b2", "pt-BR") === "play,queue-search,teams-explore,team-detail", "match queue b2 pt-BR com detalhe do time");
-check(mqIds("b2", "en") === "play,queue-search,teams-explore" && mqIds("b2", "es") === "play,queue-search,teams-explore", "match queue b2 en/es sem detalhe do time");
+check(["pt-BR", "en", "es"].every(function (l) { return mqIds("b2", l) === "play,queue-search,teams-explore,team-detail"; }), "match queue b2 nos 3 idiomas, com detalhe do time");
 check(["pt-BR", "en", "es"].every(function (l) { return mqIds("b3", l) === "central,players,player-detail,market,account"; }), "match queue b3 completo nos 3 idiomas");
 check(["play", "queue-search", "teams-explore"].every(function (n) { return fs.existsSync(path.join(root, "assets/img/home/match-queue/pt-BR", n + ".webp")); }), "match queue: 3 miniaturas pt-BR da home existem");
 check(Shots.slotFor("lapelve", "home", "en").src.indexOf("/screens/en/home.webp") > 0, "la pelve home en usa a versão en");
