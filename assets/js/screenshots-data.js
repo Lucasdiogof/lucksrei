@@ -864,6 +864,258 @@
             1600
           ]
         }
+      },
+      "other-competitions": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "socio-plan": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "store-category": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "store-product": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "media-news": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "media-youtube": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "media-x": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "news-article": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "login": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "signup": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "history": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "idol-detail": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
       }
     },
     "blocks": {
@@ -871,28 +1123,40 @@
         "home",
         "matches",
         "standings",
+        "other-competitions",
         "calendar",
         "socio",
+        "socio-plan",
         "store",
+        "store-category",
+        "store-product",
         "club",
         "anthem",
         "guess-shirt",
         "guess-player",
         "identity-quiz",
-        "identity-result"
+        "identity-result",
+        "login",
+        "signup"
       ],
       "b3": [
         "club-home",
+        "history",
         "titles",
         "board",
         "idols",
+        "idol-detail",
         "squad",
         "player",
         "transparency",
         "songs",
         "document",
         "partners",
-        "media"
+        "media",
+        "media-news",
+        "media-youtube",
+        "media-x",
+        "news-article"
       ],
       "b4": [
         "tickets",
@@ -1108,21 +1372,263 @@
             1280
           ]
         }
+      },
+      "lineup": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "platforms": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "history": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "clubs": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "club-detail": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "playstyles": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "chemistry": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "evolutions": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "controls": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "notifications": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "login": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
       }
     },
     "blocks": {
       "b2": [
         "play",
+        "platforms",
+        "lineup",
         "queue-search",
+        "history",
         "teams-explore",
         "team-detail"
       ],
       "b3": [
         "central",
+        "clubs",
+        "club-detail",
         "players",
         "player-detail",
+        "playstyles",
+        "chemistry",
+        "evolutions",
+        "controls",
         "market",
-        "account"
+        "notifications",
+        "account",
+        "login"
       ]
     }
   },
@@ -1363,12 +1869,22 @@
       },
       "essay-feedback": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            590,
+            1277
+          ],
+          "es": [
+            590,
+            1277
           ]
         }
       },
@@ -1539,26 +2055,309 @@
             1280
           ]
         }
+      },
+      "mock-summary": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1277
+          ],
+          "en": [
+            590,
+            1277
+          ],
+          "es": [
+            590,
+            1277
+          ]
+        }
+      },
+      "mock-submit": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1277
+          ],
+          "en": [
+            590,
+            1277
+          ],
+          "es": [
+            590,
+            1277
+          ]
+        }
+      },
+      "mock-result": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1277
+          ],
+          "en": [
+            590,
+            1277
+          ],
+          "es": [
+            590,
+            1277
+          ]
+        }
+      },
+      "mock-review": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1277
+          ],
+          "en": [
+            590,
+            1277
+          ],
+          "es": [
+            590,
+            1277
+          ]
+        }
+      },
+      "subjects": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1277
+          ],
+          "en": [
+            590,
+            1277
+          ],
+          "es": [
+            590,
+            1277
+          ]
+        }
+      },
+      "current-affairs": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1277
+          ],
+          "en": [
+            590,
+            1277
+          ],
+          "es": [
+            590,
+            1277
+          ]
+        }
+      },
+      "current-affairs-dossier": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1277
+          ],
+          "en": [
+            590,
+            1277
+          ],
+          "es": [
+            590,
+            1277
+          ]
+        }
+      },
+      "review-errors": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1277
+          ],
+          "en": [
+            590,
+            1277
+          ],
+          "es": [
+            590,
+            1277
+          ]
+        }
+      },
+      "essay-editor": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1277
+          ],
+          "en": [
+            590,
+            1277
+          ],
+          "es": [
+            590,
+            1277
+          ]
+        }
+      },
+      "settings-theme": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1277
+          ],
+          "en": [
+            590,
+            1277
+          ],
+          "es": [
+            590,
+            1277
+          ]
+        }
+      },
+      "settings-language": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1277
+          ],
+          "en": [
+            590,
+            1277
+          ],
+          "es": [
+            590,
+            1277
+          ]
+        }
+      },
+      "login": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1277
+          ],
+          "en": [
+            590,
+            1277
+          ],
+          "es": [
+            590,
+            1277
+          ]
+        }
+      },
+      "signup": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            590,
+            1277
+          ],
+          "en": [
+            590,
+            1277
+          ],
+          "es": [
+            590,
+            1277
+          ]
+        }
       }
     },
     "blocks": {
       "b1": [
         "practice",
         "practice-more",
+        "subjects",
         "trail",
         "trail-topics",
-        "trail-question"
+        "trail-question",
+        "current-affairs",
+        "current-affairs-dossier",
+        "review-errors"
       ],
       "b2": [
         "mock-build",
         "mock-build-more",
-        "mock-question"
+        "mock-summary",
+        "mock-question",
+        "mock-submit",
+        "mock-result",
+        "mock-review"
       ],
       "b3": [
         "essay-list",
         "essay-proposal",
+        "essay-editor",
         "essay-correcting",
-        "essay-score"
+        "essay-score",
+        "essay-feedback"
       ],
       "b4": [
         "map",
@@ -1568,7 +2367,11 @@
       "b5": [
         "home",
         "profile",
-        "level-up"
+        "level-up",
+        "settings-theme",
+        "settings-language",
+        "login",
+        "signup"
       ]
     }
   },
@@ -1583,16 +2386,16 @@
         ],
         "dims": {
           "pt-BR": [
-            924,
-            2000
+            738,
+            1597
           ],
           "en": [
             738,
-            1600
+            1597
           ],
           "es": [
             738,
-            1600
+            1597
           ]
         }
       },
@@ -1604,16 +2407,16 @@
         ],
         "dims": {
           "pt-BR": [
-            924,
-            2000
+            738,
+            1597
           ],
           "en": [
             738,
-            1600
+            1597
           ],
           "es": [
             738,
-            1600
+            1597
           ]
         }
       },
@@ -1626,15 +2429,15 @@
         "dims": {
           "pt-BR": [
             738,
-            1600
+            1597
           ],
           "en": [
             738,
-            1600
+            1597
           ],
           "es": [
             738,
-            1600
+            1597
           ]
         }
       },
@@ -1647,15 +2450,15 @@
         "dims": {
           "pt-BR": [
             738,
-            1600
+            1597
           ],
           "en": [
             738,
-            1600
+            1597
           ],
           "es": [
             738,
-            1600
+            1597
           ]
         }
       },
@@ -1668,15 +2471,15 @@
         "dims": {
           "pt-BR": [
             738,
-            1600
+            1597
           ],
           "en": [
             738,
-            1600
+            1597
           ],
           "es": [
             738,
-            1600
+            1597
           ]
         }
       },
@@ -1688,16 +2491,205 @@
         ],
         "dims": {
           "pt-BR": [
-            924,
-            2000
+            738,
+            1597
           ],
           "en": [
             738,
-            1600
+            1597
           ],
           "es": [
             738,
-            1600
+            1597
+          ]
+        }
+      },
+      "signup": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "whatsapp": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "patient-detail": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "patient-anamnesis": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "patient-urinary": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "patient-treatment": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "evolutions": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "schedule-new": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "financial-new": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
           ]
         }
       }
@@ -1705,11 +2697,20 @@
     "blocks": {
       "b1": [
         "login",
+        "signup",
         "home",
         "schedule",
+        "schedule-new",
         "patients",
+        "patient-detail",
         "patient-form",
-        "financial-report"
+        "patient-anamnesis",
+        "patient-urinary",
+        "patient-treatment",
+        "evolutions",
+        "financial-report",
+        "financial-new",
+        "whatsapp"
       ]
     }
   }
