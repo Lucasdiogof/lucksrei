@@ -56,7 +56,7 @@
         logo: '/assets/img/apps/match-queue.webp', platforms: ['ios'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/match-queue/id6810790338',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase'], caseUrl: '/projects/match-queue/' },
       { id: 'aprovaura', name: 'Aprovaura', subtitle: { en: 'Study for entrance exams and tests', 'pt-BR': 'Estudo para vestibulares e provas', es: 'Estudio para exámenes de ingreso y pruebas' }, group: 'own', sector: 'education',
-        logo: '/assets/img/apps/aprovaura.webp', platforms: ['android', 'ios'], androidUrl: null, iosUrl: null,
+        logo: '/assets/img/apps/aprovaura.webp', platforms: ['android', 'ios'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/aprovaura/id6817047910',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'IA'], caseUrl: '/projects/aura/' },
       { id: 'la-pelve', name: 'La Pelve', subtitle: { en: 'Clinical management for pelvic physiotherapy', 'pt-BR': 'Gestão clínica para fisioterapia pélvica', es: 'Gestión clínica para fisioterapia pélvica' }, group: 'own', sector: 'health',
         logo: '/assets/img/apps/la-pelve.webp', platforms: ['android', 'ios'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/la-pelve/id6811234099',
