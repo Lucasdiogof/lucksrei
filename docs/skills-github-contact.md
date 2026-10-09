@@ -23,13 +23,11 @@
 - Front: `assets/js/contact-form.js`; marcação na home (`#contato`) e em `/contact/`; strings `contact.form.*`.
 - Worker: `worker/contact.mjs` → `POST /api/contact`. Sucesso (200) só depois do provedor aceitar o e-mail; sem provedor responde 503.
 - Antiabuso: mesma origem, JSON ≤ 8 KB, honeypot (`website`), tempo mínimo de 2 s, limite por IP (3/10 min, 10/dia) e global (40/h) via `caches.default`, validação e saneamento no servidor, nada do conteúdo em log.
-- **Configuração necessária (uma das duas):**
-  1. Cloudflare Email: ativar Email Routing em lucksrei.com, verificar `marketing@lucksrei.com` como destino e adicionar em `wrangler.jsonc`:
-     `"send_email": [{ "name": "SEND_EMAIL", "destination_address": "marketing@lucksrei.com" }]`
-  2. Resend: verificar o domínio lucksrei.com no Resend e `npx wrangler secret put RESEND_API_KEY`.
-- Entregabilidade: o remetente (`CONTACT_FROM`) precisa estar no domínio verificado, com SPF e DKIM do provedor publicados e DMARC no DNS de lucksrei.com; o visitante vai em `Reply-To`, nunca em `From`. Teste o fluxo real com um envio seu antes de divulgar e confira caixa de entrada e spam.
+- **Provedor em produção: Resend.** O Worker `lucksrei-site` lê o secret `RESEND_API_KEY` (`npx wrangler secret put RESEND_API_KEY`; nunca no repositório, em `vars` ou no front). Envio: `From: Lucksrei <marketing@lucksrei.com>`, `To: marketing@lucksrei.com`, `Reply-To:` e-mail do visitante, texto puro. Sem o secret o endpoint responde 503. O binding `send_email` do Cloudflare continua suportado como alternativa, mas só é usado se `RESEND_API_KEY` não existir (e não está em `wrangler.jsonc`).
+- **Email Routing preservado:** nada no repositório altera o Email Routing. O e-mail do formulário chega a `marketing@lucksrei.com` pelo MX do domínio e o Routing o encaminha ao Gmail como qualquer outro. Não ative "Receiving" do Resend no domínio raiz (conflitaria com o MX do Cloudflare).
+- Entregabilidade: o remetente precisa estar no domínio verificado (DKIM/SPF do Resend) e convém ter DMARC no DNS; o visitante vai em `Reply-To`, nunca em `From`. Como remetente e destinatário são o mesmo endereço, o Gmail pode filtrar a mensagem: faça um envio real pelo formulário depois do deploy, confira caixa de entrada e spam e crie um filtro "nunca enviar para spam" para `marketing@lucksrei.com` se precisar.
 - Limites conhecidos: o contador de rate limit usa `caches.default` (por data center, não atômico: rajadas simultâneas podem passar de 3). Funciona no domínio lucksrei.com, não em `*.workers.dev`. Para limite global estrito, usar o binding de Rate Limiting da Cloudflare.
-- Opcionais (`vars`): `CONTACT_TO` (padrão marketing@lucksrei.com), `CONTACT_FROM` (padrão contact@lucksrei.com; precisa estar no domínio verificado).
+- Opcionais (`vars`, sem segredo): `CONTACT_TO` e `CONTACT_FROM` (só o endereço; padrão marketing@lucksrei.com nos dois; valor inválido volta ao padrão).
 
 ## Testes
 `for t in tests/*.test.js; do node $t; done`

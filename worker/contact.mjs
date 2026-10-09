@@ -5,9 +5,10 @@
  * 429 (com Retry-After), 502 delivery_failed, 503 unavailable (nenhum provedor configurado — nunca simula sucesso).
  *
  * Entrega (a primeira configurada vence):
- *   1. Binding SEND_EMAIL (Cloudflare Email Service / send_email): sem chave de API. Exige Email Routing ativo em lucksrei.com.
- *   2. Secret RESEND_API_KEY (API do Resend): exige o domínio lucksrei.com verificado no Resend.
- * Variáveis opcionais: CONTACT_TO (padrão marketing@lucksrei.com), CONTACT_FROM (padrão contact@lucksrei.com).
+ *   1. Secret RESEND_API_KEY (API do Resend; domínio lucksrei.com verificado no Resend). É o provedor em produção.
+ *   2. Binding SEND_EMAIL (Cloudflare Email, send_email): alternativa sem chave; não está habilitado em wrangler.jsonc.
+ * Remetente "Lucksrei <marketing@lucksrei.com>", destino marketing@lucksrei.com (o Email Routing já encaminha ao Gmail),
+ * Reply-To = e-mail do visitante. Variáveis opcionais: CONTACT_TO e CONTACT_FROM (só o endereço; inválido volta ao padrão).
  *
  * Antiabuso: mesma origem obrigatória, JSON, corpo ≤ 8 KB, honeypot, tempo mínimo de preenchimento, limite por IP
  * (3 por 10 min, 10 por dia) e teto global (40 por hora), todos em caches.default. O IP só entra como hash SHA-256 truncado
@@ -18,7 +19,8 @@ export const LIMITS = { nameMin: 2, nameMax: 80, emailMax: 254, messageMin: 10, 
 export const SUBJECTS = { hiring: "Hiring Opportunity", collab: "Mobile Project Collaboration", other: "Other Inquiry" };
 const EMAIL_RE = /^[A-Za-z0-9.!#$%&'*+\/=?^_`{|}~-]+@[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?)*\.[A-Za-z]{2,}$/;
 const DEFAULT_TO = "marketing@lucksrei.com";
-const DEFAULT_FROM = "contact@lucksrei.com";
+const DEFAULT_FROM = "marketing@lucksrei.com";
+const FROM_NAME = "Lucksrei";
 
 const RATE = [
   { scope: "ip10m", window: 600, limit: 3 },
@@ -107,8 +109,8 @@ function b64Lines(s) {
 }
 
 export function buildMail(value, env) {
-  const to = env.CONTACT_TO || DEFAULT_TO;
-  const from = env.CONTACT_FROM || DEFAULT_FROM;
+  const to = EMAIL_RE.test(env.CONTACT_TO || "") ? env.CONTACT_TO : DEFAULT_TO;
+  const from = EMAIL_RE.test(env.CONTACT_FROM || "") ? env.CONTACT_FROM : DEFAULT_FROM;
   const subject = `[lucksrei.com] ${SUBJECTS[value.subject]} — ${value.name}`.slice(0, 200);
   const text = `${value.message}\n\n—\nFrom: ${value.name} <${value.email}>\nSubject: ${SUBJECTS[value.subject]}\nSent via lucksrei.com`;
   return { to, from, replyTo: value.email, subject, text };
@@ -117,7 +119,7 @@ export function buildMail(value, env) {
 export function rawMime(mail) {
   const id = `<${crypto.randomUUID()}@lucksrei.com>`;
   return [
-    `From: Lucksrei Contact <${mail.from}>`,
+    `From: ${FROM_NAME} <${mail.from}>`,
     `To: ${mail.to}`,
     `Reply-To: ${mail.replyTo}`,
     `Subject: ${encodeWord(mail.subject)}`,
@@ -139,8 +141,9 @@ async function sendWithBinding(env, mail) {
 async function sendWithResend(env, mail, fetchImpl) {
   const res = await fetchImpl("https://api.resend.com/emails", {
     method: "POST",
-    headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, "content-type": "application/json" },
-    body: JSON.stringify({ from: `Lucksrei Contact <${mail.from}>`, to: [mail.to], reply_to: mail.replyTo, subject: mail.subject, text: mail.text }),
+    headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, "content-type": "application/json", "user-agent": "lucksrei-site/contact" },
+    body: JSON.stringify({ from: `${FROM_NAME} <${mail.from}>`, to: [mail.to], reply_to: mail.replyTo, subject: mail.subject, text: mail.text }),
+    signal: AbortSignal.timeout(10000),
   });
   if (!res.ok) throw new Error("resend_" + res.status);
 }
@@ -151,8 +154,8 @@ export function configured(env) {
 
 export async function deliver(env, mail, deps = {}) {
   if (deps.send) return deps.send(mail);
-  if (env.SEND_EMAIL) return sendWithBinding(env, mail);
   if (env.RESEND_API_KEY) return sendWithResend(env, mail, deps.fetch || fetch);
+  if (env.SEND_EMAIL) return sendWithBinding(env, mail);
   throw new Error("not_configured");
 }
 
@@ -196,7 +199,7 @@ export async function handleContact(request, env, ctx, deps = {}) {
     await deliver(env, buildMail(checked.value, env), deps);
   } catch (e) {
     if (e && e.message === "not_configured") return json({ error: "unavailable" }, 503);
-    console.error("contact delivery failed:", e && e.message ? String(e.message).slice(0, 80) : "error");
+    console.error("contact delivery failed:", e && /^resend_\d{3}$/.test(e.message) ? e.message : "error");
     return json({ error: "delivery_failed" }, 502);
   }
   return json({ ok: true }, 200);

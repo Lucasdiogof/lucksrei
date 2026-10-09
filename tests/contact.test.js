@@ -52,6 +52,7 @@ function post(body, headers) {
   var m = sent[0];
   check(m.to === "marketing@lucksrei.com" && m.replyTo === "ana@example.com" && /Hiring Opportunity/.test(m.subject) && /Ana Souza/.test(m.text), "e-mail montado (destino padrão, reply-to do visitante)");
   var m2 = C.buildMail(C.validateContact(good()).value, { CONTACT_TO: "x@y.com", CONTACT_FROM: "no@lucksrei.com" });
+  check(C.buildMail(C.validateContact(good()).value, {}).from === "marketing@lucksrei.com", "remetente padrão marketing@lucksrei.com");
   check(m2.to === "x@y.com" && m2.from === "no@lucksrei.com", "destino/remetente configuráveis por variável");
   var mime = C.rawMime(m);
   check(/^From: .*\r\nTo: marketing@lucksrei.com\r\nReply-To: ana@example.com\r\nSubject: =\?UTF-8\?B\?/.test(mime) && /Content-Transfer-Encoding: base64/.test(mime), "MIME com cabeçalhos seguros e UTF-8");
@@ -98,15 +99,29 @@ function post(body, headers) {
   var fail = await C.handleContact(post(good()), {}, ctx, deps({ send: async function () { throw new Error("smtp down"); } }));
   check(fail.status === 502 && (await fail.json()).error === "delivery_failed", "falha do provedor → 502, não 200");
   var resendCalls = [];
-  var viaResend = await C.handleContact(post(good()), { RESEND_API_KEY: "k_test" }, ctx, { cache: memCache(), now: function () { return NOW; },
-    fetch: async function (u, init) { resendCalls.push([u, init]); return new Response("{}", { status: 200 }); } });
-  check(viaResend.status === 200 && resendCalls[0][0] === "https://api.resend.com/emails" && resendCalls[0][1].headers.authorization === "Bearer k_test", "Resend quando RESEND_API_KEY existe");
-  var resendFail = await C.handleContact(post(good()), { RESEND_API_KEY: "k_test" }, ctx, { cache: memCache(), now: function () { return NOW; }, fetch: async function () { return new Response("no", { status: 422 }); } });
-  check(resendFail.status === 502, "Resend recusou → 502");
+  var secret = "re_test_SECRET_123";
+  var viaResend = await C.handleContact(post(good()), { RESEND_API_KEY: secret }, ctx, { cache: memCache(), now: function () { return NOW; },
+    fetch: async function (u, init) { resendCalls.push([u, init]); return new Response('{"id":"x"}', { status: 200 }); } });
+  var rc = resendCalls[0], rb = JSON.parse(rc[1].body);
+  check(viaResend.status === 200 && rc[0] === "https://api.resend.com/emails" && rc[1].method === "POST" && rc[1].headers.authorization === "Bearer " + secret, "Resend: POST /emails com Bearer do secret");
+  check(rb.from === "Lucksrei <marketing@lucksrei.com>" && JSON.stringify(rb.to) === '["marketing@lucksrei.com"]' && rb.reply_to === "ana@example.com", "Resend: From, To e Reply-To conforme definido");
+  check(/Hiring Opportunity/.test(rb.subject) && /Hello Lucas/.test(rb.text) && !("html" in rb) && !("cc" in rb) && !("bcc" in rb), "Resend: assunto e texto puro, sem html/cc/bcc");
+  check(rc[1].headers["content-type"] === "application/json" && !!rc[1].headers["user-agent"] && !!rc[1].signal, "Resend: JSON, User-Agent e timeout");
+  check(JSON.stringify(await viaResend.clone().json()).indexOf(secret) < 0 && JSON.stringify(rb).indexOf(secret) < 0, "secret não aparece na resposta nem no corpo enviado");
+  var both = [];
+  await C.handleContact(post(good()), { RESEND_API_KEY: secret, SEND_EMAIL: { send: async function () { both.push("binding"); } } }, ctx, { cache: memCache(), now: function () { return NOW; }, fetch: async function () { both.push("resend"); return new Response("{}", { status: 200 }); } });
+  check(both.join() === "resend", "Resend tem precedência sobre o binding");
+  var inj = C.buildMail(C.validateContact(good()).value, { CONTACT_TO: "x@y.com\r\nBcc: a@b.com", CONTACT_FROM: "no-address" });
+  check(inj.to === "marketing@lucksrei.com" && inj.from === "marketing@lucksrei.com", "CONTACT_TO/FROM inválidos voltam ao padrão");
+  var resendFail = await C.handleContact(post(good()), { RESEND_API_KEY: secret }, ctx, { cache: memCache(), now: function () { return NOW; }, fetch: async function () { return new Response("domain not verified", { status: 403 }); } });
+  var rfb = await resendFail.json();
+  check(resendFail.status === 502 && rfb.error === "delivery_failed" && JSON.stringify(rfb).indexOf("domain") < 0, "Resend recusou → 502 sem repassar detalhes do provedor");
+  var resendNet = await C.handleContact(post(good()), { RESEND_API_KEY: secret }, ctx, { cache: memCache(), now: function () { return NOW; }, fetch: async function () { throw new Error("network " + secret); } });
+  check(resendNet.status === 502, "Resend inalcançável → 502");
 
   // nada sensível em log
   console.error = origErr; console.log = origLog;
-  check(logged.join("\n").indexOf("Hello Lucas") < 0 && logged.join("\n").indexOf("ana@example.com") < 0, "mensagem e e-mail nunca vão para o log");
+  check(logged.join("\n").indexOf(secret) < 0 && logged.join("\n").indexOf("Hello Lucas") < 0 && logged.join("\n").indexOf("ana@example.com") < 0, "mensagem e e-mail nunca vão para o log");
 
   // roteamento no worker
   var W = (await import("../worker/index.mjs")).default;
