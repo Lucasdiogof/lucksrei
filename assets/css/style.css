@@ -1496,7 +1496,8 @@ a.sk-chip:focus-visible, button.sk-chip:focus-visible, .sk-link:focus-visible{ o
 .sk-chip .skill-logo.is-wide, .sk-logo.is-wide{ width: auto; }
 .sk-logo.is-wide{ max-width: 140px; }
 .sk-chip .skill-logo.is-wide{ max-width: 56px; }
-.sk-tag{ font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--gold-soft); }
+.sk-arrow{ color: var(--gold-soft); transition: transform .2s var(--ease); }
+a.sk-chip:hover .sk-arrow{ transform: translateX(3px); }
 .sk-link{ display: inline-block; margin-top: 12px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); text-decoration: none; border-bottom: 1px solid var(--border-strong); }
 .sk-link:hover{ color: var(--text); border-color: var(--accent); }
 @media (max-width: 560px){

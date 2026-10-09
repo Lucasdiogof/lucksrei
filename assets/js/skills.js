@@ -154,7 +154,12 @@
         var li = el("li");
         var a = el("a", "sk-chip is-link", p.name);
         a.href = p.href;
-        if (p.caseStudy) a.appendChild(el("span", "sk-tag", t("skills.modal.case")));
+        if (p.caseStudy) {                                // seta no lugar do selo "Case study"; o texto fica para leitor de tela e tooltip
+          var cs = p.name + " — " + t("skills.modal.case");
+          a.setAttribute("aria-label", cs); a.title = cs;
+          var arrow = el("span", "sk-arrow", "→"); arrow.setAttribute("aria-hidden", "true");
+          a.appendChild(arrow);
+        }
         li.appendChild(a);
         return li;
       }))));
