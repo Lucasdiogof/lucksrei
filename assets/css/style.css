@@ -831,24 +831,6 @@ figure.fig{ margin: 0; }
 .apps-cta .link-arrow{ white-space: nowrap; }
 
 
-/* ---------- stack matrix ---------- */
-.stack-matrix{ margin: 0; border-top: 1px solid var(--border); }
-.stack-row{ display: grid; grid-template-columns: 160px 1fr; gap: 12px 24px; padding: 18px 0; border-bottom: 1px solid var(--border); align-items: baseline; }
-.stack-row dt{ font-family: var(--font-mono); font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--text-faint); }
-.stack-row dd{ margin: 0; }
-.stack-row ul{ display: flex; flex-wrap: wrap; gap: 8px; }
-.stack-row li{
-  display: inline-flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--text-dim);
-  border: 1px solid var(--border-subtle); border-radius: 8px; padding: 5px 11px; background: rgba(255,255,255,.015);
-  transition: border-color .25s var(--ease), color .25s var(--ease);
-}
-/* ponto azul = tecnologia; o primeiro de cada linha (a ferramenta principal) leva o ponto dourado */
-.stack-row li::before{ content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--tech); opacity: .8; flex: none; }
-.stack-row li:first-child::before{ background: var(--gold); opacity: 1; }
-.stack-row li:hover{ color: var(--text); border-color: var(--border-gold); }
-@media (max-width: 640px){
-  .stack-row{ grid-template-columns: 1fr; gap: 10px; }
-}
 .process-title{ font-size: clamp(22px, 3vw, 30px); margin-bottom: 20px; }
 #processo .flow-row{ display: block; margin: 0; line-height: 2; }
 #processo .flow-node{ display: inline; border: 0; background: none; padding: 0; font-size: 13px; color: var(--text-dim); white-space: nowrap; }
@@ -919,12 +901,10 @@ html:not([lang="pt-BR"]) .pt-only-notice{ display: block; }
 /* ---------- vertical rhythm (home): less dead air between sections ---------- */
 #sobre{ padding-bottom: 64px; }
 #projetos{ padding-top: 48px; padding-bottom: 64px; }
-#tecnologias{ padding-top: 56px; padding-bottom: 56px; }
 #experiencia{ padding-top: 56px; padding-bottom: 72px; }
 @media (max-width: 700px){
   #sobre{ padding-bottom: 40px; }
   #projetos{ padding-top: 32px; padding-bottom: 48px; }
-  #tecnologias{ padding-top: 40px; padding-bottom: 40px; }
   #experiencia{ padding-top: 40px; padding-bottom: 56px; }
 }
 
@@ -1083,14 +1063,9 @@ main{ counter-reset: sec; }
 .site-footer::before{ content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--border-gold) 30%, var(--border-gold) calc(50% - 20px), transparent calc(50% - 20px), transparent calc(50% + 20px), var(--border-gold) calc(50% + 20px), var(--border-gold) 70%, transparent); }   /* vão no centro para o corte dourado */
 .cta-arrow{ color: var(--gold); }
 
-/* seções com atmosfera própria (uma identidade, luz diferente): tecnologia = toque azul */
-#tecnologias{ position: relative; isolation: isolate; }
-#tecnologias::before{ content: ""; position: absolute; z-index: -1; inset: 0; pointer-events: none; background: radial-gradient(ellipse 38% 34% at 90% 38%, var(--glow-blue), transparent 100%); }
-
 /* celular: identidade sem efeitos caros */
 @media (max-width: 700px){
   .hs-stage::before, .hs-stage::after{ display: none; }
-  #tecnologias::before{ display: none; }
 }
 @media (prefers-reduced-motion: reduce){ .btn-primary::after{ display: none; } }
 
@@ -1456,7 +1431,8 @@ html[data-amb="contact"] .page-hero h1::after{
 @media (max-width: 700px){ .hero-scene::before{ right: 20%; } }
 
 /* ---------- Technical Skills: grade compacta de logos + modal ---------- */
-.skills-section{ padding-top: 24px; }
+.skills-section{ padding-top: 56px; }
+@media (max-width: 700px){ .skills-section{ padding-top: 40px; } }
 .skill-grid{ list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 10px; }
 .skill-grid li{ margin: 0; min-width: 0; }
 .skill{
