@@ -53,13 +53,13 @@
         logo: '/assets/img/apps/fan-hub.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null,
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase'], caseUrl: '/projects/fan-hub/' },
       { id: 'match-queue', name: 'Match Queue', subtitle: { en: 'Matchmaking for competitive teams', 'pt-BR': 'Matchmaking para times competitivos', es: 'Matchmaking para equipos competitivos' }, group: 'own', sector: 'games',
-        logo: '/assets/img/apps/match-queue.webp', platforms: ['ios'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/match-queue/id6810790338',
+        logo: '/assets/img/apps/match-queue.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/match-queue/id6810790338',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase'], caseUrl: '/projects/match-queue/' },
       { id: 'aprovaura', name: 'Aprovaura', subtitle: { en: 'Study for entrance exams and tests', 'pt-BR': 'Estudo para vestibulares e provas', es: 'Estudio para exámenes de ingreso y pruebas' }, group: 'own', sector: 'education',
-        logo: '/assets/img/apps/aprovaura.webp', platforms: ['android', 'ios'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/aprovaura/id6817047910',
+        logo: '/assets/img/apps/aprovaura.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/aprovaura/id6817047910',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'IA'], caseUrl: '/projects/aura/' },
       { id: 'la-pelve', name: 'La Pelve', subtitle: { en: 'Clinical management for pelvic physiotherapy', 'pt-BR': 'Gestão clínica para fisioterapia pélvica', es: 'Gestión clínica para fisioterapia pélvica' }, group: 'own', sector: 'health',
-        logo: '/assets/img/apps/la-pelve.webp', platforms: ['android', 'ios'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/la-pelve/id6811234099',
+        logo: '/assets/img/apps/la-pelve.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/la-pelve/id6811234099',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase'], caseUrl: '/projects/la-pelve/' },
 
       /* ---- profissionais ---- */
