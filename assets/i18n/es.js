@@ -111,7 +111,6 @@
   "home.hero.hello_2": "Soy desarrollador mobile,<br>especializado en Flutter.",
   "home.hero.hello_2s": "Soy desarrollador mobile,<br>especializado en Flutter.",
   "home.hero.hello_3": "Puedes explorar mi portafolio con tranquilidad&nbsp;— yo me quedo por aquí programando.",
-  "home.tecnologias.kicker": "Ingeniería",
   "home.experiencia.kicker": "Trayectoria",
   "home.visitors.title": "De dónde llegan las visitas",
   "home.visitors.lead": "Visitas a lucksrei.com por país.",
@@ -169,13 +168,6 @@
   "home.sobre.p2": "Trabajo con Flutter desde 2019, en apps Android e iOS, con Clean Architecture, pruebas y BLoC/Cubit. Mi trabajo no se queda en la interfaz: también me ocupo de la integración con el backend, los datos offline, los flavors, el pipeline de build y la publicación en las tiendas. También participé en la migración de apps nativas a Flutter.",
   "home.sobre.p3": "Pasé por fintech, agrotech, sistemas de gobierno y productos propios. Antes del móvil trabajé con backend y web en Java, lo que me ayuda a pensar la app junto con la API, la base de datos y la publicación.",
   "home.sobre.span1": "Sobre mí",
-  "home.tecnologias.dt2": "CI/CD y tiendas",
-  "home.tecnologias.dt3": "Operación",
-  "home.tecnologias.dt4": "Herramientas",
-  "home.tecnologias.h21": "Tecnologías",
-  "home.tecnologias.li1": "Pruebas unitarias",
-  "home.tecnologias.li2": "Cubit",
-  "home.tecnologias.li3": "Inyección de dependencias",
 
   /* ---- apps ---- */
   "apps.a11y.div_arialabel1": "Filtrar aplicaciones",
