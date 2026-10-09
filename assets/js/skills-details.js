@@ -177,6 +177,96 @@
       en: ["JavaScript with types.", "A typed superset of JavaScript that compiles to plain JavaScript.", "Adds static types to JavaScript in web and edge code, catching mistakes at compile time and documenting the shape of data."],
       "pt-BR": ["JavaScript com tipos.", "Superconjunto tipado de JavaScript que compila para JavaScript puro.", "Adiciona tipagem estática ao JavaScript em código web e de borda, detectando erros em tempo de compilação e documentando o formato dos dados."],
       es: ["JavaScript con tipos.", "Superconjunto tipado de JavaScript que compila a JavaScript puro.", "Añade tipado estático a JavaScript en código web y de borde, detectando errores en compilación y documentando la forma de los datos."]
+    },
+    "web-pwa": {
+      en: ["Flutter apps that also run in the browser.", "Flutter's web target compiles the same Dart code to the browser; as a Progressive Web App it can be installed and work like an app.", "My four products ship web/PWA builds from the same Flutter codebase as the mobile apps, sharing the backend and the business rules."],
+      "pt-BR": ["Apps Flutter que também rodam no navegador.", "O alvo web do Flutter compila o mesmo código Dart para o navegador; como Progressive Web App, pode ser instalado e funcionar como um app.", "Meus quatro produtos têm versão web/PWA gerada da mesma base Flutter dos apps mobile, compartilhando o backend e as regras de negócio."],
+      es: ["Apps Flutter que también funcionan en el navegador.", "El destino web de Flutter compila el mismo código Dart para el navegador; como Progressive Web App se puede instalar y funcionar como una app.", "Mis cuatro productos tienen versión web/PWA generada desde la misma base Flutter de las apps móviles, compartiendo el backend y las reglas de negocio."]
+    },
+    "deep-links": {
+      en: ["Links that open a specific screen of the app.", "Android App Links and iOS Universal Links route a URL straight into the right screen, with a web fallback when the app is not installed.", "Invite links in Match Queue: the link opens the app on the right team and falls back to the web version, with verified domain files for Android and iOS."],
+      "pt-BR": ["Links que abrem uma tela específica do app.", "Android App Links e iOS Universal Links levam uma URL direto para a tela certa, com a versão web como alternativa quando o app não está instalado.", "Links de convite no Match Queue: o link abre o app no time certo ou cai na versão web, com os arquivos de domínio verificado para Android e iOS."],
+      es: ["Enlaces que abren una pantalla específica de la app.", "Android App Links e iOS Universal Links llevan una URL directo a la pantalla correcta, con la versión web como alternativa cuando la app no está instalada.", "Enlaces de invitación en Match Queue: el enlace abre la app en el equipo correcto o la versión web, con los archivos de dominio verificado para Android e iOS."]
+    },
+    i18n: {
+      en: ["Apps in more than one language.", "Internationalization prepares the code for several languages and localization delivers the translated texts, formats and content.", "Aprovaura runs in Portuguese, English and Spanish, interface and study content included; this portfolio follows the same approach."],
+      "pt-BR": ["Apps em mais de um idioma.", "Internacionalização prepara o código para vários idiomas e a localização entrega os textos, formatos e conteúdos traduzidos.", "O Aprovaura funciona em português, inglês e espanhol, da interface ao conteúdo de estudo; este portfólio segue a mesma abordagem."],
+      es: ["Apps en más de un idioma.", "La internacionalización prepara el código para varios idiomas y la localización entrega los textos, formatos y contenidos traducidos.", "Aprovaura funciona en portugués, inglés y español, de la interfaz al contenido de estudio; este portafolio sigue el mismo enfoque."]
+    },
+    gps: {
+      en: ["Device location in mobile apps.", "Location services read the device position through GPS and the network, with runtime permissions on Android and iOS.", "Location features in the Cooper Pay apps at Cooper Tec and real-time GPS tracking in freelance projects such as a ride-hailing app."],
+      "pt-BR": ["Localização do aparelho em apps mobile.", "Os serviços de localização leem a posição do aparelho por GPS e rede, com permissões em tempo de execução no Android e no iOS.", "Recursos de localização nos apps Cooper Pay na Cooper Tec e rastreamento por GPS em tempo real em projetos freelance, como um app de mobilidade."],
+      es: ["Ubicación del dispositivo en apps móviles.", "Los servicios de ubicación leen la posición del dispositivo por GPS y red, con permisos en tiempo de ejecución en Android e iOS.", "Funciones de ubicación en las apps Cooper Pay en Cooper Tec y seguimiento GPS en tiempo real en proyectos freelance, como una app de movilidad."]
+    },
+    rls: {
+      en: ["Access rules enforced by the database.", "A PostgreSQL feature that filters rows per user with policies, so each user only reads and writes their own data, whatever the client sends.", "Policies in Match Queue and La Pelve: each team or professional only sees their own records, with sensitive actions behind database functions."],
+      "pt-BR": ["Regras de acesso aplicadas pelo banco.", "Recurso do PostgreSQL que filtra linhas por usuário com políticas, para que cada um só leia e grave os próprios dados, independentemente do que o cliente envia.", "Políticas no Match Queue e no La Pelve: cada time ou profissional vê só os próprios registros, com as ações sensíveis atrás de funções do banco."],
+      es: ["Reglas de acceso aplicadas por la base de datos.", "Función de PostgreSQL que filtra filas por usuario con políticas, para que cada uno solo lea y escriba sus propios datos, sin importar lo que envíe el cliente.", "Políticas en Match Queue y La Pelve: cada equipo o profesional ve solo sus propios registros, con las acciones sensibles detrás de funciones de la base."]
+    },
+    "cloudflare-workers": {
+      en: ["Serverless code at the edge.", "Cloudflare's serverless platform runs JavaScript/TypeScript close to the user, with storage options such as KV and D1.", "Data integration for FanHub, plus the server side of this portfolio, including the privacy-friendly visitor map."],
+      "pt-BR": ["Código serverless na borda.", "Plataforma serverless da Cloudflare que roda JavaScript/TypeScript perto do usuário, com opções de armazenamento como KV e D1.", "Integração de dados do FanHub e a parte servidor deste portfólio, incluindo o mapa de visitantes sem dados pessoais."],
+      es: ["Código serverless en el borde.", "Plataforma serverless de Cloudflare que ejecuta JavaScript/TypeScript cerca del usuario, con opciones de almacenamiento como KV y D1.", "Integración de datos de FanHub y la parte de servidor de este portafolio, incluido el mapa de visitantes sin datos personales."]
+    },
+    crashlytics: {
+      en: ["Crash reports from real users.", "Firebase's crash reporting tool: groups crashes and errors with stack traces, device data and the affected app version.", "Crash monitoring at Toro Investimentos (now Santander Corretora), used to prioritize fixes by impact on users."],
+      "pt-BR": ["Relatórios de crash de usuários reais.", "Ferramenta de relatórios de falhas do Firebase: agrupa crashes e erros com stack trace, dados do aparelho e a versão do app afetada.", "Monitoramento de falhas na Toro Investimentos (hoje Santander Corretora), usado para priorizar correções pelo impacto nos usuários."],
+      es: ["Informes de fallos de usuarios reales.", "Herramienta de informes de fallos de Firebase: agrupa crashes y errores con stack trace, datos del dispositivo y la versión de la app afectada.", "Monitoreo de fallos en Toro Investimentos (hoy Santander Corretora), usado para priorizar correcciones por impacto en los usuarios."]
+    },
+    "remote-config": {
+      en: ["App behavior changed without a new release.", "Firebase service that delivers parameters to installed apps, used for feature flags, gradual rollouts and adjustments without going through the stores.", "Feature flags and remote parameters in the Toro Investimentos app (now Santander Corretora)."],
+      "pt-BR": ["Comportamento do app alterado sem nova versão.", "Serviço do Firebase que entrega parâmetros aos apps instalados, usado para feature flags, liberações graduais e ajustes sem passar pelas lojas.", "Feature flags e parâmetros remotos no app da Toro Investimentos (hoje Santander Corretora)."],
+      es: ["Comportamiento de la app cambiado sin nueva versión.", "Servicio de Firebase que entrega parámetros a las apps instaladas, usado para feature flags, lanzamientos graduales y ajustes sin pasar por las tiendas.", "Feature flags y parámetros remotos en la app de Toro Investimentos (hoy Santander Corretora)."]
+    },
+    "firebase-messaging": {
+      en: ["Push notifications for Android and iOS.", "Firebase Cloud Messaging delivers notifications and data messages to devices, using APNs on iOS.", "Push notifications in FanHub: device tokens, APNs setup on iOS and messages that open the right screen."],
+      "pt-BR": ["Notificações push para Android e iOS.", "O Firebase Cloud Messaging entrega notificações e mensagens de dados aos aparelhos, usando o APNs no iOS.", "Notificações push no FanHub: tokens dos aparelhos, configuração do APNs no iOS e mensagens que abrem a tela certa."],
+      es: ["Notificaciones push para Android e iOS.", "Firebase Cloud Messaging entrega notificaciones y mensajes de datos a los dispositivos, usando APNs en iOS.", "Notificaciones push en FanHub: tokens de los dispositivos, configuración de APNs en iOS y mensajes que abren la pantalla correcta."]
+    },
+    sentry: {
+      en: ["Error and performance monitoring.", "A monitoring platform that captures errors, stack traces and performance data from apps and backends, with alerts and release tracking.", "Error tracking in Flutter apps: grouped issues by release, breadcrumbs to reproduce problems and alerts when a new version introduces failures."],
+      "pt-BR": ["Monitoramento de erros e performance.", "Plataforma de monitoramento que captura erros, stack traces e dados de performance de apps e backends, com alertas e acompanhamento por versão.", "Rastreamento de erros em apps Flutter: problemas agrupados por versão, breadcrumbs para reproduzir falhas e alertas quando uma versão nova introduz erros."],
+      es: ["Monitoreo de errores y rendimiento.", "Plataforma de monitoreo que captura errores, stack traces y datos de rendimiento de apps y backends, con alertas y seguimiento por versión.", "Seguimiento de errores en apps Flutter: problemas agrupados por versión, breadcrumbs para reproducir fallos y alertas cuando una versión nueva introduce errores."]
+    },
+    gemini: {
+      en: ["Google's generative AI models via API.", "The Gemini API gives access to Google's multimodal models for text generation, analysis and structured output.", "Essay grading in Aprovaura: the text is sent from a backend function and comes back as an estimated score with feedback per ENEM competency."],
+      "pt-BR": ["Modelos de IA generativa do Google via API.", "A API do Gemini dá acesso aos modelos multimodais do Google para geração de texto, análise e saída estruturada.", "Correção de redação no Aprovaura: o texto sai de uma função no backend e volta como nota estimada com devolutiva por competência do ENEM."],
+      es: ["Modelos de IA generativa de Google vía API.", "La API de Gemini da acceso a los modelos multimodales de Google para generación de texto, análisis y salida estructurada.", "Corrección de redacción en Aprovaura: el texto sale de una función del backend y vuelve como nota estimada con devolución por competencia del ENEM."]
+    },
+    "app-store-connect": {
+      en: ["Publishing and testing on the App Store.", "Apple's portal for app records, builds, TestFlight beta testing, review submissions and App Store releases.", "App Store releases of the Cooper Pay apps at Cooper Tec and of my own products, including TestFlight builds and review submissions."],
+      "pt-BR": ["Publicação e testes na App Store.", "Portal da Apple para cadastro de apps, builds, testes beta no TestFlight, envio para revisão e publicação na App Store.", "Publicações na App Store dos apps Cooper Pay na Cooper Tec e dos meus produtos, incluindo builds no TestFlight e envios para revisão."],
+      es: ["Publicación y pruebas en la App Store.", "Portal de Apple para el registro de apps, builds, pruebas beta en TestFlight, envío a revisión y publicación en la App Store.", "Publicaciones en la App Store de las apps Cooper Pay en Cooper Tec y de mis productos, incluidos builds en TestFlight y envíos a revisión."]
+    },
+    "google-play-console": {
+      en: ["Publishing on Google Play.", "Google's console for app listings, release tracks (internal, closed, production), store policies and Android vitals.", "Google Play releases of the Cooper Pay apps at Cooper Tec and of my own products, from internal testing tracks to production."],
+      "pt-BR": ["Publicação no Google Play.", "Console do Google para ficha dos apps, trilhas de lançamento (interna, fechada, produção), políticas da loja e Android vitals.", "Publicações no Google Play dos apps Cooper Pay na Cooper Tec e dos meus produtos, das trilhas de teste interno à produção."],
+      es: ["Publicación en Google Play.", "Consola de Google para la ficha de las apps, pistas de lanzamiento (interna, cerrada, producción), políticas de la tienda y Android vitals.", "Publicaciones en Google Play de las apps Cooper Pay en Cooper Tec y de mis productos, de las pistas de prueba interna a producción."]
+    },
+    gitlab: {
+      en: ["Git hosting with built-in CI/CD.", "A DevOps platform for Git repositories, merge requests, issues and pipelines.", "Repositories and code review at Saneago, in the development of internal systems and portals."],
+      "pt-BR": ["Hospedagem Git com CI/CD integrado.", "Plataforma DevOps para repositórios Git, merge requests, issues e pipelines.", "Repositórios e revisão de código na Saneago, no desenvolvimento de sistemas internos e portais."],
+      es: ["Alojamiento Git con CI/CD integrado.", "Plataforma DevOps para repositorios Git, merge requests, issues y pipelines.", "Repositorios y revisión de código en Saneago, en el desarrollo de sistemas internos y portales."]
+    },
+    scrum: {
+      en: ["Agile delivery in short sprints.", "An agile framework with sprints, planning, daily stand-ups, reviews and retrospectives around a prioritized backlog.", "Day-to-day process of the mobile teams at Cooper Tec and Agrosmart: sprint planning, estimates, reviews and retrospectives."],
+      "pt-BR": ["Entrega ágil em sprints curtas.", "Framework ágil com sprints, planejamento, dailies, reviews e retrospectivas em torno de um backlog priorizado.", "Processo do dia a dia dos times mobile na Cooper Tec e na Agrosmart: planejamento de sprint, estimativas, reviews e retrospectivas."],
+      es: ["Entrega ágil en sprints cortos.", "Marco ágil con sprints, planificación, dailies, reviews y retrospectivas en torno a un backlog priorizado.", "Proceso diario de los equipos móviles en Cooper Tec y Agrosmart: planificación de sprint, estimaciones, reviews y retrospectivas."]
+    },
+    spring: {
+      en: ["Java framework for enterprise applications.", "An application framework for Java with dependency injection, web MVC, data access and integration modules.", "Enterprise web systems and REST services at Memora, together with ZK, Maven and Tomcat."],
+      "pt-BR": ["Framework Java para aplicações corporativas.", "Framework de aplicações para Java com injeção de dependência, web MVC, acesso a dados e módulos de integração.", "Sistemas web corporativos e serviços REST na Memora, junto com ZK, Maven e Tomcat."],
+      es: ["Framework Java para aplicaciones empresariales.", "Framework de aplicaciones para Java con inyección de dependencias, web MVC, acceso a datos y módulos de integración.", "Sistemas web empresariales y servicios REST en Memora, junto con ZK, Maven y Tomcat."]
+    },
+    oracle: {
+      en: ["Enterprise relational database.", "Oracle Database: a relational database widely used in corporate systems, with SQL and PL/SQL.", "Queries and maintenance of the enterprise systems at Memora, from development and testing to production."],
+      "pt-BR": ["Banco de dados relacional corporativo.", "Oracle Database: banco relacional muito usado em sistemas corporativos, com SQL e PL/SQL.", "Consultas e manutenção dos sistemas corporativos na Memora, do desenvolvimento e testes à produção."],
+      es: ["Base de datos relacional empresarial.", "Oracle Database: base de datos relacional muy usada en sistemas corporativos, con SQL y PL/SQL.", "Consultas y mantenimiento de los sistemas empresariales en Memora, del desarrollo y las pruebas a producción."]
+    },
+    mongodb: {
+      en: ["Document database (NoSQL).", "A NoSQL database that stores JSON-like documents with flexible schemas, indexes and aggregation pipelines.", "Document modeling and queries for app backends: collections designed around how the screens read the data."],
+      "pt-BR": ["Banco de documentos (NoSQL).", "Banco NoSQL que guarda documentos no formato JSON com esquema flexível, índices e pipelines de agregação.", "Modelagem de documentos e consultas para backends de apps: coleções desenhadas a partir de como as telas leem os dados."],
+      es: ["Base de datos de documentos (NoSQL).", "Base de datos NoSQL que guarda documentos en formato JSON con esquema flexible, índices y pipelines de agregación.", "Modelado de documentos y consultas para backends de apps: colecciones diseñadas a partir de cómo las pantallas leen los datos."]
     }
   };
 });
