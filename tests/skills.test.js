@@ -11,9 +11,11 @@ var D = require(path.join(root, "assets/js/skills-data.js"));
 var T = require(path.join(root, "assets/js/skills-details.js"));
 var LOCALES = ["en", "pt-BR", "es"];
 
-var EXPECTED = ["flutter", "dart", "android", "ios", "flavors", "bloc", "provider", "clean-architecture", "solid", "tdd", "dependency-injection",
-  "automated-testing", "rest-api", "supabase", "postgresql", "firebase", "jwt", "hive", "sembast", "objectdb", "codemagic", "fastlane", "github-actions",
-  "azure-devops", "git", "github", "java", "sql", "mysql", "db2", "zk-framework", "javascript", "typescript"];
+var EXPECTED = ["flutter", "dart", "android", "ios", "web-pwa", "flavors", "deep-links", "i18n", "gps", "bloc", "provider", "clean-architecture",
+  "solid", "tdd", "dependency-injection", "automated-testing", "rest-api", "supabase", "postgresql", "rls", "cloudflare-workers", "firebase",
+  "crashlytics", "remote-config", "firebase-messaging", "sentry", "gemini", "jwt", "hive", "sembast", "objectdb", "codemagic", "fastlane",
+  "github-actions", "azure-devops", "app-store-connect", "google-play-console", "git", "github", "gitlab", "scrum", "java", "spring", "sql", "mysql",
+  "db2", "oracle", "mongodb", "zk-framework", "javascript", "typescript"];
 check(JSON.stringify(D.ORDER.map(function (s) { return s.id; })) === JSON.stringify(EXPECTED), "ordem da grade diferente da esperada (mobile primeiro)");
 
 var ids = {};
@@ -89,7 +91,7 @@ check(D.PROJECTS["fan-hub"].name === "FanHub" && D.PROJECTS["fan-hub"].href === 
 check(/FanHub/.test(T.supabase.en[2]) && !/Goiás App/.test(T.supabase.en[2]), "Supabase cita o produto como FanHub");
 check(ids.hive.projects.length === 0 && ids.sembast.projects.length === 0, "Hive/Sembast: só a experiência comprovada (Agrosmart)");
 // skills sem evidência não recebem empresa nem projeto
-["provider", "solid", "dependency-injection", "jwt", "git", "github", "sql", "mysql", "db2", "javascript", "typescript"].forEach(function (s) { check(ids[s].exp.length === 0 && ids[s].projects.length === 0, s + " sem evidência não pode ter vínculos"); });
+["provider", "solid", "dependency-injection", "jwt", "git", "github", "sql", "mysql", "db2", "javascript", "typescript", "sentry", "mongodb"].forEach(function (s) { check(ids[s].exp.length === 0 && ids[s].projects.length === 0, s + " sem evidência não pode ter vínculos"); });
 // nomes de experiência batem com a linha do tempo da home
 var home = read("index.html");
 ["Cooper Tec", "Agrosmart", "Toro Investimentos", "IZA", "Saneago"].forEach(function (n) { check(home.indexOf(">" + n + "<") >= 0 || read("assets/i18n/en.js").indexOf('"' + n + '"') >= 0, "experiência fora da home: " + n); });
@@ -97,7 +99,7 @@ var home = read("index.html");
 // regras de interface: sem níveis, percentuais, barras ou emojis
 var all = read("assets/js/skills.js") + read("assets/js/skills-data.js") + read("assets/js/skills-details.js") + read("index.html").match(/<section id="skills"[\s\S]*?<\/section>/)[0];
 check(!/\b(Expert|Advanced|Beginner|Intermediate|Mid)\b/.test(all), "etiqueta de nível proibida");
-check(!/\d\s?%|progress|<meter/i.test(all.replace(/100%/g, "")), "percentual/barra de progresso proibida");
+check(!/\d\s?%|progress(?!ive)|<meter/i.test(all.replace(/100%/g, "")), "percentual/barra de progresso proibida");   // "Progressive Web App" é nome, não barra
 check(!/[\u{1F300}-\u{1FAFF}☀-➿]/u.test(all), "emoji proibido");
 check(!/\b(Claude|Anthropic|ChatGPT|OpenAI)\b/i.test(read("assets/js/skills-details.js") + read("assets/js/skills-data.js")), "referência a IA/gerador");
 // HTML da home: seção, script de dados antes do script da grade
