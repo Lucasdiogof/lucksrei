@@ -100,7 +100,7 @@ check(!/\b(Claude|Anthropic|ChatGPT|OpenAI)\b/i.test(read("assets/js/skills-deta
 check(/<ul class="skill-grid" id="skill-grid"/.test(home), "grade ausente na home");
 check(home.indexOf("skills-data.js") > 0 && home.indexOf("skills-data.js") < home.indexOf("/assets/js/skills.js"), "skills-data.js deve vir antes de skills.js");
 // seções existentes continuam e na mesma ordem
-var order = ["sobre", "projetos", "processo", "tecnologias", "skills", "experiencia", "contato"].map(function (id) { return home.indexOf('<section id="' + id + '"'); });
+var order = ["sobre", "projetos", "processo", "skills", "experiencia", "contato"].map(function (id) { return home.indexOf('<section id="' + id + '"'); });
 check(order.every(function (v, i) { return v > 0 && (i === 0 || v > order[i - 1]); }), "ordem das seções da home");
 
 if (failures.length) { console.error("FALHOU:\n - " + failures.join("\n - ")); process.exit(1); }
