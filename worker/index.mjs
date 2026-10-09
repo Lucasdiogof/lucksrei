@@ -5,6 +5,8 @@
  *   POST /api/visit     conta UMA visita no mês/país (e mês/país/região) atuais. 204 sempre (nunca quebra a página).
  *   GET  /api/visitors  agregados dos últimos 12 meses, por país e por região dentro de cada país (cache de 5 min).
  *   GET  /api/whoami    { country, region, region_name } do próprio visitante, vindos só de request.cf (sem cache).
+ *   GET  /api/github-contributions  calendário público de contribuições do GitHub (worker/github.mjs).
+ *   POST /api/contact   formulário "Send Message" (worker/contact.mjs).
  *
  * Métrica: "visitas" = no máximo UMA contagem por sessão de aba. Quem decide é o cliente
  * (sessionStorage; o servidor nunca vê esse marcador). Não é visitante único.
@@ -26,6 +28,9 @@
  *
  * Rate limiting pode ser adicionado futuramente se houver abuso real.
  */
+
+import { handleGithub } from "./github.mjs";
+import { handleContact } from "./contact.mjs";
 
 const VISITORS_TTL = 300; // s
 const WINDOW_MONTHS = 12;
@@ -271,6 +276,9 @@ export default {
         return json({ error: "unavailable" }, 503, "no-store");
       }
     }
+
+    if (path === "/api/github-contributions") return handleGithub(request, env, ctx);
+    if (path === "/api/contact") return handleContact(request, env, ctx);
 
     if (path.startsWith("/api/")) return json({ error: "not_found" }, 404, "no-store");
     return env.ASSETS.fetch(request);
