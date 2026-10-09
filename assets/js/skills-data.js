@@ -68,7 +68,7 @@
     { id: "jwt", name: "JWT", exp: [], projects: [], related: ["rest-api"] },
     { id: "hive", name: "Hive", exp: ["agrosmart"], projects: [], related: ["sembast", "flutter"] },
     { id: "sembast", name: "Sembast", exp: ["agrosmart"], projects: [], related: ["hive", "flutter"] },
-    { id: "objectdb", name: "ObjectDB", ext: "png", exp: ["freelance"], projects: ["emater", "agr-fiscal"], related: ["hive", "sembast"] },
+    { id: "objectdb", name: "ObjectDB", exp: ["freelance"], projects: ["emater", "agr-fiscal"], related: ["hive", "sembast"] },
     { id: "codemagic", name: "Codemagic", exp: ["cooper-tec"], projects: ["cooper-pay"], related: ["flavors", "fastlane"] },
     { id: "fastlane", name: "Fastlane", exp: ["agrosmart"], projects: COOPER_AGRO, related: ["github-actions", "codemagic"] },
     { id: "github-actions", name: "GitHub Actions", exp: ["agrosmart"], projects: COOPER_AGRO, related: ["fastlane", "github"] },
