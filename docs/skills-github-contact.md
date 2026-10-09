@@ -8,7 +8,8 @@
 - Logos em `assets/img/skills/<id>.svg`, locais e sem fundo:
   - Marcas: [Simple Icons](https://simpleicons.org) 16.34.0 (CC0), preenchidas com a cor da marca (versão clara onde a oficial é escura: GitHub, iOS) — Flutter, Dart, Android, iOS, Supabase, PostgreSQL, Firebase, Codemagic, Fastlane, GitHub Actions, Git, GitHub, MySQL, JavaScript, TypeScript, JWT.
   - [Devicon](https://devicon.dev) 2.17.0 (MIT), versão colorida original: Java, Azure DevOps.
-  - Conceitos sem logo oficial (BLoC, Provider, Clean Architecture, SOLID, TDD, Dependency Injection, Automated Testing, REST APIs, Hive, Sembast, ObjectDB, DB2, SQL, ZK Framework, Flutter Flavors): glifos de traço próprios, em dourado. Não imitam marcas.
+  - Logos oficiais copiados dos repositórios dos projetos: BLoC (`felangel/bloc`, `docs/src/assets/bloc.svg`, MIT, recortado no cubo) e Hive (`isar/hive`, `.github/logo_transparent.svg`, Apache-2.0, só o símbolo). Fastlane usa o SVG colorido do conjunto SVG Logos (CC0).
+  - Conceitos sem logo oficial reconhecida (Provider, Clean Architecture, SOLID, TDD, Dependency Injection, Automated Testing, REST APIs, Sembast, ObjectDB, DB2, SQL, ZK Framework, Flutter Flavors): glifos de traço próprios, em dourado. Não imitam marcas. Os ícones "solid" e "hive" do Simple Icons pertencem a outros produtos (SolidJS, Hive blockchain/Apache Hive) e não foram usados.
   - Marcas registradas pertencem aos seus donos; os logos identificam as tecnologias usadas.
 
 ## GitHub Contributions

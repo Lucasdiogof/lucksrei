@@ -106,6 +106,8 @@ function req(method) { return new Request("https://lucksrei.com/api/github-contr
   var cssC = read("assets/css/style.css");
   check(!/\.gh-card\{[^}]*--gh-4:\s*#(d|e)[0-9a-f]{5}/i.test(cssC) && /--gh-3: #2ea043/.test(cssC), "verdes do GitHub (sem dourado nos quadrados)");
 
+  var visibleHome = read("index.html").replace(/<!--[\s\S]*?-->/g, "");
+  check(!/id="gh-calendar"|github-calendar\.js/.test(visibleHome) && /<!--[\s\S]*id="gh-calendar"[\s\S]*-->/.test(read("index.html")), "seção do GitHub comentada na home (oculta, código preservado)");
   var site = ["worker/github.mjs", "assets/js/github-calendar.js", "index.html"].map(read).join("\n");
   check(!/fixture|makeDays|buildHtml|Math\.random/.test(site), "dados sintéticos/aleatórios só existem em tests/");
   check(!/github-fixture/.test(read("assets/js/github-calendar.js") + read("worker/github.mjs")), "worker e front não importam o fixture");
