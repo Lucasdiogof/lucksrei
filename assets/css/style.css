@@ -1444,6 +1444,7 @@ html[data-amb="contact"] .page-hero h1::after{
 .skill-logo{ width: 40px; height: 40px; object-fit: contain; transition: transform .3s var(--ease); }
 .skill-logo.is-wide{ width: auto; max-width: 100%; }
 .skill-name{ font-family: var(--font-mono); font-size: 11.5px; line-height: 1.25; letter-spacing: .02em; text-align: center; overflow-wrap: anywhere; hyphens: auto; }
+.skill.is-text .skill-name{ color: #fff; font-size: 13.5px; font-weight: 600; }   /* cartões sem logo: só o nome, centralizado */
 .skill:hover, .skill:focus-visible{ border-color: var(--border-gold-hover); color: var(--text); transform: translateY(-2px); box-shadow: var(--shadow-lift); }
 .skill:hover .skill-logo, .skill:focus-visible .skill-logo{ transform: scale(1.07); }
 .skill:focus-visible{ outline: 2px solid var(--accent); outline-offset: 3px; }
