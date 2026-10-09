@@ -51,9 +51,8 @@
       b.setAttribute("data-skill", s.id);
       b.setAttribute("aria-haspopup", "dialog");
       b.setAttribute("aria-label", t("skills.open", { name: label(s) }));
-      var img = logo(s.id, 40);
-      img.loading = "lazy";
-      b.appendChild(img);
+      if (s.text) b.classList.add("is-text");          // sem logo: só o nome, centralizado em branco
+      else { var img = logo(s.id, 40); img.loading = "lazy"; b.appendChild(img); }
       b.appendChild(el("span", "skill-name", label(s)));
       li.appendChild(b);
       frag.appendChild(li);
@@ -168,7 +167,7 @@
         var b = el("button", "sk-chip is-rel");
         b.type = "button";
         b.setAttribute("data-skill-jump", id);
-        b.appendChild(logo(id, 16));
+        if (!r.text) b.appendChild(logo(id, 16));
         b.appendChild(document.createTextNode(label(r)));
         li.appendChild(b);
         return li;
@@ -179,15 +178,15 @@
   function head(s, desc) {
     var h = dialog.querySelector(".sk-head");
     h.textContent = "";
-    var lg = logo(s.id, 52);
-    lg.className = "skill-logo sk-logo" + (s.wide ? " is-wide" : "");
+    var lg = s.text ? null : logo(s.id, 52);
+    if (lg) lg.className = "skill-logo sk-logo" + (s.wide ? " is-wide" : "");
     var txt = el("div", "sk-headtext");
     var title = el("h3", "sk-title", label(s));
     title.id = "skill-modal-title";
     title.tabIndex = -1;
     txt.appendChild(title);
     txt.appendChild(el("p", "sk-desc", desc || ""));
-    h.appendChild(lg);
+    if (lg) h.appendChild(lg);
     h.appendChild(txt);
   }
 

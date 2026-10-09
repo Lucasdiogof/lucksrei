@@ -3,7 +3,7 @@
  * Para editar: mexa só aqui e em assets/js/skills-details.js (textos nos 3 idiomas).
  *
  * order  ordem exata da grade (primeiro o mobile). Cada item:
- *   id       slug; logo em /assets/img/skills/<id>.svg (ext: "png" quando o logo só existe em PNG; wide: true para logo largo, que mantém a altura do ícone)
+ *   id       slug; logo em /assets/img/skills/<id>.svg (ext: "png" quando o logo só existe em PNG; wide: true para logo largo, que mantém a altura do ícone; text: true = sem logo, só o nome centralizado em branco)
  *   name     nome próprio (não traduzido). label = nome traduzível quando o item é um conceito
  *   exp      ids de EXPERIENCES onde há evidência (vazio = nenhuma atribuição)
  *   projects ids de PROJECTS onde há evidência
@@ -53,13 +53,13 @@
       projects: ["cooper-pay", "boosteragro", "boosterpro", "santander", "iza-seguros", "fan-hub", "la-pelve", "aprovaura"], related: ["flutter", "ios"] },
     { id: "ios", name: "iOS", exp: ["cooper-tec", "agrosmart", "toro", "iza"],
       projects: ["cooper-pay", "boosteragro", "boosterpro", "santander", "iza-seguros", "match-queue", "fan-hub", "la-pelve", "aprovaura"], related: ["flutter", "android"] },
-    { id: "flavors", name: "Flutter Flavors", exp: ["cooper-tec"], projects: ["cooper-pay"], related: ["flutter", "codemagic"] },
+    { id: "flavors", name: "Flutter Flavors", text: true, exp: ["cooper-tec"], projects: ["cooper-pay"], related: ["flutter", "codemagic"] },
     { id: "bloc", name: "BLoC / Cubit", exp: ["cooper-tec", "agrosmart"], projects: [], related: ["flutter", "clean-architecture"] },
-    { id: "provider", name: "Provider", ext: "png", wide: true, exp: [], projects: [], related: ["flutter", "bloc"] },
+    { id: "provider", name: "Provider", text: true, exp: [], projects: [], related: ["flutter", "bloc"] },
     { id: "clean-architecture", name: "Clean Architecture", ext: "png", label: { en: "Clean Architecture", "pt-BR": "Arquitetura Limpa", es: "Arquitectura Limpia" }, exp: ["cooper-tec", "agrosmart", "toro"], projects: ["fan-hub"], related: ["solid", "tdd", "dependency-injection"] },
     { id: "solid", name: "SOLID", ext: "png", wide: true, exp: [], projects: [], related: ["clean-architecture", "dependency-injection"] },
     { id: "tdd", name: "TDD", exp: ["cooper-tec"], projects: [], related: ["automated-testing", "clean-architecture"] },
-    { id: "dependency-injection", name: "Dependency Injection", ext: "png", label: { en: "Dependency Injection", "pt-BR": "Injeção de Dependência", es: "Inyección de Dependencias" }, exp: [], projects: [], related: ["clean-architecture", "solid"] },
+    { id: "dependency-injection", name: "Dependency Injection", text: true, label: { en: "Dependency Injection", "pt-BR": "Injeção de Dependência", es: "Inyección de Dependencias" }, exp: [], projects: [], related: ["clean-architecture", "solid"] },
     { id: "automated-testing", name: "Automated Testing", label: { en: "Automated Testing", "pt-BR": "Testes Automatizados", es: "Pruebas Automatizadas" }, exp: ["cooper-tec"], projects: [], related: ["tdd", "github-actions"] },
     { id: "rest-api", name: "REST APIs", exp: [], projects: [], related: ["jwt", "flutter"] },
     { id: "supabase", name: "Supabase", exp: [], projects: OWN, related: ["postgresql", "flutter"] },
@@ -78,9 +78,9 @@
     { id: "java", name: "Java", exp: ["memora", "saneago"], projects: [], related: ["zk-framework", "sql"] },
     { id: "sql", name: "SQL", exp: [], projects: [], related: ["postgresql", "mysql"] },
     { id: "mysql", name: "MySQL", exp: [], projects: [], related: ["sql"] },
-    { id: "db2", name: "DB2", exp: [], projects: [], related: ["sql"] },
+    { id: "db2", name: "DB2", ext: "png", exp: [], projects: [], related: ["sql"] },
     { id: "zk-framework", name: "ZK Framework", ext: "png", exp: ["memora", "saneago"], projects: [], related: ["java"] },
-    { id: "javascript", name: "JavaScript", exp: [], projects: [], related: ["typescript"] },
+    { id: "javascript", name: "JavaScript", ext: "png", exp: [], projects: [], related: ["typescript"] },
     { id: "typescript", name: "TypeScript", exp: [], projects: [], related: ["javascript"] }
   ];
 

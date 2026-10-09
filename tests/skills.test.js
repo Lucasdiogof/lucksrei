@@ -21,8 +21,10 @@ D.ORDER.forEach(function (s) {
   check(!ids[s.id], "id duplicado: " + s.id); ids[s.id] = s;
   check(s.name && typeof s.name === "string", "sem nome: " + s.id);
   var svgPath = "assets/img/skills/" + s.id + "." + (s.ext || "svg");
-  check(fs.existsSync(path.join(root, svgPath)), "logo ausente: " + svgPath);
-  if (s.ext === "png") {
+  // text: true = cartão sem logo (só o nome em branco); nesse caso não pode haver ext/wide nem arquivo de logo
+  if (s.text) check(!s.ext && !s.wide && !fs.existsSync(path.join(root, "assets/img/skills/" + s.id + ".svg")) && !fs.existsSync(path.join(root, "assets/img/skills/" + s.id + ".png")), "skill só-texto com logo sobrando: " + s.id);
+  else check(fs.existsSync(path.join(root, svgPath)), "logo ausente: " + svgPath);
+  if (s.text) { /* sem logo */ } else if (s.ext === "png") {
     var png = fs.readFileSync(path.join(root, svgPath));
     check(png.slice(1, 4).toString() === "PNG" && png.readUInt32BE(16) >= 100 && png.length < 60000, "png inválido ou grande demais: " + s.id);
   } else if (fs.existsSync(path.join(root, svgPath))) {
