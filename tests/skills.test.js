@@ -11,12 +11,12 @@ var D = require(path.join(root, "assets/js/skills-data.js"));
 var T = require(path.join(root, "assets/js/skills-details.js"));
 var LOCALES = ["en", "pt-BR", "es"];
 
-var EXPECTED = ["flutter", "dart", "android", "ios", "web-pwa", "flavors", "deep-links", "i18n", "gps", "bloc", "provider", "clean-architecture",
-  "solid", "tdd", "dependency-injection", "automated-testing", "rest-api", "supabase", "postgresql", "rls", "cloudflare-workers", "firebase",
-  "crashlytics", "remote-config", "firebase-messaging", "sentry", "gemini", "jwt", "hive", "sembast", "objectdb", "codemagic", "fastlane",
-  "github-actions", "azure-devops", "app-store-connect", "google-play-console", "git", "github", "gitlab", "scrum", "java", "spring", "sql", "mysql",
-  "db2", "oracle", "mongodb", "zk-framework", "javascript", "typescript"];
-check(JSON.stringify(D.ORDER.map(function (s) { return s.id; })) === JSON.stringify(EXPECTED), "ordem da grade diferente da esperada (mobile primeiro)");
+var EXPECTED = ["flutter", "dart", "android", "ios", "clean-architecture", "bloc", "tdd", "automated-testing", "dependency-injection", "solid",
+  "rest-api", "supabase", "postgresql", "firebase", "flavors", "fastlane", "codemagic", "github-actions", "app-store-connect", "google-play-console",
+  "git", "github", "rls", "cloudflare-workers", "crashlytics", "remote-config", "firebase-messaging", "sentry", "gemini", "deep-links", "i18n",
+  "gps", "web-pwa", "hive", "sembast", "provider", "jwt", "scrum", "azure-devops", "gitlab", "sql", "typescript", "javascript", "java", "spring",
+  "mysql", "mongodb", "oracle", "db2", "objectdb", "zk-framework"];
+check(JSON.stringify(D.ORDER.map(function (s) { return s.id; })) === JSON.stringify(EXPECTED), "ordem da grade diferente da esperada (por importância)");
 
 var ids = {};
 D.ORDER.forEach(function (s) {
