@@ -1119,28 +1119,20 @@
       }
     },
     "blocks": {
-      "b2": [
-        "home",
-        "matches",
-        "standings",
-        "other-competitions",
-        "calendar",
-        "socio",
-        "socio-plan",
-        "store",
-        "store-category",
-        "store-product",
-        "club",
-        "anthem",
-        "guess-shirt",
-        "guess-player",
-        "identity-quiz",
-        "identity-result",
+      "j1": [
         "login",
-        "signup"
+        "signup",
+        "home"
       ],
-      "b3": [
+      "j2": [
+        "matches",
+        "calendar",
+        "standings",
+        "other-competitions"
+      ],
+      "j3": [
         "club-home",
+        "club",
         "history",
         "titles",
         "board",
@@ -1148,8 +1140,9 @@
         "idol-detail",
         "squad",
         "player",
-        "transparency",
         "songs",
+        "anthem",
+        "transparency",
         "document",
         "partners",
         "media",
@@ -1158,23 +1151,32 @@
         "media-x",
         "news-article"
       ],
-      "b4": [
+      "j4": [
+        "socio",
+        "socio-plan",
+        "member-signup",
         "tickets",
         "ticket-sectors",
         "purchase",
         "purchased",
         "my-tickets",
         "ticket",
-        "member-signup"
+        "store",
+        "store-category",
+        "store-product"
       ],
-      "b5": [
+      "j5": [
         "arena",
         "challenges",
-        "crowd",
-        "pitch",
         "guess-lineup",
+        "guess-shirt",
+        "guess-player",
         "who-wore",
         "who-wore-hit",
+        "identity-quiz",
+        "identity-result",
+        "crowd",
+        "pitch",
         "passport",
         "trajectory",
         "ranking"
@@ -1606,16 +1608,21 @@
       }
     },
     "blocks": {
-      "b2": [
+      "j1": [
+        "login"
+      ],
+      "j2": [
+        "teams-explore",
+        "team-detail"
+      ],
+      "j3": [
         "play",
         "platforms",
         "lineup",
         "queue-search",
-        "history",
-        "teams-explore",
-        "team-detail"
+        "history"
       ],
-      "b3": [
+      "j4": [
         "central",
         "clubs",
         "club-detail",
@@ -1625,10 +1632,11 @@
         "chemistry",
         "evolutions",
         "controls",
-        "market",
-        "notifications",
+        "market"
+      ],
+      "j5": [
         "account",
-        "login"
+        "notifications"
       ]
     }
   },
@@ -2341,7 +2349,12 @@
       }
     },
     "blocks": {
-      "b1": [
+      "j1": [
+        "login",
+        "signup",
+        "home"
+      ],
+      "j2": [
         "practice",
         "practice-more",
         "subjects",
@@ -2352,7 +2365,7 @@
         "current-affairs-dossier",
         "review-errors"
       ],
-      "b2": [
+      "j3": [
         "mock-build",
         "mock-build-more",
         "mock-summary",
@@ -2361,7 +2374,7 @@
         "mock-result",
         "mock-review"
       ],
-      "b3": [
+      "j4": [
         "essay-list",
         "essay-proposal",
         "essay-editor",
@@ -2370,19 +2383,16 @@
         "essay-score",
         "essay-feedback"
       ],
-      "b4": [
+      "j5": [
+        "topics",
         "map",
-        "map-done",
-        "topics"
+        "map-done"
       ],
-      "b5": [
-        "home",
+      "j6": [
         "profile",
         "level-up",
         "settings-theme",
-        "settings-language",
-        "login",
-        "signup"
+        "settings-language"
       ]
     }
   },
@@ -2706,19 +2716,25 @@
       }
     },
     "blocks": {
-      "b1": [
+      "j1": [
         "login",
         "signup",
-        "home",
+        "home"
+      ],
+      "j2": [
         "schedule",
-        "schedule-new",
+        "schedule-new"
+      ],
+      "j3": [
         "patients",
-        "patient-detail",
         "patient-form",
         "patient-anamnesis",
         "patient-urinary",
         "patient-treatment",
-        "evolutions",
+        "patient-detail",
+        "evolutions"
+      ],
+      "j4": [
         "financial-report",
         "financial-new",
         "whatsapp"
