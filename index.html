@@ -252,6 +252,32 @@
     </div>
   </section>
 
+  <section id="skills" class="skills-section">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow" data-sec data-i18n="skills.eyebrow">Skills</span>
+        <h2 data-i18n="skills.title">Technical Skills</h2>
+        <p data-i18n="skills.lead">Technologies I've used to build and deliver real-world applications.</p>
+      </div>
+      <ul class="skill-grid" id="skill-grid" data-reveal data-i18n-attr="aria-label:skills.grid_aria" aria-label="Technical skills. Select one to see how I use it."></ul>
+    </div>
+  </section>
+
+  <!-- GitHub contributions: oculto por enquanto (poucos commits). Para reativar, remova este comentário e o do script github-calendar.js.
+  <section id="github" class="gh-section" aria-labelledby="gh-title">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <span class="eyebrow" data-sec data-i18n="github.eyebrow">Open source</span>
+        <h2 id="gh-title" data-i18n="github.title">GitHub contributions</h2>
+        <p data-i18n="github.lead">Public contributions over the last 12 months.</p>
+      </div>
+      <div class="gh-card" id="gh-calendar" data-reveal data-login="Lucasdiogof" aria-busy="true">
+        <p class="gh-state" id="gh-state" role="status" aria-live="polite" data-i18n="github.loading">Loading contributions…</p>
+      </div>
+    </div>
+  </section>
+  -->
+
   <span class="kd-divider" aria-hidden="true"></span>
 
   <section id="experiencia">
@@ -325,16 +351,53 @@
 
   <section id="contato" class="cta-section lk-grid">
     <div class="container">
-      <div class="contact-block" data-reveal>
-        <div class="contact-head">
+      <div class="contact-block has-form" data-reveal>
+        <div class="contact-info">
+          <div class="contact-head">
           <h2 class="contact-title" data-i18n="contact.title">Contact</h2>
           <p class="contact-lead" data-i18n="contact.lead">Professional contact and online presence.</p>
         </div>
-        <ul class="channels">
+          <ul class="channels">
           <li><a class="channel is-primary" href="mailto:marketing@lucksrei.com"><span class="ch-label" data-i18n="contact.label.email">Email</span><span class="ch-value">marketing@lucksrei.com</span><span class="ch-arrow" aria-hidden="true">↗</span></a></li>
           <li><a class="channel" href="https://www.linkedin.com/in/lucas-diogo-aa39b9174/" target="_blank" rel="noopener"><span class="ch-label">LinkedIn</span><span class="ch-value">linkedin.com/in/lucas-diogo</span><span class="ch-arrow" aria-hidden="true">↗</span></a></li>
           <li><a class="channel" href="https://github.com/Lucasdiogof" target="_blank" rel="noopener"><span class="ch-label">GitHub</span><span class="ch-value">github.com/Lucasdiogof</span><span class="ch-arrow" aria-hidden="true">↗</span></a></li>
         </ul>
+        </div>
+        <form class="contact-form" data-contact-form novalidate>
+          <h3 class="cf-title" data-i18n="contact.form.title">Send a message</h3>
+          <p class="cf-lead" data-i18n="contact.form.lead">Tell me about the opportunity or project and I'll reply by email.</p>
+          <div class="cf-field">
+            <label for="cf-name"><span data-i18n="contact.form.name">Name</span> <span class="cf-req" aria-hidden="true">*</span></label>
+            <input id="cf-name" name="name" type="text" autocomplete="name" maxlength="80" required aria-required="true" aria-describedby="cf-name-err">
+            <p class="cf-err" id="cf-name-err" hidden></p>
+          </div>
+          <div class="cf-field">
+            <label for="cf-email"><span data-i18n="contact.form.email">Email</span> <span class="cf-req" aria-hidden="true">*</span></label>
+            <input id="cf-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" required aria-required="true" aria-describedby="cf-email-err">
+            <p class="cf-err" id="cf-email-err" hidden></p>
+          </div>
+          <div class="cf-field">
+            <label for="cf-subject"><span data-i18n="contact.form.subject">Subject</span> <span class="cf-req" aria-hidden="true">*</span></label>
+            <select id="cf-subject" name="subject" required aria-required="true" aria-describedby="cf-subject-err">
+              <option value="" data-i18n="contact.form.subject_ph">Select a subject</option>
+              <option value="hiring" data-i18n="contact.form.subject_hiring">Hiring Opportunity</option>
+              <option value="collab" data-i18n="contact.form.subject_collab">Mobile Project Collaboration</option>
+              <option value="other" data-i18n="contact.form.subject_other">Other Inquiry</option>
+            </select>
+            <p class="cf-err" id="cf-subject-err" hidden></p>
+          </div>
+          <div class="cf-field">
+            <label for="cf-message"><span data-i18n="contact.form.message">Message</span> <span class="cf-req" aria-hidden="true">*</span></label>
+            <textarea id="cf-message" name="message" rows="6" maxlength="2000" required aria-required="true" aria-describedby="cf-message-err cf-message-count"></textarea>
+            <div class="cf-meta"><p class="cf-err" id="cf-message-err" hidden></p><span class="cf-count" id="cf-message-count"></span></div>
+          </div>
+          <div class="cf-hp" aria-hidden="true"><label>Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+          <div class="cf-actions">
+            <button type="submit" class="btn btn-primary cf-submit"><span data-i18n="contact.form.send">Send Message</span></button>
+            <p class="cf-hint" data-i18n="contact.form.hint">Used only to reply to you. Fields marked * are required.</p>
+          </div>
+          <div class="cf-status" role="status" aria-live="polite" tabindex="-1"></div>
+        </form>
       </div>
     </div>
   </section>
@@ -426,6 +489,10 @@
 <script src="/assets/js/hero-scene.js"></script>
 <script src="/assets/js/loop-video.js"></script>
 <script src="/assets/js/visitors.js"></script>
+<script src="/assets/js/skills-data.js"></script>
+<script src="/assets/js/skills.js"></script>
+<!-- <script src="/assets/js/github-calendar.js"></script> -->
+<script src="/assets/js/contact-form.js"></script>
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/kingdom.js"></script>
 </body>
