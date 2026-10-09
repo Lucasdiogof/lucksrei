@@ -146,35 +146,55 @@ proj.forEach(function (p) {
   });
 });
 // seleção por idioma e ausência de fallback silencioso
-check(Shots.blockFor("aprovaura", "b1", "pt-BR").length === 9, "aprovaura b1 pt-BR deve ter 9 telas");
-check(Shots.blockFor("aprovaura", "b1", "en").map(function (s) { return s.id; }).join() === "practice,practice-more,subjects,trail,trail-topics,trail-question,current-affairs,current-affairs-dossier,review-errors", "aprovaura b1 en: trilha completa em inglês");
-check(Shots.blockFor("aprovaura", "b1", "es").map(function (s) { return s.id; }).join() === "practice,practice-more,subjects,trail,trail-topics,trail-question,current-affairs,current-affairs-dossier,review-errors", "aprovaura b1 es: trilha completa em espanhol");
 ["pt-BR", "en", "es"].forEach(function (l) {
-  ["b2", "b5"].forEach(function (b) { check(Shots.blockFor("aprovaura", b, l).every(function (s) { return s.src.indexOf("/screens/" + l + "/") > 0; }), "aprovaura " + b + " " + l + ": sem imagem de outro idioma"); });
+  ["j1", "j2", "j3", "j4", "j5", "j6"].forEach(function (b) { check(Shots.blockFor("aprovaura", b, l).every(function (s) { return s.src.indexOf("/screens/" + l + "/") > 0; }), "aprovaura " + b + " " + l + ": sem imagem de outro idioma"); });
   ["home", "practice", "mock-build", "mock-question"].forEach(function (s) { check(Shots.slotFor("aprovaura", s, l), "aprovaura " + s + " existe em " + l); });
   ["home", "practice"].forEach(function (s) { check(fs.existsSync(path.join(root, "assets/img/home/aura", l, s + ".webp")), "miniatura da home aprovaura " + l + "/" + s); });
 });
-var aprovBlocks = function (b, l) { return Shots.blockFor("aprovaura", b, l).map(function (s) { return s.id; }).join(); };
-check(aprovBlocks("b2", "pt-BR") === "mock-build,mock-build-more,mock-summary,mock-question,mock-submit,mock-result,mock-review" && aprovBlocks("b2", "en") === "mock-build,mock-build-more,mock-summary,mock-question,mock-submit,mock-result,mock-review" && aprovBlocks("b2", "es") === "mock-build,mock-build-more,mock-summary,mock-question,mock-submit,mock-result,mock-review", "aprovaura: telas do simulado por idioma");
-check(aprovBlocks("b3", "pt-BR") === "essay-list,essay-proposal,essay-editor,essay-submit,essay-correcting,essay-score,essay-feedback", "aprovaura: redação em português (lista de temas, proposta, correção, nota)");
-check(aprovBlocks("b5", "pt-BR") === "home,profile,level-up,settings-theme,settings-language,login,signup" && aprovBlocks("b5", "en") === "home,profile,level-up,settings-theme,settings-language,login,signup" && aprovBlocks("b5", "es") === "home,profile,level-up,settings-theme,settings-language,login,signup", "aprovaura: só telas novas (tema escuro) em progresso");
-check(aprovBlocks("b3", "en") === "essay-list,essay-proposal,essay-editor,essay-submit,essay-correcting,essay-score,essay-feedback", "aprovaura: redação em inglês (lista de temas, proposta, correção, nota)");
-check(aprovBlocks("b3", "es") === "essay-list,essay-proposal,essay-editor,essay-submit,essay-correcting,essay-score,essay-feedback" && aprovBlocks("b4", "en") === "map,map-done,topics" && aprovBlocks("b4", "es") === "map,map-done,topics", "redação em espanhol (com lista de temas) e tópicos de geografia em en/es");
 // Perfil: o e-mail pessoal NUNCA aparece. As 3 telas de perfil publicadas têm a linha do e-mail coberta com a cor do
 // cartão (só nome e @usuário); qualquer tela de perfil nova precisa passar pela mesma máscara antes de entrar.
 check(["pt-BR", "en", "es"].every(function (l) { return Shots.slotFor("aprovaura", "profile", l); }), "aprovaura: perfil (e-mail mascarado) nos 3 idiomas");
-var mqIds = function (b, l) { return Shots.blockFor("matchqueue", b, l).map(function (x) { return x.id; }).join(","); };
-check(["pt-BR", "en", "es"].every(function (l) { return mqIds("b2", l) === "play,platforms,lineup,queue-search,history,teams-explore,team-detail"; }), "match queue b2 nos 3 idiomas, com detalhe do time");
-check(["pt-BR", "en", "es"].every(function (l) { return mqIds("b3", l) === "central,clubs,club-detail,players,player-detail,playstyles,chemistry,evolutions,controls,market,notifications,account,login"; }), "match queue b3 completo nos 3 idiomas");
 check(["play", "queue-search", "teams-explore"].every(function (n) { return fs.existsSync(path.join(root, "assets/img/home/match-queue/pt-BR", n + ".webp")); }), "match queue: 3 miniaturas pt-BR da home existem");
 check(Shots.slotFor("lapelve", "home", "en").src.indexOf("/screens/en/home.webp") > 0, "la pelve home en usa a versão en");
 check(Shots.slotFor("lapelve", "home", "pt-BR").src.indexOf("/screens/pt-BR/home.webp") > 0, "la pelve home pt-BR usa a versão pt-BR");
-check(Shots.slotFor("aprovaura", "essay-themes", "en") === null, "aprovaura temas de redação só em pt-BR → en null (sem fallback)");
-var model = Shots.buildScreenshots("fanhub", "b2", function (k, v, l) { return D[l][k]; });
-check(model["pt-BR"].length === 18 && Shots.blockFor("fanhub", "b3", "pt-BR").length === 17 && Shots.blockFor("fanhub", "b4", "pt-BR").length === 7 && Shots.blockFor("fanhub", "b5", "pt-BR").length === 10 && Shots.blockFor("fanhub", "b5", "en").length === 10 && model.en.length === 18 && Shots.blockFor("fanhub", "b3", "en").length === 17 && Shots.blockFor("fanhub", "b4", "en").map(function (s) { return s.id; }).join() === "tickets,ticket-sectors,purchase,purchased,my-tickets,ticket,member-signup" && model.es.length === 18 && Shots.blockFor("fanhub", "b3", "es").length === 17 && Shots.blockFor("fanhub", "b4", "es").map(function (s) { return s.id; }).join() === "tickets,ticket-sectors,purchase,purchased,my-tickets,ticket,member-signup" && Shots.blockFor("fanhub", "b5", "es").length === 10, "modelo por locale do fan hub (pt-BR e es completos; en também completo)");
 check(["play", "queue-search", "teams-explore", "central", "players", "player-detail", "market"].every(function (s) { return Shots.slotFor("matchqueue", s, "es") && fs.existsSync(path.join(root, "assets/img/match-queue/screens/es", s + ".webp")); }), "match queue: telas em espanhol existem no manifesto e em disco");
-check(Shots.blockFor("fanhub", "b2", "pt-BR").every(function (s) { return fs.existsSync(path.join(root, s.src.replace(/^\//, ""))); }), "fan hub b2: todo arquivo do manifesto existe");
+
+// jornadas narrativas: ordem fixa das telas por etapa, igual nos 3 idiomas
+var JOURNEY = {"fanhub": [["login", "signup", "home"], ["matches", "calendar", "standings", "other-competitions"], ["club-home", "club", "history", "titles", "board", "idols", "idol-detail", "squad", "player", "songs", "anthem", "transparency", "document", "partners", "media", "media-news", "media-youtube", "media-x", "news-article"], ["socio", "socio-plan", "member-signup", "tickets", "ticket-sectors", "purchase", "purchased", "my-tickets", "ticket", "store", "store-category", "store-product"], ["arena", "challenges", "guess-lineup", "guess-shirt", "guess-player", "who-wore", "who-wore-hit", "identity-quiz", "identity-result", "crowd", "pitch", "passport", "trajectory", "ranking"]], "aprovaura": [["login", "signup", "home"], ["practice", "practice-more", "subjects", "trail", "trail-topics", "trail-question", "current-affairs", "current-affairs-dossier", "review-errors"], ["mock-build", "mock-build-more", "mock-summary", "mock-question", "mock-submit", "mock-result", "mock-review"], ["essay-list", "essay-proposal", "essay-editor", "essay-submit", "essay-correcting", "essay-score", "essay-feedback"], ["topics", "map", "map-done"], ["profile", "level-up", "settings-theme", "settings-language"]], "lapelve": [["login", "signup", "home"], ["schedule", "schedule-new"], ["patients", "patient-form", "patient-anamnesis", "patient-urinary", "patient-treatment", "patient-detail", "evolutions"], ["financial-report", "financial-new", "whatsapp"]], "matchqueue": [["login"], ["teams-explore", "team-detail"], ["play", "platforms", "lineup", "queue-search", "history"], ["central", "clubs", "club-detail", "players", "player-detail", "playstyles", "chemistry", "evolutions", "controls", "market"], ["account", "notifications"]]};
+var PAGE = { fanhub: "fan-hub", aprovaura: "aura", lapelve: "la-pelve", matchqueue: "match-queue" };
+var UNUSED = { "aprovaura": ["essay-themes"] };
+Object.keys(JOURNEY).forEach(function (pr) {
+  var steps = JOURNEY[pr];
+  check(Object.keys(Shots.DATA[pr].blocks).join() === steps.map(function (_, i) { return "j" + (i + 1); }).join(), pr + ": blocos devem ser j1..j" + steps.length);
+  var seen = {};
+  steps.forEach(function (ids, i) {
+    var b = "j" + (i + 1);
+    Loc.SUPPORTED.forEach(function (l) {
+      var got = Shots.blockFor(pr, b, l).map(function (s) { return s.id; }).join();
+      check(got === ids.join(), pr + " " + b + " " + l + ": ordem inesperada (" + got + ")");
+      ["title", "intro"].forEach(function (f) { check(D[l]["journey." + pr + "." + (i + 1) + "." + f], "falta journey." + pr + "." + (i + 1) + "." + f + " em " + l); });
+      check(D[l]["journey.step." + (i + 1)], "falta journey.step." + (i + 1) + " em " + l);
+    });
+    ids.forEach(function (id) { check(!seen[id], pr + ": captura repetida em mais de uma etapa: " + id); seen[id] = true; });
+  });
+  Object.keys(Shots.DATA[pr].slots).forEach(function (id) { check(seen[id] || (UNUSED[pr] || []).indexOf(id) >= 0, pr + ": captura fora da narrativa: " + id); });
+  var html = read("projects/" + PAGE[pr] + "/index.html");
+  var order = (html.match(/data-shots="[^"]+"/g) || []).map(function (m) { return m.slice(12, -1); });
+  check(order.join() === steps.map(function (_, i) { return pr + ":j" + (i + 1); }).join(), pr + ": a página deve renderizar as etapas em ordem (" + order.join() + ")");
+  steps.forEach(function (_, i) { check(html.indexOf("data-i18n=\"journey." + pr + "." + (i + 1) + ".title\"") > 0, pr + ": título da etapa " + (i + 1) + " ausente no HTML"); });
+});
+check(Shots.slotFor("aprovaura", "essay-themes", "en") === null, "aprovaura temas de redação só em pt-BR → en null (sem fallback)");
+// telas distintas da Arena não se confundem (títulos diferentes)
+Loc.SUPPORTED.forEach(function (l) {
+  var t = ["guess-lineup", "guess-player", "who-wore", "identity-quiz"].map(function (s) { return D[l]["shots.fanhub." + s + ".title"]; });
+  check(new Set(t).size === t.length, "fanhub " + l + ": jogos da Arena com títulos repetidos");
+  check(D[l]["shots.fanhub.anthem.title"] !== D[l]["shots.fanhub.songs.title"], "fanhub " + l + ": hino e lista de músicas com o mesmo título");
+  check(/(desenvolvimento|development|desarrollo)/i.test(D[l]["shots.lapelve.whatsapp.title"]), "lapelve " + l + ": tela do WhatsApp deve dizer que está em desenvolvimento");
+});
+var model = Shots.buildScreenshots("fanhub", "j1", function (k, v, l) { return D[l][k]; });
+check(model["pt-BR"].length === 3 && model.en.length === 3 && model.es.length === 3, "modelo por locale do fan hub: etapa 1 com 3 telas");
 check(model["pt-BR"].every(function (x) { return x.src.indexOf("/pt-BR/") > 0 && x.alt; }), "itens do modelo têm src e alt do próprio idioma");
+check(Object.keys(Shots.DATA).every(function (pr) { return Object.keys(Shots.DATA[pr].blocks).every(function (b) { return Loc.SUPPORTED.every(function (l) { return Shots.blockFor(pr, b, l).every(function (s) { return fs.existsSync(path.join(root, s.src.replace(/^\//, ""))); }); }); }); }), "todo arquivo das etapas existe nos 3 idiomas");
 
 if (failures.length) { console.error("FALHOU:\n - " + failures.join("\n - ")); process.exit(1); }
 console.log("ok — i18n: " + enKeys.length + " strings × 3 locales; " + proj.length + " projetos de screenshots; 33 apps");
