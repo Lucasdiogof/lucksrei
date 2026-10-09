@@ -1466,6 +1466,7 @@ html[data-amb="contact"] .page-hero h1::after{
   transition: border-color .25s var(--ease), transform .25s var(--ease), color .25s var(--ease), box-shadow .25s var(--ease);
 }
 .skill-logo{ width: 40px; height: 40px; object-fit: contain; transition: transform .3s var(--ease); }
+.skill-logo.is-wide{ width: auto; max-width: 100%; }
 .skill-name{ font-family: var(--font-mono); font-size: 11.5px; line-height: 1.25; letter-spacing: .02em; text-align: center; overflow-wrap: anywhere; hyphens: auto; }
 .skill:hover, .skill:focus-visible{ border-color: var(--border-gold-hover); color: var(--text); transform: translateY(-2px); box-shadow: var(--shadow-lift); }
 .skill:hover .skill-logo, .skill:focus-visible .skill-logo{ transform: scale(1.07); }
@@ -1515,6 +1516,9 @@ a.sk-chip, button.sk-chip{ cursor: pointer; transition: border-color .2s var(--e
 a.sk-chip:hover, button.sk-chip:hover{ border-color: var(--border-gold-hover); color: var(--ivory); }
 a.sk-chip:focus-visible, button.sk-chip:focus-visible, .sk-link:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
 .sk-chip .skill-logo{ width: 16px; height: 16px; }
+.sk-chip .skill-logo.is-wide, .sk-logo.is-wide{ width: auto; }
+.sk-logo.is-wide{ max-width: 140px; }
+.sk-chip .skill-logo.is-wide{ max-width: 56px; }
 .sk-tag{ font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--gold-soft); }
 .sk-link{ display: inline-block; margin-top: 12px; font-family: var(--font-mono); font-size: 13px; color: var(--text-dim); text-decoration: none; border-bottom: 1px solid var(--border-strong); }
 .sk-link:hover{ color: var(--text); border-color: var(--accent); }
