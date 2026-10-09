@@ -38,7 +38,7 @@
 
   function sectorOf(app) {
     var label = app.sector ? I.t("apps.sector." + app.sector) : "";
-    return app.group === "own" ? I.t("apps.own_tag") + (label ? " · " + label : "") : label;
+    return label;
   }
 
   function storeLink(app, kind) {
