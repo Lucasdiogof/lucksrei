@@ -1837,12 +1837,22 @@
       },
       "essay-submit": {
         "locales": [
-          "pt-BR"
+          "pt-BR",
+          "en",
+          "es"
         ],
         "dims": {
           "pt-BR": [
             590,
             1280
+          ],
+          "en": [
+            590,
+            1277
+          ],
+          "es": [
+            590,
+            1277
           ]
         }
       },
@@ -2355,6 +2365,7 @@
         "essay-list",
         "essay-proposal",
         "essay-editor",
+        "essay-submit",
         "essay-correcting",
         "essay-score",
         "essay-feedback"
