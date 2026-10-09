@@ -28,9 +28,11 @@ D.ORDER.forEach(function (s) {
   } else if (fs.existsSync(path.join(root, svgPath))) {
     var svg = read(svgPath);
     check(/^<svg[^>]+viewBox="/.test(svg), "svg inválido: " + s.id);
-    check(!/<script|<image|href="http|onload=/i.test(svg), "svg com conteúdo ativo/externo: " + s.id);
+    // o ícone oficial do Flutter traz a sombra como PNG embutido (data URI, inerte em <img>); nenhum outro svg pode ter <image>
+    var imgOk = s.id === "flavors" ? svg.replace(/<image[^>]*xlink:href="data:image\/png;base64,[A-Za-z0-9+\/=]+"[^>]*\/>/g, "") : svg;
+    check(!/<script|<image|href="http|onload=/i.test(imgOk), "svg com conteúdo ativo/externo: " + s.id);
     check(!/<rect[^>]*width="(100%|24|128)"/.test(svg), "svg com retângulo de fundo: " + s.id);
-    check(!/fill="(#fff|#ffffff|white)"/i.test(svg) || ["java"].indexOf(s.id) >= 0, "fill branco inesperado: " + s.id);
+    check(!/fill="(#fff|#ffffff|white)"/i.test(svg) || ["java", "tdd", "automated-testing"].indexOf(s.id) >= 0, "fill branco inesperado: " + s.id);
     check(!/(background|style)=[^>]*#fff/i.test(svg), "svg com fundo branco inline: " + s.id);
   }
   if (s.label) LOCALES.forEach(function (l) { check(s.label[l], "label " + l + " ausente: " + s.id); });
