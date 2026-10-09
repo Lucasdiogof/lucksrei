@@ -20,9 +20,12 @@ var ids = {};
 D.ORDER.forEach(function (s) {
   check(!ids[s.id], "id duplicado: " + s.id); ids[s.id] = s;
   check(s.name && typeof s.name === "string", "sem nome: " + s.id);
-  var svgPath = "assets/img/skills/" + s.id + ".svg";
+  var svgPath = "assets/img/skills/" + s.id + "." + (s.ext || "svg");
   check(fs.existsSync(path.join(root, svgPath)), "logo ausente: " + svgPath);
-  if (fs.existsSync(path.join(root, svgPath))) {
+  if (s.ext === "png") {
+    var png = fs.readFileSync(path.join(root, svgPath));
+    check(png.slice(1, 4).toString() === "PNG" && png.readUInt32BE(16) >= 100 && png.length < 60000, "png inválido ou grande demais: " + s.id);
+  } else if (fs.existsSync(path.join(root, svgPath))) {
     var svg = read(svgPath);
     check(/^<svg[^>]+viewBox="/.test(svg), "svg inválido: " + s.id);
     check(!/<script|<image|href="http|onload=/i.test(svg), "svg com conteúdo ativo/externo: " + s.id);

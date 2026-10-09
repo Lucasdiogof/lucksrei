@@ -3,7 +3,7 @@
  * Para editar: mexa só aqui e em assets/js/skills-details.js (textos nos 3 idiomas).
  *
  * order  ordem exata da grade (primeiro o mobile). Cada item:
- *   id       slug; logo em /assets/img/skills/<id>.svg
+ *   id       slug; logo em /assets/img/skills/<id>.svg (ext: "png" quando o logo só existe em PNG; wide: true para logo largo, que mantém a altura do ícone)
  *   name     nome próprio (não traduzido). label = nome traduzível quando o item é um conceito
  *   exp      ids de EXPERIENCES onde há evidência (vazio = nenhuma atribuição)
  *   projects ids de PROJECTS onde há evidência
@@ -53,9 +53,9 @@
       projects: ["cooper-pay", "boosteragro", "boosterpro", "santander", "iza-seguros", "fan-hub", "la-pelve", "aprovaura"], related: ["flutter", "ios"] },
     { id: "ios", name: "iOS", exp: ["cooper-tec", "agrosmart", "toro", "iza"],
       projects: ["cooper-pay", "boosteragro", "boosterpro", "santander", "iza-seguros", "match-queue", "fan-hub", "la-pelve", "aprovaura"], related: ["flutter", "android"] },
-    { id: "flavors", name: "Flutter Flavors", exp: ["cooper-tec"], projects: ["cooper-pay"], related: ["flutter", "codemagic"] },
+    { id: "flavors", name: "Flutter Flavors", ext: "png", wide: true, exp: ["cooper-tec"], projects: ["cooper-pay"], related: ["flutter", "codemagic"] },
     { id: "bloc", name: "BLoC / Cubit", exp: ["cooper-tec", "agrosmart"], projects: [], related: ["flutter", "clean-architecture"] },
-    { id: "provider", name: "Provider", exp: [], projects: [], related: ["flutter", "bloc"] },
+    { id: "provider", name: "Provider", ext: "png", wide: true, exp: [], projects: [], related: ["flutter", "bloc"] },
     { id: "clean-architecture", name: "Clean Architecture", label: { en: "Clean Architecture", "pt-BR": "Arquitetura Limpa", es: "Arquitectura Limpia" }, exp: ["cooper-tec", "agrosmart", "toro"], projects: ["fan-hub"], related: ["solid", "tdd", "dependency-injection"] },
     { id: "solid", name: "SOLID", exp: [], projects: [], related: ["clean-architecture", "dependency-injection"] },
     { id: "tdd", name: "TDD", exp: ["cooper-tec"], projects: [], related: ["automated-testing", "clean-architecture"] },
@@ -79,7 +79,7 @@
     { id: "sql", name: "SQL", exp: [], projects: [], related: ["postgresql", "mysql"] },
     { id: "mysql", name: "MySQL", exp: [], projects: [], related: ["sql"] },
     { id: "db2", name: "DB2", exp: [], projects: [], related: ["sql"] },
-    { id: "zk-framework", name: "ZK Framework", exp: ["memora", "saneago"], projects: [], related: ["java"] },
+    { id: "zk-framework", name: "ZK Framework", ext: "png", exp: ["memora", "saneago"], projects: [], related: ["java"] },
     { id: "javascript", name: "JavaScript", exp: [], projects: [], related: ["typescript"] },
     { id: "typescript", name: "TypeScript", exp: [], projects: [], related: ["javascript"] }
   ];

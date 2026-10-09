@@ -33,9 +33,10 @@
   }
   function logo(id, size) {
     var img = el("img", "skill-logo");
-    img.src = "/assets/img/skills/" + id + ".svg";
+    img.src = "/assets/img/skills/" + id + "." + ((byId[id] && byId[id].ext) || "svg");
     img.alt = "";
     img.width = size; img.height = size;
+    if (byId[id] && byId[id].wide) img.classList.add("is-wide");
     img.decoding = "async";
     return img;
   }
@@ -179,7 +180,7 @@
     var h = dialog.querySelector(".sk-head");
     h.textContent = "";
     var lg = logo(s.id, 52);
-    lg.className = "skill-logo sk-logo";
+    lg.className = "skill-logo sk-logo" + (s.wide ? " is-wide" : "");
     var txt = el("div", "sk-headtext");
     var title = el("h3", "sk-title", label(s));
     title.id = "skill-modal-title";
