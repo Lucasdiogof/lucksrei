@@ -267,6 +267,11 @@
       en: ["Document database (NoSQL).", "A NoSQL database that stores JSON-like documents with flexible schemas, indexes and aggregation pipelines.", "Document modeling and queries for app backends: collections designed around how the screens read the data."],
       "pt-BR": ["Banco de documentos (NoSQL).", "Banco NoSQL que guarda documentos no formato JSON com esquema flexível, índices e pipelines de agregação.", "Modelagem de documentos e consultas para backends de apps: coleções desenhadas a partir de como as telas leem os dados."],
       es: ["Base de datos de documentos (NoSQL).", "Base de datos NoSQL que guarda documentos en formato JSON con esquema flexible, índices y pipelines de agregación.", "Modelado de documentos y consultas para backends de apps: colecciones diseñadas a partir de cómo las pantallas leen los datos."]
+    },
+    "get-it": {
+      en: ["Service locator for Dart and Flutter.", "A simple service locator that registers dependencies once and resolves them anywhere, including singletons, lazy singletons and factories.", "Dependency wiring in my own products (Match Queue, FanHub, La Pelve and Aprovaura): repositories, services and blocs registered in one place and resolved by layer."],
+      "pt-BR": ["Service locator para Dart e Flutter.", "Service locator simples que registra as dependências uma vez e as resolve em qualquer ponto, com singletons, lazy singletons e factories.", "Ligação das dependências nos meus produtos (Match Queue, FanHub, La Pelve e Aprovaura): repositórios, serviços e blocs registrados num só lugar e resolvidos por camada."],
+      es: ["Service locator para Dart y Flutter.", "Service locator simple que registra las dependencias una vez y las resuelve en cualquier punto, con singletons, lazy singletons y factories.", "Conexión de dependencias en mis productos (Match Queue, FanHub, La Pelve y Aprovaura): repositorios, servicios y blocs registrados en un solo lugar y resueltos por capa."]
     }
   };
 });

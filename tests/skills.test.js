@@ -11,7 +11,7 @@ var D = require(path.join(root, "assets/js/skills-data.js"));
 var T = require(path.join(root, "assets/js/skills-details.js"));
 var LOCALES = ["en", "pt-BR", "es"];
 
-var EXPECTED = ["flutter", "dart", "android", "ios", "clean-architecture", "bloc", "tdd", "automated-testing", "dependency-injection", "solid",
+var EXPECTED = ["flutter", "dart", "android", "ios", "clean-architecture", "bloc", "tdd", "automated-testing", "dependency-injection", "get-it", "solid",
   "rest-api", "supabase", "postgresql", "firebase", "flavors", "fastlane", "codemagic", "github-actions", "app-store-connect", "google-play-console",
   "git", "github", "rls", "cloudflare-workers", "crashlytics", "remote-config", "firebase-messaging", "sentry", "gemini", "deep-links", "i18n",
   "gps", "web-pwa", "hive", "sembast", "provider", "jwt", "scrum", "azure-devops", "gitlab", "sql", "typescript", "javascript", "java", "spring",
@@ -36,7 +36,7 @@ D.ORDER.forEach(function (s) {
     var imgOk = s.id === "flavors" ? svg.replace(/<image[^>]*xlink:href="data:image\/png;base64,[A-Za-z0-9+\/=]+"[^>]*\/>/g, "") : svg;
     check(!/<script|<image|href="http|onload=/i.test(imgOk), "svg com conteúdo ativo/externo: " + s.id);
     check(!/<rect[^>]*width="(100%|24|128)"/.test(svg), "svg com retângulo de fundo: " + s.id);
-    check(!/fill="(#fff|#ffffff|white)"/i.test(svg) || ["java", "tdd", "automated-testing"].indexOf(s.id) >= 0, "fill branco inesperado: " + s.id);
+    check(!/fill="(#fff|#ffffff|white)"/i.test(svg) || ["java", "web-pwa"].indexOf(s.id) >= 0, "fill branco inesperado: " + s.id);
     check(!/(background|style)=[^>]*#fff/i.test(svg), "svg com fundo branco inline: " + s.id);
   }
   if (s.label) LOCALES.forEach(function (l) { check(s.label[l], "label " + l + " ausente: " + s.id); });
