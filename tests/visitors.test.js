@@ -107,6 +107,18 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
   [{ asn: 28573 }, { asn: 26599 }, { asn: 13335 }, { asn: 20940 }, { asn: 54113 }, {}, undefined].forEach(function (cf) {
     check(!mod.fromDatacenter({ cf: cf }), "rede comum não é nuvem: " + JSON.stringify(cf));
   });
+  [{ asn: 1, asOrganization: "Anthropic, PBC" }, { asn: 1, asOrganization: "OpenAI" }, { asn: 1, asOrganization: "Amazon.com, Inc." }, { asn: 1, asOrganization: "GOOGLE-CLOUD-PLATFORM" }].forEach(function (cf) {
+    check(mod.fromDatacenter({ cf: cf }), "nuvem pelo nome da rede: " + cf.asOrganization);
+  });
+  [{ asn: 16591, asOrganization: "Google Fiber Inc." }, { asn: 28573, asOrganization: "Claro NXT Telecomunicacoes Ltda" }, { asn: 26599, asOrganization: "TELEFONICA BRASIL S.A" }].forEach(function (cf) {
+    check(!mod.fromDatacenter({ cf: cf }), "operadora não é nuvem: " + cf.asOrganization);
+  });
+  ["Mozilla/5.0 AppleWebKit/537.36 (KHTML, like Gecko; compatible; Claude-User/1.0; +Claude-User@anthropic.com)", "Mozilla/5.0 (compatible; ChatGPT-User/1.0; +https://openai.com/bot)", "Mozilla/5.0 (compatible; Perplexity-User/1.0)"].forEach(function (ua) {
+    check(mod.looksLikeBot({ headers: new Headers({ "user-agent": ua }) }), "agente de IA pelo user-agent: " + ua.slice(0, 40));
+  });
+  check(!mod.looksLikeBot({ headers: new Headers({ "user-agent": UA["user-agent"] }) }), "navegador comum não é robô");
+  var main = fs.readFileSync(path.join(root, "assets/js/main.js"), "utf8");
+  check(/sendBeacon && !navigator\.webdriver/.test(main), "navegador automatizado (navigator.webdriver) não envia visita");
   var dcEnv = { DB: fakeDb(), ASSETS: env.ASSETS };
   await W.fetch(req("POST", "/api/visit", h, { country: "US", asn: 15169 }), dcEnv, ctx);
   check(dcEnv.DB.log.length === 0, "visita de nuvem não toca o banco");
