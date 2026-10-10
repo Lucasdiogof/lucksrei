@@ -161,8 +161,10 @@
 
   // Visitas: no máximo uma contagem por sessão de aba. O marcador fica só em sessionStorage (nunca é enviado);
   // sem cookie e sem identificador. O servidor grava apenas mês + país (ver worker/index.mjs).
+  // Navegador controlado por automação (Playwright, Puppeteer, Selenium, agentes de IA) declara
+  // navigator.webdriver = true: não conta, venha de qual rede vier.
   try {
-    if (navigator.sendBeacon && !sessionStorage.getItem("lk.v")) {
+    if (navigator.sendBeacon && !navigator.webdriver && !sessionStorage.getItem("lk.v")) {
       sessionStorage.setItem("lk.v", "1");
       navigator.sendBeacon("/api/visit");
     }

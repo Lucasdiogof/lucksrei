@@ -59,7 +59,11 @@ const DATACENTER_ASNS = new Set([
   132203, 45090, // Tencent Cloud
   136907, // Huawei Cloud
 ]);
-const BOT_UA = /bot|crawl|spider|slurp|preview|facebookexternalhit|headless|phantom|lighthouse|pagespeed|pingdom|uptime|monitor|curl|wget|python-requests|httpclient|axios|node-fetch|go-http|java\//i;
+// Reforço pelo nome da rede (request.cf.asOrganization): pega ASNs que não estão na lista acima — provedores
+// que usam vários ASNs, redes novas e as próprias empresas de IA (Anthropic, OpenAI). "Google Fiber" é
+// operadora residencial e fica de fora. Também só em memória, nunca gravado.
+const DATACENTER_ORG = /\b(amazon|aws|google(?! fiber)|microsoft|azure|oracle|digitalocean|linode|vultr|choopa|ovh|hetzner|contabo|scaleway|ibm cloud|softlayer|leaseweb|alibaba|tencent|huawei cloud|anthropic|openai)\b/i;
+const BOT_UA = /bot|crawl|claude|anthropic|chatgpt|openai|perplexity|spider|slurp|preview|facebookexternalhit|headless|phantom|lighthouse|pagespeed|pingdom|uptime|monitor|curl|wget|python-requests|httpclient|axios|node-fetch|go-http|java\//i;
 
 const BASE_HEADERS = {
   "x-content-type-options": "nosniff",
@@ -108,8 +112,8 @@ export function looksLikeBot(request) {
 }
 
 export function fromDatacenter(request) {
-  const asn = Number((request.cf || {}).asn);
-  return DATACENTER_ASNS.has(asn);
+  const cf = request.cf || {};
+  return DATACENTER_ASNS.has(Number(cf.asn)) || DATACENTER_ORG.test(String(cf.asOrganization || ""));
 }
 
 function json(body, status, cacheControl) {
