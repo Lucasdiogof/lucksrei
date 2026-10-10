@@ -7,7 +7,7 @@
 <script src="/assets/js/theme-boot.js"></script>
 <script src="/assets/js/i18n-boot.js"></script>
 <title>Goiás App — Case Study | Lucksrei</title>
-<meta name="description" content="Goiás App: a Flutter app for Goiás fans, with matches, club, a mini-games Arena, the Fans' Lineup and real-time features via Supabase.">
+<meta name="description" content="Goiás App: a Flutter app for Goiás fans, with matches, live scores, club, tickets, membership, a mini-games Arena and the Fans' Lineup.">
 <link rel="canonical" href="https://lucksrei.com/projects/fan-hub/">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
@@ -16,7 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lucksrei">
 <meta property="og:title" content="Goiás App — Case Study | Lucksrei">
-<meta property="og:description" content="Flutter app for Goiás fans, with a mini-games Arena and real-time features via Supabase.">
+<meta property="og:description" content="Flutter app for Goiás fans, with live scores and a mini-games Arena.">
 <meta property="og:url" content="https://lucksrei.com/projects/fan-hub/">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://lucksrei.com/assets/img/fan-hub/screens/pt-BR/home.webp">
@@ -121,7 +121,7 @@
       <div class="case-block" data-reveal>
         <span class="eyebrow" data-i18n="common.arquitetura">Architecture</span>
         <h2 data-i18n="fanhub.s2.h23">How the app is built</h2>
-        <p data-i18n="fanhub.s2.p2">Layered Clean Architecture (domain, data and presentation), with Supabase as the backend and RLS policies protecting each fan's data.</p>
+        <p data-i18n="fanhub.s2.p2">A multi-club base: one Flutter codebase produces a build per club, each with its own Supabase project and Cloudflare Worker. Layered Clean Architecture (domain, data and presentation); RLS policies and server-side RPCs protect each fan's data, scores and rankings.</p>
         <div class="arch-diagram">
           <div class="arch-core" data-i18n="fanhub.s2.div1">App core: Flutter · Clean Architecture · Arena engine · Design system</div>
           <div class="arch-flavors" style="grid-template-columns:1fr">
@@ -137,10 +137,10 @@
           <div class="feature-item" data-i18n="fanhub.s2.div4"><strong>Games Arena</strong>Mini-games for fans: quiz, guess the player, guess the lineup.</div>
           <div class="feature-item" data-i18n="fanhub.s2.div5"><strong>Rankings</strong>Cross-game progression and scoring per fan.</div>
           <div class="feature-item" data-i18n="fanhub.s2.div6"><strong>Passport</strong>Match attendance record.</div>
-          <div class="feature-item" data-i18n="fanhub.s2.div7"><strong>Store &amp; Tickets</strong>Product catalog and ticket issuing.</div>
+          <div class="feature-item" data-i18n="fanhub.s2.div7"><strong>Store &amp; Tickets</strong>Catalog, cart and a digital ticket with a QR code (demo mode, no real payments).</div>
           <div class="feature-item" data-i18n="fanhub.s2.div8"><strong>Membership</strong>Subscription and member benefits.</div>
           <div class="feature-item" data-i18n="fanhub.s2.div9"><strong>Media</strong>News, YouTube, X and Instagram aggregated.</div>
-          <div class="feature-item" data-i18n="fanhub.s2.div10"><strong>Realtime</strong>Live updates via Supabase Realtime.</div>
+          <div class="feature-item" data-i18n="fanhub.s2.div10"><strong>Live matches</strong>Live score and push notifications for kickoff, goals, half-time and full time.</div>
         </div>
       </div>
 
@@ -153,7 +153,7 @@
           </div>
           <div class="stack-category">
             <h3>Backend</h3>
-            <ul><li>Supabase</li><li>PostgreSQL</li><li>Row Level Security</li><li>Realtime</li></ul>
+            <ul><li>Supabase</li><li>PostgreSQL</li><li>Row Level Security</li><li>Edge Functions</li><li>Cloudflare Workers</li><li>FCM</li></ul>
           </div>
           <div class="stack-category">
             <h3>Delivery</h3>

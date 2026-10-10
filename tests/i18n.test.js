@@ -85,10 +85,10 @@ check(fake.store[Loc.STORAGE_KEY] === "es" && Object.keys(fake.store).length ===
 var actx = { window: {} };
 vm.runInNewContext(read("assets/js/apps-data.js"), actx);
 var A = actx.window.LUCKSREI_APPS;
-check(A.apps.length === 33, "dataset deve continuar com 33 apps, tem " + A.apps.length);
+check(A.apps.length === 34, "dataset deve continuar com 34 apps, tem " + A.apps.length);
 var ids = {};
 A.apps.forEach(function (a) { check(!ids[a.id], "app duplicado: " + a.id); ids[a.id] = 1; });
-check(Object.keys(ids).length === 33, "idiomas não devem duplicar apps");
+check(Object.keys(ids).length === 34, "idiomas não devem duplicar apps");
 A.apps.forEach(function (a) {
   if (a.subtitle && typeof a.subtitle === "object") Loc.SUPPORTED.forEach(function (l) { check(typeof a.subtitle[l] === "string" && a.subtitle[l], a.id + ": subtitle sem " + l); });
   if (a.subtitleKey) Loc.SUPPORTED.forEach(function (l) { check(D[l][a.subtitleKey], a.id + ": subtitleKey ausente em " + l); });
@@ -197,4 +197,4 @@ check(model["pt-BR"].every(function (x) { return x.src.indexOf("/pt-BR/") > 0 &&
 check(Object.keys(Shots.DATA).every(function (pr) { return Object.keys(Shots.DATA[pr].blocks).every(function (b) { return Loc.SUPPORTED.every(function (l) { return Shots.blockFor(pr, b, l).every(function (s) { return fs.existsSync(path.join(root, s.src.replace(/^\//, ""))); }); }); }); }), "todo arquivo das etapas existe nos 3 idiomas");
 
 if (failures.length) { console.error("FALHOU:\n - " + failures.join("\n - ")); process.exit(1); }
-console.log("ok — i18n: " + enKeys.length + " strings × 3 locales; " + proj.length + " projetos de screenshots; 33 apps");
+console.log("ok — i18n: " + enKeys.length + " strings × 3 locales; " + proj.length + " projetos de screenshots; 34 apps");
