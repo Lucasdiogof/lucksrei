@@ -245,6 +245,13 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
   var VR = require(path.join(root, "assets/js/visitors.js"));
   check(VR.regionLabel("BR", "GO", "Goias") === "Goiás" && VR.regionLabel("BR", "SP", "") === "São Paulo" && VR.regionLabel("BR", "DF", "x", "Federal District") === "Federal District", "estados do Brasil com grafia oficial; DF por idioma");
   check(Object.keys(VR.BR_STATES).length === 26, "26 estados + DF");
+  // "Atualizado em": só data real da API (ISO); nada vira 1969/1970 nem "agora"
+  var NOW = Date.UTC(2026, 9, 10);
+  check(VR.validUpdatedAt("2026-10-10T02:37:26.000Z", NOW) instanceof Date, "updated_at ISO válido vira data");
+  [null, undefined, 0, 1, "", "abc", "1970-01-01T00:00:00.000Z", "2099-01-01T00:00:00Z", {}].forEach(function (v) {
+    check(VR.validUpdatedAt(v, NOW) === null, "updated_at inválido não vira data: " + JSON.stringify(v));
+  });
+  check(!/new Date\(d\.updated_at\)/.test(read("assets/js/visitors.js")), "visitors.js não converte updated_at sem validar");
   check(VR.regionLabel("US", "CA", "California") === "California" && VR.regionLabel("FR", "IDF", "") === "FR-IDF", "outros países: nome da Cloudflare ou PAÍS-CÓDIGO");
   // --- divisas de estados (admin1) e mapa interativo
   var admDir = path.join(root, "assets/img/visitors/admin1");
