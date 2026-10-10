@@ -1593,3 +1593,176 @@ a.sk-chip:hover .sk-arrow{ transform: translateX(3px); }
   .contact-form{ padding: 20px 16px 18px; }
   .cf-submit{ width: 100%; }
 }
+
+/* =====================================================================
+   TEMA CLARO / ESCURO — html[data-theme] (theme-boot.js no <head>, antes da pintura; botão no header em main.js)
+   O escuro é o padrão aprovado e continua sendo o :root acima. O claro só troca tokens e corrige as poucas cores
+   fixas que existem. Marfim muito suave + navy no texto + dourado mais profundo (legível no claro) + azul técnico.
+   Header e rodapé seguem em navy escuro no claro: a logo oficial tem letras brancas e não é recriada.
+   A cena 8-bit, os vídeos e os blocos de tecnologia (logos brancos) ficam em superfície escura nos dois temas.
+   ===================================================================== */
+
+/* botão de tema: um ícone só, ao lado de PT | EN | ES (sol no escuro = "ir para o claro"; lua no claro) */
+.theme-toggle{
+  flex: none; width: 34px; height: 34px; display: inline-grid; place-items: center; padding: 0; cursor: pointer;
+  color: var(--text-dim); background: var(--panel); border: 1px solid var(--border); border-radius: 50%;
+  transition: color .2s var(--ease), border-color .2s var(--ease);
+}
+.theme-toggle svg{ width: 16px; height: 16px; }
+.theme-toggle:hover{ color: var(--text); border-color: var(--border-gold-hover); }
+.theme-toggle:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+.theme-toggle .ic-moon{ display: none; }
+[data-theme="light"] .theme-toggle .ic-sun{ display: none; }
+[data-theme="light"] .theme-toggle .ic-moon{ display: block; }
+
+/* WhatsApp: mesma linha editorial dos outros canais; o verde fica só no ícone */
+.ch-wa{ display: inline-block; width: 13px; height: 13px; margin-right: 8px; vertical-align: -2px; fill: #25d366; }
+.ch-open{
+  display: inline-flex; align-items: baseline; gap: 4px; font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em;
+  color: var(--text-dim); white-space: nowrap; transition: color .25s var(--ease);
+}
+.ch-open .ch-ic{ color: var(--text-faint); transition: color .25s var(--ease), transform .3s var(--ease); display: inline-block; }
+.channel:hover .ch-open, .channel:focus-visible .ch-open, .channel:hover .ch-open .ch-ic{ color: var(--royal-gold-soft); }
+.channel:hover .ch-open .ch-ic{ transform: translate(2px, -2px); }
+@media (max-width: 560px){ .ch-open{ grid-column: 1 / -1; margin-top: 2px; } }
+
+/* ---------- tokens do tema claro ---------- */
+[data-theme="light"]{
+  color-scheme: light;
+  --bg-void: #f6f2e9;
+  --bg: #f8f5ee;
+  --bg-soft: #f1ece1;
+  --bg-elevated: #fffdf9;
+  --panel: #fffdf8;
+  --panel-2: #f3eee3;
+  --panel-hover: #ebe4d5;
+  --border: #e2dacb;
+  --border-strong: #cfc4ae;
+  --border-subtle: rgba(18,26,46,.09);
+  --border-gold: rgba(150,108,32,.38);
+  --border-gold-hover: rgba(150,108,32,.72);
+
+  --ivory: #16203a;
+  --text: #121a2e;
+  --text-dim: #455067;
+  --text-faint: #646c80;
+
+  --gold-bright: #b8862a;
+  --gold: #a1741c;
+  --gold-deep: #7d5a16;
+  --gold-dark: #cdb88c;
+  --gold-soft: #94681a;
+
+  --tech: #2557d6;
+  --tech-bright: #1d4ed8;
+  --accent-2: #17855e;
+  --accent-warn: #a8650f;
+  --danger: #b4321f;
+
+  --glow: rgba(161,116,28,.14);
+  --glow-soft: rgba(161,116,28,.08);
+  --glow-blue: rgba(37,87,214,.07);
+  --grid-line: rgba(18,26,46,.05);
+  --halo: rgba(161,116,28,.05);
+
+  --shadow-lift: 0 16px 40px rgba(18,26,46,.11), 0 0 22px rgba(161,116,28,.06);
+  --card-bg: linear-gradient(145deg, #fffefb, #faf6ee);
+
+  --royal-black: #fffdf8;
+  --royal-surface: #f1ece1;
+  --royal-gold: #a1741c;
+  --royal-gold-soft: #94681a;
+  --royal-champagne: #0f1730;
+  --royal-gold-deep: #7d5a16;
+  --royal-border: rgba(150,108,32,.22);
+  --royal-glow: rgba(161,116,28,.16);
+  --royal-text: linear-gradient(180deg, #c3953a 0%, #a1741c 55%, #7a5714 100%);
+}
+/* superfícies que continuam escuras no claro: recebem de volta os tokens do escuro (logo branca, cena 8-bit, logos brancos) */
+[data-theme="light"] .site-header, [data-theme="light"] .site-footer, [data-theme="light"] .skill, [data-theme="light"] .hs-stage{
+  --bg-void: #040405; --bg: #070708; --bg-soft: #0c0c0f; --bg-elevated: #121216;
+  --panel: #121a2b; --panel-2: #151d30; --panel-hover: #1d2740;
+  --border: #233049; --border-strong: #33415f; --border-subtle: rgba(255,255,255,.08);
+  --border-gold: rgba(219,178,80,.32); --border-gold-hover: rgba(238,204,109,.70);
+  --ivory: #f8f4ea; --text: #f5f5f2; --text-dim: #b3b9c4; --text-faint: #8a91a0;
+  --gold-bright: #eecc6d; --gold: #dbb250; --gold-soft: #e9cf86; --accent: #dbb250; --accent-strong: #eecc6d;
+  --royal-champagne: #f6efe0; --royal-gold-soft: #eecc6d; --royal-border: rgba(238,204,109,.14);
+  --card-bg: linear-gradient(145deg, rgba(18,24,38,.98), rgba(11,15,25,.96));
+  color: var(--text);
+}
+
+/* ---------- base ---------- */
+[data-theme="light"] body::after{
+  background:
+    radial-gradient(circle at 16% 12%, rgba(161,116,28,.07), transparent 34%),
+    radial-gradient(circle at 84% 30%, rgba(37,87,214,.04), transparent 32%),
+    linear-gradient(160deg, #f8f5ee 0%, #f6f2e9 55%, #f2ede2 100%);
+}
+[data-theme="light"] body::before{ opacity: .025; }
+[data-theme="light"] ::selection{ background: rgba(161,116,28,.22); color: #0f1730; }
+
+/* header e rodapé: navy escuro (a logo é branca) */
+[data-theme="light"] .site-header{ background: linear-gradient(180deg, rgba(13,20,36,.97), rgba(13,20,36,.94)); }
+[data-theme="light"] .site-header.is-scrolled{ background: rgba(13,20,36,.98); box-shadow: 0 10px 30px rgba(18,26,46,.18); }
+[data-theme="light"] .mobile-nav{ background: #0d1424; }
+[data-theme="light"] .site-footer{ background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(219,178,80,.07), transparent 70%), #0d1424; margin-top: 0; }
+
+/* efeitos decorativos: quase subliminares no claro */
+[data-theme="light"] .amb{ opacity: .55; }
+[data-theme="light"] .amb-glow{ background: radial-gradient(ellipse 48vmax 44vmax at 78% 22%, rgba(37,87,214,.035), transparent 70%), radial-gradient(ellipse 36vmax 32vmax at 18% 82%, rgba(161,116,28,.05), transparent 70%); }
+[data-theme="light"] .amb-p::before{ background: #c4a050; box-shadow: none; }
+[data-theme="light"] .amb-beam{ opacity: .35; }
+[data-theme="light"] .kd-divider::before{ background: linear-gradient(90deg, transparent, rgba(18,26,46,.12) 25%, rgba(161,116,28,.45) 50%, rgba(18,26,46,.12) 75%, transparent); }
+[data-theme="light"] .hero-visual::before{ background-image: linear-gradient(rgba(18,26,46,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(18,26,46,.06) 1px, transparent 1px); }
+[data-theme="light"] .hero-visual::after{ background: radial-gradient(closest-side, rgba(161,116,28,.10), rgba(161,116,28,.04) 46%, transparent 74%); }
+
+/* ---------- hero: a cena continua noturna, a moldura conversa com o claro ---------- */
+[data-theme="light"] .hs-stage{ border-color: rgba(18,26,46,.35); box-shadow: 0 0 0 1px rgba(18,26,46,.12), 0 26px 60px rgba(18,26,46,.22), 0 0 60px rgba(161,116,28,.08); }
+[data-theme="light"] .hs-hello{ color: #f5f5f2; }
+[data-theme="light"] .hero-scene::before{ background: linear-gradient(90deg, #a1741c, #d2a54a 60%, #b8862a) 0 0 / 32px 4px no-repeat, linear-gradient(90deg, rgba(18,26,46,.3), rgba(18,26,46,0)) 42px 2px / calc(100% - 42px) 1px no-repeat; }
+[data-theme="light"] .hero-scene figcaption{ border-top-color: var(--border); }
+
+/* ---------- cards (produtos, apps, painel do portfólio) ---------- */
+[data-theme="light"] .work-item, [data-theme="light"] .app-card{
+  background: linear-gradient(180deg, rgba(255,255,255,.7), transparent 26%), linear-gradient(145deg, #fffefb, #f9f5ec);
+  border-color: var(--border);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 12px 30px rgba(18,26,46,.07);
+}
+[data-theme="light"] .work-item:hover, [data-theme="light"] .app-card:hover{ border-color: rgba(150,108,32,.45); }
+[data-theme="light"] .has-fx:hover{ box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 20px 46px rgba(18,26,46,.13), 0 0 36px color-mix(in srgb, var(--p) 12%, transparent) !important; }
+[data-theme="light"] .fx-halo{ opacity: .45; }
+[data-theme="light"] .work-plate{ border-color: var(--border); }
+/* cores dos produtos: no claro, o tom do app escurecido o suficiente para ler sobre marfim */
+[data-theme="light"] .showcase-tagline, [data-theme="light"] .showcase-go, [data-theme="light"] .work-item:hover .work-copy h3{ color: color-mix(in srgb, var(--p) 58%, #0f1730); }
+[data-theme="light"] .showcase-num{ color: color-mix(in srgb, var(--p) 50%, #646c80); }
+[data-theme="light"] .metrics-foot{ border-color: rgba(37,87,214,.16); background: linear-gradient(100deg, rgba(37,87,214,.06), rgba(161,116,28,.06) 70%, rgba(161,116,28,.03)), #fffdf8; }
+[data-theme="light"] .metrics-foot:hover{ border-color: rgba(150,108,32,.45); }
+[data-theme="light"] .apps-cta-btn{ color: var(--gold) !important; border-color: rgba(150,108,32,.45); background: rgba(161,116,28,.08); }
+
+/* ---------- contato ---------- */
+[data-theme="light"] .channels, [data-theme="light"] .channel{ border-color: var(--border); }
+[data-theme="light"] .ch-value{ color: #1b2440; }
+[data-theme="light"] .channel:hover .ch-value, [data-theme="light"] .channel:focus-visible .ch-value{ color: #0b1226; }
+[data-theme="light"] .channel::before{ background: linear-gradient(90deg, rgba(161,116,28,.7), rgba(161,116,28,0) 70%); }
+html[data-theme="light"][data-amb="contact"] .page-hero h1::after{ background: linear-gradient(90deg, #a1741c, #d2a54a 60%, #b8862a) 0 0 / 28px 4px no-repeat, linear-gradient(90deg, rgba(18,26,46,.28), rgba(18,26,46,0)) 38px 2px / calc(100% - 38px) 1px no-repeat; }
+[data-theme="light"] .cf-field input, [data-theme="light"] .cf-field select, [data-theme="light"] .cf-field textarea{ background: #fffdf8; }
+[data-theme="light"] .cf-field input:hover, [data-theme="light"] .cf-field select:hover, [data-theme="light"] .cf-field textarea:hover{ border-color: #b9ad94; }
+
+/* ---------- tecnologias: blocos escuros (logos brancos de marca não são recoloridos); modal claro ---------- */
+[data-theme="light"] .skill{ border-color: rgba(18,26,46,.5); box-shadow: 0 6px 16px rgba(18,26,46,.10); }
+[data-theme="light"] .skill:hover, [data-theme="light"] .skill:focus-visible{ box-shadow: 0 14px 30px rgba(18,26,46,.18); }
+[data-theme="light"] .skill-modal{ box-shadow: 0 30px 80px rgba(18,26,46,.28); }
+[data-theme="light"] .skill-modal::backdrop{ background: rgba(13,20,36,.55); }
+[data-theme="light"] .sk-logo{ box-sizing: content-box; padding: 8px; background: #121a2b; border-radius: 12px; }
+[data-theme="light"] .sk-chip .skill-logo{ box-sizing: content-box; padding: 3px; background: #121a2b; border-radius: 50%; }
+[data-theme="light"] .sk-chip .skill-logo.is-wide{ border-radius: 6px; }
+
+/* ---------- GitHub: as cores do tema claro do próprio GitHub ---------- */
+[data-theme="light"] .gh-card{ --gh-0: #ebedf0; --gh-1: #9be9a8; --gh-2: #40c463; --gh-3: #30a14e; --gh-4: #216e39; }
+[data-theme="light"] .gh-day{ outline-color: rgba(18,26,46,.06); }
+[data-theme="light"] .gh-days .gh-day:not(.is-pad):hover, [data-theme="light"] .gh-day.is-active{ outline-color: rgba(18,26,46,.7); }
+
+/* ---------- mapa de visitantes: no claro, país sem visita precisa se destacar do fundo (sem filtro no SVG) ---------- */
+[data-theme="light"]{ --map-0: #d8cdb6; }
+[data-theme="light"] .visitors-map{ background: #faf7f0; }
+[data-theme="light"] .world path, [data-theme="light"] .world .adm path{ stroke: #fcfaf5; }

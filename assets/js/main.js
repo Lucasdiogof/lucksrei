@@ -167,4 +167,44 @@
       navigator.sendBeacon("/api/visit");
     }
   } catch (err) { /* storage indisponível: não conta */ }
+
+  // Tema claro/escuro: o theme-boot.js (no <head>) já aplicou o tema antes da pintura. Aqui só o botão do header:
+  // troca, salva a escolha (lucksrei.theme) e mantém o rótulo acessível no idioma atual. Sem escolha salva, o site
+  // acompanha o sistema também quando ele muda com a página aberta.
+  var themeBtn = document.querySelector("[data-theme-toggle]");
+  var THEME_KEY = "lucksrei.theme";
+  function currentTheme() { return document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark"; }
+  function themeLabel() {
+    if (!themeBtn) return;
+    var I = window.LucksreiI18n;
+    var key = currentTheme() === "dark" ? "theme.to_light" : "theme.to_dark";
+    var text = I && I.t ? I.t(key) : (currentTheme() === "dark" ? "Switch to light theme" : "Switch to dark theme");
+    themeBtn.setAttribute("aria-label", text);
+    themeBtn.title = text;
+  }
+  function applyTheme(t) {
+    document.documentElement.setAttribute("data-theme", t);
+    document.documentElement.style.colorScheme = t;
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute("content", t === "light" ? "#0d1424" : "#040405");
+    themeLabel();
+  }
+  if (themeBtn) {
+    themeLabel();
+    themeBtn.addEventListener("click", function () {
+      var next = currentTheme() === "dark" ? "light" : "dark";
+      applyTheme(next);
+      try { localStorage.setItem(THEME_KEY, next); } catch (err) { /* storage indisponível: vale só nesta página */ }
+    });
+    document.addEventListener("lucksrei:locale", themeLabel);
+  }
+  if (window.matchMedia) {
+    var sys = window.matchMedia("(prefers-color-scheme: light)");
+    var onSys = function (e) {
+      var saved = null;
+      try { saved = localStorage.getItem(THEME_KEY); } catch (err) { /* sem storage: segue o sistema */ }
+      if (saved !== "light" && saved !== "dark") applyTheme(e.matches ? "light" : "dark");
+    };
+    if (sys.addEventListener) sys.addEventListener("change", onSys); else if (sys.addListener) sys.addListener(onSys);
+  }
 })();

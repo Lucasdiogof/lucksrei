@@ -52,7 +52,17 @@
     return name || (country + "-" + code);
   }
 
-  if (typeof module === "object" && module.exports) module.exports = { makeCountryNamer: makeCountryNamer, level: level, regionLabel: regionLabel, BR_STATES: BR_STATES };
+  // "Atualizado em": só com data real. A API manda ISO (ou null); qualquer outra coisa (0, número, texto inválido,
+  // época Unix) não vira data — sem isso, um valor 0/1 aparecia como "31 de dez. de 1969". Nunca usa "agora".
+  var MIN_UPDATED = Date.UTC(2020, 0, 1);
+  function validUpdatedAt(v, now) {
+    if (typeof v !== "string" || !v) return null;
+    var t = Date.parse(v);
+    if (!isFinite(t) || t < MIN_UPDATED || t > (now || Date.now()) + 864e5) return null;
+    return new Date(t);
+  }
+
+  if (typeof module === "object" && module.exports) module.exports = { makeCountryNamer: makeCountryNamer, level: level, regionLabel: regionLabel, BR_STATES: BR_STATES, validUpdatedAt: validUpdatedAt };
   if (!root.document) return;
 
   var I = root.LucksreiI18n;
@@ -423,7 +433,8 @@
       ? (state.youRegion ? regionName(state.you, state.youRegion, state.youRegionName) + ", " : "") + countryName(state.you)
       : (state.data ? I.t("visitors.unknown_you") : "—"));
     var meta = [];
-    if (d && d.updated_at) meta.push(I.t("visitors.updated", { date: I.formatDate(new Date(d.updated_at), { dateStyle: "medium" }) }));
+    var updated = d && validUpdatedAt(d.updated_at);
+    if (updated) meta.push(I.t("visitors.updated", { date: I.formatDate(updated, { dateStyle: "medium" }) }));
     if (d && d.since) {
       var now = new Date();
       var start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - (d.window_months - 1), 1));
