@@ -67,7 +67,7 @@
       <div class="breadcrumb" data-i18n="matchqueue.s1.div1"><a href="/">Lucksrei</a> / <a href="/#projetos">Projects</a> / Match Queue</div>
       <span class="eyebrow" data-i18n="common.case_study_produto_proprio">Case study — Own product</span>
       <h1>Match Queue</h1>
-      <p class="lead" data-i18n="matchqueue.s1.p1">An app for competitive teams to find matches. The matchmaking queue runs on the server; the client only asks and follows.</p>
+      <p class="lead" data-i18n="matchqueue.s1.p1">A real-time search queue for EA SPORTS FC teams: one member searches at a time and the next in line takes over automatically. The server decides; the app only asks and follows.</p>
       <div class="page-meta">
         <span class="badge">Flutter</span>
         <span class="badge">Supabase</span>
@@ -85,7 +85,7 @@
     <div class="container">
       <div class="case-block" data-reveal>
         <h2 data-i18n="common.visao_do_produto">Product overview</h2>
-        <p data-i18n="matchqueue.s2.p1">Teams organize into groups, join the queue and get a match when a compatible opponent exists. The app covers team creation, invites, the queue, match formation and real-time notifications.</p>
+        <p data-i18n="matchqueue.s2.p1">Teammates who share a game mode (Champions or Rivals) shouldn't search at the same time and end up matched against each other. In Match Queue only one member searches at a time; the others wait in an ordered queue and take over when it's their turn. Around the queue, the app adds team management, a card catalog, a squad builder, game guides and market prices.</p>
       </div>
 
       <div class="case-block" data-reveal>
@@ -125,7 +125,7 @@
 
       <div class="case-block" data-reveal>
         <h2 data-i18n="matchqueue.s2.h25">Matchmaking on the server</h2>
-        <p data-i18n="matchqueue.s2.p4">Pairing has to stay consistent with many clients acting at once, so every decision happens on the server (Postgres + Edge Functions), never in the app: a FIFO queue, a per-team lock (one active search at a time) and a transactional outbox to deliver match events and notifications even when something fails midway.</p>
+        <p data-i18n="matchqueue.s2.p4">The queue has to stay consistent with many clients acting at once, so every decision happens on the server (Postgres RPCs + Edge Functions), never in the app: an ordered queue, advisory locks per team and per user (one active search at a time), expiration via pg_cron and a transactional outbox that delivers notifications even when something fails midway. Realtime is only a signal: on each event the app re-reads the official state.</p>
         <div class="flow-row" data-reveal>
           <span class="flow-node">Team</span><span class="flow-arrow">→</span>
           <span class="flow-node">Queue (FIFO)</span><span class="flow-arrow">→</span>
@@ -140,10 +140,12 @@
         <div class="feature-grid">
           <div class="feature-item" data-i18n="matchqueue.s2.div1"><strong>Teams &amp; members</strong>Team creation, invites and member management.</div>
           <div class="feature-item" data-i18n="matchqueue.s2.div2"><strong>Search queue</strong>One active search per team, with automatic expiration.</div>
-          <div class="feature-item" data-i18n="matchqueue.s2.div3"><strong>Server-side matchmaking</strong>Pairing decided entirely on the backend.</div>
+          <div class="feature-item" data-i18n="matchqueue.s2.div3"><strong>Automatic turns</strong>When the search ends, is cancelled or times out, the next member in line starts searching.</div>
           <div class="feature-item" data-i18n="matchqueue.s2.div4"><strong>Notifications</strong>Push via FCM for queue and match events.</div>
           <div class="feature-item" data-i18n="matchqueue.s2.div5"><strong>Real-time state</strong>Sync via Supabase Realtime.</div>
           <div class="feature-item" data-i18n="matchqueue.s2.div6"><strong>Row Level Security</strong>Data access restricted per team/user in Postgres.</div>
+          <div class="feature-item" data-i18n="matchqueue.s2.div8"><strong>Squad Builder</strong>Formations, pitch view, overall and chemistry, with chemistry always calculated on the server.</div>
+          <div class="feature-item" data-i18n="matchqueue.s2.div9"><strong>Central &amp; Market</strong>Card catalog and controls guides in Central; card prices per platform in Market.</div>
         </div>
       </div>
 
@@ -156,7 +158,7 @@
           </div>
           <div class="stack-category">
             <h3>Backend</h3>
-            <ul><li>Supabase</li><li>PostgreSQL</li><li>Edge Functions</li><li>Row Level Security</li><li>Realtime</li></ul>
+            <ul><li>Supabase</li><li>PostgreSQL</li><li>Edge Functions</li><li>Row Level Security</li><li>Realtime</li><li>pg_cron</li></ul>
           </div>
           <div class="stack-category">
             <h3>Mensageria</h3>

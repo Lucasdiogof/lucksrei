@@ -27,7 +27,7 @@
  * Nenhum número de downloads/avaliação foi confirmado até aqui: tudo null.
  *
  * TOTAIS ESPERADOS (conferidos por tests/apps-data.test.js e no console da página):
- *   own 4 + professional 9 + cooper 20 = 33.
+ *   own 5 + professional 9 + cooper 20 = 34.
  */
 (function () {
   "use strict";
@@ -42,7 +42,7 @@
   }
 
   window.LUCKSREI_APPS = {
-    expected: { own: 4, professional: 9, cooper: 20, total: 33 },
+    expected: { own: 5, professional: 9, cooper: 20, total: 34 },
     featured: ['fan-hub', 'toro', 'iza', 'aprovaura', 'cooper-pay'],
     // textos dos grupos: apps.filter.<id>, apps.group.<id>.title|intro (assets/i18n)
     groups: [{ id: 'own' }, { id: 'professional' }, { id: 'cooper' }],
@@ -61,6 +61,9 @@
       { id: 'la-pelve', name: 'La Pelve', subtitle: { en: 'Clinical management for pelvic physiotherapy', 'pt-BR': 'Gestão clínica para fisioterapia pélvica', es: 'Gestión clínica para fisioterapia pélvica' }, group: 'own', sector: 'health',
         logo: '/assets/img/apps/la-pelve.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/la-pelve/id6811234099',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase'], caseUrl: '/projects/la-pelve/' },
+      { id: 'busaogyn', name: 'BusãoGyn', subtitle: { en: 'Bus arrivals and live tracking in Goiânia', 'pt-BR': 'Chegadas e ônibus ao vivo em Goiânia', es: 'Llegadas y autobuses en vivo en Goiânia' }, group: 'own', sector: 'mobility',
+        logo: '/assets/img/apps/busaogyn.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null,
+        downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Cloudflare Workers', 'MapLibre'] },
 
       /* ---- profissionais ---- */
       { id: 'toro', name: 'Toro Investimentos', subtitle: { en: 'Now Santander Corretora', 'pt-BR': 'Atualmente Santander Corretora', es: 'Actualmente Santander Corretora' }, group: 'professional', sector: 'fintech',
