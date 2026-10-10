@@ -250,7 +250,6 @@
   "contact.cv.desc": "Professional resume · PDF",
   "contact.cv.view": "View",
   "contact.cv.download": "Download",
-  "contact.whatsapp.open": "Start a conversation",
   "theme.to_light": "Switch to light theme",
   "theme.to_dark": "Switch to dark theme",
   "contact.lead": "Professional contact and online presence.",
