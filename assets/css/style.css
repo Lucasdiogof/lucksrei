@@ -1386,7 +1386,6 @@ html[data-amb="visitors"] .amb{ opacity: .55; }
 }
 .ch-label{ font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-faint); transition: color .25s var(--ease); }
 .ch-value{ font-size: clamp(17px, 1.7vw, 20px); font-weight: 600; letter-spacing: -.01em; color: rgba(246,239,224,.82); overflow-wrap: anywhere; transition: color .25s var(--ease), transform .3s var(--ease); }
-.channel.is-primary .ch-value{ font-size: clamp(20px, 2.3vw, 27px); color: var(--royal-champagne); }
 .ch-arrow{ color: var(--text-faint); font-size: 15px; transition: color .25s var(--ease), transform .3s var(--ease); }
 .channel:hover .ch-value, .channel:focus-visible .ch-value{ color: #fff; transform: translateX(4px); }
 .channel:hover .ch-label, .channel:focus-visible .ch-label{ color: var(--royal-gold-soft); }
@@ -1615,16 +1614,8 @@ a.sk-chip:hover .sk-arrow{ transform: translateX(3px); }
 [data-theme="light"] .theme-toggle .ic-sun{ display: none; }
 [data-theme="light"] .theme-toggle .ic-moon{ display: block; }
 
-/* WhatsApp: mesma linha editorial dos outros canais; o verde fica só no ícone */
-.ch-wa{ display: inline-block; width: 13px; height: 13px; margin-right: 8px; vertical-align: -2px; fill: #25d366; }
-.ch-open{
-  display: inline-flex; align-items: baseline; gap: 4px; font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em;
-  color: var(--text-dim); white-space: nowrap; transition: color .25s var(--ease);
-}
-.ch-open .ch-ic{ color: var(--text-faint); transition: color .25s var(--ease), transform .3s var(--ease); display: inline-block; }
-.channel:hover .ch-open, .channel:focus-visible .ch-open, .channel:hover .ch-open .ch-ic{ color: var(--royal-gold-soft); }
-.channel:hover .ch-open .ch-ic{ transform: translate(2px, -2px); }
-@media (max-width: 560px){ .ch-open{ grid-column: 1 / -1; margin-top: 2px; } }
+/* Ícone de cada canal: mesmo traço e mesma cor do rótulo (dourado no hover) */
+.ch-icon{ display: inline-block; width: 14px; height: 14px; margin-right: 9px; vertical-align: -2px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 
 /* ---------- tokens do tema claro ---------- */
 [data-theme="light"]{

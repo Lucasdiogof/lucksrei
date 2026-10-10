@@ -250,7 +250,6 @@
   "contact.cv.desc": "Currículo profissional · PDF",
   "contact.cv.view": "Visualizar",
   "contact.cv.download": "Baixar",
-  "contact.whatsapp.open": "Abrir conversa",
   "theme.to_light": "Mudar para tema claro",
   "theme.to_dark": "Mudar para tema escuro",
   "contact.lead": "Canais profissionais e presença online.",
