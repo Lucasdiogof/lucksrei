@@ -8,7 +8,7 @@
  *   subtitle    contexto/empresa. String (nome próprio) ou { en, 'pt-BR', es }
  *   subtitleKey chave i18n alternativa ao subtitle (ex.: 'apps.ecosystem')
  *   group       'own' (meus produtos) | 'professional' | 'cooper'
- *   sector      id do setor (fintech, insurtech, agtech, govtech, retailtech, mobility, management, education, health, sports, games, banking) → apps.sector.<id>
+ *   sector      id do setor (fintech, insurtech, agtech, govtech, retailtech, mobility, jobs, management, education, health, sports, games, banking) → apps.sector.<id>
  *   logo        caminho do logo; null = placeholder com iniciais.
  *               Para trocar o fallback: salve o arquivo em assets/img/apps/<id>.webp
  *               (128x128) e escreva aqui '/assets/img/apps/<id>.webp'.
@@ -27,7 +27,7 @@
  * Nenhum número de downloads/avaliação foi confirmado até aqui: tudo null.
  *
  * TOTAIS ESPERADOS (conferidos por tests/apps-data.test.js e no console da página):
- *   own 5 + professional 9 + cooper 20 = 34.
+ *   own 6 + professional 9 + cooper 20 = 35.
  */
 (function () {
   "use strict";
@@ -42,7 +42,7 @@
   }
 
   window.LUCKSREI_APPS = {
-    expected: { own: 5, professional: 9, cooper: 20, total: 34 },
+    expected: { own: 6, professional: 9, cooper: 20, total: 35 },
     featured: ['fan-hub', 'toro', 'iza', 'aprovaura', 'cooper-pay'],
     // textos dos grupos: apps.filter.<id>, apps.group.<id>.title|intro (assets/i18n)
     groups: [{ id: 'own' }, { id: 'professional' }, { id: 'cooper' }],
@@ -64,6 +64,9 @@
       { id: 'busaogyn', name: 'BusãoGyn', subtitle: { en: 'Bus arrivals and live tracking in Goiânia', 'pt-BR': 'Chegadas e ônibus ao vivo em Goiânia', es: 'Llegadas y autobuses en vivo en Goiânia' }, group: 'own', sector: 'mobility',
         logo: '/assets/img/apps/busaogyn.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null,
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Cloudflare Workers', 'MapLibre'] },
+      { id: 'orbijob', name: 'OrbiJob', subtitle: { en: 'Global job search aggregator', 'pt-BR': 'Agregador global de vagas', es: 'Agregador global de empleo' }, group: 'own', sector: 'jobs',
+        logo: '/assets/img/apps/orbijob.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null,
+        downloads: null, rating: null, reviewCount: null, period: '2026-10/present', technologies: ['Flutter', 'Supabase', 'BLoC/Cubit'] },
 
       /* ---- profissionais ---- */
       { id: 'toro', name: 'Toro Investimentos', subtitle: { en: 'Now Santander Corretora', 'pt-BR': 'Atualmente Santander Corretora', es: 'Actualmente Santander Corretora' }, group: 'professional', sector: 'fintech',
