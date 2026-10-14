@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#040405">
 <script src="/assets/js/theme-boot.js"></script>
 <script src="/assets/js/i18n-boot.js"></script>
-<title>Política de Privacidade — OrbiJob | Lucksrei</title>
-<meta name="description" content="Política de privacidade do aplicativo OrbiJob: quais dados coletamos, como usamos, com quem compartilhamos e como excluir sua conta.">
+<title>Privacy policy — OrbiJob | Lucksrei</title>
+<meta name="description" content="How the OrbiJob app handles your data: account, professional profile, resumes, searches, applications, notifications, export and deletion.">
 <link rel="canonical" href="https://lucksrei.com/projects/orbijob/privacy/">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
@@ -15,10 +15,16 @@
 <link rel="stylesheet" href="/assets/css/style.css">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lucksrei">
-<meta property="og:title" content="Política de Privacidade — OrbiJob">
-<meta property="og:description" content="Quais dados o OrbiJob coleta, como usa, com quem compartilha e como excluir sua conta.">
+<meta property="og:title" content="Privacy policy — OrbiJob">
+<meta property="og:description" content="How the OrbiJob app handles your data: account, professional profile, resumes, searches, applications, notifications, export and deletion.">
 <meta property="og:url" content="https://lucksrei.com/projects/orbijob/privacy/">
 <meta name="twitter:card" content="summary">
+<style>
+html[lang="pt-BR"] [data-legal]:not([data-legal="pt-BR"]),
+html[lang="en"] [data-legal]:not([data-legal="en"]),
+html[lang="es"] [data-legal]:not([data-legal="es"]){ display:none; }
+.legal-draft{ font-size:13px; color:var(--text-dim); border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--panel); padding:10px 14px; margin-bottom:24px; }
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main" data-i18n="nav.skip">Skip to content</a>
@@ -58,171 +64,214 @@
   </div>
 </header>
 
-<main id="main" lang="pt-BR">
-  <div class="container pt-only-notice-wrap"><p class="pt-only-notice" lang="en" data-i18n="privacy.notice">This privacy policy is available in Portuguese only.</p></div>
+<main id="main">
+<div data-legal="en" lang="en">
   <section class="page-hero lk-grid">
     <div class="container">
-      <div class="breadcrumb"><a href="/">Lucksrei</a> / <a href="/#projetos">Projetos</a> / OrbiJob / Privacidade</div>
+      <div class="breadcrumb"><a href="/">Lucksrei</a> / OrbiJob / Privacy policy</div>
       <span class="eyebrow">Legal</span>
-      <h1>Política de Privacidade — OrbiJob</h1>
-      <p class="lead">Última atualização: 12 de outubro de 2026. Esta política é específica do aplicativo OrbiJob e complementa a <a href="/privacy/">política institucional da Lucksrei</a>.</p>
+      <h1>Privacy policy — OrbiJob</h1>
+      <p class="lead">What OrbiJob stores about you, why, with whom it is shared, and how to export or delete it.</p>
     </div>
   </section>
-
   <section>
     <div class="container legal-body" style="max-width:760px">
-      <h2>1. Responsável pelo aplicativo</h2>
-      <p>
-        O OrbiJob é operado por Lucas Diogo Franca (CNPJ 54.868.173/0001-55), que é o
-        controlador dos dados tratados pelo aplicativo nos termos da Lei Geral de Proteção de
-        Dados (Lei nº 13.709/2018 — LGPD). Dúvidas e solicitações sobre esta Política podem ser
-        enviadas para <a href="mailto:marketing@lucksrei.com">marketing@lucksrei.com</a>.
-      </p>
+      <p class="legal-draft">Technical draft, last updated 2026-10-14. It describes how the app works today and has not yet been reviewed by a lawyer; it does not claim full compliance with any law.</p>
 
-      <h2>2. O que é o OrbiJob</h2>
-      <p>
-        O OrbiJob ajuda você a encontrar vagas de emprego remoto, guardar as que interessam e
-        acompanhar suas candidaturas e currículos em um só lugar. Está disponível em
-        português, inglês e espanhol. As vagas exibidas vêm de fontes externas (hoje, o Jobicy) e
-        sempre levam ao anúncio original. O OrbiJob <strong>não envia candidaturas por você</strong>:
-        a candidatura é feita por você, no site do anunciante.
-      </p>
+<h2>1. Who is responsible</h2>
+<p>OrbiJob is a mobile and web app published by Lucksrei (Lucas Diogo Franca, CNPJ 54.868.173/0001-55, Brazil). Contact for anything about your data: <a href="mailto:marketing@lucksrei.com?subject=OrbiJob%20privacy">marketing@lucksrei.com</a>.</p>
+<h2>2. What OrbiJob is</h2>
+<p>OrbiJob collects public job listings from third-party sources and lets you search, save and follow them. OrbiJob does <strong>not</strong> send applications to employers for you and does <strong>not</strong> fill in or submit forms on third-party sites. You can use the catalogue without an account; an account is needed to save anything.</p>
+<h2>3. Data we handle</h2>
+<ul>
+<li><strong>Account:</strong> your e-mail address and password. The password is handled by the authentication service (Supabase Auth); the app keeps your session on the device in the system's secure storage (Keystore/Keychain; the browser's storage on the web).</li>
+<li><strong>Professional profile (optional, filled in by you):</strong> name, country of residence, languages, occupations of interest, skills, experiences, education, certificates or licences, headline, summary, city, contact e-mail, phone, professional links, work authorisations and preferences such as work mode and countries of interest.</li>
+<li><strong>Resumes (optional):</strong> PDF files you upload (up to 5 MiB each). They are kept in a private storage area in a folder tied to your account and are shown to you only through short-lived links. The text of a PDF is read on your device to suggest profile fields, which you review before saving.</li>
+<li><strong>Your activity:</strong> favourites, hidden jobs, viewed jobs, saved searches (with their alert settings), applications (stage, notes, interview and follow-up dates, a copy of the listing's main fields), reminders and notifications.</li>
+<li><strong>Device (only if you allow notifications):</strong> the push token of your device, its platform (Android, iOS or web) and your language.</li>
+<li><strong>Only on your device:</strong> recent searches (you can turn this off or clear it), the cache of translated texts, and display settings such as language and theme.</li>
+</ul>
+<p>The app does not include advertising or analytics SDKs, does not use your location and does not build advertising profiles.</p>
+<h2>4. Why we use it</h2>
+<ul>
+<li>To run your account and show your profile, favourites, applications and saved searches.</li>
+<li>To send in-app and push notifications for the saved searches you enabled and for reminders you created.</li>
+<li>To suggest listings and explain why they match, using rules applied to the profile and preferences you provided.</li>
+<li>To protect the service against abuse and keep it working.</li>
+</ul>
+<h2>5. Job listings and third-party sites</h2>
+<p>Listings are public information published by third parties, shown with their source and, where required, their licence. When you open an application link, the employer's site opens in the app's built-in browser or in your browser; that site's own privacy policy applies. OrbiJob does not inject data into those pages.</p>
+<h2>6. Translation</h2>
+<p>On Android and iOS, translation of listing titles and descriptions runs on your device. The language models are downloaded to the device by Google's ML Kit; the listing text is not sent to OrbiJob's servers for translation.</p>
+<h2>7. Services that process data for us</h2>
+<ul>
+<li><strong>Supabase</strong> — authentication, database, file storage and server functions. The OrbiJob project is hosted in São Paulo, Brazil.</li>
+<li><strong>Google Firebase Cloud Messaging</strong> — delivers push notifications; it receives the device token and the notification text.</li>
+<li><strong>Cloudflare and GitHub</strong> — run the jobs that collect and refresh the public catalogue. They do not receive your personal data.</li>
+</ul>
+<p>We do not sell personal data and do not share it for advertising. Providers may process data in other countries according to their own terms.</p>
+<h2>8. How long we keep data</h2>
+<ul>
+<li>Your account data stays until you delete your account.</li>
+<li>Notifications older than 60 days are deleted automatically, and at most 300 are kept per person.</li>
+<li>When you delete your account, your profile, resumes, favourites, searches, applications, reminders, notifications and device registrations are deleted right away from the database and storage. Copies in the backups of our hosting provider may remain for the time that provider defines; we have not set a different period.</li>
+</ul>
+<h2>9. Your rights and controls</h2>
+<ul>
+<li><strong>Access and portability:</strong> in the app, Profile → Privacy → Your data → <em>Export my data</em> creates a ZIP with your data (JSON) and your resume PDFs. Passwords and push tokens are not included.</li>
+<li><strong>Correction:</strong> edit your profile and preferences in the app.</li>
+<li><strong>Deletion:</strong> Profile → Privacy → Your data → <em>Delete my account</em> (permanent). See <a href="/projects/orbijob/data-deletion/">how to delete your account and data</a>.</li>
+<li><strong>Anything else</strong> the law of your country gives you (for example under Brazil's LGPD): write to <a href="mailto:marketing@lucksrei.com?subject=OrbiJob%20privacy">marketing@lucksrei.com</a>. If you are in Brazil you may also complain to the National Data Protection Authority (ANPD).</li>
+</ul>
+<h2>10. Security</h2>
+<p>Each person's data is protected by access rules in the database (row-level security), resumes are in a private area and the connection to the services uses HTTPS. No system is completely secure; tell us if you notice a problem.</p>
+<h2>11. Children</h2>
+<p>OrbiJob is meant for people looking for work and is not directed at children.</p>
+<h2>12. Changes</h2>
+<p>When this policy changes, this page is updated with a new date.</p>
+<div class="hero-ctas" style="margin-top:32px"><a class="btn btn-ghost" href="/projects/orbijob/terms/">Terms of use</a><a class="btn btn-ghost" href="/projects/orbijob/data-deletion/">Account and data deletion</a></div>
 
-      <h2>3. Dados que você nos fornece</h2>
-      <p>Ao criar e usar sua conta, você pode informar:</p>
-      <ul>
-        <li><strong>Conta:</strong> e-mail e senha. A senha é armazenada pelo provedor de autenticação de forma protegida (hash), nunca em texto simples. O acesso é somente por e-mail e senha, com redefinição de senha por e-mail.</li>
-        <li><strong>Perfil profissional:</strong> dados que você escolhe cadastrar: nome, país de residência, cidade, título profissional e resumo, idiomas, ocupações, habilidades, modo de trabalho preferido, experiências (empresa, cargo, datas e descrição) e formação (instituição, curso, área e datas).</li>
-        <li><strong>Currículos:</strong> os arquivos que você seleciona no seu aparelho para guardar na conta. Eles ficam em um armazenamento privado, acessível somente por você.</li>
-        <li><strong>Candidaturas:</strong> as vagas a que você se candidatou, a etapa de cada processo, o canal, a data e as anotações que você escreve.</li>
-        <li><strong>Preferências e pesquisas salvas:</strong> tema, idioma, países de interesse e as pesquisas (filtros) que você salva.</li>
-      </ul>
-      <p>
-        Esses dados são todos opcionais e inseridos por você. Não peça nem informe no app dados
-        que você não queira guardar.
-      </p>
-
-      <h2>4. Dados gerados pelo seu uso</h2>
-      <p>Para o app funcionar, ele registra, vinculados à sua conta:</p>
-      <ul>
-        <li>As vagas que você favoritou.</li>
-        <li>O histórico das etapas das suas candidaturas.</li>
-      </ul>
-      <p>
-        Favoritos e candidaturas guardam uma <strong>cópia própria</strong> dos dados essenciais da
-        vaga (empresa, título, local, link do anúncio original e datas). Assim, eles continuam
-        disponíveis mesmo que a vaga seja encerrada ou removida do catálogo.
-      </p>
-
-      <h2>5. O que fica só no seu aparelho — e o que não coletamos</h2>
-      <p>
-        A sessão de login fica guardada no armazenamento seguro do sistema (Keychain no iOS,
-        Keystore no Android).
-      </p>
-      <p>
-        O OrbiJob <strong>não</strong> coleta sua localização, contatos, fotos, câmera ou
-        microfone, <strong>não</strong> exibe anúncios, <strong>não</strong> usa identificadores de
-        publicidade e <strong>não</strong> usa ferramentas de análise ou rastreamento de terceiros.
-        O app só lê um arquivo do seu aparelho quando você o escolhe, para anexar um currículo.
-      </p>
-
-      <h2>6. As vagas e o Jobicy</h2>
-      <p>
-        As vagas são informações públicas de anúncios, obtidas pela API oficial do
-        <a href="https://jobicy.com" target="_blank" rel="noopener">Jobicy</a>, com atribuição e
-        link para o anúncio original. Elas não contêm dados seus. <strong>Não enviamos seus dados
-        pessoais ao Jobicy.</strong> Ao abrir o anúncio original, você sai do OrbiJob e passa a
-        estar sujeito à política de privacidade do Jobicy e do anunciante.
-      </p>
-
-      <h2>7. Para que usamos os dados</h2>
-      <ul>
-        <li>Criar e manter sua conta e autenticar seu acesso.</li>
-        <li>Guardar e mostrar seu perfil, currículos, favoritos e candidaturas.</li>
-        <li>Lembrar suas buscas e preferências.</li>
-        <li>Manter a segurança do serviço e evitar abusos (por exemplo, limites de quantidade de itens por conta).</li>
-      </ul>
-      <p>
-        Tratamos esses dados para executar o serviço que você contratou ao criar a conta (art. 7º,
-        V, da LGPD) e, no caso de segurança, com base no nosso legítimo interesse (art. 7º, IX),
-        sempre limitado ao necessário.
-      </p>
-
-      <h2>8. Provedores que usamos</h2>
-      <ul>
-        <li><strong>Supabase</strong> — banco de dados, autenticação e armazenamento de arquivos. Os dados ficam em servidores na região de São Paulo (Brasil). O Supabase também envia os e-mails da conta, como confirmação de cadastro e redefinição de senha.</li>
-      </ul>
-      <p>
-        O provedor trata os dados em nosso nome, na medida necessária para o app funcionar, e não
-        tem permissão para usá-los para fins próprios.
-      </p>
-
-      <h2>9. Compartilhamento de dados</h2>
-      <p>
-        Não vendemos seus dados e não os compartilhamos com terceiros para fins de marketing.
-        Compartilhamos dados apenas com o provedor da seção 8, nos limites descritos acima, e
-        quando exigido por lei ou por ordem de autoridade competente.
-      </p>
-
-      <h2>10. Armazenamento e segurança</h2>
-      <p>
-        O acesso aos dados é protegido por controle em nível de linha (Row Level Security): cada
-        conta só consegue ler e alterar os próprios dados de perfil, currículos, favoritos e
-        candidaturas. Os currículos ficam em um armazenamento privado. A comunicação entre o app e
-        o servidor é sempre feita por HTTPS, e as chaves de serviço do servidor nunca ficam no
-        aplicativo.
-      </p>
-
-      <h2>11. Retenção</h2>
-      <p>
-        Mantemos os dados da sua conta, seus currículos, favoritos e candidaturas
-        enquanto a conta existir, para que você acompanhe sua busca. Quando a conta é excluída,
-        esses dados são apagados, como descrito na seção 12. O catálogo público de vagas é
-        independente da sua conta: vagas encerradas há muito tempo podem ser resumidas ou removidas
-        dele, o que não afeta os seus favoritos e candidaturas, que guardam cópia própria dos dados
-        essenciais da vaga.
-      </p>
-
-      <h2>12. Exclusão de conta e dos seus dados</h2>
-      <p>
-        Você pode apagar itens individuais no app (candidaturas, experiências, formações,
-        currículos). Para <strong>excluir a conta inteira</strong> e todos os dados vinculados a ela
-        (perfil, currículos e arquivos, favoritos, candidaturas, pesquisas salvas e preferências), envie o
-        pedido, a partir do e-mail da conta, para
-        <a href="mailto:marketing@lucksrei.com">marketing@lucksrei.com</a>. A exclusão é permanente
-        e não pode ser desfeita.
-      </p>
-
-      <h2>13. Seus direitos</h2>
-      <p>
-        Nos termos do art. 18 da LGPD, você pode pedir a confirmação de que tratamos seus dados, o
-        acesso a eles, a correção de dados incompletos ou desatualizados, a portabilidade, a
-        eliminação, informações sobre com quem compartilhamos e a revisão de decisões tomadas
-        unicamente com base em tratamento automatizado. Parte disso você faz direto no app (editar
-        e apagar seus dados); para o restante, escreva para
-        <a href="mailto:marketing@lucksrei.com">marketing@lucksrei.com</a>. Você também pode
-        apresentar reclamação à Autoridade Nacional de Proteção de Dados (ANPD).
-      </p>
-
-      <h2>14. Crianças e adolescentes</h2>
-      <p>
-        O OrbiJob é voltado a pessoas em busca de trabalho e não é direcionado a crianças e
-        adolescentes menores de 14 anos. Se você é responsável e acredita que tratamos dados de uma
-        criança indevidamente, entre em contato para que possamos apagá-los.
-      </p>
-
-      <h2>15. Mudanças nesta política</h2>
-      <p>
-        Podemos atualizar esta Política de tempos em tempos, por exemplo se mudarmos de provedor ou
-        incluirmos novas fontes de vagas ou funcionalidades. A data no topo desta página sempre
-        indica a versão mais recente.
-      </p>
-
-      <div class="hero-ctas" style="margin-top:32px">
-        <a class="btn btn-ghost" href="/apps/">Ver os apps</a>
-      </div>
     </div>
   </section>
+</div>
+<div data-legal="pt-BR" lang="pt-BR">
+  <section class="page-hero lk-grid">
+    <div class="container">
+      <div class="breadcrumb"><a href="/">Lucksrei</a> / OrbiJob / Política de privacidade</div>
+      <span class="eyebrow">Legal</span>
+      <h1>Política de privacidade — OrbiJob</h1>
+      <p class="lead">O que o OrbiJob guarda sobre você, para quê, com quem é compartilhado e como exportar ou excluir.</p>
+    </div>
+  </section>
+  <section>
+    <div class="container legal-body" style="max-width:760px">
+      <p class="legal-draft">Minuta técnica, atualizada em 2026-10-14. Descreve como o app funciona hoje e ainda não foi revisada por advogado; não afirma conformidade integral com nenhuma lei.</p>
+
+<h2>1. Quem é o responsável</h2>
+<p>O OrbiJob é um aplicativo móvel e web publicado pela Lucksrei (Lucas Diogo Franca, CNPJ 54.868.173/0001-55, Brasil). Contato para qualquer assunto sobre seus dados: <a href="mailto:marketing@lucksrei.com?subject=OrbiJob%20privacidade">marketing@lucksrei.com</a>.</p>
+<h2>2. O que é o OrbiJob</h2>
+<p>O OrbiJob reúne vagas públicas de fontes de terceiros e permite pesquisar, salvar e acompanhar. O OrbiJob <strong>não</strong> envia candidaturas aos empregadores por você e <strong>não</strong> preenche nem envia formulários em sites de terceiros. É possível usar o catálogo sem conta; a conta é necessária para salvar qualquer coisa.</p>
+<h2>3. Dados que tratamos</h2>
+<ul>
+<li><strong>Conta:</strong> seu e-mail e senha. A senha é tratada pelo serviço de autenticação (Supabase Auth); o app guarda sua sessão no aparelho, no armazenamento seguro do sistema (Keystore/Keychain; armazenamento do navegador na web).</li>
+<li><strong>Perfil profissional (opcional, preenchido por você):</strong> nome, país de residência, idiomas, profissões de interesse, competências, experiências, formação, certificados ou registros, título profissional, resumo, cidade, e-mail de contato, telefone, links profissionais, autorizações de trabalho e preferências como modalidade e países de interesse.</li>
+<li><strong>Currículos (opcional):</strong> PDFs que você envia (até 5 MiB cada). Ficam numa área privada de armazenamento, em uma pasta ligada à sua conta, e só são mostrados a você por links de curta duração. O texto do PDF é lido no seu aparelho para sugerir campos do perfil, que você revisa antes de salvar.</li>
+<li><strong>Sua atividade:</strong> favoritos, vagas ocultas, vagas vistas, buscas salvas (com as configurações de alerta), candidaturas (etapa, anotações, datas de entrevista e retorno, cópia dos principais campos da vaga), lembretes e notificações.</li>
+<li><strong>Aparelho (só se você permitir notificações):</strong> o token de push do aparelho, a plataforma (Android, iOS ou web) e seu idioma.</li>
+<li><strong>Apenas no seu aparelho:</strong> buscas recentes (você pode desligar ou limpar), o cache dos textos traduzidos e ajustes de exibição, como idioma e tema.</li>
+</ul>
+<p>O app não inclui SDKs de publicidade ou de análise, não usa sua localização e não cria perfis publicitários.</p>
+<h2>4. Para que usamos</h2>
+<ul>
+<li>Para operar sua conta e mostrar seu perfil, favoritos, candidaturas e buscas salvas.</li>
+<li>Para enviar notificações no app e por push das buscas salvas com alerta ativado e dos lembretes que você criou.</li>
+<li>Para sugerir vagas e explicar por que combinam, com regras aplicadas ao perfil e às preferências que você informou.</li>
+<li>Para proteger o serviço contra abuso e mantê-lo funcionando.</li>
+</ul>
+<h2>5. Vagas e sites de terceiros</h2>
+<p>As vagas são informações públicas publicadas por terceiros, exibidas com a fonte e, quando exigido, a licença. Ao abrir um link de candidatura, o site do empregador abre no navegador interno do app ou no seu navegador; vale a política de privacidade desse site. O OrbiJob não injeta dados nessas páginas.</p>
+<h2>6. Tradução</h2>
+<p>No Android e no iOS, a tradução de títulos e descrições das vagas é feita no seu aparelho. Os modelos de idioma são baixados para o aparelho pelo ML Kit do Google; o texto da vaga não é enviado aos servidores do OrbiJob para traduzir.</p>
+<h2>7. Serviços que tratam dados por nós</h2>
+<ul>
+<li><strong>Supabase</strong> — autenticação, banco de dados, armazenamento de arquivos e funções de servidor. O projeto do OrbiJob fica hospedado em São Paulo, Brasil.</li>
+<li><strong>Google Firebase Cloud Messaging</strong> — entrega as notificações push; recebe o token do aparelho e o texto da notificação.</li>
+<li><strong>Cloudflare e GitHub</strong> — executam as rotinas que coletam e atualizam o catálogo público. Não recebem seus dados pessoais.</li>
+</ul>
+<p>Não vendemos dados pessoais nem os compartilhamos para publicidade. Os provedores podem tratar dados em outros países conforme seus próprios termos.</p>
+<h2>8. Por quanto tempo guardamos</h2>
+<ul>
+<li>Os dados da conta ficam até você excluí-la.</li>
+<li>Notificações com mais de 60 dias são apagadas automaticamente, e são mantidas no máximo 300 por pessoa.</li>
+<li>Ao excluir a conta, perfil, currículos, favoritos, buscas, candidaturas, lembretes, notificações e registros de aparelho são apagados na hora do banco e do armazenamento. Cópias nos backups do nosso provedor de hospedagem podem permanecer pelo tempo que o provedor define; não definimos prazo diferente.</li>
+</ul>
+<h2>9. Seus direitos e controles</h2>
+<ul>
+<li><strong>Acesso e portabilidade:</strong> no app, Perfil → Privacidade → Seus dados → <em>Exportar meus dados</em> cria um ZIP com seus dados (JSON) e seus PDFs de currículo. Senhas e tokens de push não são incluídos.</li>
+<li><strong>Correção:</strong> edite seu perfil e suas preferências no app.</li>
+<li><strong>Exclusão:</strong> Perfil → Privacidade → Seus dados → <em>Excluir minha conta</em> (permanente). Veja <a href="/projects/orbijob/data-deletion/">como excluir sua conta e seus dados</a>.</li>
+<li><strong>Qualquer outro direito</strong> que a lei do seu país conceda (por exemplo, a LGPD no Brasil): escreva para <a href="mailto:marketing@lucksrei.com?subject=OrbiJob%20privacidade">marketing@lucksrei.com</a>. No Brasil, você também pode reclamar à Autoridade Nacional de Proteção de Dados (ANPD).</li>
+</ul>
+<h2>10. Segurança</h2>
+<p>Os dados de cada pessoa são protegidos por regras de acesso no banco (row-level security), os currículos ficam em área privada e a conexão com os serviços usa HTTPS. Nenhum sistema é totalmente seguro; avise-nos se notar algum problema.</p>
+<h2>11. Crianças</h2>
+<p>O OrbiJob é voltado a quem procura trabalho e não é direcionado a crianças.</p>
+<h2>12. Alterações</h2>
+<p>Quando esta política mudar, esta página será atualizada com nova data.</p>
+<div class="hero-ctas" style="margin-top:32px"><a class="btn btn-ghost" href="/projects/orbijob/terms/">Termos de uso</a><a class="btn btn-ghost" href="/projects/orbijob/data-deletion/">Exclusão de conta e dados</a></div>
+
+    </div>
+  </section>
+</div>
+<div data-legal="es" lang="es">
+  <section class="page-hero lk-grid">
+    <div class="container">
+      <div class="breadcrumb"><a href="/">Lucksrei</a> / OrbiJob / Política de privacidad</div>
+      <span class="eyebrow">Legal</span>
+      <h1>Política de privacidad — OrbiJob</h1>
+      <p class="lead">Qué guarda OrbiJob sobre ti, para qué, con quién se comparte y cómo exportarlo o eliminarlo.</p>
+    </div>
+  </section>
+  <section>
+    <div class="container legal-body" style="max-width:760px">
+      <p class="legal-draft">Borrador técnico, actualizado el 2026-10-14. Describe cómo funciona la app hoy y aún no ha sido revisado por un abogado; no afirma cumplimiento íntegro de ninguna ley.</p>
+
+<h2>1. Quién es el responsable</h2>
+<p>OrbiJob es una aplicación móvil y web publicada por Lucksrei (Lucas Diogo Franca, CNPJ 54.868.173/0001-55, Brasil). Contacto para cualquier asunto sobre tus datos: <a href="mailto:marketing@lucksrei.com?subject=OrbiJob%20privacidad">marketing@lucksrei.com</a>.</p>
+<h2>2. Qué es OrbiJob</h2>
+<p>OrbiJob reúne vacantes públicas de fuentes de terceros y te permite buscarlas, guardarlas y seguirlas. OrbiJob <strong>no</strong> envía postulaciones a los empleadores por ti y <strong>no</strong> rellena ni envía formularios en sitios de terceros. Puedes usar el catálogo sin cuenta; la cuenta es necesaria para guardar cualquier cosa.</p>
+<h2>3. Datos que tratamos</h2>
+<ul>
+<li><strong>Cuenta:</strong> tu correo electrónico y contraseña. La contraseña la gestiona el servicio de autenticación (Supabase Auth); la app guarda tu sesión en el dispositivo, en el almacenamiento seguro del sistema (Keystore/Keychain; almacenamiento del navegador en la web).</li>
+<li><strong>Perfil profesional (opcional, completado por ti):</strong> nombre, país de residencia, idiomas, profesiones de interés, competencias, experiencias, formación, certificados o licencias, título profesional, resumen, ciudad, correo de contacto, teléfono, enlaces profesionales, autorizaciones de trabajo y preferencias como modalidad y países de interés.</li>
+<li><strong>Currículums (opcional):</strong> PDF que subes (hasta 5 MiB cada uno). Se guardan en un área privada, en una carpeta vinculada a tu cuenta, y solo se te muestran mediante enlaces de corta duración. El texto del PDF se lee en tu dispositivo para sugerir campos del perfil, que revisas antes de guardar.</li>
+<li><strong>Tu actividad:</strong> favoritos, vacantes ocultas, vacantes vistas, búsquedas guardadas (con sus ajustes de alerta), postulaciones (etapa, notas, fechas de entrevista y seguimiento, copia de los campos principales de la vacante), recordatorios y notificaciones.</li>
+<li><strong>Dispositivo (solo si permites notificaciones):</strong> el token push del dispositivo, la plataforma (Android, iOS o web) y tu idioma.</li>
+<li><strong>Solo en tu dispositivo:</strong> búsquedas recientes (puedes desactivarlo o borrarlas), la caché de textos traducidos y ajustes de visualización como idioma y tema.</li>
+</ul>
+<p>La app no incluye SDK de publicidad ni de analítica, no usa tu ubicación y no crea perfiles publicitarios.</p>
+<h2>4. Para qué los usamos</h2>
+<ul>
+<li>Para operar tu cuenta y mostrar tu perfil, favoritos, postulaciones y búsquedas guardadas.</li>
+<li>Para enviar notificaciones en la app y push de las búsquedas guardadas con alerta activada y de los recordatorios que creaste.</li>
+<li>Para sugerir vacantes y explicar por qué encajan, con reglas aplicadas al perfil y a las preferencias que indicaste.</li>
+<li>Para proteger el servicio contra abusos y mantenerlo en funcionamiento.</li>
+</ul>
+<h2>5. Vacantes y sitios de terceros</h2>
+<p>Las vacantes son información pública publicada por terceros, mostrada con su fuente y, cuando se exige, su licencia. Al abrir un enlace de postulación, el sitio del empleador se abre en el navegador integrado de la app o en tu navegador; se aplica la política de privacidad de ese sitio. OrbiJob no inyecta datos en esas páginas.</p>
+<h2>6. Traducción</h2>
+<p>En Android e iOS, la traducción de títulos y descripciones de vacantes se hace en tu dispositivo. Los modelos de idioma los descarga al dispositivo ML Kit de Google; el texto de la vacante no se envía a los servidores de OrbiJob para traducirlo.</p>
+<h2>7. Servicios que tratan datos por nosotros</h2>
+<ul>
+<li><strong>Supabase</strong> — autenticación, base de datos, almacenamiento de archivos y funciones de servidor. El proyecto de OrbiJob está alojado en São Paulo, Brasil.</li>
+<li><strong>Google Firebase Cloud Messaging</strong> — entrega las notificaciones push; recibe el token del dispositivo y el texto de la notificación.</li>
+<li><strong>Cloudflare y GitHub</strong> — ejecutan las rutinas que recopilan y actualizan el catálogo público. No reciben tus datos personales.</li>
+</ul>
+<p>No vendemos datos personales ni los compartimos con fines publicitarios. Los proveedores pueden tratar datos en otros países según sus propios términos.</p>
+<h2>8. Cuánto tiempo los conservamos</h2>
+<ul>
+<li>Los datos de la cuenta se conservan hasta que la elimines.</li>
+<li>Las notificaciones con más de 60 días se borran automáticamente y se conservan como máximo 300 por persona.</li>
+<li>Al eliminar la cuenta, el perfil, los currículums, favoritos, búsquedas, postulaciones, recordatorios, notificaciones y registros de dispositivo se borran de inmediato de la base de datos y del almacenamiento. Las copias en las copias de seguridad de nuestro proveedor de alojamiento pueden permanecer el tiempo que ese proveedor defina; no hemos fijado otro plazo.</li>
+</ul>
+<h2>9. Tus derechos y controles</h2>
+<ul>
+<li><strong>Acceso y portabilidad:</strong> en la app, Perfil → Privacidad → Tus datos → <em>Exportar mis datos</em> crea un ZIP con tus datos (JSON) y tus PDF de currículum. No se incluyen contraseñas ni tokens push.</li>
+<li><strong>Rectificación:</strong> edita tu perfil y tus preferencias en la app.</li>
+<li><strong>Eliminación:</strong> Perfil → Privacidad → Tus datos → <em>Eliminar mi cuenta</em> (permanente). Consulta <a href="/projects/orbijob/data-deletion/">cómo eliminar tu cuenta y tus datos</a>.</li>
+<li><strong>Cualquier otro derecho</strong> que te otorgue la ley de tu país (por ejemplo, la LGPD en Brasil): escribe a <a href="mailto:marketing@lucksrei.com?subject=OrbiJob%20privacidad">marketing@lucksrei.com</a>. Si estás en Brasil, también puedes presentar una queja ante la Autoridad Nacional de Protección de Datos (ANPD).</li>
+</ul>
+<h2>10. Seguridad</h2>
+<p>Los datos de cada persona están protegidos por reglas de acceso en la base de datos (row-level security), los currículums están en un área privada y la conexión con los servicios usa HTTPS. Ningún sistema es completamente seguro; avísanos si notas algún problema.</p>
+<h2>11. Menores</h2>
+<p>OrbiJob está pensado para personas que buscan trabajo y no está dirigido a menores.</p>
+<h2>12. Cambios</h2>
+<p>Cuando esta política cambie, esta página se actualizará con una nueva fecha.</p>
+<div class="hero-ctas" style="margin-top:32px"><a class="btn btn-ghost" href="/projects/orbijob/terms/">Términos de uso</a><a class="btn btn-ghost" href="/projects/orbijob/data-deletion/">Eliminación de cuenta y datos</a></div>
+
+    </div>
+  </section>
+</div>
 </main>
 
 <footer class="site-footer">
