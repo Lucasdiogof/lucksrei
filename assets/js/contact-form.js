@@ -3,6 +3,11 @@
  * Envia JSON para POST /api/contact (worker/contact.mjs). O sucesso só aparece depois da confirmação do servidor
  * (HTTP 200 com { ok: true }); em qualquer erro o texto digitado é mantido. Validação aqui é conforto de UX;
  * a validação que vale é a do servidor. Os limites abaixo precisam bater com worker/contact.mjs.
+ *
+ * Turnstile: só entra em cena se o <form> tiver data-turnstile-sitekey (chave pública). O script da Cloudflare carrega quando o
+ * formulário se aproxima da tela, em modo "interaction-only" (sem CAPTCHA visual na maioria dos casos). O token vai em
+ * turnstileToken e é validado no servidor; cada token vale uma tentativa, então o widget é reiniciado depois de cada envio.
+ * Sem sitekey, nada disso é carregado.
  */
 (function (root, factory) {
   "use strict";
@@ -51,6 +56,9 @@
     var shownErrors = {};
     var statusKey = null;
     var statusKind = null;
+    var sitekey = (form.getAttribute("data-turnstile-sitekey") || "").trim();
+    var tsToken = "";
+    var tsWidget = null;
 
     function setLabel(key) { btnLabel.setAttribute("data-i18n", key); btnLabel.textContent = t(key); }
 
@@ -97,6 +105,58 @@
       count.textContent = t("contact.form.counter", { n: els.message.value.length, max: LIMITS.messageMax });
     }
 
+    var TURNSTILE_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+    var TS_LANG = { en: "en", "pt-BR": "pt-br", es: "es" };
+
+    function mountTurnstile() {
+      var box = root.document.createElement("div");
+      box.className = "cf-turnstile-box";
+      form.querySelector(".cf-actions").parentNode.insertBefore(box, form.querySelector(".cf-actions"));
+      var render = function () {
+        if (tsWidget !== null || !root.turnstile) return;
+        tsWidget = root.turnstile.render(box, {
+          sitekey: sitekey, action: "contact", theme: "dark", appearance: "interaction-only",
+          language: TS_LANG[I18N ? I18N.getLocale() : "en"] || "auto",
+          callback: function (tok) { tsToken = tok; },
+          "expired-callback": function () { tsToken = ""; },
+          "error-callback": function () { tsToken = ""; }
+        });
+      };
+      var load = function () {
+        if (root.turnstile) return render();
+        if (root.document.getElementById("cf-turnstile-api")) return;
+        var sc = root.document.createElement("script");
+        sc.id = "cf-turnstile-api"; sc.src = TURNSTILE_SRC; sc.async = true; sc.defer = true; sc.onload = render;
+        root.document.head.appendChild(sc);
+      };
+      if ("IntersectionObserver" in root) {
+        var io = new root.IntersectionObserver(function (entries, obs) {
+          if (entries.some(function (x) { return x.isIntersecting; })) { obs.disconnect(); load(); }
+        }, { rootMargin: "300px 0px" });
+        io.observe(form);
+      } else {
+        load();
+      }
+      form.addEventListener("focusin", load);
+    }
+
+    // espera o token por até 10 s (o widget se resolve sozinho, quase sempre em < 1 s)
+    function waitForToken() {
+      return new Promise(function (resolve) {
+        var tries = 0;
+        (function poll() {
+          if (tsToken) return resolve(tsToken);
+          if (++tries > 50) return resolve("");
+          root.setTimeout(poll, 200);
+        })();
+      });
+    }
+
+    function resetTurnstile() {
+      tsToken = "";
+      if (tsWidget !== null && root.turnstile) { try { root.turnstile.reset(tsWidget); } catch (e) { /* o próximo envio mostra o erro */ } }
+    }
+
     function setBusy(on) {
       busy = on;
       form.setAttribute("aria-busy", on ? "true" : "false");
@@ -116,7 +176,8 @@
         return;
       }
       var key = "contact.form.fail";
-      if (res.status === 429) key = "contact.form.fail_rate";
+      if (res.body && (res.body.error === "captcha" || res.body.error === "captcha_unavailable")) key = "contact.form.fail_captcha";
+      else if (res.status === 429) key = "contact.form.fail_rate";
       else if (res.status === 503) key = "contact.form.fail_unavailable";
       if (res.status === 400 && res.body && Array.isArray(res.body.fields)) {
         var e = validate({ name: els.name.value, email: els.email.value, subject: els.subject.value, message: els.message.value });
@@ -141,18 +202,26 @@
       setStatus(null, null);
       setBusy(true);
       var ctl = typeof AbortController === "function" ? new AbortController() : null;
-      var timer = ctl ? root.setTimeout(function () { ctl.abort(); }, 20000) : null;
+      var timer = null;
       var payload = {
         name: clean(values.name).replace(/\s+/g, " "), email: clean(values.email), subject: values.subject,
         message: clean(values.message), website: form.elements.website.value, ts: loadedAt, locale: I18N ? I18N.getLocale() : "en"
       };
-      root.fetch("/api/contact", {
-        method: "POST", headers: { "content-type": "application/json", accept: "application/json" },
-        body: JSON.stringify(payload), signal: ctl ? ctl.signal : undefined, credentials: "same-origin"
+      var needsToken = sitekey !== "";
+      (needsToken ? waitForToken() : Promise.resolve("")).then(function (token) {
+        if (needsToken) {
+          if (!token) { setStatus("error", "contact.form.fail_captcha"); return null; }
+          payload.turnstileToken = token;
+        }
+        timer = ctl ? root.setTimeout(function () { ctl.abort(); }, 20000) : null;
+        return root.fetch("/api/contact", {
+          method: "POST", headers: { "content-type": "application/json", accept: "application/json" },
+          body: JSON.stringify(payload), signal: ctl ? ctl.signal : undefined, credentials: "same-origin"
+        })
+          .then(function (r) { return r.json().catch(function () { return null; }).then(function (b) { return { status: r.status, body: b }; }); })
+          .then(onResult, function () { setStatus("error", "contact.form.fail_network"); });
       })
-        .then(function (r) { return r.json().catch(function () { return null; }).then(function (b) { return { status: r.status, body: b }; }); })
-        .then(onResult, function () { setStatus("error", "contact.form.fail_network"); })
-        .then(function () { if (timer) root.clearTimeout(timer); setBusy(false); });
+        .then(function () { if (timer) root.clearTimeout(timer); if (needsToken) resetTurnstile(); setBusy(false); });
     });
 
     fields.forEach(function (f) {
@@ -170,6 +239,7 @@
     });
 
     updateCount();
+    if (sitekey) mountTurnstile();
   }
 
   return { validate: validate, LIMITS: LIMITS, SUBJECTS: SUBJECTS, init: init };

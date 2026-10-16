@@ -10,12 +10,17 @@
  * Remetente "Lucksrei <marketing@lucksrei.com>", destino marketing@lucksrei.com (o Email Routing já encaminha ao Gmail),
  * Reply-To = e-mail do visitante. Variáveis opcionais: CONTACT_TO e CONTACT_FROM (só o endereço; inválido volta ao padrão).
  *
+ * Turnstile: com o secret TURNSTILE_SECRET_KEY no Worker, o corpo precisa trazer turnstileToken válido (Siteverify no servidor,
+ * hostname e action "contact" conferidos). Token ausente/inválido: 400 captcha; verificação indisponível: 503 captcha_unavailable.
+ * Sem o secret a verificação fica desligada e o fluxo é o de sempre (desligar = apagar o secret, sem deploy).
+ *
  * Antiabuso: limite de borda por IP (binding RL_CONTACT, antes de ler o corpo), mesma origem obrigatória, JSON, corpo ≤ 8 KB, honeypot, tempo mínimo de preenchimento, limite por IP
  * (3 por 10 min, 10 por dia) e teto global (40 por hora), todos em caches.default. O IP só entra como hash SHA-256 truncado
  * na chave do contador e nunca é gravado em outro lugar. O conteúdo da mensagem nunca é registrado em log.
  */
 
 import { API_HEADERS, overLimit, shortHash } from "./security.mjs";
+import { parseHostnames, verifyTurnstile } from "./turnstile.mjs";
 
 export const LIMITS = { nameMin: 2, nameMax: 80, emailMax: 254, messageMin: 10, messageMax: 2000, bodyMax: 8192, minFillMs: 2000, maxAgeMs: 24 * 3600 * 1000 };
 export const SUBJECTS = { hiring: "Hiring Opportunity", collab: "Mobile Project Collaboration", other: "Other Inquiry" };
@@ -182,6 +187,21 @@ export async function handleContact(request, env, ctx, deps = {}) {
 
   const checked = validateContact(body);
   if (!checked.ok) return json({ error: "invalid", fields: checked.fields }, 400);
+
+  if (env.TURNSTILE_SECRET_KEY) {
+    const human = await verifyTurnstile({
+      secret: env.TURNSTILE_SECRET_KEY,
+      token: body.turnstileToken,
+      ip: request.headers.get("cf-connecting-ip"),
+      hostnames: parseHostnames(env.TURNSTILE_HOSTNAMES),
+      action: "contact",
+      fetchImpl: deps.fetch || fetch,
+    });
+    if (!human.ok) {
+      if (human.reason === "unavailable") return json({ error: "captcha_unavailable" }, 503, { "retry-after": "30" });
+      return json({ error: "captcha" }, 400);
+    }
+  }
 
   const cache = deps.cache === undefined ? (typeof caches !== "undefined" ? caches.default : null) : deps.cache;
   const ip = request.headers.get("cf-connecting-ip") || "unknown";
