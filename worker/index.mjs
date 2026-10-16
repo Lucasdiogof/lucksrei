@@ -29,7 +29,8 @@
  * Limite na camada da aplicação (binding "ratelimits", worker/security.mjs): roda dentro do Worker, depois que ele já foi invocado,
  * então protege o D1 e não a quota de requisições do Worker. Em /api/visit, depois dos filtros baratos (origem, user-agent, rede)
  * e antes de qualquer escrita no D1: 30/min por IP e 300/min compartilhado por localização (colo), nunca global. Estourou: 204 em
- * silêncio e nada gravado. /api/visitors tem cache de borda, /api/whoami não toca recurso externo e /api/github-contributions
+ * silêncio e nada gravado. RL_VISIT_COLO NÃO é global, NÃO protege a quota de requisições do Worker, NÃO garante proteção contra ataque
+ * distribuído e NÃO impede o esgotamento sustentado do D1 em vários colos: só contém rajadas dentro de uma localização. /api/visitors tem cache de borda, /api/whoami não toca recurso externo e /api/github-contributions
  * tem cache de 6 h: nenhum dos três tem limite próprio. /api/contact tem o seu em worker/contact.mjs.
  */
 

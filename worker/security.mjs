@@ -23,7 +23,8 @@ export async function shortHash(text) {
 }
 
 // true = passou do limite. `scope` "shared" usa uma chave única compartilhada por todos os IPs, mas só dentro da
-// mesma localização da Cloudflare (teto por colo, não global).
+// mesma localização da Cloudflare. Serve só para conter rajadas ali: não é global, não protege a quota de requisições do Worker,
+// não garante proteção contra ataque distribuído nem impede o esgotamento sustentado do D1 em vários colos.
 export async function overLimit(env, binding, request, scope) {
   const rl = env && env[binding];
   if (!rl || typeof rl.limit !== "function") return false;

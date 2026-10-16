@@ -74,7 +74,12 @@ Limites deliberadamente **sem** binding:
 - `/api/whoami`: usa apenas `request.cf`, não toca D1 nem serviço externo.
 - `/api/github-contributions`: o cache absorve praticamente tudo (ver abaixo).
 
-Limite de realismo: 30/min por IP e 300/min por colo, mantidos de forma contínua, ainda somam muito mais que o orçamento diário de escritas do D1 gratuito. O binding contém rajadas; não impede o esgotamento sustentado da quota. Para isso é preciso a camada de WAF acima.
+**O que `RL_VISIT_COLO` não é** (mantido em 300/60 s por decisão do dono do site):
+- não é global: o contador é de uma localização Cloudflare;
+- não protege a quota de requisições do Worker (roda depois da invocação);
+- não garante proteção contra ataque distribuído;
+- não impede o esgotamento sustentado do D1 em vários colos: 300/min mantidos por um dia são cerca de 432 mil escritas por localização, muito acima do orçamento diário gratuito do D1 (a cota exata não foi confirmada aqui);
+- serve apenas como contenção de rajadas dentro de uma localização. O mesmo vale, em escala menor, para `RL_VISIT` (30/min por IP). Para isso é preciso a camada de WAF acima.
 
 ### `/api/contact`: quais requisições incrementam cada camada
 
