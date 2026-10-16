@@ -9,3 +9,9 @@ build/
 .vercel/
 .wrangler/
 *.log
+
+# segredos locais do Wrangler (wrangler dev) e chaves
+.dev.vars
+.dev.vars.*
+*.pem
+*.key
