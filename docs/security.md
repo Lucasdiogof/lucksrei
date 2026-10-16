@@ -4,15 +4,15 @@ Escopo: só infraestrutura e segurança. Nada aqui muda visual, textos, SEO ou U
 
 ## Superfície pública (`/api/*`)
 
-Arquivos estáticos (HTML, CSS, JS, imagens, vídeos) são servidos pelo Workers Static Assets e **não consomem requisições do Worker**. Só `/api/*` roda o Worker (`run_worker_first`), então é o que precisa de proteção de quota.
+Arquivos estáticos (HTML, CSS, JS, imagens, vídeos) são servidos pelo Workers Static Assets e **não consomem requisições do Worker**. Só `/api/*` roda o Worker (`run_worker_first`), então é onde a quota do Worker é gasta e onde os recursos a jusante (D1, Resend, GitHub) são tocados.
 
 | endpoint | método | operação | recurso externo | custo/risco | cache | proteção |
 |---|---|---|---|---|---|---|
-| `/api/visit` | POST | grava 1–2 linhas no D1 (mês/país/região) | D1 | escrita; é o alvo mais óbvio de abuso | no-store | mesma origem, filtro de bot (UA), de datacenter (ASN e nome da rede), **limite por IP 15/min e global 150/min antes do D1**, acima do limite responde 204 sem gravar |
-| `/api/visitors` | GET | lê agregados do D1 | D1 | leitura | borda 5 min | cache de borda, **limite 60/min por IP**, 429 |
-| `/api/whoami` | GET | devolve país/região do próprio `request.cf` | nenhum | barato | no-store | **limite 60/min por IP**, 429 |
-| `/api/contact` | POST | valida e envia e-mail | Resend (+ Turnstile Siteverify) | e-mail e reputação do domínio | no-store | **limite de borda 5/min por IP**, mesma origem, JSON, ≤ 8 KB, honeypot, tempo mínimo, 3/10 min e 10/dia por IP, 40/h global, validação, Turnstile (quando ativado) |
-| `/api/github-contributions` | GET | calendário do GitHub | GitHub (API/HTML) | quota externa | borda 6 h, falha 60 s | **desligado por padrão** (a seção está oculta): 404 sem `GITHUB_CONTRIBUTIONS=on`; ligado tem limite 10/min por IP |
+| `/api/visit` | POST | grava 1–2 linhas no D1 (mês/país/região) | D1 | escrita; é o alvo mais óbvio de abuso | no-store | mesma origem, filtro de bot (UA), de datacenter (ASN e nome da rede), **limite de aplicação 30/min por IP e 300/min compartilhado por localização (colo, não global) antes do D1**; acima do limite responde 204 sem gravar |
+| `/api/visitors` | GET | lê agregados do D1 | D1 | leitura | borda 5 min | cache de borda de 5 min (sem limite próprio) |
+| `/api/whoami` | GET | devolve país/região do próprio `request.cf` | nenhum | barato | no-store | nenhuma além do custo mínimo (sem limite próprio) |
+| `/api/contact` | POST | valida e envia e-mail | Resend (+ Turnstile Siteverify) | e-mail e reputação do domínio | no-store | **limite de aplicação 10/min por IP** (só rajadas), mesma origem, JSON, ≤ 8 KB, honeypot, tempo mínimo, 3/10 min e 10/dia por IP, 40/h global, validação, Turnstile (quando ativado) |
+| `/api/github-contributions` | GET | calendário do GitHub | GitHub (API/HTML) | quota externa | borda 6 h, falha 60 s | rota ativa como antes (a seção está oculta na home e o script comentado); o cache absorve as chamadas, sem limite próprio |
 | qualquer outro `/api/*` | todos | 404 JSON | nenhum | nenhum | no-store | cabeçalhos de segurança |
 
 Toda resposta da API leva: `X-Content-Type-Options: nosniff`, `Referrer-Policy: no-referrer`, `X-Frame-Options: DENY`, `Cross-Origin-Resource-Policy: same-origin`, `Content-Security-Policy: default-src 'none'; frame-ancestors 'none'` (`worker/security.mjs`).
@@ -46,19 +46,57 @@ Se você editar um `<style>` inline, o hash muda: `node tests/security.test.js` 
 
 **Por que Report-Only:** validei com a política aplicada em Chromium (20 páginas × PT/EN/ES + modais, formulário, mapa): zero violações. Mas não consigo ver a produção nem o Turnstile real daqui, e a Cloudflare pode injetar scripts por conta própria (ex.: Web Analytics). Por isso a política completa só observa. **Para promover:** abra o site com o DevTools (Console) em `/`, `/apps/`, `/contact/`, `/visitors/`; se não aparecer nenhum `Content Security Policy`/`Report Only`, troque o nome do cabeçalho `Content-Security-Policy-Report-Only` por `Content-Security-Policy` (unindo com a linha aplicada) e faça push.
 
-## Limites de borda (Workers Rate Limiting, gratuito)
+## Camadas de limitação: o que cada uma faz e o que não faz
 
-Declarados em `wrangler.jsonc` (`ratelimits`), usados em `worker/security.mjs`. O contador é por data center e a chave é o hash do IP (não é gravado). **Sem o binding ou se ele falhar, a requisição passa** (falha aberta): o limite nunca derruba o site.
+**Workers Rate Limiting Binding** (`ratelimits` em `wrangler.jsonc`, usado em `worker/security.mjs`)
+- roda **dentro do Worker**, depois que ele já foi invocado;
+- protege recursos a jusante (D1, Resend), não evita a invocação do Worker;
+- **não poupa** requisições do Worker nem é anti-DDoS;
+- o contador é **local a cada localização (colo) da Cloudflare**; nada é global no mundo todo;
+- a chave por IP é o hash do IP (nunca gravado). IP não é a chave ideal onde vários visitantes legítimos compartilham o endereço (NAT, operadora móvel, empresa, universidade, VPN), por isso os limites por IP são folgados;
+- **falha aberta**: sem o binding (build antigo, `wrangler dev`, testes) ou se ele falhar, a requisição passa. Escolhido porque um defeito do limitador nunca deve derrubar o site nem o formulário.
 
-| binding | limite | onde | justificativa |
+**Cloudflare WAF / Rate Limiting Rules** (no painel, na zona)
+- camada futura a avaliar;
+- pode agir **antes** do Worker, então é a que protegeria a quota de requisições;
+- depende dos recursos realmente disponíveis no plano atual: **não confirmei** o que o plano gratuito oferece, e nada foi configurado. O item do checklist abaixo é uma proposta a validar no painel.
+
+### Bindings e limites em uso
+
+| binding | limite | período | chave | onde | ao exceder | justificativa |
+|---|---|---|---|---|---|---|
+| `RL_VISIT` | 30 | 60 s | hash do IP | `/api/visit` | 204, nada gravado no D1 | o beacon dispara 1 vez por página; 30/min cobre NAT de escritório/campus. Falso positivo só deixa de contar visitas |
+| `RL_VISIT_COLO` | 300 | 60 s | chave única compartilhada por localização (**não global**) | `/api/visit` | 204, nada gravado no D1 | teto de rajada de escritas no D1 por localização, mesmo com muitos IPs |
+| `RL_CONTACT` | 10 | 60 s | hash do IP | `/api/contact` | 429 + `Retry-After: 60` | só rajadas, antes de ler o corpo, validar, Turnstile ou chamar o Resend |
+
+Limites deliberadamente **sem** binding:
+- `/api/visitors`: já tem cache de borda de 300 s, que protege o D1; limitar por IP só geraria falso positivo.
+- `/api/whoami`: usa apenas `request.cf`, não toca D1 nem serviço externo.
+- `/api/github-contributions`: o cache absorve praticamente tudo (ver abaixo).
+
+Limite de realismo: 30/min por IP e 300/min por colo, mantidos de forma contínua, ainda somam muito mais que o orçamento diário de escritas do D1 gratuito. O binding contém rajadas; não impede o esgotamento sustentado da quota. Para isso é preciso a camada de WAF acima.
+
+### `/api/contact`: quais requisições incrementam cada camada
+
+Na ordem em que são avaliadas:
+
+| ordem | camada | incrementa quando | não incrementa |
 |---|---|---|---|
-| `RL_VISIT` | 15 / 60 s por IP | `/api/visit` | uma visita real manda 1 beacon por aba; 15/min cobre NAT de escritório/campus. Acima disso só deixa de contar (204) |
-| `RL_VISIT_ALL` | 150 / 60 s por data center | `/api/visit` | teto de escritas no D1 mesmo com muitos IPs |
-| `RL_READ` | 60 / 60 s por IP | `/api/visitors`, `/api/whoami` | cada página faz 1–2 leituras; 60/min é folgado |
-| `RL_CONTACT` | 5 / 60 s por IP | `/api/contact` | rajada; as regras de 3/10 min e 10/dia continuam |
-| `RL_GITHUB` | 10 / 60 s por IP | `/api/github-contributions` | só se a rota for ligada |
+| 1 | filtros sem contador: método POST, mesma origem, `Content-Type` JSON, `Content-Length` ≤ 8 KB, provedor configurado | n/a | n/a |
+| 2 | `RL_CONTACT` (10/min por IP) | **toda** requisição que passou da camada 1, inclusive corpo inválido, honeypot e tempo mínimo | requisições barradas na camada 1 |
+| 3 | corpo ≤ 8 KB, JSON, honeypot, tempo mínimo, validação, Turnstile (se ativo) | n/a | n/a |
+| 4 | 3 / 10 min por IP (cache) | só envios que passaram da camada 3 | tentativas inválidas, honeypot, Turnstile recusado |
+| 5 | 10 / dia por IP (cache) | idem, e só se a camada 4 passou | idem |
+| 6 | 40 / hora global (cache; por localização) | idem, e só se as camadas 4 e 5 passaram | idem |
 
-Esses limites protegem D1, Resend e GitHub. **Não** poupam requisições do Worker (a chamada já chegou). Para isso use a regra de rate limiting do painel (abaixo).
+Notas:
+- as camadas 4 a 6 incrementam **antes** de o Resend ser chamado, então uma falha de entrega (502) também consome o contador;
+- se a camada 6 barrar, os contadores 4 e 5 já foram incrementados;
+- como `RL_CONTACT` é bem mais frouxo que as camadas 4 a 6 e só observa rajadas, não há comportamento contraditório: quem envia a mensagem uma vez nunca chega perto dos 10/min.
+
+### `/api/github-contributions`: por que sem limite próprio
+
+Com resposta em cache, 60 chamadas seguidas fazem 1 ida ao GitHub (teste em `tests/github.test.js`). O cache de borda dura 6 h, há cópia antiga por até 7 dias, e uma falha fica 60 s em cache. Ressalva real: o cache é por localização, então duas requisições simultâneas num cache vazio podem ir ambas ao GitHub (o fragmento é público e leve), e em `*.workers.dev` não há Cache API (ver a seção de workers.dev). Não criei limitador porque o ganho seria só para a invocação já feita.
 
 ## Turnstile no contato
 
@@ -82,7 +120,7 @@ Não tive acesso autenticado à Cloudflare nesta sessão, então **nada abaixo f
 | SSL/TLS | SSL/TLS → Overview | modo **Full (strict)**; *Always Use HTTPS* ligado; *Minimum TLS* 1.2 | Reverter: voltar ao valor anterior. Full (strict) exige certificado válido na origem (Workers já tem) |
 | DNSSEC | DNS → Settings | ativar e copiar o **DS** para o registrador | só vale quando o DS estiver no registrador; reverter: remover o DS no registrador **antes** de desativar |
 | WAF / managed rules | Security → WAF | Free Managed Ruleset (já automático no plano gratuito) | conferir se está ativo |
-| Regra de rate limiting (1 grátis) | Security → WAF → Rate limiting rules | `starts_with(http.request.uri.path, "/api/")` → **40 req / 10 s por IP → Block por 10 s** | protege a quota do Worker (os limites do código não protegem). Uma página faz ≤ 3 chamadas; 40/10 s é largo. Reverter: desativar a regra |
+| Regra de rate limiting (a avaliar) | Security → WAF → Rate limiting rules | proposta: `starts_with(http.request.uri.path, "/api/")` → 40 req / 10 s por IP → Block por 10 s | única camada que atua antes do Worker (os bindings do código não atuam). **Não confirmei** quantas regras nem quais opções o plano gratuito permite. Reverter: desativar a regra |
 | Regra personalizada (opcional) | Security → WAF → Custom rules | *Block* para `/.env`, `/.git`, `/wp-login.php`, `/xmlrpc.php`, `/wp-admin` | reduz ruído de scanners; nenhuma dessas rotas existe no site |
 | Bot Fight Mode | Security → Bots | **deixar desligado por enquanto** | veja abaixo |
 | Under Attack Mode | Security → Settings | **só em ataque ativo**, depois desligar | desafia todo visitante |
@@ -131,13 +169,12 @@ Auditoria por padrões (GitHub, AWS, Resend, Turnstile, Slack, Google, Stripe, c
 | mudança | como voltar |
 |---|---|
 | Cabeçalhos / CSP | apagar a linha do cabeçalho em `_headers` e fazer push (deploy automático); a CSP completa está em Report-Only e não bloqueia |
-| Limites de borda | remover o bloco `ratelimits` do `wrangler.jsonc` (o código já passa sem binding) |
+| Limites de aplicação | remover o bloco `ratelimits` do `wrangler.jsonc` (o código já passa sem binding) |
 | Turnstile | apagar o secret `TURNSTILE_SECRET_KEY` (imediato) |
-| `/api/github-contributions` | já está desligada; para ligar defina `GITHUB_CONTRIBUTIONS=on` |
 | Regras da Cloudflare | desativar a regra no painel |
 | Ruleset do GitHub | desativar/apagar o ruleset |
 
 ## Verificação
 
 - Código: `for t in tests/*.test.js; do node $t; done`
-- Produção: `node tools/check-security.mjs https://lucksrei.com` (opcional `--workers-dev <url>` e `--probe-rate-limit`).
+- Produção: `node tools/check-security.mjs https://lucksrei.com` (opcional `--workers-dev <url>`).

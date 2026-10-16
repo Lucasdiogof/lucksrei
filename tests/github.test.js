@@ -88,10 +88,14 @@ function req(method) { return new Request("https://lucksrei.com/api/github-contr
 
   // roteamento no worker
   var W = (await import("../worker/index.mjs")).default;
-  var rr = await W.fetch(new Request("https://lucksrei.com/api/github-contributions", { method: "DELETE" }), { GITHUB_CONTRIBUTIONS: "on" }, ctx);
-  check(rr.status === 405, "rota registrada no worker (com GITHUB_CONTRIBUTIONS=on)");
-  var off = await W.fetch(new Request("https://lucksrei.com/api/github-contributions"), {}, ctx);
-  check(off.status === 404 && (await off.json()).error === "not_found", "rota desligada por padrão: a seção está oculta, então a API não fica exposta");
+  var rr = await W.fetch(new Request("https://lucksrei.com/api/github-contributions", { method: "DELETE" }), {}, ctx);
+  check(rr.status === 405, "rota registrada no worker, ativa por padrão (sem feature flag)");
+
+  // o cache absorve as chamadas repetidas: 60 leituras seguidas fazem 1 única ida ao GitHub
+  var cMany = memCache(); var hits = 0;
+  var counting = async function () { hits++; return new Response(html, { status: 200 }); };
+  for (var n = 0; n < 60; n++) await G.handleGithub(req(), {}, ctx, { cache: cMany, fetch: counting });
+  check(hits === 1, "60 chamadas seguidas = 1 requisição ao GitHub (" + hits + ")");
 
   // falha cacheada por pouco tempo: durante uma queda do GitHub não há uma requisição nova por chamada
   var cErr = memCache(); var upstream = 0;

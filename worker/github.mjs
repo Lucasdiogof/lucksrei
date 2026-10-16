@@ -10,7 +10,7 @@
  *
  * Cache: borda (caches.default) por 6 h. A última resposta boa também fica por 7 dias e é servida se o GitHub falhar
  * ou limitar a taxa (campo stale: true); uma falha fica em cache por 60 s para não martelar o GitHub durante uma queda.
- * A rota só está ativa com a variável GITHUB_CONTRIBUTIONS=on (ver worker/index.mjs). Só contribuições públicas (e as privadas que o perfil optou por mostrar).
+ * A seção está oculta na home, mas a rota continua ativa. Só contribuições públicas (e as privadas que o perfil optou por mostrar).
  */
 
 import { API_HEADERS } from "./security.mjs";

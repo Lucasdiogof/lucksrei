@@ -14,7 +14,7 @@
  * hostname e action "contact" conferidos). Token ausente/inválido: 400 captcha; verificação indisponível: 503 captcha_unavailable.
  * Sem o secret a verificação fica desligada e o fluxo é o de sempre (desligar = apagar o secret, sem deploy).
  *
- * Antiabuso: limite de borda por IP (binding RL_CONTACT, antes de ler o corpo), mesma origem obrigatória, JSON, corpo ≤ 8 KB, honeypot, tempo mínimo de preenchimento, limite por IP
+ * Antiabuso: limite por IP (binding RL_CONTACT, 10/min, contador local à localização, só contra rajadas; roda dentro do Worker, antes de ler o corpo), mesma origem obrigatória, JSON, corpo ≤ 8 KB, honeypot, tempo mínimo de preenchimento, limite por IP
  * (3 por 10 min, 10 por dia) e teto global (40 por hora), todos em caches.default. O IP só entra como hash SHA-256 truncado
  * na chave do contador e nunca é gravado em outro lugar. O conteúdo da mensagem nunca é registrado em log.
  */
@@ -67,7 +67,7 @@ function json(body, status, extra) {
   });
 }
 
-// Contador em caches.default (por data center; aproximado, suficiente contra abuso comum). true = ainda dentro do limite.
+// Contador em caches.default (por data center; só conta envios que já passaram por corpo, honeypot, tempo mínimo, validação e Turnstile; aproximado, suficiente contra abuso comum). true = ainda dentro do limite.
 export async function hit(cache, scope, id, windowSec, limit, now = Date.now()) {
   if (!cache) return true;
   const key = new Request(`https://rl.invalid/${scope}/${id}`);
