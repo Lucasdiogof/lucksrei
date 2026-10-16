@@ -9,12 +9,16 @@
  *      do perfil. Não é uma API documentada; se o HTML mudar, o parser falha e a resposta é 503 (nunca dado inventado).
  *
  * Cache: borda (caches.default) por 6 h. A última resposta boa também fica por 7 dias e é servida se o GitHub falhar
- * ou limitar a taxa (campo stale: true). Só contribuições públicas (e as privadas que o perfil optou por mostrar).
+ * ou limitar a taxa (campo stale: true); uma falha fica em cache por 60 s para não martelar o GitHub durante uma queda.
+ * A rota só está ativa com a variável GITHUB_CONTRIBUTIONS=on (ver worker/index.mjs). Só contribuições públicas (e as privadas que o perfil optou por mostrar).
  */
+
+import { API_HEADERS } from "./security.mjs";
 
 export const LOGIN = "Lucasdiogof";
 const TTL = 6 * 3600;
 const STALE_TTL = 7 * 86400;
+const ERROR_TTL = 60;
 const UA = "lucksrei-site (+https://lucksrei.com)";
 const LEVELS = { NONE: 0, FIRST_QUARTILE: 1, SECOND_QUARTILE: 2, THIRD_QUARTILE: 3, FOURTH_QUARTILE: 4 };
 
@@ -83,21 +87,27 @@ function reply(body, status, cacheControl) {
     headers: {
       "content-type": "application/json; charset=utf-8",
       "cache-control": cacheControl,
-      "x-content-type-options": "nosniff",
-      "referrer-policy": "no-referrer",
+      ...API_HEADERS,
     },
   });
 }
 
 export async function handleGithub(request, env, ctx, deps = {}) {
-  if (request.method !== "GET") return new Response(null, { status: 405, headers: { allow: "GET" } });
+  if (request.method !== "GET") return new Response(null, { status: 405, headers: { ...API_HEADERS, allow: "GET" } });
   const cache = deps.cache === undefined ? (typeof caches !== "undefined" ? caches.default : null) : deps.cache;
   const origin = new URL(request.url).origin;
   const key = new Request(origin + "/api/github-contributions");
   const staleKey = new Request(origin + "/api/github-contributions?stale");
+  const errKey = new Request(origin + "/api/github-contributions?error");
   if (cache) {
     const hit = await cache.match(key);
     if (hit) return hit;
+    const recentFailure = await cache.match(errKey);
+    if (recentFailure) {
+      const stale = await cache.match(staleKey);
+      if (stale) return reply({ ...(await stale.json()), stale: true }, 200, "public, max-age=300");
+      return recentFailure;
+    }
   }
   try {
     const data = await fetchContributions(env, deps.fetch);
@@ -119,6 +129,8 @@ export async function handleGithub(request, env, ctx, deps = {}) {
     const limited = e && (e.status === 403 || e.status === 429);
     const res = reply({ error: limited ? "rate_limited" : "unavailable" }, 503, "no-store");
     if (limited) res.headers.set("retry-after", "900");
+    // falha também fica em cache por pouco tempo: sem isso, cada chamada durante uma queda do GitHub viraria uma nova requisição a ele
+    if (cache) ctx.waitUntil(cache.put(errKey, new Response(res.clone().body, { status: res.status, headers: { ...Object.fromEntries(res.headers), "cache-control": `public, max-age=${ERROR_TTL}` } })));
     return res;
   }
 }

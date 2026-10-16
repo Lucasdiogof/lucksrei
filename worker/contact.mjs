@@ -10,10 +10,12 @@
  * Remetente "Lucksrei <marketing@lucksrei.com>", destino marketing@lucksrei.com (o Email Routing já encaminha ao Gmail),
  * Reply-To = e-mail do visitante. Variáveis opcionais: CONTACT_TO e CONTACT_FROM (só o endereço; inválido volta ao padrão).
  *
- * Antiabuso: mesma origem obrigatória, JSON, corpo ≤ 8 KB, honeypot, tempo mínimo de preenchimento, limite por IP
+ * Antiabuso: limite de borda por IP (binding RL_CONTACT, antes de ler o corpo), mesma origem obrigatória, JSON, corpo ≤ 8 KB, honeypot, tempo mínimo de preenchimento, limite por IP
  * (3 por 10 min, 10 por dia) e teto global (40 por hora), todos em caches.default. O IP só entra como hash SHA-256 truncado
  * na chave do contador e nunca é gravado em outro lugar. O conteúdo da mensagem nunca é registrado em log.
  */
+
+import { API_HEADERS, overLimit, shortHash } from "./security.mjs";
 
 export const LIMITS = { nameMin: 2, nameMax: 80, emailMax: 254, messageMin: 10, messageMax: 2000, bodyMax: 8192, minFillMs: 2000, maxAgeMs: 24 * 3600 * 1000 };
 export const SUBJECTS = { hiring: "Hiring Opportunity", collab: "Mobile Project Collaboration", other: "Other Inquiry" };
@@ -54,16 +56,10 @@ function json(body, status, extra) {
     headers: {
       "content-type": "application/json; charset=utf-8",
       "cache-control": "no-store",
-      "x-content-type-options": "nosniff",
-      "referrer-policy": "no-referrer",
+      ...API_HEADERS,
       ...(extra || {}),
     },
   });
-}
-
-async function shortHash(text) {
-  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
-  return [...new Uint8Array(buf).slice(0, 10)].map((b) => b.toString(16).padStart(2, "0")).join("");
 }
 
 // Contador em caches.default (por data center; aproximado, suficiente contra abuso comum). true = ainda dentro do limite.
@@ -160,7 +156,7 @@ export async function deliver(env, mail, deps = {}) {
 }
 
 export async function handleContact(request, env, ctx, deps = {}) {
-  if (request.method !== "POST") return new Response(null, { status: 405, headers: { allow: "POST" } });
+  if (request.method !== "POST") return new Response(null, { status: 405, headers: { ...API_HEADERS, allow: "POST" } });
   let sameOrigin = false;
   try { sameOrigin = request.headers.get("origin") === new URL(request.url).origin; } catch (e) { /* inválido */ }
   if (!sameOrigin) return json({ error: "forbidden" }, 403);
@@ -168,6 +164,7 @@ export async function handleContact(request, env, ctx, deps = {}) {
   const declared = Number(request.headers.get("content-length"));
   if (declared > LIMITS.bodyMax) return json({ error: "too_large" }, 413);
   if (!(deps.send || configured(env))) return json({ error: "unavailable" }, 503);
+  if (await overLimit(env, "RL_CONTACT", request)) return json({ error: "rate_limited" }, 429, { "retry-after": "60" });
 
   let text;
   try { text = await request.text(); } catch (e) { return json({ error: "invalid", fields: [] }, 400); }

@@ -15,5 +15,12 @@
       "database_id": "244f20e5-166c-4f6c-bfa1-0ad648902fab",
       "migrations_dir": "migrations"
     }
+  ],
+  "ratelimits": [
+    { "name": "RL_VISIT", "namespace_id": "7301", "simple": { "limit": 15, "period": 60 } },
+    { "name": "RL_VISIT_ALL", "namespace_id": "7302", "simple": { "limit": 150, "period": 60 } },
+    { "name": "RL_READ", "namespace_id": "7303", "simple": { "limit": 60, "period": 60 } },
+    { "name": "RL_CONTACT", "namespace_id": "7304", "simple": { "limit": 5, "period": 60 } },
+    { "name": "RL_GITHUB", "namespace_id": "7305", "simple": { "limit": 10, "period": 60 } }
   ]
 }

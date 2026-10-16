@@ -26,11 +26,14 @@
  *   /api/whoami    no-store.
  *   /api/visit     no-store (também nas respostas de ruído/robô/nuvem).
  *
- * Rate limiting pode ser adicionado futuramente se houver abuso real.
+ * Defesa de borda: limite por IP e teto global via binding "ratelimits" (worker/security.mjs), aplicado depois dos filtros baratos
+ * (origem, user-agent, rede) e antes de qualquer escrita no D1. Estourou o limite: /api/visit ignora em silêncio (204); os demais
+ * respondem 429. GET /api/github-contributions só responde com GITHUB_CONTRIBUTIONS=on (a seção está oculta na home).
  */
 
 import { handleGithub } from "./github.mjs";
 import { handleContact } from "./contact.mjs";
+import { API_HEADERS, overLimit, tooManyRequests } from "./security.mjs";
 
 const VISITORS_TTL = 300; // s
 const WINDOW_MONTHS = 12;
@@ -65,10 +68,7 @@ const DATACENTER_ASNS = new Set([
 const DATACENTER_ORG = /\b(amazon|aws|google(?! fiber)|microsoft|azure|oracle|digitalocean|linode|vultr|choopa|ovh|hetzner|contabo|scaleway|ibm cloud|softlayer|leaseweb|alibaba|tencent|huawei cloud|anthropic|openai)\b/i;
 const BOT_UA = /bot|crawl|claude|anthropic|chatgpt|openai|perplexity|spider|slurp|preview|facebookexternalhit|headless|phantom|lighthouse|pagespeed|pingdom|uptime|monitor|curl|wget|python-requests|httpclient|axios|node-fetch|go-http|java\//i;
 
-const BASE_HEADERS = {
-  "x-content-type-options": "nosniff",
-  "referrer-policy": "no-referrer",
-};
+const BASE_HEADERS = API_HEADERS;
 
 export function normalizeCountry(raw) {
   if (typeof raw !== "string") return UNKNOWN;
@@ -231,6 +231,7 @@ export default {
       if (request.method !== "POST") return new Response(null, { status: 405, headers: { ...BASE_HEADERS, allow: "POST" } });
       const none = new Response(null, { status: 204, headers: { ...BASE_HEADERS, "cache-control": "no-store" } });
       if (!isSameOriginBrowserCall(request) || looksLikeBot(request) || fromDatacenter(request)) return none;
+      if ((await overLimit(env, "RL_VISIT", request)) || (await overLimit(env, "RL_VISIT_ALL", request, "all"))) return none;
       const now = new Date();
       const cf = request.cf || {};
       const country = normalizeCountry(cf.country);
@@ -253,6 +254,7 @@ export default {
 
     if (path === "/api/whoami") {
       if (request.method !== "GET") return new Response(null, { status: 405, headers: { ...BASE_HEADERS, allow: "GET" } });
+      if (await overLimit(env, "RL_READ", request)) return tooManyRequests();
       const cf = request.cf || {};
       const c = normalizeCountry(cf.country);
       const r = c === UNKNOWN ? UNKNOWN : normalizeRegion(cf.regionCode);
@@ -265,6 +267,7 @@ export default {
 
     if (path === "/api/visitors") {
       if (request.method !== "GET") return new Response(null, { status: 405, headers: { ...BASE_HEADERS, allow: "GET" } });
+      if (await overLimit(env, "RL_READ", request)) return tooManyRequests();
       const cache = typeof caches !== "undefined" ? caches.default : null;
       const key = new Request(url.origin + "/api/visitors");
       if (cache) {
@@ -281,7 +284,11 @@ export default {
       }
     }
 
-    if (path === "/api/github-contributions") return handleGithub(request, env, ctx);
+    if (path === "/api/github-contributions") {
+      if (env.GITHUB_CONTRIBUTIONS !== "on") return json({ error: "not_found" }, 404, "no-store");
+      if (request.method === "GET" && (await overLimit(env, "RL_GITHUB", request))) return tooManyRequests();
+      return handleGithub(request, env, ctx);
+    }
     if (path === "/api/contact") return handleContact(request, env, ctx);
 
     if (path.startsWith("/api/")) return json({ error: "not_found" }, 404, "no-store");

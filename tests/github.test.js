@@ -88,8 +88,20 @@ function req(method) { return new Request("https://lucksrei.com/api/github-contr
 
   // roteamento no worker
   var W = (await import("../worker/index.mjs")).default;
-  var rr = await W.fetch(new Request("https://lucksrei.com/api/github-contributions", { method: "DELETE" }), {}, ctx);
-  check(rr.status === 405, "rota registrada no worker");
+  var rr = await W.fetch(new Request("https://lucksrei.com/api/github-contributions", { method: "DELETE" }), { GITHUB_CONTRIBUTIONS: "on" }, ctx);
+  check(rr.status === 405, "rota registrada no worker (com GITHUB_CONTRIBUTIONS=on)");
+  var off = await W.fetch(new Request("https://lucksrei.com/api/github-contributions"), {}, ctx);
+  check(off.status === 404 && (await off.json()).error === "not_found", "rota desligada por padrão: a seção está oculta, então a API não fica exposta");
+
+  // falha cacheada por pouco tempo: durante uma queda do GitHub não há uma requisição nova por chamada
+  var cErr = memCache(); var upstream = 0;
+  var down = async function () { upstream++; return new Response("x", { status: 502 }); };
+  await G.handleGithub(req(), {}, ctx, { cache: cErr, fetch: down });
+  var again = await G.handleGithub(req(), {}, ctx, { cache: cErr, fetch: down });
+  check(upstream === 1 && again.status === 503, "queda do GitHub: segunda chamada não reconsulta o GitHub (cache negativo de 60 s): " + upstream);
+  var okFetch = async function () { upstream++; return new Response(html); };
+  var cMix = memCache(); await G.handleGithub(req(), {}, ctx, { cache: cMix, fetch: okFetch });
+  check((await (await cMix.match(new Request("https://lucksrei.com/api/github-contributions?stale"))).json()).days.length === days.length, "última resposta boa continua guardada para servir como stale");
 
   // ---- calendário (front)
   var weeks = Cal.toWeeks(p.days);
