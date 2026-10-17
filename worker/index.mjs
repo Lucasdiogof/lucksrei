@@ -5,6 +5,7 @@
  *   POST /api/visit     conta UMA visita no mês/país (e mês/país/região) atuais. 204 sempre (nunca quebra a página).
  *   GET  /api/visitors  agregados dos últimos 12 meses, por país e por região dentro de cada país (cache de 5 min).
  *   GET  /api/whoami    { country, region, region_name } do próprio visitante, vindos só de request.cf (sem cache).
+ *   GET  /api/turnstile-config      sitekey pública do Turnstile (worker/turnstile.mjs); sem D1, sem recurso externo, no-store.
  *   GET  /api/github-contributions  calendário público de contribuições do GitHub (worker/github.mjs).
  *   POST /api/contact   formulário "Send Message" (worker/contact.mjs).
  *
@@ -26,11 +27,18 @@
  *   /api/whoami    no-store.
  *   /api/visit     no-store (também nas respostas de ruído/robô/nuvem).
  *
- * Rate limiting pode ser adicionado futuramente se houver abuso real.
+ * Limite na camada da aplicação (binding "ratelimits", worker/security.mjs): roda dentro do Worker, depois que ele já foi invocado,
+ * então protege o D1 e não a quota de requisições do Worker. Em /api/visit, depois dos filtros baratos (origem, user-agent, rede)
+ * e antes de qualquer escrita no D1: 30/min por IP e 300/min compartilhado por localização (colo), nunca global. Estourou: 204 em
+ * silêncio e nada gravado. RL_VISIT_COLO NÃO é global, NÃO protege a quota de requisições do Worker, NÃO garante proteção contra ataque
+ * distribuído e NÃO impede o esgotamento sustentado do D1 em vários colos: só contém rajadas dentro de uma localização. /api/visitors tem cache de borda, /api/whoami não toca recurso externo e /api/github-contributions
+ * tem cache de 6 h: nenhum dos três tem limite próprio. /api/contact tem o seu em worker/contact.mjs.
  */
 
 import { handleGithub } from "./github.mjs";
 import { handleContact } from "./contact.mjs";
+import { handleTurnstileConfig } from "./turnstile.mjs";
+import { API_HEADERS, overLimit } from "./security.mjs";
 
 const VISITORS_TTL = 300; // s
 const WINDOW_MONTHS = 12;
@@ -65,10 +73,7 @@ const DATACENTER_ASNS = new Set([
 const DATACENTER_ORG = /\b(amazon|aws|google(?! fiber)|microsoft|azure|oracle|digitalocean|linode|vultr|choopa|ovh|hetzner|contabo|scaleway|ibm cloud|softlayer|leaseweb|alibaba|tencent|huawei cloud|anthropic|openai)\b/i;
 const BOT_UA = /bot|crawl|claude|anthropic|chatgpt|openai|perplexity|spider|slurp|preview|facebookexternalhit|headless|phantom|lighthouse|pagespeed|pingdom|uptime|monitor|curl|wget|python-requests|httpclient|axios|node-fetch|go-http|java\//i;
 
-const BASE_HEADERS = {
-  "x-content-type-options": "nosniff",
-  "referrer-policy": "no-referrer",
-};
+const BASE_HEADERS = API_HEADERS;
 
 export function normalizeCountry(raw) {
   if (typeof raw !== "string") return UNKNOWN;
@@ -231,6 +236,7 @@ export default {
       if (request.method !== "POST") return new Response(null, { status: 405, headers: { ...BASE_HEADERS, allow: "POST" } });
       const none = new Response(null, { status: 204, headers: { ...BASE_HEADERS, "cache-control": "no-store" } });
       if (!isSameOriginBrowserCall(request) || looksLikeBot(request) || fromDatacenter(request)) return none;
+      if ((await overLimit(env, "RL_VISIT", request)) || (await overLimit(env, "RL_VISIT_COLO", request, "shared"))) return none;
       const now = new Date();
       const cf = request.cf || {};
       const country = normalizeCountry(cf.country);
@@ -283,6 +289,7 @@ export default {
 
     if (path === "/api/github-contributions") return handleGithub(request, env, ctx);
     if (path === "/api/contact") return handleContact(request, env, ctx);
+    if (path === "/api/turnstile-config") return handleTurnstileConfig(request, env);
 
     if (path.startsWith("/api/")) return json({ error: "not_found" }, 404, "no-store");
     return env.ASSETS.fetch(request);

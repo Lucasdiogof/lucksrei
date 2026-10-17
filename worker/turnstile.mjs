@@ -1,0 +1,94 @@
+/* Cloudflare Turnstile — validação no servidor (Siteverify).
+ *
+ * O navegador só entrega o token; quem decide é este módulo, com o segredo guardado como secret do Worker
+ * (TURNSTILE_SECRET_KEY, nunca no repositório, no HTML ou no JS). Aceita só se: success === true, o hostname é do site
+ * e a action é a esperada. Com a verificação ativa, qualquer falha de rede, timeout ou resposta inesperada rejeita (falha fechada).
+ *
+ * Configuração (tudo no Worker; o HTML não leva chave nenhuma):
+ *   TURNSTILE_SITE_KEY    variável pública: a sitekey. Servida por GET /api/turnstile-config; sem ela (ou inválida) o front nem carrega o widget.
+ *   TURNSTILE_SECRET_KEY  secret: só o servidor, para o Siteverify.
+ *   TURNSTILE_ENFORCE     variável: "on" torna o Turnstile obrigatório.
+ * Ativação (turnstileRequired): TURNSTILE_ENFORCE === "on" E sitekey VÁLIDA (getTurnstileSiteKey, a mesma regra do endpoint de config) E secret não vazio. Qualquer combinação incompleta NÃO ativa
+ * e só avisa (nomes, nunca valores): é um fail-open de CONFIGURAÇÃO (formulário com as defesas de sempre), não do Siteverify;
+ * com tudo completo, o Siteverify nunca vira bypass. Nada vindo do cliente decide se o Turnstile é obrigatório.
+ * O IP do visitante NÃO é enviado ao Siteverify (remoteip é opcional).
+ */
+
+import { API_HEADERS } from "./security.mjs";
+
+export const SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+export const DEFAULT_HOSTNAMES = ["lucksrei.com", "www.lucksrei.com"];
+
+// nunca aceitar workers.dev nem hosts locais como hostname de produção, nem por override
+const NOT_PRODUCTION = /(^|\.)workers\.dev$|^localhost$|^127\.0\.0\.1$|^\[?::1\]?$/;
+
+export function parseHostnames(raw) {
+  const list = String(raw || "").split(",").map((h) => h.trim().toLowerCase()).filter((h) => h && !NOT_PRODUCTION.test(h));
+  return list.length ? list : DEFAULT_HOSTNAMES;
+}
+
+let warnedMisconfigured = false;
+export function resetTurnstileWarning() { warnedMisconfigured = false; }
+
+// A sitekey é pública, mas só vale com o formato esperado. ESTA função é a única regra: ela decide tanto o que
+// /api/turnstile-config entrega ao front quanto se a sitekey conta como presente para ativar o enforcement.
+const SITEKEY_RE = /^[A-Za-z0-9_-]{8,100}$/;
+export function getTurnstileSiteKey(env) {
+  const raw = env && typeof env.TURNSTILE_SITE_KEY === "string" ? env.TURNSTILE_SITE_KEY.trim() : "";
+  return SITEKEY_RE.test(raw) ? raw : null;
+}
+
+// O secret só precisa ser uma string não vazia depois do trim (espaço puro não é secret configurado). Sem validar formato
+// proprietário: não há especificação oficial confiável. Devolve o valor normalizado, que é o enviado ao Siteverify; nunca é logado.
+export function getTurnstileSecret(env) {
+  const raw = env && typeof env.TURNSTILE_SECRET_KEY === "string" ? env.TURNSTILE_SECRET_KEY.trim() : "";
+  return raw || null;
+}
+
+// true só com TURNSTILE_ENFORCE === "on" E sitekey válida E secret não vazio. "on" com algo ausente ou inválido = configuração
+// incompleta: não ativa e avisa (só os nomes das variáveis, nunca valores).
+export function turnstileRequired(env) {
+  if (!env || env.TURNSTILE_ENFORCE !== "on") return false;
+  const problems = [];
+  if (!getTurnstileSiteKey(env)) problems.push("TURNSTILE_SITE_KEY");
+  if (!getTurnstileSecret(env)) problems.push("TURNSTILE_SECRET_KEY");
+  if (problems.length) {
+    if (!warnedMisconfigured) {
+      warnedMisconfigured = true;
+      console.warn("contact: TURNSTILE_ENFORCE=on mas falta ou é inválida " + problems.join(" e ") + "; Turnstile NÃO está ativo (o formulário segue com as outras defesas)");
+    }
+    return false;
+  }
+  return true;
+}
+
+// GET /api/turnstile-config -> { enabled, sitekey }. Só a sitekey pública; nunca o secret nem o estado do enforcement.
+export function handleTurnstileConfig(request, env) {
+  if (request.method !== "GET") return new Response(null, { status: 405, headers: { ...API_HEADERS, allow: "GET" } });
+  const key = getTurnstileSiteKey(env);
+  return new Response(JSON.stringify({ enabled: key !== null, sitekey: key }), {
+    status: 200,
+    headers: { ...API_HEADERS, "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+  });
+}
+
+// -> { ok: true } | { ok: false, reason: "missing" | "invalid" | "hostname" | "action" | "unavailable" }
+export async function verifyTurnstile({ secret, token, hostnames, action, fetchImpl = fetch, timeoutMs = 5000 }) {
+  if (typeof token !== "string" || token.length === 0) return { ok: false, reason: "missing" };
+  if (token.length > 2048) return { ok: false, reason: "invalid" };
+  try {
+    const body = new URLSearchParams({ secret, response: token });
+    const res = await fetchImpl(SITEVERIFY_URL, { method: "POST", body, signal: AbortSignal.timeout(timeoutMs) });
+    if (!res.ok) return { ok: false, reason: "unavailable" };
+    const data = await res.json();
+    if (!data || data.success !== true) {
+      const codes = Array.isArray(data && data["error-codes"]) ? data["error-codes"] : [];
+      return { ok: false, reason: codes.includes("internal-error") ? "unavailable" : "invalid" };
+    }
+    if (!hostnames.includes(String(data.hostname || "").toLowerCase())) return { ok: false, reason: "hostname" };
+    if (action && data.action !== action) return { ok: false, reason: "action" };
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, reason: "unavailable" };
+  }
+}

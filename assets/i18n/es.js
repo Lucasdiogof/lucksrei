@@ -811,5 +811,6 @@
   "contact.form.fail": "Tu mensaje no se envió. Lo que escribiste se conservó, así que puedes intentarlo de nuevo.",
   "contact.form.fail_network": "No se pudo contactar al servidor. Lo que escribiste se conservó, así que puedes intentarlo de nuevo.",
   "contact.form.fail_rate": "Demasiados intentos. Espera unos minutos e inténtalo de nuevo.",
+  "contact.form.fail_captcha": "No se pudo completar la verificación de seguridad. Inténtalo de nuevo en unos instantes.",
   "contact.form.fail_unavailable": "El envío de mensajes no está disponible por ahora. Escribe a marketing@lucksrei.com."
 };

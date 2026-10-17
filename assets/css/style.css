@@ -1571,6 +1571,8 @@ a.sk-chip:hover .sk-arrow{ transform: translateX(3px); }
 .cf-meta{ display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
 .cf-count{ margin-left: auto; margin-top: 6px; font-family: var(--font-mono); font-size: 11.5px; color: var(--text-faint); white-space: nowrap; }
 .cf-err{ margin-top: 6px; font-size: 13px; color: var(--danger); }
+.cf-turnstile-box{ margin-bottom: 4px; }
+.cf-turnstile-box:empty{ display: none; }
 .cf-hp{ position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .cf-actions{ display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 4px; }
 .cf-submit{ min-height: 48px; cursor: pointer; font: inherit; font-weight: 600; }

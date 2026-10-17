@@ -10,10 +10,18 @@
  * Remetente "Lucksrei <marketing@lucksrei.com>", destino marketing@lucksrei.com (o Email Routing já encaminha ao Gmail),
  * Reply-To = e-mail do visitante. Variáveis opcionais: CONTACT_TO e CONTACT_FROM (só o endereço; inválido volta ao padrão).
  *
- * Antiabuso: mesma origem obrigatória, JSON, corpo ≤ 8 KB, honeypot, tempo mínimo de preenchimento, limite por IP
+ * Turnstile: obrigatório só com TURNSTILE_ENFORCE=on E TURNSTILE_SECRET_KEY não vazio E TURNSTILE_SITE_KEY válida (turnstileRequired). Então o corpo precisa
+ * trazer turnstileToken válido (Siteverify no servidor, hostname e action "contact" conferidos, sem enviar o IP): token
+ * ausente/inválido/reutilizado: 400 captcha; Siteverify indisponível ou lento: 503 captcha_unavailable (falha fechada).
+ * Sem a flag, ou com ela e alguma chave faltando, o token é ignorado e o fluxo é o de sempre (desligar = TURNSTILE_ENFORCE=off, sem deploy).
+ *
+ * Antiabuso: limite por IP (binding RL_CONTACT, 10/min, contador local à localização, só contra rajadas; roda dentro do Worker, antes de ler o corpo), mesma origem obrigatória, JSON, corpo ≤ 8 KB, honeypot, tempo mínimo de preenchimento, limite por IP
  * (3 por 10 min, 10 por dia) e teto global (40 por hora), todos em caches.default. O IP só entra como hash SHA-256 truncado
  * na chave do contador e nunca é gravado em outro lugar. O conteúdo da mensagem nunca é registrado em log.
  */
+
+import { API_HEADERS, overLimit, shortHash } from "./security.mjs";
+import { getTurnstileSecret, parseHostnames, turnstileRequired, verifyTurnstile } from "./turnstile.mjs";
 
 export const LIMITS = { nameMin: 2, nameMax: 80, emailMax: 254, messageMin: 10, messageMax: 2000, bodyMax: 8192, minFillMs: 2000, maxAgeMs: 24 * 3600 * 1000 };
 export const SUBJECTS = { hiring: "Hiring Opportunity", collab: "Mobile Project Collaboration", other: "Other Inquiry" };
@@ -54,19 +62,13 @@ function json(body, status, extra) {
     headers: {
       "content-type": "application/json; charset=utf-8",
       "cache-control": "no-store",
-      "x-content-type-options": "nosniff",
-      "referrer-policy": "no-referrer",
+      ...API_HEADERS,
       ...(extra || {}),
     },
   });
 }
 
-async function shortHash(text) {
-  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
-  return [...new Uint8Array(buf).slice(0, 10)].map((b) => b.toString(16).padStart(2, "0")).join("");
-}
-
-// Contador em caches.default (por data center; aproximado, suficiente contra abuso comum). true = ainda dentro do limite.
+// Contador em caches.default (por data center; só conta envios que já passaram por corpo, honeypot, tempo mínimo, validação e Turnstile; aproximado, suficiente contra abuso comum). true = ainda dentro do limite.
 export async function hit(cache, scope, id, windowSec, limit, now = Date.now()) {
   if (!cache) return true;
   const key = new Request(`https://rl.invalid/${scope}/${id}`);
@@ -160,7 +162,7 @@ export async function deliver(env, mail, deps = {}) {
 }
 
 export async function handleContact(request, env, ctx, deps = {}) {
-  if (request.method !== "POST") return new Response(null, { status: 405, headers: { allow: "POST" } });
+  if (request.method !== "POST") return new Response(null, { status: 405, headers: { ...API_HEADERS, allow: "POST" } });
   let sameOrigin = false;
   try { sameOrigin = request.headers.get("origin") === new URL(request.url).origin; } catch (e) { /* inválido */ }
   if (!sameOrigin) return json({ error: "forbidden" }, 403);
@@ -168,6 +170,7 @@ export async function handleContact(request, env, ctx, deps = {}) {
   const declared = Number(request.headers.get("content-length"));
   if (declared > LIMITS.bodyMax) return json({ error: "too_large" }, 413);
   if (!(deps.send || configured(env))) return json({ error: "unavailable" }, 503);
+  if (await overLimit(env, "RL_CONTACT", request)) return json({ error: "rate_limited" }, 429, { "retry-after": "60" });
 
   let text;
   try { text = await request.text(); } catch (e) { return json({ error: "invalid", fields: [] }, 400); }
@@ -185,6 +188,21 @@ export async function handleContact(request, env, ctx, deps = {}) {
 
   const checked = validateContact(body);
   if (!checked.ok) return json({ error: "invalid", fields: checked.fields }, 400);
+
+  if (turnstileRequired(env)) {
+    const human = await verifyTurnstile({
+      secret: getTurnstileSecret(env),
+      token: body.turnstileToken,
+      hostnames: parseHostnames(env.TURNSTILE_HOSTNAMES),
+      action: "contact",
+      fetchImpl: deps.fetch || fetch,
+    });
+    if (!human.ok) {
+      console.warn("contact: turnstile recusado:", human.reason);   // só o motivo; nunca token, secret, IP nem conteúdo
+      if (human.reason === "unavailable") return json({ error: "captcha_unavailable" }, 503, { "retry-after": "30" });
+      return json({ error: "captcha" }, 400);
+    }
+  }
 
   const cache = deps.cache === undefined ? (typeof caches !== "undefined" ? caches.default : null) : deps.cache;
   const ip = request.headers.get("cf-connecting-ip") || "unknown";
