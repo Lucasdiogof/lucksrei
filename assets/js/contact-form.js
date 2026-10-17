@@ -248,7 +248,7 @@
       showErrors(e);
       var firstBad = fields.filter(function (f) { return e[f]; })[0];
       if (firstBad) {
-        setStatus("error", "contact.form.err_summary");
+        setStatus(null, null);   // a mensagem embaixo de cada campo já basta; sem aviso geral
         els[firstBad].focus();
         return;
       }

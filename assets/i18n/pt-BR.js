@@ -804,7 +804,6 @@
   "contact.form.err_email": "Informe um e-mail válido.",
   "contact.form.err_subject": "Selecione um assunto.",
   "contact.form.err_message": "Escreva uma mensagem com pelo menos {min} caracteres.",
-  "contact.form.err_summary": "Corrija os campos destacados.",
   "contact.form.ok_title": "Mensagem enviada",
   "contact.form.ok": "Obrigado. Sua mensagem foi entregue e responderei por e-mail.",
   "contact.form.ok_again": "Enviar outra mensagem",
