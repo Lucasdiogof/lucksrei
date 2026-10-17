@@ -174,23 +174,27 @@ O widget é renderizado com o tema real do site (`data-theme` de `<html>`, o mes
 - A CSP completa está em enforcement. O Turnstile real, Siteverify e o envio real por Resend foram validados no domínio customizado.
 - No estado D, o formulário depende da disponibilidade da rota de config, da Cloudflare (script e Siteverify) e do navegador permitir o widget.
 
-## Cloudflare: o que fica no painel (o repositório não alcança)
+## Cloudflare: estado do painel
 
-Não tive acesso autenticado à Cloudflare nesta sessão, então **nada abaixo foi alterado nem lido**: o estado "antes" precisa ser conferido por você. Sempre anote ANTES → DEPOIS.
+Estado conferido manualmente no painel em 17/10/2026:
 
-| item | onde | recomendação | observação / reversão |
-|---|---|---|---|
-| SSL/TLS | SSL/TLS → Overview | modo **Full (strict)**; *Always Use HTTPS* ligado; *Minimum TLS* 1.2 | Reverter: voltar ao valor anterior. Full (strict) exige certificado válido na origem (Workers já tem) |
-| DNSSEC | DNS → Settings | ativar e copiar o **DS** para o registrador | só vale quando o DS estiver no registrador; reverter: remover o DS no registrador **antes** de desativar |
-| WAF / managed rules | Security → WAF | Free Managed Ruleset (já automático no plano gratuito) | conferir se está ativo |
-| Regra de rate limiting (a avaliar) | Security → WAF → Rate limiting rules | proposta: `starts_with(http.request.uri.path, "/api/")` → 40 req / 10 s por IP → Block por 10 s | única camada que atua antes do Worker (os bindings do código não atuam). **Não confirmei** quantas regras nem quais opções o plano gratuito permite. Reverter: desativar a regra |
-| Regra personalizada (opcional) | Security → WAF → Custom rules | *Block* para `/.env`, `/.git`, `/wp-login.php`, `/xmlrpc.php`, `/wp-admin` | reduz ruído de scanners; nenhuma dessas rotas existe no site |
-| Bot Fight Mode | Security → Bots | **deixar desligado por enquanto** | veja abaixo |
-| Under Attack Mode | Security → Settings | **só em ataque ativo**, depois desligar | desafia todo visitante |
-| Alertas de quota | Workers & Pages → Plans/Usage + Notifications | notificação de uso do Worker/D1 | evita surpresa; a quota gratuita é 100 mil requisições/dia |
+| item | estado | observação / reversão |
+|---|---|---|
+| Free Managed Ruleset | **Sempre ativo** | proteção gerenciada da Cloudflare; não alterar |
+| Proteção contra DDoS | **automática** | camada da Cloudflare antes do Worker |
+| Rate limiting de borda | **ativo**: `rate-limit-contact` | `http.request.uri.path eq "/api/contact"`; 5 req / 10 s; chave por IP/colo; **Block** por 10 s. Atua antes do Worker. Reverter: desativar a regra |
+| Monitoramento contínuo de script | **ON** | monitora mudanças/injeções de JavaScript |
+| Obfuscação de endereço de e-mail | **ON** | mantida |
+| Bot Fight Mode | **OFF** | mantido desligado para não arriscar App Links, previews e tráfego legítimo |
+| AI Labyrinth | **OFF** | mantido |
+| Precursor | **OFF** | mantido |
+| Detecção de credenciais vazadas | **OFF** | não há login no site |
+| Hotlink Protection | **OFF** | evita quebrar OG/previews e uso legítimo das imagens |
+| Web Analytics / RUM | **OFF** | desativado para remover a injeção de `static.cloudflareinsights.com` e manter a CSP fechada |
+| Under Attack Mode | **OFF normalmente** | usar só em ataque ativo e desligar depois |
 
-### Bot Fight Mode: por que não ativei nem recomendo agora
-No plano gratuito ele oferece pouca margem para exceções e trata como bot o tráfego não verificado. O site publica `/.well-known/apple-app-site-association` e `assetlinks.json`, buscados por servidores da Apple e do Google, e recebe prévias de link (WhatsApp, Slack, LinkedIn). Esses clientes podem ser bloqueados e quebrar os App Links dos apps. Se quiser testar: ative, olhe *Security → Events* por alguns dias, valide `https://app-site-association.cdn-apple.com/a/v1/lucksrei.com` e as prévias de link, e desative se aparecer bloqueio.
+### Bot Fight Mode: por que continua desligado
+No plano gratuito ele oferece pouca margem para exceções e trata como bot o tráfego não verificado. O site publica `/.well-known/apple-app-site-association` e `assetlinks.json`, buscados por servidores da Apple e do Google, e recebe prévias de link (WhatsApp, Slack, LinkedIn). Esses clientes podem ser bloqueados e quebrar os App Links dos apps.
 
 ### workers.dev e URLs de preview
 Existem: o check do GitHub (Workers Builds) e o comentário do PR #5 mostraram `*.workers.dev` e *Preview URLs* ativos para este Worker. Riscos: uma cópia pública do site e da API sem as regras do domínio, **sem o Cache API** (o limite por cache do contato não funciona em `workers.dev`), compartilhando D1 e o secret do Resend. O que sustenta desligar: nada no repositório referencia `workers.dev` (apps, App Links e SEO usam `lucksrei.com`).
@@ -206,15 +210,25 @@ Efeito colateral: PRs deixam de ter URL de preview. Reverter: `true` (ou religar
 
 ## GitHub
 
-Estado confirmado por leitura (API do repositório): repo público; **Secret Scanning ligado; Push Protection ligado**; Dependabot security updates **desligado**; Secret Scanning *non-provider patterns* e *validity checks* desligados; **nenhum ruleset e nenhuma proteção de branch**. Não há `package.json` nem GitHub Actions, então o Dependabot tem pouco a escanear.
+Estado conferido em 17/10/2026:
 
-A sessão não pode escrever nessas configurações. Para proteger a `main` contra acidentes **sem exigir PR e sem bloquear push normal nem o deploy da Cloudflare**:
+- repositório público;
+- **Dependency graph: ON**;
+- **Dependabot alerts: ON**;
+- **Dependabot security updates: ON**;
+- **Grouped security updates: ON**;
+- Dependabot version updates: não configurado (não há manifest de dependências útil hoje);
+- **CodeQL: Default setup ativo**, com scan concluído;
+- **Copilot Autofix: ON**;
+- AI Scan for pull requests: OFF;
+- Agentic autofix: OFF;
+- **Secret Protection / Secret Scanning: ON**;
+- **Push Protection: ON**;
+- Private vulnerability reporting: OFF;
+- a UI atual não expôs controles separados para *Validity checks* nem *Non-provider patterns*;
+- **nenhum ruleset** por decisão do proprietário; push direto na `main` continua permitido.
 
-1. Settings → Rules → Rulesets → *New ruleset* → *Import a ruleset* → envie `docs/ruleset-main.json`.
-2. Ele aplica na branch padrão: **bloquear exclusão** e **bloquear force-push** (`non_fast_forward`). Sem *Require pull request*, sem aprovações, sem commits assinados.
-3. Reverter: apagar o ruleset ou colocar *Enforcement* em *Disabled*.
-
-Extras gratuitos recomendados: Settings → Code security → *Dependabot alerts* e *security updates*, *Secret scanning → Validity checks* e *Non-provider patterns*, *Private vulnerability reporting*.
+Não há `package.json` nem GitHub Actions no projeto, então o Dependabot tem pouco a escanear hoje.
 
 ## Segredos
 
@@ -253,12 +267,15 @@ Auditoria por padrões (GitHub, AWS, Resend, Turnstile, Slack, Google, Stripe, c
 - Fluxo positivo real validado: token válido → Siteverify → Resend → e-mail recebido.
 - Cloudflare Web Analytics/RUM desativado; `static.cloudflareinsights.com/beacon.min.js` não é mais injetado.
 - CSP completa promovida para enforcement no commit `458bf53e8d3976fd22686fc2c0eab12e9199d2e8`.
-- Verificação externa do cabeçalho em produção confirmou a CSP completa, HSTS, `X-Frame-Options`, `Permissions-Policy`, COOP, nosniff e `Referrer-Policy`; nota A no SecurityHeaders.
+- Verificação externa do cabeçalho em produção confirmou a CSP completa, HSTS, `X-Frame-Options`, `Permissions-Policy`, COOP, nosniff e `Referrer-Policy`; nota A no SecurityHeaders. Depois disso, o HSTS foi aumentado no repositório para `max-age=2592000` (30 dias), sem `includeSubDomains` nem `preload`.
 - **Headers das APIs confirmados**: CSP `default-src 'none'; frame-ancestors 'none'`, `X-Frame-Options: DENY`, nosniff e `Referrer-Policy: no-referrer`.
 
-### Ainda pendente
-- Comportamento real dos contadores `ratelimits` sob volume.
-- Hardening opcional adicional (aumentar HSTS futuramente para 6–12 meses após período estável, GitHub ruleset e controles gratuitos de segurança).
+### Estado final / opcionais
+- Rate limiting de borda da Cloudflare ativo em `/api/contact`: 5 requisições / 10 s, bloqueio de 10 s, além das camadas internas do Worker.
+- GitHub security hardening concluído: Dependabot alerts/security updates/grouped updates, CodeQL Default setup, Copilot Autofix, Secret Protection e Push Protection ativos.
+- HSTS configurado em `max-age=2592000` (30 dias). Próxima elevação para 6–12 meses é opcional e deve ser feita só após período estável.
+- Ruleset de proteção da `main` permanece opcional e **não foi implementado por decisão do proprietário**.
+- Teste de estresse deliberado dos rate limits não foi executado para evitar bloqueio desnecessário e tráfego artificial em produção.
 
 ## Verificação
 
