@@ -804,7 +804,6 @@
   "contact.form.err_email": "Enter a valid email address.",
   "contact.form.err_subject": "Select a subject.",
   "contact.form.err_message": "Write a message of at least {min} characters.",
-  "contact.form.err_summary": "Please fix the highlighted fields.",
   "contact.form.ok_title": "Message sent",
   "contact.form.ok": "Thank you. Your message was delivered and I'll reply by email.",
   "contact.form.ok_again": "Send another message",
