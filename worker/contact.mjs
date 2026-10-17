@@ -10,7 +10,7 @@
  * Remetente "Lucksrei <marketing@lucksrei.com>", destino marketing@lucksrei.com (o Email Routing já encaminha ao Gmail),
  * Reply-To = e-mail do visitante. Variáveis opcionais: CONTACT_TO e CONTACT_FROM (só o endereço; inválido volta ao padrão).
  *
- * Turnstile: obrigatório só com TURNSTILE_ENFORCE=on E TURNSTILE_SECRET_KEY E TURNSTILE_SITE_KEY (turnstileRequired). Então o corpo precisa
+ * Turnstile: obrigatório só com TURNSTILE_ENFORCE=on E TURNSTILE_SECRET_KEY não vazio E TURNSTILE_SITE_KEY válida (turnstileRequired). Então o corpo precisa
  * trazer turnstileToken válido (Siteverify no servidor, hostname e action "contact" conferidos, sem enviar o IP): token
  * ausente/inválido/reutilizado: 400 captcha; Siteverify indisponível ou lento: 503 captcha_unavailable (falha fechada).
  * Sem a flag, ou com ela e alguma chave faltando, o token é ignorado e o fluxo é o de sempre (desligar = TURNSTILE_ENFORCE=off, sem deploy).
@@ -21,7 +21,7 @@
  */
 
 import { API_HEADERS, overLimit, shortHash } from "./security.mjs";
-import { parseHostnames, turnstileRequired, verifyTurnstile } from "./turnstile.mjs";
+import { getTurnstileSecret, parseHostnames, turnstileRequired, verifyTurnstile } from "./turnstile.mjs";
 
 export const LIMITS = { nameMin: 2, nameMax: 80, emailMax: 254, messageMin: 10, messageMax: 2000, bodyMax: 8192, minFillMs: 2000, maxAgeMs: 24 * 3600 * 1000 };
 export const SUBJECTS = { hiring: "Hiring Opportunity", collab: "Mobile Project Collaboration", other: "Other Inquiry" };
@@ -191,7 +191,7 @@ export async function handleContact(request, env, ctx, deps = {}) {
 
   if (turnstileRequired(env)) {
     const human = await verifyTurnstile({
-      secret: env.TURNSTILE_SECRET_KEY,
+      secret: getTurnstileSecret(env),
       token: body.turnstileToken,
       hostnames: parseHostnames(env.TURNSTILE_HOSTNAMES),
       action: "contact",

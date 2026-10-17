@@ -121,18 +121,20 @@ Fluxo: o formulário (marcador `data-turnstile-contact`, **sem chave no HTML**) 
 
 `wrangler.jsonc` tem `"keep_vars": true`: sem isso o Wrangler trata o arquivo como fonte da verdade e **apaga** variáveis criadas só no painel no próximo deploy (comportamento descrito no esquema do próprio Wrangler). Com `keep_vars`, `TURNSTILE_SITE_KEY` e `TURNSTILE_ENFORCE` sobrevivem aos deploys automáticos. Secrets nunca são afetados. A sitekey é pública; nada além dela é servido pelo endpoint.
 
-`GET /api/turnstile-config` responde `{ "enabled": true, "sitekey": "…" }` ou `{ "enabled": false, "sitekey": null }`. Só GET (405 nos outros), `no-store`, sem D1, sem rate limit próprio (barato), mesmos cabeçalhos de segurança da API. Uma sitekey fora do formato `[A-Za-z0-9_-]{8,100}` nunca é servida e conta como ausente. Custo: uma requisição do Worker por visita em que o formulário chega perto da tela (a rota **não** é chamada no carregamento da página).
+`GET /api/turnstile-config` responde `{ "enabled": true, "sitekey": "…" }` ou `{ "enabled": false, "sitekey": null }`. Só GET (405 nos outros), `no-store`, sem D1, sem rate limit próprio (barato), mesmos cabeçalhos de segurança da API. Uma sitekey fora do formato `[A-Za-z0-9_-]{8,100}` (depois do `trim`) nunca é servida e conta como ausente também para o enforcement; a válida é devolvida já normalizada. Custo: uma requisição do Worker por visita em que o formulário chega perto da tela (a rota **não** é chamada no carregamento da página).
 
 ### Condição exata de enforcement (servidor)
 
 ```js
 turnstileRequired =
   env.TURNSTILE_ENFORCE === "on" &&
-  !!env.TURNSTILE_SECRET_KEY &&
-  !!env.TURNSTILE_SITE_KEY   // no formato esperado
+  getTurnstileSiteKey(env) !== null &&   // string, trim, /^[A-Za-z0-9_-]{8,100}$/
+  getTurnstileSecret(env) !== null       // string, trim, não vazio
 ```
 
-Só o valor exato `on` ativa (`ON`, `true`, `1` não). **Nada vindo do cliente decide se o Turnstile é obrigatório.** `TURNSTILE_ENFORCE=on` com qualquer chave faltando é configuração incompleta: **não ativa** e registra um aviso sanitizado uma vez por isolate, citando só os **nomes** do que falta (nunca valores). Isso é fail-open de **configuração**; com tudo completo, o Siteverify continua **fail-closed**: token ausente, inválido, expirado, reutilizado, hostname ou action errados → 400 `captcha`; Siteverify indisponível ou lento (> 5 s) → 503 `captcha_unavailable`. Nunca vira bypass. A presença da sitekey é só *readiness*; a segurança real é o token + Siteverify (`success === true`, hostname, action `contact`, uso único, validade). Token: string, não vazia, ≤ 2048 caracteres, validado antes de chamar a Cloudflare. O `remoteip` **não** é enviado ao Siteverify (opcional; o IP só continua como hash nos contadores).
+**Uma única regra para a sitekey:** `getTurnstileSiteKey` decide tanto o que `/api/turnstile-config` entrega ao front quanto se a sitekey conta como presente para o enforcement. Assim, uma sitekey que o front não consegue usar (ausente, vazia, só espaços, curta como `abc`, com caracteres inválidos ou longa demais) **nunca** ativa a exigência (há teste ponta a ponta no `/api/contact` e um teste que compara as duas decisões para uma lista de valores). O secret só precisa ser string não vazia depois do `trim` (espaço puro não é secret configurado); o formato dele não é validado porque não há especificação oficial confiável, e o valor normalizado é o enviado ao Siteverify. Nenhum valor é logado.
+
+Só o valor exato `on` ativa (`ON`, `true`, `1` não). **Nada vindo do cliente decide se o Turnstile é obrigatório.** `TURNSTILE_ENFORCE=on` com qualquer chave ausente **ou inválida** é configuração incompleta: **não ativa** e registra um aviso sanitizado uma vez por isolate, citando só os **nomes** (`TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`), nunca valores. Isso é fail-open de **configuração**; com tudo completo, o Siteverify continua **fail-closed**: token ausente, inválido, expirado, reutilizado, hostname ou action errados → 400 `captcha`; Siteverify indisponível ou lento (> 5 s) → 503 `captcha_unavailable`. Nunca vira bypass. A presença da sitekey é só *readiness*; a segurança real é o token + Siteverify (`success === true`, hostname, action `contact`, uso único, validade). Token: string, não vazia, ≤ 2048 caracteres, validado antes de chamar a Cloudflare. O `remoteip` **não** é enviado ao Siteverify (opcional; o IP só continua como hash nos contadores).
 
 ### Matriz de estados
 

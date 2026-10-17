@@ -114,14 +114,58 @@ var GOOD = { body: { success: true, hostname: "lucksrei.com", action: "contact",
   async function incomplete(label, env, mustMention, mustNot) {
     T.resetTurnstileWarning();
     var l1 = await plain(label, env, NO_TOKEN);
-    var w = l1.filter(function (l) { return /TURNSTILE_ENFORCE=on mas falta/.test(l); });
+    var w = l1.filter(function (l) { return /TURNSTILE_ENFORCE=on mas falta ou é inválida/.test(l); });
     check(w.length === 1 && w[0].indexOf(mustMention) >= 0 && (!mustNot || w[0].indexOf(mustNot) < 0) && w[0].indexOf(SECRET) < 0 && w[0].indexOf(SITE) < 0, label + ": aviso único, só com o nome do que falta e sem valores");
     var l2 = await plain(label + " (2ª requisição)", env, NO_TOKEN);
     check(l2.filter(function (l) { return /TURNSTILE_ENFORCE/.test(l); }).length === 0, label + ": o aviso não se repete a cada requisição");
   }
   await incomplete("F) enforce=on + secret, SEM sitekey", { TURNSTILE_ENFORCE: "on", TURNSTILE_SECRET_KEY: SECRET }, "TURNSTILE_SITE_KEY", "TURNSTILE_SECRET_KEY");
   await incomplete("G) enforce=on + sitekey, SEM secret", { TURNSTILE_ENFORCE: "on", TURNSTILE_SITE_KEY: SITE }, "TURNSTILE_SECRET_KEY", "TURNSTILE_SITE_KEY");
-  await incomplete("H) enforce=on sem secret e sem sitekey", { TURNSTILE_ENFORCE: "on" }, "TURNSTILE_SECRET_KEY e TURNSTILE_SITE_KEY");
+  await incomplete("H) enforce=on sem secret e sem sitekey", { TURNSTILE_ENFORCE: "on" }, "TURNSTILE_SITE_KEY e TURNSTILE_SECRET_KEY");
+
+  // ---- /api/contact de ponta a ponta: nenhuma configuração ausente, incompleta OU INVÁLIDA ativa o enforcement
+  async function e2e(label, env, expectRequired, expectWarn) {
+    T.resetTurnstileWarning();
+    var c = []; var b = sent.length; var w0 = logged.length;
+    var r = await C.handleContact(post(body(NO_TOKEN)), env, ctx, { cache: memCache(), now: function () { return NOW; }, send: async function (m) { sent.push(m); }, fetch: siteverify(GOOD, c) });
+    var wl = logged.slice(w0);
+    if (expectRequired) check(r.status === 400 && sent.length === b && c.length === 0, label + ": EXIGE (sem token → 400, nada enviado, Siteverify nem chamado)");
+    else check(r.status === 200 && sent.length === b + 1 && c.length === 0, label + ": NÃO exige (200, e-mail enviado, Siteverify NÃO chamado) — status " + r.status + ", chamadas " + c.length);
+    var warns = wl.filter(function (l) { return /TURNSTILE_ENFORCE=on mas falta ou é inválida/.test(l); });
+    check(expectWarn ? warns.length === 1 : warns.length === 0, label + ": " + (expectWarn ? "warning único de configuração" : "sem warning de configuração") + " (" + warns.length + ")");
+    check(wl.every(function (l) { return l.indexOf(SECRET) < 0 && l.indexOf("non-empty-test-secret") < 0 && l.indexOf(SITE) < 0 && l.indexOf('"abc"') < 0; }), label + ": nenhum valor sensível no log");
+    return warns[0] || "";
+  }
+  var okSecret = "non-empty-test-secret";
+  var wAbc = await e2e('sitekey "abc" (curta/inválida) + secret + enforce=on', { TURNSTILE_SITE_KEY: "abc", TURNSTILE_SECRET_KEY: okSecret, TURNSTILE_ENFORCE: "on" }, false, true);
+  check(wAbc.indexOf("TURNSTILE_SITE_KEY") >= 0 && wAbc.indexOf("TURNSTILE_SECRET_KEY") < 0 && !/\babc\b/.test(wAbc.replace("TURNSTILE_ENFORCE=on mas falta ou é inválida", "")), 'o warning de "abc" cita só o nome TURNSTILE_SITE_KEY, não o valor');
+  await e2e("sitekey só com espaços + secret + enforce=on", { TURNSTILE_SITE_KEY: "   ", TURNSTILE_SECRET_KEY: okSecret, TURNSTILE_ENFORCE: "on" }, false, true);
+  await e2e("sitekey vazia + secret + enforce=on", { TURNSTILE_SITE_KEY: "", TURNSTILE_SECRET_KEY: okSecret, TURNSTILE_ENFORCE: "on" }, false, true);
+  await e2e("sitekey com caractere inválido + secret + enforce=on", { TURNSTILE_SITE_KEY: "chave com espaço!", TURNSTILE_SECRET_KEY: okSecret, TURNSTILE_ENFORCE: "on" }, false, true);
+  await e2e("sitekey > 100 caracteres + secret + enforce=on", { TURNSTILE_SITE_KEY: "k".repeat(101), TURNSTILE_SECRET_KEY: okSecret, TURNSTILE_ENFORCE: "on" }, false, true);
+  await e2e("sitekey não-string + secret + enforce=on", { TURNSTILE_SITE_KEY: 12345678, TURNSTILE_SECRET_KEY: okSecret, TURNSTILE_ENFORCE: "on" }, false, true);
+  await e2e("sitekey válida + secret só com espaços + enforce=on", { TURNSTILE_SITE_KEY: SITE, TURNSTILE_SECRET_KEY: "   ", TURNSTILE_ENFORCE: "on" }, false, true);
+  await e2e("sitekey válida + secret vazio + enforce=on", { TURNSTILE_SITE_KEY: SITE, TURNSTILE_SECRET_KEY: "", TURNSTILE_ENFORCE: "on" }, false, true);
+  await e2e("sitekey válida + secret não-string + enforce=on", { TURNSTILE_SITE_KEY: SITE, TURNSTILE_SECRET_KEY: 12345, TURNSTILE_ENFORCE: "on" }, false, true);
+  await e2e('sitekey válida + secret + enforce="ON"', { TURNSTILE_SITE_KEY: SITE, TURNSTILE_SECRET_KEY: okSecret, TURNSTILE_ENFORCE: "ON" }, false, false);
+  await e2e('sitekey válida + secret + enforce="true"', { TURNSTILE_SITE_KEY: SITE, TURNSTILE_SECRET_KEY: okSecret, TURNSTILE_ENFORCE: "true" }, false, false);
+  await e2e("sitekey válida + secret + enforce ausente", { TURNSTILE_SITE_KEY: SITE, TURNSTILE_SECRET_KEY: okSecret }, false, false);
+  await e2e('sitekey válida + secret + enforce="on" → EXIGE', { TURNSTILE_SITE_KEY: SITE, TURNSTILE_SECRET_KEY: okSecret, TURNSTILE_ENFORCE: "on" }, true, false);
+  // sitekey e secret com espaços nas pontas são normalizados (trim) e o Siteverify recebe o secret já normalizado
+  var cTrim = []; var bTrim = sent.length;
+  var rTrim = await C.handleContact(post(body()), { TURNSTILE_SITE_KEY: "  " + SITE + "  ", TURNSTILE_SECRET_KEY: "  " + okSecret + "\n", TURNSTILE_ENFORCE: "on" }, ctx, { cache: memCache(), now: function () { return NOW; }, send: async function (m) { sent.push(m); }, fetch: siteverify(GOOD, cTrim) });
+  check(rTrim.status === 200 && sent.length === bTrim + 1 && cTrim.length === 1 && cTrim[0].init.body.get("secret") === okSecret, "enforce=on com espaços nas pontas: exige, token válido segue e o Siteverify recebe o secret normalizado");
+  check(T.getTurnstileSiteKey({ TURNSTILE_SITE_KEY: " " + SITE + " " }) === SITE && T.getTurnstileSiteKey({ TURNSTILE_SITE_KEY: "abc" }) === null && T.getTurnstileSiteKey({}) === null && T.getTurnstileSiteKey(null) === null, "getTurnstileSiteKey: válida normalizada, o resto null");
+  check(T.getTurnstileSecret({ TURNSTILE_SECRET_KEY: "  s3  " }) === "s3" && T.getTurnstileSecret({ TURNSTILE_SECRET_KEY: " \t " }) === null && T.getTurnstileSecret({ TURNSTILE_SECRET_KEY: 7 }) === null && T.getTurnstileSecret({}) === null, "getTurnstileSecret: trim, vazio/whitespace/não-string = null");
+  // a MESMA regra: tudo que o endpoint de config recusa, o enforcement também recusa (e vice-versa)
+  var Wcfg = (await import("../worker/index.mjs")).default;
+  var samples = ["abc", "", "   ", SITE, " " + SITE + " ", "x".repeat(8), "x".repeat(100), "x".repeat(101), "bad key", "bad/key", undefined, null, 123456789, { a: 1 }];
+  for (var si = 0; si < samples.length; si++) {
+    var envS = { TURNSTILE_SITE_KEY: samples[si], TURNSTILE_SECRET_KEY: okSecret, TURNSTILE_ENFORCE: "on" };
+    var cj = await (await Wcfg.fetch(new Request("https://lucksrei.com/api/turnstile-config"), envS, ctx)).json();
+    T.resetTurnstileWarning(); var logsBefore = logged.length;
+    check(cj.enabled === T.turnstileRequired(envS) && (cj.enabled ? cj.sitekey === T.getTurnstileSiteKey(envS) : cj.sitekey === null), "config e enforcement concordam para sitekey " + JSON.stringify(samples[si]) + " (enabled=" + cj.enabled + ")");
+  }
 
   // D) enforce=on + secret + sitekey: obrigatório; sem token nada é enviado e o Siteverify nem é chamado
   var cD = []; var bD = sent.length;
@@ -170,6 +214,10 @@ var GOOD = { body: { success: true, hostname: "lucksrei.com", action: "contact",
   // ---- GET /api/turnstile-config: só a sitekey pública
   var Wk = (await import("../worker/index.mjs")).default;
   function cfgReq(method) { return new Request("https://lucksrei.com/api/turnstile-config", { method: method || "GET" }); }
+  var cfgOf = async function (env) { return JSON.stringify(await (await Wk.fetch(cfgReq(), env, ctx)).json()); };
+  var DIS = JSON.stringify({ enabled: false, sitekey: null });
+  check(await cfgOf({}) === DIS && await cfgOf({ TURNSTILE_SITE_KEY: "" }) === DIS && await cfgOf({ TURNSTILE_SITE_KEY: "   " }) === DIS && await cfgOf({ TURNSTILE_SITE_KEY: "abc" }) === DIS, "config: ausente, vazia, whitespace e malformada → disabled");
+  check(await cfgOf({ TURNSTILE_SITE_KEY: "  " + SITE + " " }) === JSON.stringify({ enabled: true, sitekey: SITE }), "config: sitekey válida é devolvida normalizada (trim)");
   var noKey = await Wk.fetch(cfgReq(), { TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "on" }, ctx);
   check(noKey.status === 200 && JSON.stringify(await noKey.json()) === JSON.stringify({ enabled: false, sitekey: null }), "config sem sitekey: 200 { enabled: false, sitekey: null }");
   var withKey = await Wk.fetch(cfgReq(), { TURNSTILE_SITE_KEY: SITE, TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "on" }, ctx);
