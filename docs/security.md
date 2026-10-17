@@ -28,10 +28,10 @@ Toda resposta da API leva: `X-Content-Type-Options: nosniff`, `Referrer-Policy: 
 | `Permissions-Policy` | câmera, microfone, localização, pagamento, USB, captura de tela e sensores desligados | o site não usa nenhum |
 | `Cross-Origin-Opener-Policy` | `same-origin` | isola a janela de outras origens |
 | `Strict-Transport-Security` | `max-age=604800` (7 dias) | só HTTPS; **sem `includeSubDomains` e sem `preload`** de propósito |
-| `Content-Security-Policy` (aplicada) | `base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'` | diretivas que não afetam o carregamento |
-| `Content-Security-Policy-Report-Only` | política completa (abaixo) | só observa, não bloqueia |
+| `Content-Security-Policy` (aplicada) | política completa (abaixo) | bloqueia recursos fora da allowlist |
+| `Content-Security-Policy-Report-Only` | removida | a política completa foi promovida para enforcement |
 
-### CSP completa (em Report-Only)
+### CSP completa (enforced)
 
 ```
 default-src 'self'; script-src 'self' https://challenges.cloudflare.com;
@@ -41,13 +41,13 @@ connect-src 'self' https://challenges.cloudflare.com; frame-src https://challeng
 worker-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'
 ```
 
-Por quê: o inventário das 20 páginas publicadas mostrou **zero** recursos externos, **zero** `<script>` inline executável, **zero** handlers `on*=`, nenhum iframe. Existem 2 blocos `<style>` inline (liberados por hash) e atributos `style=""` (liberados só em `style-src-attr`). `data:` só em imagens (um fundo SVG no CSS). O único host externo é o do Turnstile. Sem `unsafe-eval`, sem curinga, sem `unsafe-inline` em script ou `<style>`.
+Por quê: o inventário das 20 páginas publicadas mostrou **zero** recursos externos, **zero** `<script>` inline executável, **zero** handlers `on*=`, nenhum iframe próprio. Existem 2 blocos `<style>` inline (liberados por hash) e atributos `style=""` (liberados só em `style-src-attr`). `data:` só em imagens. O único host externo necessário é o Turnstile. Sem `unsafe-eval`, sem curinga, sem `unsafe-inline` em script ou `<style>`.
 
 Se você editar um `<style>` inline, o hash muda: `node tests/security.test.js` avisa e mostra qual.
 
-**`_headers` confirmado na Cloudflare.** No Commit Preview real do SHA `f007dab1a7ea01cc449302e4e00a0f71ea48325c`, o Cloudflare Workers Static Assets aplicou, em `/`, `/apps/` e `/contact/`, a CSP mínima, a CSP completa em Report-Only, `Strict-Transport-Security: max-age=604800`, `X-Frame-Options: DENY`, `Permissions-Policy`, `Cross-Origin-Opener-Policy: same-origin`, `X-Content-Type-Options: nosniff` e `Referrer-Policy: strict-origin-when-cross-origin` (ver "Status de validação"). Isso foi no **Commit Preview**, não no domínio customizado `https://lucksrei.com`.
+**Produção confirmada em `https://lucksrei.com`.** Depois de desativar o Cloudflare Web Analytics/RUM (que injetava `static.cloudflareinsights.com`), foram verificados `/`, `/apps/`, `/contact/`, `/visitors/` e páginas de projetos em navegador real, sem violação CSP originada pelo site. Os avisos observados dentro do iframe do próprio Turnstile pertencem à política interna de `challenges.cloudflare.com`, não à CSP de Lucksrei. A política completa foi então promovida para `Content-Security-Policy` no commit `458bf53e8d3976fd22686fc2c0eab12e9199d2e8`.
 
-**Por que a CSP completa continua em Report-Only:** em Chromium local, com a política aplicada (20 páginas × PT/EN/ES + modais, formulário, mapa), houve zero violações. Os cabeçalhos já estão confirmados na Cloudflare, mas ainda falta a inspeção em um **navegador real** no preview: console, mensagens `[Report Only]`, recursos bloqueados, overflow, claro/escuro, PT/EN/ES e celular. Também seguem pendentes o Turnstile real, o Siteverify real e a validação no domínio customizado (a Cloudflare pode injetar scripts por conta própria, ex.: Web Analytics). Por isso a política completa só observa. **Para promover:** abra o site com o DevTools (Console) em `/`, `/apps/`, `/contact/`, `/visitors/`; se não aparecer nenhum `Content Security Policy`/`Report Only`, troque o nome do cabeçalho `Content-Security-Policy-Report-Only` por `Content-Security-Policy` (unindo com a linha aplicada) e faça push.
+Uma verificação externa posterior confirmou o cabeçalho completo em produção e nota **A** no SecurityHeaders. O Web Analytics permanece desativado; o site usa o contador próprio em D1.
 
 ## Camadas de limitação: o que cada uma faz e o que não faz
 
@@ -159,7 +159,7 @@ O widget é renderizado com o tema real do site (`data-theme` de `<html>`, o mes
 ### Ativação (ordem; nenhum deploy de HTML é necessário)
 1. **Criar o widget** em Cloudflare → Turnstile: tipo **Managed** (não Invisible), hostnames `lucksrei.com` e `www.lucksrei.com` (nada de `workers.dev`).
 2. No Worker `lucksrei-site` → *Settings → Variables and Secrets*, criar a variável de texto `TURNSTILE_SITE_KEY` com a Site Key. `TURNSTILE_ENFORCE` continua ausente/`off`.
-3. Verificar no site publicado: o widget aparece; celular; PT/EN/ES; tema claro/escuro; console (nenhuma violação nova, inclusive a CSP Report-Only).
+3. Verificar no site publicado: o widget aparece; celular; PT/EN/ES; tema claro/escuro; console sem violação CSP originada pelo site.
 4. Criar o secret `TURNSTILE_SECRET_KEY` (tipo *Secret*). `TURNSTILE_ENFORCE` ainda ausente/`off`.
 5. Enviar uma mensagem real ainda com enforcement desligado e conferir que chega.
 6. **Só depois**, definir `TURNSTILE_ENFORCE` = `on`. Conferir Siteverify, Resend, caixa de entrada e o Turnstile Analytics.
@@ -171,7 +171,7 @@ O widget é renderizado com o tema real do site (`data-theme` de `<html>`, o mes
 
 ### Limitações conhecidas
 - Mudança de idioma ou tema recria o widget (ver acima); não há troca "in place".
-- A CSP completa ainda é Report-Only; o Turnstile real nunca rodou (só stub nos testes locais), então a validação com sitekey real no preview e depois no domínio customizado ainda é necessária antes de endurecer.
+- A CSP completa está em enforcement. O Turnstile real, Siteverify e o envio real por Resend foram validados no domínio customizado.
 - No estado D, o formulário depende da disponibilidade da rota de config, da Cloudflare (script e Siteverify) e do navegador permitir o widget.
 
 ## Cloudflare: o que fica no painel (o repositório não alcança)
@@ -239,39 +239,26 @@ Auditoria por padrões (GitHub, AWS, Resend, Turnstile, Slack, Google, Stripe, c
 
 ## Status de validação
 
-Três níveis, que não se misturam. Nada abaixo foi validado em `https://lucksrei.com`.
-
 ### Local
 - 10 arquivos de teste passando (`for t in tests/*.test.js; do node $t; done`).
 - 71 checks em `tests/turnstile.test.js`.
 - 71 verificações em Chromium local, com a CSP aplicada.
-- Turnstile, Siteverify e Resend **simulados**; nenhuma chamada real.
 - `wrangler deploy --dry-run` e `wrangler dev --local` (Wrangler 4.151.1).
 
-### Cloudflare Commit Preview real (SHA `f007dab1a7ea01cc449302e4e00a0f71ea48325c`)
-Workers Build `Workers Builds: lucksrei-site`: sucesso. Verificado externamente pelo dono do site (a sessão de desenvolvimento não alcança `workers.dev`):
-
-| requisição | resultado |
-|---|---|
-| `GET /`, `/apps/`, `/contact/`, `/visitors/` | 200 |
-| `GET /api/whoami`, `/api/visitors`, `/api/github-contributions` | 200 |
-| `GET /api/turnstile-config` | 200 `{"enabled":false,"sitekey":null}`, `Cache-Control: no-store` (esperado: ainda não há sitekey) |
-| `POST /api/turnstile-config` | 405 |
-| `GET /api/contact` | 405 |
-| `DELETE /api/github-contributions` | 405 |
-| `POST /api/contact` de outra origem | 403 |
-| `POST /api/contact` com `Content-Type` inválido | 415 |
-| `POST /api/contact` com JSON inválido | 400 |
-
-- **`_headers` confirmado** em `/`, `/apps/` e `/contact/`: CSP mínima, CSP completa em Report-Only (com `challenges.cloudflare.com` em script/connect/frame), HSTS `max-age=604800`, `X-Frame-Options: DENY`, `Permissions-Policy`, COOP `same-origin`, nosniff e `Referrer-Policy: strict-origin-when-cross-origin`.
+### Produção — `https://lucksrei.com`
+- `/`, `/apps/`, `/contact/`, `/visitors/` e páginas de projetos respondendo 200 em smoke tests externos.
+- `GET /api/turnstile-config` responde 200 com `enabled:true` e apenas a sitekey pública.
+- Turnstile real validado em PT-BR, EN, ES e mobile; widget Managed com `appearance: interaction-only`.
+- Enforcement real validado: POST válido sem token → 400 `captcha`; token inválido → 400 `captcha`.
+- Fluxo positivo real validado: token válido → Siteverify → Resend → e-mail recebido.
+- Cloudflare Web Analytics/RUM desativado; `static.cloudflareinsights.com/beacon.min.js` não é mais injetado.
+- CSP completa promovida para enforcement no commit `458bf53e8d3976fd22686fc2c0eab12e9199d2e8`.
+- Verificação externa do cabeçalho em produção confirmou a CSP completa, HSTS, `X-Frame-Options`, `Permissions-Policy`, COOP, nosniff e `Referrer-Policy`; nota A no SecurityHeaders.
 - **Headers das APIs confirmados**: CSP `default-src 'none'; frame-ancestors 'none'`, `X-Frame-Options: DENY`, nosniff e `Referrer-Policy: no-referrer`.
-- Nenhum `POST` válido de contato foi executado e nenhum e-mail foi enviado.
 
 ### Ainda pendente
-- Smoke visual manual no preview, em navegador real: console, mensagens `[Report Only]`, recursos bloqueados, overflow, claro/escuro, PT/EN/ES e celular.
-- Turnstile real e Siteverify real.
-- Comportamento real dos contadores `ratelimits`.
-- Validação do domínio customizado depois de um eventual merge.
+- Comportamento real dos contadores `ratelimits` sob volume.
+- Hardening opcional adicional (HSTS maior, GitHub ruleset e controles gratuitos de segurança).
 
 ## Verificação
 
