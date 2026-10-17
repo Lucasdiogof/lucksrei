@@ -1,4 +1,4 @@
-/* Turnstile no /api/contact: validação no servidor, falha segura e segredo fora do front. Rode: node tests/turnstile.test.js */
+/* Turnstile no /api/contact: ativação por TURNSTILE_ENFORCE, validação no servidor, falha segura, front que nunca decide e segredo fora do front. Rode: node tests/turnstile.test.js */
 "use strict";
 var fs = require("fs");
 var path = require("path");
@@ -28,9 +28,9 @@ var GOOD = { body: { success: true, hostname: "lucksrei.com", action: "contact",
   var T = await import("../worker/turnstile.mjs");
   var ctx = { waitUntil: function (p) { return p; } };
   var sent = []; var logged = [];
-  var oe = console.error, ol = console.log; console.error = console.log = function () { logged.push([].slice.call(arguments).join(" ")); };
+  var oe = console.error, ol = console.log, ow = console.warn; console.error = console.log = console.warn = function () { logged.push([].slice.call(arguments).join(" ")); };
   function run(req, env, fetchImpl, extra) {
-    return C.handleContact(req, Object.assign({ TURNSTILE_SECRET_KEY: SECRET }, env || {}), ctx, Object.assign({ cache: memCache(), now: function () { return NOW; }, send: async function (m) { sent.push(m); }, fetch: fetchImpl }, extra || {}));
+    return C.handleContact(req, Object.assign({ TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "on" }, env || {}), ctx, Object.assign({ cache: memCache(), now: function () { return NOW; }, send: async function (m) { sent.push(m); }, fetch: fetchImpl }, extra || {}));
   }
 
   // ---- válido
@@ -39,7 +39,7 @@ var GOOD = { body: { success: true, hostname: "lucksrei.com", action: "contact",
   check(ok.status === 200 && sent.length === 1, "token válido: 200 e e-mail enviado");
   var sv = calls[0], form = sv.init.body;
   check(sv.url === "https://challenges.cloudflare.com/turnstile/v0/siteverify" && sv.init.method === "POST", "Siteverify: POST na URL oficial");
-  check(form.get("secret") === SECRET && form.get("response") === "tok-valido-123" && form.get("remoteip") === "203.0.113.9", "Siteverify recebe secret, token e IP");
+  check(form.get("secret") === SECRET && form.get("response") === "tok-valido-123" && !form.has("remoteip") && Array.from(form.keys()).sort().join() === "response,secret", "Siteverify recebe só secret e token: o IP do visitante (remoteip) não é enviado");
   check(!!sv.init.signal, "Siteverify com timeout (AbortSignal)");
 
   // ---- rejeições (nada é enviado, nada chega ao e-mail)
@@ -87,13 +87,50 @@ var GOOD = { body: { success: true, hostname: "lucksrei.com", action: "contact",
   for (var i = 0; i < 5; i++) codes.push((await run(post(), {}, siteverify(GOOD), d)).status);
   check(codes.join() === "200,200,200,429,429", "limite por IP (3/10 min) continua: " + codes.join());
 
-  // ---- sem o secret: verificação desligada, fluxo de sempre
-  var c2 = []; var before = sent.length;
-  var off = await C.handleContact(post(body({ turnstileToken: undefined })), {}, ctx, { cache: memCache(), now: function () { return NOW; }, send: async function (m) { sent.push(m); }, fetch: siteverify(GOOD, c2) });
-  check(off.status === 200 && c2.length === 0 && sent.length === before + 1, "sem TURNSTILE_SECRET_KEY o contato funciona como antes e não chama o Siteverify");
+  // ---- ativação: só TURNSTILE_ENFORCE === "on" E secret. Qualquer outro estado = fluxo de sempre, sem Siteverify
+  async function plain(label, env, over, expectWarn) {
+    var c = []; var b = sent.length; var w0 = logged.length;
+    var r = await C.handleContact(post(body(over)), env, ctx, { cache: memCache(), now: function () { return NOW; }, send: async function (m) { sent.push(m); }, fetch: siteverify(GOOD, c) });
+    check(r.status === 200 && c.length === 0 && sent.length === b + 1, label + ": formulário funciona e o Siteverify não é chamado (status " + r.status + ", chamadas " + c.length + ")");
+    return logged.slice(w0);
+  }
+  var NO_TOKEN = { turnstileToken: undefined };
+  await plain("A) sem sitekey/secret/enforce", {}, NO_TOKEN);
+  await plain("B) sitekey sem secret e sem enforce (token enviado e ignorado)", {}, {});
+  await plain("C) secret sem enforce (token enviado e ignorado)", { TURNSTILE_SECRET_KEY: SECRET }, {});
+  await plain("C2) secret sem enforce e sem token", { TURNSTILE_SECRET_KEY: SECRET }, NO_TOKEN);
+  await plain("E) secret sem sitekey no front, sem enforce", { TURNSTILE_SECRET_KEY: SECRET }, NO_TOKEN);
+  await plain("enforce=off", { TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "off" }, NO_TOKEN);
+  await plain("enforce vazio", { TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "" }, NO_TOKEN);
+  await plain("enforce com valor fora do contrato ('true' não ativa)", { TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "true" }, NO_TOKEN);
+  await plain("enforce 'ON' em maiúsculas não ativa (só o valor exato 'on')", { TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "ON" }, NO_TOKEN);
+  check(T.turnstileRequired({ TURNSTILE_ENFORCE: "on", TURNSTILE_SECRET_KEY: "x" }) === true && T.turnstileRequired({}) === false && T.turnstileRequired(null) === false, "turnstileRequired: true só com enforce=on + secret");
+
+  // F) enforce ligado sem secret = configuração incompleta: não ativa, não derruba o formulário, avisa uma vez, sem valores
+  T.resetTurnstileWarning();
+  var logsF = await plain("F) enforce=on sem secret", { TURNSTILE_ENFORCE: "on" }, NO_TOKEN);
+  check(logsF.filter(function (l) { return /TURNSTILE_ENFORCE=on sem TURNSTILE_SECRET_KEY/.test(l); }).length === 1, "F) aviso de configuração incompleta registrado");
+  var logsF2 = await plain("F) segunda requisição", { TURNSTILE_ENFORCE: "on" }, NO_TOKEN);
+  check(logsF2.filter(function (l) { return /TURNSTILE_ENFORCE/.test(l); }).length === 0, "F) o aviso não se repete a cada requisição");
+
+  // D) enforce=on + secret: obrigatório; sem token nada é enviado e o Siteverify nem é chamado
+  var cD = []; var bD = sent.length;
+  var noTok = await run(post(body(NO_TOKEN)), {}, siteverify(GOOD, cD));
+  check(noTok.status === 400 && (await noTok.json()).error === "captcha" && cD.length === 0 && sent.length === bD, "D) enforce=on sem token: 400 captcha, sem e-mail, sem chamar a Cloudflare");
+  var dupSeen = {};
+  var dupSv = function (url, init) { var tk = init.body.get("response"); var r = dupSeen[tk] ? { success: false, "error-codes": ["timeout-or-duplicate"] } : { success: true, hostname: "lucksrei.com", action: "contact" }; dupSeen[tk] = true; return Promise.resolve(new Response(JSON.stringify(r), { status: 200 })); };
+  var first = await run(post(body({ turnstileToken: "tok-replay" })), {}, dupSv);
+  var replay = await run(post(body({ turnstileToken: "tok-replay" }), "203.0.113.10"), {}, dupSv);
+  check(first.status === 200 && replay.status === 400 && (await replay.json()).error === "captcha", "D) replay do mesmo token (Siteverify simulado devolve timeout-or-duplicate): rejeitado");
+  var wrn = logged.filter(function (l) { return /turnstile recusado/.test(l); });
+  check(wrn.length > 0 && wrn.every(function (l) { return !l.includes(SECRET) && !l.includes("tok-") && !l.includes("203.0.113"); }), "rejeições registram só o motivo, sem token, secret nem IP");
+
+  // hostnames de produção: workers.dev e hosts locais nunca entram, nem por override
+  check(JSON.stringify(T.parseHostnames("x.workers.dev, localhost,127.0.0.1,[::1]")) === JSON.stringify(["lucksrei.com", "www.lucksrei.com"]), "override com workers.dev/localhost/127.0.0.1 é ignorado");
+  check(JSON.stringify(T.parseHostnames("a.exemplo.dev,b.workers.dev")) === JSON.stringify(["a.exemplo.dev"]), "o filtro tira só os hosts não-produção");
 
   // ---- segredo e token nunca saem
-  console.error = oe; console.log = ol;
+  console.error = oe; console.log = ol; console.warn = ow;
   var alllogs = logged.join("\n");
   check(alllogs.indexOf(SECRET) < 0 && alllogs.indexOf("tok-valido-123") < 0, "secret e token nunca aparecem em log");
   var rj = JSON.stringify(await (await run(post(), {}, siteverify({ body: { success: false } }))).json());
@@ -110,6 +147,9 @@ var GOOD = { body: { success: true, hostname: "lucksrei.com", action: "contact",
   check((js.match(/https:\/\/[a-z.]+/g) || []).filter(function (u) { return /challenges\.cloudflare\.com/.test(u); }).length >= 1 && !/siteverify/i.test(js), "o front só carrega api.js; Siteverify existe apenas no servidor");
   check(/appearance: "interaction-only"/.test(js) && /action: "contact"/.test(js), "widget sem CAPTCHA visual e com action contact");
   check(/if \(sitekey\) mountTurnstile\(\)/.test(js), "sem sitekey, nenhum script de terceiro é carregado");
+  check(!/setStatus\("error", "contact\.form\.fail_captcha"\)/.test(js), "o front não bloqueia o envio por causa do Turnstile (a mensagem vem só da resposta do servidor)");
+  check(!/theme: "dark"|theme: "light"/.test(js) && /getAttribute\("data-theme"\)/.test(js), "tema do widget vem do tema real do site, não fixo");
+  check(!/\.set\(\s*"remoteip"/.test(read("worker/turnstile.mjs")) && !/ip: request\.headers/.test(read("worker/contact.mjs")), "remoteip não é enviado ao Siteverify");
   var cfg = read("wrangler.jsonc");
   check(!/TURNSTILE|0x4[A-Za-z0-9_-]{15,}/.test(cfg), "wrangler.jsonc sem chaves do Turnstile (o secret vive só no Worker)");
   var gi = require("child_process").execSync("git ls-files", { cwd: root }).toString().split("\n").filter(function (f) { return f && !/^tests\//.test(f) && /\.(js|mjs|html|md|jsonc|json|css|txt)$/.test(f); });
@@ -117,7 +157,69 @@ var GOOD = { body: { success: true, hostname: "lucksrei.com", action: "contact",
   var csp = read("_headers");
   check(/script-src 'self' https:\/\/challenges\.cloudflare\.com/.test(csp) && /frame-src https:\/\/challenges\.cloudflare\.com/.test(csp) && /connect-src 'self' https:\/\/challenges\.cloudflare\.com/.test(csp), "CSP prevê script, frame e connect do Turnstile");
 
+  // ---- front: o Turnstile só tenta obter um token; nunca decide (createTurnstile com window simulado)
+  var F = require("../assets/js/contact-form.js");
+  function fakeWin(o) {
+    var scripts = []; var w = { rendered: [], removed: [], resets: [], theme: o.theme || "dark" };
+    var n = 0;
+    function fire(params) {
+      if (o.widget === "token") setTimeout(function () { params.callback("tok-front-" + (++n)); }, 5);
+      else if (o.widget === "error") setTimeout(function () { params["error-callback"](); }, 5);
+    }
+    var ts = {
+      render: function (box, params) { if (o.renderThrows) throw new Error("x"); w.rendered.push(params); fire(params); return "w" + w.rendered.length; },
+      remove: function (id) { w.removed.push(id); },
+      reset: function (id) { w.resets.push(id); fire(w.rendered[w.rendered.length - 1]); }
+    };
+    w.document = {
+      documentElement: { getAttribute: function (a) { return a === "data-theme" ? w.theme : null; } },
+      getElementById: function (id) { return scripts.filter(function (x) { return x.id === id; })[0] || null; },
+      createElement: function () { return {}; },
+      head: { appendChild: function (sc) { scripts.push(sc); setTimeout(function () { if (o.scriptFails) sc.onerror && sc.onerror(); else { w.turnstile = ts; sc.onload && sc.onload(); } }, 5); } }
+    };
+    w.setTimeout = setTimeout; w.scripts = scripts;
+    return w;
+  }
+  function gateFor(o, loc) { var w = fakeWin(o); var locale = { v: loc || "en" }; var g = F.createTurnstile({ root: w, box: {}, sitekey: "1x-sitekey-publica", getLocale: function () { return locale.v; }, waitMs: o.waitMs == null ? 300 : o.waitMs }); return { w: w, g: g, locale: locale }; }
+  async function timed(p) { var t = Date.now(); var v = await p; return { v: v, ms: Date.now() - t }; }
+
+  var fOk = gateFor({ widget: "token" });
+  var t1 = await timed(fOk.g.obtain());
+  check(t1.v === "tok-front-1" && fOk.w.scripts.length === 1 && /challenges\.cloudflare\.com\/turnstile\/v0\/api\.js\?render=explicit/.test(fOk.w.scripts[0].src), "front: carrega o api.js oficial uma vez e obtém o token");
+  check(fOk.w.rendered[0].action === "contact" && fOk.w.rendered[0].appearance === "interaction-only" && fOk.w.rendered[0].sitekey === "1x-sitekey-publica", "front: render com sitekey, action contact e interaction-only");
+  var t1b = await timed(fOk.g.obtain());
+  check(t1b.v === "", "front: o token já usado NÃO é reaproveitado numa segunda tentativa sem reset");
+  fOk.g.reset();
+  var t2 = await fOk.g.obtain();
+  check(fOk.w.resets.length === 1 && t2 === "tok-front-2" && t2 !== t1.v, "front: reset após a tentativa e token novo na seguinte (" + t2 + " ≠ " + t1.v + ")");
+
+  var fScript = gateFor({ scriptFails: true });
+  var t3 = await timed(fScript.g.obtain());
+  check(t3.v === "" && t3.ms < 200, "front: script bloqueado/falho → segue sem token na hora (" + t3.ms + " ms)");
+  var fErr = gateFor({ widget: "error" });
+  var t4 = await timed(fErr.g.obtain());
+  check(t4.v === "" && t4.ms < 250, "front: erro do widget → segue sem token (" + t4.ms + " ms)");
+  var fThrow = gateFor({ renderThrows: true });
+  var t4b = await timed(fThrow.g.obtain());
+  check(t4b.v === "" && t4b.ms < 250, "front: render que lança → segue sem token");
+  var fSlow = gateFor({ widget: "slow", waitMs: 400 });
+  var t5 = await timed(fSlow.g.obtain());
+  check(t5.v === "" && t5.ms >= 350 && t5.ms < 1500, "front: widget que demora → espera só o limite curto e segue sem token (" + t5.ms + " ms)");
+  check(/var TS_WAIT_MS = 4[0-9]{3};/.test(read("assets/js/contact-form.js")), "front: espera máxima padrão de ~4,5 s (não 10 s)");
+
+  var fTheme = gateFor({ widget: "token", theme: "light" }, "pt-BR");
+  await fTheme.g.obtain();
+  check(fTheme.w.rendered[0].theme === "light" && fTheme.w.rendered[0].language === "pt-br", "front: tema e idioma iniciais seguem os do site (light, pt-br)");
+  fTheme.w.theme = "dark"; fTheme.locale.v = "es"; fTheme.g.rerender();
+  check(fTheme.w.removed.length === 1 && fTheme.w.rendered.length === 2 && fTheme.w.rendered[1].theme === "dark" && fTheme.w.rendered[1].language === "es", "front: mudança de tema/idioma re-renderiza o widget");
+  var fLoc = gateFor({ widget: "token" }, "fr");
+  await fLoc.g.obtain();
+  check(fLoc.w.rendered[0].language === "auto", "front: idioma desconhecido → auto");
+  var fNone = gateFor({ widget: "token" });
+  fNone.g.rerender();
+  check(fNone.w.rendered.length === 0, "front: rerender antes do primeiro render não cria widget");
+
   clearInterval(keepAlive);
   if (failures.length) { console.error("FALHOU:\n - " + failures.join("\n - ")); process.exit(1); }
-  console.log("ok — turnstile: válido, inválido, ausente, expirado, hostname/action errados, timeout, indisponível (falha fechada), ordem das checagens, desligado sem secret, segredo fora do front");
+  console.log("ok — turnstile: matriz sitekey/secret/enforce, falha fechada só com enforcement ativo, replay, token gigante, sem remoteip, front que nunca bloqueia, reset, tema e idioma, segredo fora do front");
 })().catch(function (e) { console.error(e); process.exit(1); });

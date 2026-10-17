@@ -4,9 +4,11 @@
  * (HTTP 200 com { ok: true }); em qualquer erro o texto digitado é mantido. Validação aqui é conforto de UX;
  * a validação que vale é a do servidor. Os limites abaixo precisam bater com worker/contact.mjs.
  *
- * Turnstile: só entra em cena se o <form> tiver data-turnstile-sitekey (chave pública). O script da Cloudflare carrega quando o
- * formulário se aproxima da tela, em modo "interaction-only" (sem CAPTCHA visual na maioria dos casos). O token vai em
- * turnstileToken e é validado no servidor; cada token vale uma tentativa, então o widget é reiniciado depois de cada envio.
+ * Turnstile: data-turnstile-sitekey (chave pública) significa só "tente obter um token". O front NUNCA bloqueia o envio por
+ * causa do Turnstile: se o script não carregar, o widget falhar ou o token não vier em poucos segundos, o POST sai sem token e
+ * quem decide é o servidor (a verificação só é obrigatória quando está ativada lá; ver worker/contact.mjs e docs/security.md).
+ * O script da Cloudflare carrega quando o formulário se aproxima da tela, em modo "interaction-only". Cada token vale uma
+ * tentativa: é consumido ao enviar e o widget é reiniciado depois. Tema e idioma do widget seguem os do site.
  * Sem sitekey, nada disso é carregado.
  */
 (function (root, factory) {
@@ -37,6 +39,69 @@
     return e;
   }
 
+  var TURNSTILE_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+  var TS_LANG = { en: "en", "pt-BR": "pt-br", es: "es" };
+  var TS_WAIT_MS = 4500;
+  var TS_POLL_MS = 150;
+
+  // Obtém (no máximo) um token do Turnstile por tentativa. Nunca decide nada: sem token, obtain() resolve "".
+  function createTurnstile(o) {
+    var win = o.root, box = o.box;
+    var st = { token: "", widget: null, failed: false };
+    var waitMs = o.waitMs == null ? TS_WAIT_MS : o.waitMs;
+
+    function theme() { return win.document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark"; }
+
+    function render() {
+      if (!win.turnstile) return;
+      if (st.widget !== null) { try { win.turnstile.remove(st.widget); } catch (e) { /* já removido */ } st.widget = null; st.token = ""; }
+      try {
+        st.widget = win.turnstile.render(box, {
+          sitekey: o.sitekey, action: "contact", theme: theme(), appearance: "interaction-only",
+          language: TS_LANG[o.getLocale()] || "auto",
+          callback: function (tok) { st.token = tok; st.failed = false; },
+          "expired-callback": function () { st.token = ""; },
+          "error-callback": function () { st.token = ""; st.failed = true; }
+        });
+        st.failed = false;
+      } catch (e) { st.failed = true; }
+    }
+
+    function load() {
+      if (win.turnstile) { if (st.widget === null) render(); return; }
+      if (win.document.getElementById("cf-turnstile-api")) return;
+      var sc = win.document.createElement("script");
+      sc.id = "cf-turnstile-api"; sc.src = TURNSTILE_SRC; sc.async = true; sc.defer = true;
+      sc.onload = render;
+      sc.onerror = function () { st.failed = true; };
+      win.document.head.appendChild(sc);
+    }
+
+    // espera pouco: o widget costuma resolver em < 1 s. Falha conhecida (script bloqueado, erro do widget) não espera nada.
+    function obtain() {
+      load();
+      return new Promise(function (resolve) {
+        var waited = 0;
+        (function poll() {
+          if (st.token) { var tok = st.token; st.token = ""; return resolve(tok); }   // consumido: não pode ser reutilizado
+          if (st.failed || waited >= waitMs) return resolve("");
+          waited += TS_POLL_MS;
+          win.setTimeout(poll, TS_POLL_MS);
+        })();
+      });
+    }
+
+    // depois de qualquer tentativa que usou token: um token novo para a próxima
+    function reset() {
+      st.token = "";
+      if (st.widget !== null && win.turnstile) { try { win.turnstile.reset(st.widget); } catch (e) { st.failed = true; } }
+    }
+
+    function rerender() { if (st.widget !== null) render(); }
+
+    return { load: load, obtain: obtain, reset: reset, rerender: rerender, state: st };
+  }
+
   function init() {
     var form = root.document.querySelector("form[data-contact-form]");
     if (!form) return;
@@ -57,8 +122,7 @@
     var statusKey = null;
     var statusKind = null;
     var sitekey = (form.getAttribute("data-turnstile-sitekey") || "").trim();
-    var tsToken = "";
-    var tsWidget = null;
+    var gate = null;
 
     function setLabel(key) { btnLabel.setAttribute("data-i18n", key); btnLabel.textContent = t(key); }
 
@@ -105,56 +169,24 @@
       count.textContent = t("contact.form.counter", { n: els.message.value.length, max: LIMITS.messageMax });
     }
 
-    var TURNSTILE_SRC = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
-    var TS_LANG = { en: "en", "pt-BR": "pt-br", es: "es" };
-
     function mountTurnstile() {
       var box = root.document.createElement("div");
       box.className = "cf-turnstile-box";
       form.querySelector(".cf-actions").parentNode.insertBefore(box, form.querySelector(".cf-actions"));
-      var render = function () {
-        if (tsWidget !== null || !root.turnstile) return;
-        tsWidget = root.turnstile.render(box, {
-          sitekey: sitekey, action: "contact", theme: "dark", appearance: "interaction-only",
-          language: TS_LANG[I18N ? I18N.getLocale() : "en"] || "auto",
-          callback: function (tok) { tsToken = tok; },
-          "expired-callback": function () { tsToken = ""; },
-          "error-callback": function () { tsToken = ""; }
-        });
-      };
-      var load = function () {
-        if (root.turnstile) return render();
-        if (root.document.getElementById("cf-turnstile-api")) return;
-        var sc = root.document.createElement("script");
-        sc.id = "cf-turnstile-api"; sc.src = TURNSTILE_SRC; sc.async = true; sc.defer = true; sc.onload = render;
-        root.document.head.appendChild(sc);
-      };
+      gate = createTurnstile({ root: root, box: box, sitekey: sitekey, getLocale: function () { return I18N ? I18N.getLocale() : "en"; } });
       if ("IntersectionObserver" in root) {
         var io = new root.IntersectionObserver(function (entries, obs) {
-          if (entries.some(function (x) { return x.isIntersecting; })) { obs.disconnect(); load(); }
+          if (entries.some(function (x) { return x.isIntersecting; })) { obs.disconnect(); gate.load(); }
         }, { rootMargin: "300px 0px" });
         io.observe(form);
       } else {
-        load();
+        gate.load();
       }
-      form.addEventListener("focusin", load);
-    }
-
-    // espera o token por até 10 s (o widget se resolve sozinho, quase sempre em < 1 s)
-    function waitForToken() {
-      return new Promise(function (resolve) {
-        var tries = 0;
-        (function poll() {
-          if (tsToken) return resolve(tsToken);
-          if (++tries > 50) return resolve("");
-          root.setTimeout(poll, 200);
-        })();
-      });
-    }
-
-    function resetTurnstile() {
-      tsToken = "";
-      if (tsWidget !== null && root.turnstile) { try { root.turnstile.reset(tsWidget); } catch (e) { /* o próximo envio mostra o erro */ } }
+      form.addEventListener("focusin", gate.load);
+      root.document.addEventListener("lucksrei:locale", gate.rerender);
+      if (typeof root.MutationObserver === "function") {
+        new root.MutationObserver(gate.rerender).observe(root.document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+      }
     }
 
     function setBusy(on) {
@@ -207,12 +239,9 @@
         name: clean(values.name).replace(/\s+/g, " "), email: clean(values.email), subject: values.subject,
         message: clean(values.message), website: form.elements.website.value, ts: loadedAt, locale: I18N ? I18N.getLocale() : "en"
       };
-      var needsToken = sitekey !== "";
-      (needsToken ? waitForToken() : Promise.resolve("")).then(function (token) {
-        if (needsToken) {
-          if (!token) { setStatus("error", "contact.form.fail_captcha"); return null; }
-          payload.turnstileToken = token;
-        }
+      var usedToken = false;
+      (gate ? gate.obtain() : Promise.resolve("")).then(function (token) {
+        if (token) { payload.turnstileToken = token; usedToken = true; }   // sem token o POST sai igual: o servidor decide
         timer = ctl ? root.setTimeout(function () { ctl.abort(); }, 20000) : null;
         return root.fetch("/api/contact", {
           method: "POST", headers: { "content-type": "application/json", accept: "application/json" },
@@ -221,7 +250,7 @@
           .then(function (r) { return r.json().catch(function () { return null; }).then(function (b) { return { status: r.status, body: b }; }); })
           .then(onResult, function () { setStatus("error", "contact.form.fail_network"); });
       })
-        .then(function () { if (timer) root.clearTimeout(timer); if (needsToken) resetTurnstile(); setBusy(false); });
+        .then(function () { if (timer) root.clearTimeout(timer); if (usedToken) gate.reset(); setBusy(false); });
     });
 
     fields.forEach(function (f) {
@@ -242,5 +271,5 @@
     if (sitekey) mountTurnstile();
   }
 
-  return { validate: validate, LIMITS: LIMITS, SUBJECTS: SUBJECTS, init: init };
+  return { validate: validate, LIMITS: LIMITS, SUBJECTS: SUBJECTS, init: init, createTurnstile: createTurnstile };
 });

@@ -134,6 +134,7 @@ function check(ok, msg) { if (!ok) failures.push(msg); }
   check(ids.length === 3 && new Set(ids).size === 3, "só os 3 bindings em uso, com namespace_id únicos");
   check(!/RL_READ|RL_GITHUB|RL_VISIT_ALL|GITHUB_CONTRIBUTIONS/.test(cfg + src), "nenhum binding sem uso nem feature flag do GitHub restante");
   check(/"RL_VISIT",[^}]*"limit": 30, "period": 60/.test(cfg) && /"RL_VISIT_COLO",[^}]*"limit": 300, "period": 60/.test(cfg) && /"RL_CONTACT",[^}]*"limit": 10, "period": 60/.test(cfg), "limites: visita 30/min por IP, 300/min por colo; contato 10/min");
+  check(/"keep_vars":\s*true/.test(cfg), "keep_vars: variáveis definidas no painel (ex.: TURNSTILE_ENFORCE) sobrevivem ao deploy automático");
   check(!/workers_dev|preview_urls/.test(cfg), "workers_dev/preview_urls ficam para o painel até confirmar o domínio (ver docs/security.md)");
   check(!/(secret|token|api[_-]?key)\s*"?\s*:\s*"[^"]{8,}"/i.test(cfg), "wrangler.jsonc sem segredo");
 
