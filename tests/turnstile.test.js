@@ -9,6 +9,7 @@ function read(p) { return fs.readFileSync(path.join(root, p), "utf8"); }
 
 var NOW = 1790000000000;
 var SECRET = "test-turnstile-secret-local";
+var SITE = "1x-sitekey-publica-teste";
 function body(over) { return JSON.stringify(Object.assign({ name: "Ana Souza", email: "ana@example.com", subject: "hiring", message: "Olá Lucas, queremos conversar sobre uma vaga Flutter.", website: "", ts: NOW - 30000, turnstileToken: "tok-valido-123" }, over || {})); }
 function post(b, ip) { return new Request("https://lucksrei.com/api/contact", { method: "POST", headers: { origin: "https://lucksrei.com", "content-type": "application/json", "cf-connecting-ip": ip || "203.0.113.9" }, body: b || body() }); }
 function memCache() { var m = new Map(); return { match: async function (r) { var v = m.get(r.url); return v ? v.clone() : undefined; }, put: async function (r, res) { m.set(r.url, res); } }; }
@@ -30,7 +31,7 @@ var GOOD = { body: { success: true, hostname: "lucksrei.com", action: "contact",
   var sent = []; var logged = [];
   var oe = console.error, ol = console.log, ow = console.warn; console.error = console.log = console.warn = function () { logged.push([].slice.call(arguments).join(" ")); };
   function run(req, env, fetchImpl, extra) {
-    return C.handleContact(req, Object.assign({ TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "on" }, env || {}), ctx, Object.assign({ cache: memCache(), now: function () { return NOW; }, send: async function (m) { sent.push(m); }, fetch: fetchImpl }, extra || {}));
+    return C.handleContact(req, Object.assign({ TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_SITE_KEY: SITE, TURNSTILE_ENFORCE: "on" }, env || {}), ctx, Object.assign({ cache: memCache(), now: function () { return NOW; }, send: async function (m) { sent.push(m); }, fetch: fetchImpl }, extra || {}));
   }
 
   // ---- válido
@@ -95,25 +96,34 @@ var GOOD = { body: { success: true, hostname: "lucksrei.com", action: "contact",
     return logged.slice(w0);
   }
   var NO_TOKEN = { turnstileToken: undefined };
-  await plain("A) sem sitekey/secret/enforce", {}, NO_TOKEN);
-  await plain("B) sitekey sem secret e sem enforce (token enviado e ignorado)", {}, {});
-  await plain("C) secret sem enforce (token enviado e ignorado)", { TURNSTILE_SECRET_KEY: SECRET }, {});
-  await plain("C2) secret sem enforce e sem token", { TURNSTILE_SECRET_KEY: SECRET }, NO_TOKEN);
-  await plain("E) secret sem sitekey no front, sem enforce", { TURNSTILE_SECRET_KEY: SECRET }, NO_TOKEN);
-  await plain("enforce=off", { TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "off" }, NO_TOKEN);
-  await plain("enforce vazio", { TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "" }, NO_TOKEN);
-  await plain("enforce com valor fora do contrato ('true' não ativa)", { TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "true" }, NO_TOKEN);
-  await plain("enforce 'ON' em maiúsculas não ativa (só o valor exato 'on')", { TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "ON" }, NO_TOKEN);
-  check(T.turnstileRequired({ TURNSTILE_ENFORCE: "on", TURNSTILE_SECRET_KEY: "x" }) === true && T.turnstileRequired({}) === false && T.turnstileRequired(null) === false, "turnstileRequired: true só com enforce=on + secret");
+  await plain("A) sem sitekey, sem secret, enforce off", {}, NO_TOKEN);
+  await plain("B) sitekey sem secret, enforce off (token enviado e ignorado)", { TURNSTILE_SITE_KEY: SITE }, {});
+  await plain("B2) sitekey sem secret, enforce off, widget falhou (sem token)", { TURNSTILE_SITE_KEY: SITE }, NO_TOKEN);
+  await plain("C) sitekey + secret, enforce off (token enviado e ignorado)", { TURNSTILE_SITE_KEY: SITE, TURNSTILE_SECRET_KEY: SECRET }, {});
+  await plain("C2) sitekey + secret, enforce off, sem token (widget falhou)", { TURNSTILE_SITE_KEY: SITE, TURNSTILE_SECRET_KEY: SECRET }, NO_TOKEN);
+  await plain("E) sem sitekey, secret, enforce off", { TURNSTILE_SECRET_KEY: SECRET }, NO_TOKEN);
+  await plain("enforce=off explícito", { TURNSTILE_SITE_KEY: SITE, TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "off" }, NO_TOKEN);
+  await plain("enforce vazio", { TURNSTILE_SITE_KEY: SITE, TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "" }, NO_TOKEN);
+  await plain("enforce com valor fora do contrato ('true' não ativa)", { TURNSTILE_SITE_KEY: SITE, TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "true" }, NO_TOKEN);
+  await plain("enforce 'ON' em maiúsculas não ativa (só o valor exato 'on')", { TURNSTILE_SITE_KEY: SITE, TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "ON" }, NO_TOKEN);
+  var full = { TURNSTILE_ENFORCE: "on", TURNSTILE_SECRET_KEY: "x", TURNSTILE_SITE_KEY: SITE };
+  check(T.turnstileRequired(full) === true && T.turnstileRequired({}) === false && T.turnstileRequired(null) === false, "turnstileRequired: true só com enforce=on + secret + sitekey");
+  check(T.turnstileRequired({ ...full, TURNSTILE_SITE_KEY: "tem espaço" }) === false && T.turnstileRequired({ ...full, TURNSTILE_SITE_KEY: "x".repeat(101) }) === false && T.turnstileRequired({ ...full, TURNSTILE_SITE_KEY: "" }) === false, "sitekey vazia ou fora do formato não conta como presente");
 
-  // F) enforce ligado sem secret = configuração incompleta: não ativa, não derruba o formulário, avisa uma vez, sem valores
-  T.resetTurnstileWarning();
-  var logsF = await plain("F) enforce=on sem secret", { TURNSTILE_ENFORCE: "on" }, NO_TOKEN);
-  check(logsF.filter(function (l) { return /TURNSTILE_ENFORCE=on sem TURNSTILE_SECRET_KEY/.test(l); }).length === 1, "F) aviso de configuração incompleta registrado");
-  var logsF2 = await plain("F) segunda requisição", { TURNSTILE_ENFORCE: "on" }, NO_TOKEN);
-  check(logsF2.filter(function (l) { return /TURNSTILE_ENFORCE/.test(l); }).length === 0, "F) o aviso não se repete a cada requisição");
+  // configurações incompletas com enforce=on: não ativam, não derrubam o formulário, avisam uma vez (só nomes, nunca valores)
+  async function incomplete(label, env, mustMention, mustNot) {
+    T.resetTurnstileWarning();
+    var l1 = await plain(label, env, NO_TOKEN);
+    var w = l1.filter(function (l) { return /TURNSTILE_ENFORCE=on mas falta/.test(l); });
+    check(w.length === 1 && w[0].indexOf(mustMention) >= 0 && (!mustNot || w[0].indexOf(mustNot) < 0) && w[0].indexOf(SECRET) < 0 && w[0].indexOf(SITE) < 0, label + ": aviso único, só com o nome do que falta e sem valores");
+    var l2 = await plain(label + " (2ª requisição)", env, NO_TOKEN);
+    check(l2.filter(function (l) { return /TURNSTILE_ENFORCE/.test(l); }).length === 0, label + ": o aviso não se repete a cada requisição");
+  }
+  await incomplete("F) enforce=on + secret, SEM sitekey", { TURNSTILE_ENFORCE: "on", TURNSTILE_SECRET_KEY: SECRET }, "TURNSTILE_SITE_KEY", "TURNSTILE_SECRET_KEY");
+  await incomplete("G) enforce=on + sitekey, SEM secret", { TURNSTILE_ENFORCE: "on", TURNSTILE_SITE_KEY: SITE }, "TURNSTILE_SECRET_KEY", "TURNSTILE_SITE_KEY");
+  await incomplete("H) enforce=on sem secret e sem sitekey", { TURNSTILE_ENFORCE: "on" }, "TURNSTILE_SECRET_KEY e TURNSTILE_SITE_KEY");
 
-  // D) enforce=on + secret: obrigatório; sem token nada é enviado e o Siteverify nem é chamado
+  // D) enforce=on + secret + sitekey: obrigatório; sem token nada é enviado e o Siteverify nem é chamado
   var cD = []; var bD = sent.length;
   var noTok = await run(post(body(NO_TOKEN)), {}, siteverify(GOOD, cD));
   check(noTok.status === 400 && (await noTok.json()).error === "captcha" && cD.length === 0 && sent.length === bD, "D) enforce=on sem token: 400 captcha, sem e-mail, sem chamar a Cloudflare");
@@ -139,14 +149,14 @@ var GOOD = { body: { success: true, hostname: "lucksrei.com", action: "contact",
   // ---- front e repositório: sitekey público (em branco até criar o widget), secret jamais
   ["index.html", "contact/index.html"].forEach(function (f) {
     var h = read(f);
-    check(/<form class="contact-form" data-contact-form data-turnstile-sitekey="[^"]*" novalidate>/.test(h), f + ": atributo data-turnstile-sitekey presente");
+    check(/<form class="contact-form" data-contact-form data-turnstile-contact novalidate>/.test(h) && !/data-turnstile-sitekey/.test(h), f + ": só o marcador data-turnstile-contact, sem sitekey no HTML");
     check(!/TURNSTILE_SECRET|0x4[A-Za-z0-9_-]{15,}/.test(h), f + ": sem segredo no HTML");
   });
   var js = read("assets/js/contact-form.js");
   check(!/TURNSTILE_SECRET|0x4[A-Za-z0-9_-]{20,}/.test(js), "contact-form.js sem segredo");
   check((js.match(/https:\/\/[a-z.]+/g) || []).filter(function (u) { return /challenges\.cloudflare\.com/.test(u); }).length >= 1 && !/siteverify/i.test(js), "o front só carrega api.js; Siteverify existe apenas no servidor");
   check(/appearance: "interaction-only"/.test(js) && /action: "contact"/.test(js), "widget sem CAPTCHA visual e com action contact");
-  check(/if \(sitekey\) mountTurnstile\(\)/.test(js), "sem sitekey, nenhum script de terceiro é carregado");
+  check(/if \(withTurnstile\) mountTurnstile\(\)/.test(js) && /\/api\/turnstile-config/.test(js) && !/data-turnstile-sitekey/.test(js), "o front só usa o marcador e busca a sitekey em /api/turnstile-config");
   check(!/setStatus\("error", "contact\.form\.fail_captcha"\)/.test(js), "o front não bloqueia o envio por causa do Turnstile (a mensagem vem só da resposta do servidor)");
   check(!/theme: "dark"|theme: "light"/.test(js) && /getAttribute\("data-theme"\)/.test(js), "tema do widget vem do tema real do site, não fixo");
   check(!/\.set\(\s*"remoteip"/.test(read("worker/turnstile.mjs")) && !/ip: request\.headers/.test(read("worker/contact.mjs")), "remoteip não é enviado ao Siteverify");
@@ -156,6 +166,27 @@ var GOOD = { body: { success: true, hostname: "lucksrei.com", action: "contact",
   gi.forEach(function (f) { if (/0x4[A-Za-z0-9_-]{25,}/.test(read(f))) check(false, "possível chave do Turnstile versionada em " + f); });
   var csp = read("_headers");
   check(/script-src 'self' https:\/\/challenges\.cloudflare\.com/.test(csp) && /frame-src https:\/\/challenges\.cloudflare\.com/.test(csp) && /connect-src 'self' https:\/\/challenges\.cloudflare\.com/.test(csp), "CSP prevê script, frame e connect do Turnstile");
+
+  // ---- GET /api/turnstile-config: só a sitekey pública
+  var Wk = (await import("../worker/index.mjs")).default;
+  function cfgReq(method) { return new Request("https://lucksrei.com/api/turnstile-config", { method: method || "GET" }); }
+  var noKey = await Wk.fetch(cfgReq(), { TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "on" }, ctx);
+  check(noKey.status === 200 && JSON.stringify(await noKey.json()) === JSON.stringify({ enabled: false, sitekey: null }), "config sem sitekey: 200 { enabled: false, sitekey: null }");
+  var withKey = await Wk.fetch(cfgReq(), { TURNSTILE_SITE_KEY: SITE, TURNSTILE_SECRET_KEY: SECRET, TURNSTILE_ENFORCE: "on" }, ctx);
+  var wkText = await withKey.text();
+  check(withKey.status === 200 && JSON.stringify(JSON.parse(wkText)) === JSON.stringify({ enabled: true, sitekey: SITE }), "config com sitekey: 200 { enabled: true, sitekey }");
+  check(wkText.indexOf(SECRET) < 0 && !/enforce|secret|on"/i.test(wkText) && Object.keys(JSON.parse(wkText)).join() === "enabled,sitekey" && wkText.length < 100, "a resposta não traz secret, enforcement nem nada interno, e é pequena (" + wkText.length + " B)");
+  check(withKey.headers.get("cache-control") === "no-store" && /json/.test(withKey.headers.get("content-type")) && withKey.headers.get("x-content-type-options") === "nosniff" && withKey.headers.get("cross-origin-resource-policy") === "same-origin" && /default-src 'none'/.test(withKey.headers.get("content-security-policy")) && withKey.headers.get("x-frame-options") === "DENY", "config: no-store e os mesmos cabeçalhos de segurança da API");
+  var dbTouched = 0; var guardEnv = { TURNSTILE_SITE_KEY: SITE, DB: { prepare: function () { dbTouched++; throw new Error("D1 não deve ser usado"); } } };
+  await Wk.fetch(cfgReq(), guardEnv, ctx);
+  check(dbTouched === 0, "config não toca o D1");
+  for (var mi = 0; mi < 3; mi++) {
+    var mm = ["POST", "PUT", "DELETE"][mi];
+    var rm = await Wk.fetch(cfgReq(mm), { TURNSTILE_SITE_KEY: SITE }, ctx);
+    check(rm.status === 405 && rm.headers.get("allow") === "GET" && rm.headers.get("x-content-type-options") === "nosniff", mm + " /api/turnstile-config → 405");
+  }
+  var badKey = await Wk.fetch(cfgReq(), { TURNSTILE_SITE_KEY: "<script>alert(1)</script>" }, ctx);
+  check(JSON.stringify(await badKey.json()) === JSON.stringify({ enabled: false, sitekey: null }), "sitekey fora do formato nunca é servida");
 
   // ---- front: o Turnstile só tenta obter um token; nunca decide (createTurnstile com window simulado)
   var F = require("../assets/js/contact-form.js");
@@ -180,22 +211,51 @@ var GOOD = { body: { success: true, hostname: "lucksrei.com", action: "contact",
     w.setTimeout = setTimeout; w.scripts = scripts;
     return w;
   }
-  function gateFor(o, loc) { var w = fakeWin(o); var locale = { v: loc || "en" }; var g = F.createTurnstile({ root: w, box: {}, sitekey: "1x-sitekey-publica", getLocale: function () { return locale.v; }, waitMs: o.waitMs == null ? 300 : o.waitMs }); return { w: w, g: g, locale: locale }; }
+  var CFG_ON = { enabled: true, sitekey: "1x-sitekey-publica" };
+  // o.config: objeto (resposta do endpoint), "fail" (rota falha) ou { delay, value }
+  function gateFor(o, loc) {
+    var w = fakeWin(o); var locale = { v: loc || "en" }; var cfgCalls = { n: 0 };
+    var cfg = o.config === undefined ? CFG_ON : o.config;
+    var g = F.createTurnstile({ root: w, box: {}, getLocale: function () { return locale.v; }, waitMs: o.waitMs == null ? 300 : o.waitMs,
+      fetchConfig: function () {
+        cfgCalls.n++;
+        if (cfg === "fail") return Promise.reject(new Error("config 500"));
+        if (cfg && cfg.delay) return new Promise(function (r) { setTimeout(function () { r(cfg.value); }, cfg.delay); });
+        return Promise.resolve(cfg);
+      } });
+    return { w: w, g: g, locale: locale, cfgCalls: cfgCalls };
+  }
   async function timed(p) { var t = Date.now(); var v = await p; return { v: v, ms: Date.now() - t }; }
 
   var fOk = gateFor({ widget: "token" });
   var t1 = await timed(fOk.g.obtain());
-  check(t1.v === "tok-front-1" && fOk.w.scripts.length === 1 && /challenges\.cloudflare\.com\/turnstile\/v0\/api\.js\?render=explicit/.test(fOk.w.scripts[0].src), "front: carrega o api.js oficial uma vez e obtém o token");
-  check(fOk.w.rendered[0].action === "contact" && fOk.w.rendered[0].appearance === "interaction-only" && fOk.w.rendered[0].sitekey === "1x-sitekey-publica", "front: render com sitekey, action contact e interaction-only");
+  check(t1.v === "tok-front-1" && fOk.cfgCalls.n === 1 && fOk.w.scripts.length === 1 && /challenges\.cloudflare\.com\/turnstile\/v0\/api\.js\?render=explicit/.test(fOk.w.scripts[0].src), "front: busca a config, carrega o api.js oficial uma vez e obtém o token");
+  check(fOk.w.rendered[0].action === "contact" && fOk.w.rendered[0].appearance === "interaction-only" && fOk.w.rendered[0].sitekey === "1x-sitekey-publica", "front: render com a sitekey do endpoint, action contact e interaction-only");
   var t1b = await timed(fOk.g.obtain());
-  check(t1b.v === "", "front: o token já usado NÃO é reaproveitado numa segunda tentativa sem reset");
+  check(t1b.v === "" && fOk.cfgCalls.n === 1, "front: o token já usado NÃO é reaproveitado numa segunda tentativa sem reset (e a config não é buscada de novo)");
   fOk.g.reset();
   var t2 = await fOk.g.obtain();
   check(fOk.w.resets.length === 1 && t2 === "tok-front-2" && t2 !== t1.v, "front: reset após a tentativa e token novo na seguinte (" + t2 + " ≠ " + t1.v + ")");
 
+  var fOff = gateFor({ widget: "token", config: { enabled: false, sitekey: null } });
+  var t0a = await timed(fOff.g.obtain());
+  check(t0a.v === "" && t0a.ms < 200 && fOff.w.scripts.length === 0 && fOff.w.rendered.length === 0, "front: endpoint diz disabled → nada de terceiros, sem espera (" + t0a.ms + " ms)");
+  var fCfgFail = gateFor({ widget: "token", config: "fail" });
+  var t0b = await timed(fCfgFail.g.obtain());
+  check(t0b.v === "" && t0b.ms < 200 && fCfgFail.w.scripts.length === 0, "front: rota de config falha → segue sem token, sem carregar nada (" + t0b.ms + " ms)");
+  var fBadCfg = [{ enabled: true, sitekey: "" }, { enabled: "true", sitekey: "abc" }, { enabled: true, sitekey: 5 }, null];
+  for (var bi = 0; bi < fBadCfg.length; bi++) {
+    var fb = gateFor({ widget: "token", config: fBadCfg[bi] });
+    var tb = await timed(fb.g.obtain());
+    check(tb.v === "" && tb.ms < 200 && fb.w.scripts.length === 0, "front: resposta de config inesperada #" + bi + " → desligado");
+  }
+  var fCfgSlow = gateFor({ widget: "token", config: { delay: 1500, value: CFG_ON }, waitMs: 300 });
+  var t0c = await timed(fCfgSlow.g.obtain());
+  check(t0c.v === "" && t0c.ms >= 250 && t0c.ms < 900, "front: config lenta → espera só o limite curto e segue sem token (" + t0c.ms + " ms)");
+
   var fScript = gateFor({ scriptFails: true });
   var t3 = await timed(fScript.g.obtain());
-  check(t3.v === "" && t3.ms < 200, "front: script bloqueado/falho → segue sem token na hora (" + t3.ms + " ms)");
+  check(t3.v === "" && t3.ms < 250, "front: script bloqueado/falho → segue sem token (" + t3.ms + " ms)");
   var fErr = gateFor({ widget: "error" });
   var t4 = await timed(fErr.g.obtain());
   check(t4.v === "" && t4.ms < 250, "front: erro do widget → segue sem token (" + t4.ms + " ms)");
@@ -217,9 +277,9 @@ var GOOD = { body: { success: true, hostname: "lucksrei.com", action: "contact",
   check(fLoc.w.rendered[0].language === "auto", "front: idioma desconhecido → auto");
   var fNone = gateFor({ widget: "token" });
   fNone.g.rerender();
-  check(fNone.w.rendered.length === 0, "front: rerender antes do primeiro render não cria widget");
+  check(fNone.w.rendered.length === 0 && fNone.cfgCalls.n === 0, "front: rerender antes do primeiro render não cria widget nem busca config");
 
   clearInterval(keepAlive);
   if (failures.length) { console.error("FALHOU:\n - " + failures.join("\n - ")); process.exit(1); }
-  console.log("ok — turnstile: matriz sitekey/secret/enforce, falha fechada só com enforcement ativo, replay, token gigante, sem remoteip, front que nunca bloqueia, reset, tema e idioma, segredo fora do front");
+  console.log("ok — turnstile: matriz A–H sitekey/secret/enforce, endpoint de config, falha fechada só com enforcement ativo, replay, token gigante, sem remoteip, front que nunca bloqueia, reset, tema e idioma, segredo fora do front");
 })().catch(function (e) { console.error(e); process.exit(1); });

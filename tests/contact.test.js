@@ -144,7 +144,7 @@ function post(body, headers) {
   check(!/value = ""/.test(errBranch.slice(0, errBranch.indexOf("setStatus(\"error\", key)"))), "erro não apaga o texto digitado");
   ["index.html", "contact/index.html"].forEach(function (f) {
     var h = read(f);
-    check(/<form class="contact-form" data-contact-form data-turnstile-sitekey="[^"]*" novalidate>/.test(h), f + ": formulário presente");
+    check(/<form class="contact-form" data-contact-form data-turnstile-contact novalidate>/.test(h), f + ": formulário presente");
     ["name", "email", "subject", "message"].forEach(function (n) { check(new RegExp('<label for="cf-' + n + '">').test(h), f + ": label de " + n); });
     check(/name="website"[^>]*tabindex="-1"[^>]*autocomplete="off"/.test(h), f + ": honeypot");
     check(/value="hiring"[\s\S]*value="collab"[\s\S]*value="other"/.test(h), f + ": assuntos");

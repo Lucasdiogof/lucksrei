@@ -5,6 +5,7 @@
  *   POST /api/visit     conta UMA visita no mês/país (e mês/país/região) atuais. 204 sempre (nunca quebra a página).
  *   GET  /api/visitors  agregados dos últimos 12 meses, por país e por região dentro de cada país (cache de 5 min).
  *   GET  /api/whoami    { country, region, region_name } do próprio visitante, vindos só de request.cf (sem cache).
+ *   GET  /api/turnstile-config      sitekey pública do Turnstile (worker/turnstile.mjs); sem D1, sem recurso externo, no-store.
  *   GET  /api/github-contributions  calendário público de contribuições do GitHub (worker/github.mjs).
  *   POST /api/contact   formulário "Send Message" (worker/contact.mjs).
  *
@@ -36,6 +37,7 @@
 
 import { handleGithub } from "./github.mjs";
 import { handleContact } from "./contact.mjs";
+import { handleTurnstileConfig } from "./turnstile.mjs";
 import { API_HEADERS, overLimit } from "./security.mjs";
 
 const VISITORS_TTL = 300; // s
@@ -287,6 +289,7 @@ export default {
 
     if (path === "/api/github-contributions") return handleGithub(request, env, ctx);
     if (path === "/api/contact") return handleContact(request, env, ctx);
+    if (path === "/api/turnstile-config") return handleTurnstileConfig(request, env);
 
     if (path.startsWith("/api/")) return json({ error: "not_found" }, 404, "no-store");
     return env.ASSETS.fetch(request);

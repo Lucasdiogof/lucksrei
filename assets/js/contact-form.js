@@ -4,12 +4,13 @@
  * (HTTP 200 com { ok: true }); em qualquer erro o texto digitado é mantido. Validação aqui é conforto de UX;
  * a validação que vale é a do servidor. Os limites abaixo precisam bater com worker/contact.mjs.
  *
- * Turnstile: data-turnstile-sitekey (chave pública) significa só "tente obter um token". O front NUNCA bloqueia o envio por
- * causa do Turnstile: se o script não carregar, o widget falhar ou o token não vier em poucos segundos, o POST sai sem token e
- * quem decide é o servidor (a verificação só é obrigatória quando está ativada lá; ver worker/contact.mjs e docs/security.md).
- * O script da Cloudflare carrega quando o formulário se aproxima da tela, em modo "interaction-only". Cada token vale uma
- * tentativa: é consumido ao enviar e o widget é reiniciado depois. Tema e idioma do widget seguem os do site.
- * Sem sitekey, nada disso é carregado.
+ * Turnstile: o <form> só leva o marcador data-turnstile-contact; a sitekey (pública) vem do Worker em GET /api/turnstile-config,
+ * buscada quando o formulário se aproxima da tela (não no carregamento da página). Sem sitekey ({enabled:false}) ou se essa
+ * rota falhar, nada de terceiros é carregado. O front NUNCA bloqueia o envio por causa do Turnstile: se o script não
+ * carregar, o widget falhar ou o token não vier em poucos segundos, o POST sai sem token e quem decide é o servidor (a
+ * verificação só é obrigatória quando está totalmente ativada lá; ver worker/contact.mjs e docs/security.md).
+ * Widget em modo "interaction-only". Cada token vale uma tentativa: é consumido ao enviar e o widget é reiniciado depois.
+ * Tema e idioma do widget seguem os do site.
  */
 (function (root, factory) {
   "use strict";
@@ -45,19 +46,20 @@
   var TS_POLL_MS = 150;
 
   // Obtém (no máximo) um token do Turnstile por tentativa. Nunca decide nada: sem token, obtain() resolve "".
+  // o.fetchConfig() -> Promise<{ enabled, sitekey }> (GET /api/turnstile-config); qualquer falha dela = sem Turnstile.
   function createTurnstile(o) {
     var win = o.root, box = o.box;
-    var st = { token: "", widget: null, failed: false };
+    var st = { token: "", widget: null, failed: false, sitekey: "", config: "idle" };   // config: idle | pending | on | off
     var waitMs = o.waitMs == null ? TS_WAIT_MS : o.waitMs;
 
     function theme() { return win.document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark"; }
 
     function render() {
-      if (!win.turnstile) return;
+      if (!win.turnstile || !st.sitekey) return;
       if (st.widget !== null) { try { win.turnstile.remove(st.widget); } catch (e) { /* já removido */ } st.widget = null; st.token = ""; }
       try {
         st.widget = win.turnstile.render(box, {
-          sitekey: o.sitekey, action: "contact", theme: theme(), appearance: "interaction-only",
+          sitekey: st.sitekey, action: "contact", theme: theme(), appearance: "interaction-only",
           language: TS_LANG[o.getLocale()] || "auto",
           callback: function (tok) { st.token = tok; st.failed = false; },
           "expired-callback": function () { st.token = ""; },
@@ -67,7 +69,7 @@
       } catch (e) { st.failed = true; }
     }
 
-    function load() {
+    function loadScript() {
       if (win.turnstile) { if (st.widget === null) render(); return; }
       if (win.document.getElementById("cf-turnstile-api")) return;
       var sc = win.document.createElement("script");
@@ -77,14 +79,27 @@
       win.document.head.appendChild(sc);
     }
 
-    // espera pouco: o widget costuma resolver em < 1 s. Falha conhecida (script bloqueado, erro do widget) não espera nada.
+    // busca a configuração uma vez; só então carrega o script da Cloudflare
+    function load() {
+      if (st.config === "on") return loadScript();
+      if (st.config !== "idle") return;
+      st.config = "pending";
+      var p;
+      try { p = Promise.resolve(o.fetchConfig()); } catch (e) { p = Promise.reject(e); }
+      p.then(function (cfg) {
+        if (cfg && cfg.enabled === true && typeof cfg.sitekey === "string" && cfg.sitekey) { st.sitekey = cfg.sitekey; st.config = "on"; loadScript(); }
+        else st.config = "off";
+      }, function () { st.config = "off"; });
+    }
+
+    // espera pouco: o widget costuma resolver em < 1 s. Sem Turnstile (config desligada ou falha), script bloqueado ou erro do widget: nada de espera.
     function obtain() {
       load();
       return new Promise(function (resolve) {
         var waited = 0;
         (function poll() {
           if (st.token) { var tok = st.token; st.token = ""; return resolve(tok); }   // consumido: não pode ser reutilizado
-          if (st.failed || waited >= waitMs) return resolve("");
+          if (st.config === "off" || st.failed || waited >= waitMs) return resolve("");
           waited += TS_POLL_MS;
           win.setTimeout(poll, TS_POLL_MS);
         })();
@@ -121,7 +136,7 @@
     var shownErrors = {};
     var statusKey = null;
     var statusKind = null;
-    var sitekey = (form.getAttribute("data-turnstile-sitekey") || "").trim();
+    var withTurnstile = form.hasAttribute("data-turnstile-contact");
     var gate = null;
 
     function setLabel(key) { btnLabel.setAttribute("data-i18n", key); btnLabel.textContent = t(key); }
@@ -173,7 +188,13 @@
       var box = root.document.createElement("div");
       box.className = "cf-turnstile-box";
       form.querySelector(".cf-actions").parentNode.insertBefore(box, form.querySelector(".cf-actions"));
-      gate = createTurnstile({ root: root, box: box, sitekey: sitekey, getLocale: function () { return I18N ? I18N.getLocale() : "en"; } });
+      gate = createTurnstile({
+        root: root, box: box, getLocale: function () { return I18N ? I18N.getLocale() : "en"; },
+        fetchConfig: function () {
+          return root.fetch("/api/turnstile-config", { credentials: "same-origin", headers: { accept: "application/json" } })
+            .then(function (r) { if (!r.ok) throw new Error("config"); return r.json(); });
+        }
+      });
       if ("IntersectionObserver" in root) {
         var io = new root.IntersectionObserver(function (entries, obs) {
           if (entries.some(function (x) { return x.isIntersecting; })) { obs.disconnect(); gate.load(); }
@@ -268,7 +289,7 @@
     });
 
     updateCount();
-    if (sitekey) mountTurnstile();
+    if (withTurnstile) mountTurnstile();
   }
 
   return { validate: validate, LIMITS: LIMITS, SUBJECTS: SUBJECTS, init: init, createTurnstile: createTurnstile };

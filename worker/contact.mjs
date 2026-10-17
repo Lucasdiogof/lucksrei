@@ -10,10 +10,10 @@
  * Remetente "Lucksrei <marketing@lucksrei.com>", destino marketing@lucksrei.com (o Email Routing já encaminha ao Gmail),
  * Reply-To = e-mail do visitante. Variáveis opcionais: CONTACT_TO e CONTACT_FROM (só o endereço; inválido volta ao padrão).
  *
- * Turnstile: obrigatório só com TURNSTILE_ENFORCE=on E o secret TURNSTILE_SECRET_KEY (turnstileRequired). Então o corpo precisa
+ * Turnstile: obrigatório só com TURNSTILE_ENFORCE=on E TURNSTILE_SECRET_KEY E TURNSTILE_SITE_KEY (turnstileRequired). Então o corpo precisa
  * trazer turnstileToken válido (Siteverify no servidor, hostname e action "contact" conferidos, sem enviar o IP): token
  * ausente/inválido/reutilizado: 400 captcha; Siteverify indisponível ou lento: 503 captcha_unavailable (falha fechada).
- * Sem a flag, ou com a flag e sem o secret, o token é ignorado e o fluxo é o de sempre (desligar = TURNSTILE_ENFORCE=off, sem deploy).
+ * Sem a flag, ou com ela e alguma chave faltando, o token é ignorado e o fluxo é o de sempre (desligar = TURNSTILE_ENFORCE=off, sem deploy).
  *
  * Antiabuso: limite por IP (binding RL_CONTACT, 10/min, contador local à localização, só contra rajadas; roda dentro do Worker, antes de ler o corpo), mesma origem obrigatória, JSON, corpo ≤ 8 KB, honeypot, tempo mínimo de preenchimento, limite por IP
  * (3 por 10 min, 10 por dia) e teto global (40 por hora), todos em caches.default. O IP só entra como hash SHA-256 truncado

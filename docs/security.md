@@ -12,6 +12,7 @@ Arquivos estáticos (HTML, CSS, JS, imagens, vídeos) são servidos pelo Workers
 | `/api/visitors` | GET | lê agregados do D1 | D1 | leitura | borda 5 min | cache de borda de 5 min (sem limite próprio) |
 | `/api/whoami` | GET | devolve país/região do próprio `request.cf` | nenhum | barato | no-store | nenhuma além do custo mínimo (sem limite próprio) |
 | `/api/contact` | POST | valida e envia e-mail | Resend (+ Turnstile Siteverify) | e-mail e reputação do domínio | no-store | **limite de aplicação 10/min por IP** (só rajadas), mesma origem, JSON, ≤ 8 KB, honeypot, tempo mínimo, 3/10 min e 10/dia por IP, 40/h global, validação, Turnstile (quando ativado) |
+| `/api/turnstile-config` | GET | devolve `{ enabled, sitekey }` (sitekey pública do Turnstile, da variável do Worker) | nenhum | barato; uma chamada por visita em que o formulário chega perto da tela | no-store | só GET (405), sem D1, sem secret nem estado de enforcement, mesmos cabeçalhos da API |
 | `/api/github-contributions` | GET | calendário do GitHub | GitHub (API/HTML) | quota externa | borda 6 h, falha 60 s | rota ativa como antes (a seção está oculta na home e o script comentado); o cache absorve as chamadas, sem limite próprio |
 | qualquer outro `/api/*` | todos | 404 JSON | nenhum | nenhum | no-store | cabeçalhos de segurança |
 
@@ -105,52 +106,69 @@ Com resposta em cache, 60 chamadas seguidas fazem 1 ida ao GitHub (teste em `tes
 
 ## Turnstile no contato
 
-Fluxo: navegador → widget Turnstile (modo **Managed**, `appearance: interaction-only`: sem CAPTCHA visual na maioria dos casos) → token → `POST /api/contact` → o Worker valida na Siteverify (`success`, hostname, action `contact`, timeout 5 s) → só então envia.
+Fluxo: o formulário (marcador `data-turnstile-contact`, **sem chave no HTML**) pede a sitekey a `GET /api/turnstile-config` quando se aproxima da tela → carrega o widget (modo **Managed**, `appearance: interaction-only`: sem CAPTCHA visual na maioria dos casos) → token → `POST /api/contact` → o Worker valida na Siteverify (`success`, hostname, action `contact`, timeout 5 s) → só então envia.
 
-**Quem decide é só o servidor.** O front apenas tenta obter um token: se o script não carregar (adblock, rede), o widget falhar ou o token não vier em ~4,5 s, o POST sai **sem token** e o servidor responde conforme estiver configurado. O front nunca bloqueia o envio por causa do Turnstile; enquanto espera, o botão fica em "Sending…" (`aria-busy`). Cada token vale uma tentativa: é consumido ao enviar e o widget é reiniciado depois (sucesso ou erro).
+**Quem decide é só o servidor.** O front apenas tenta obter um token: se a rota de config falhar ou disser `enabled: false`, se o script não carregar (adblock, rede), o widget falhar ou o token não vier em ~4,5 s, o POST sai **sem token** e o servidor responde conforme estiver configurado. O front nunca bloqueia o envio por causa do Turnstile; enquanto espera, o botão fica em "Sending…" (`aria-busy`). Cada token vale uma tentativa: é consumido ao enviar e o widget é reiniciado depois (sucesso ou erro).
+
+### Configuração (tudo no Worker; o HTML não leva chave)
+
+| nome | tipo | valor | função |
+|---|---|---|---|
+| `TURNSTILE_SITE_KEY` | variável **pública** (Text) | a sitekey do widget | servida em `/api/turnstile-config`; sem ela o front nem carrega o widget |
+| `TURNSTILE_SECRET_KEY` | **secret** | a secret key | só o servidor, para o Siteverify; nunca em HTML, JS, repositório, log ou resposta |
+| `TURNSTILE_ENFORCE` | variável (Text) | `on` | torna o Turnstile obrigatório |
+| `TURNSTILE_HOSTNAMES` | variável (opcional) | lista separada por vírgula | substitui `lucksrei.com,www.lucksrei.com`; `workers.dev`, `localhost`, `127.0.0.1` e `::1` são sempre ignorados |
+
+`wrangler.jsonc` tem `"keep_vars": true`: sem isso o Wrangler trata o arquivo como fonte da verdade e **apaga** variáveis criadas só no painel no próximo deploy (comportamento descrito no esquema do próprio Wrangler). Com `keep_vars`, `TURNSTILE_SITE_KEY` e `TURNSTILE_ENFORCE` sobrevivem aos deploys automáticos. Secrets nunca são afetados. A sitekey é pública; nada além dela é servido pelo endpoint.
+
+`GET /api/turnstile-config` responde `{ "enabled": true, "sitekey": "…" }` ou `{ "enabled": false, "sitekey": null }`. Só GET (405 nos outros), `no-store`, sem D1, sem rate limit próprio (barato), mesmos cabeçalhos de segurança da API. Uma sitekey fora do formato `[A-Za-z0-9_-]{8,100}` nunca é servida e conta como ausente. Custo: uma requisição do Worker por visita em que o formulário chega perto da tela (a rota **não** é chamada no carregamento da página).
 
 ### Condição exata de enforcement (servidor)
 
 ```js
-turnstileRequired = env.TURNSTILE_ENFORCE === "on" && !!env.TURNSTILE_SECRET_KEY
+turnstileRequired =
+  env.TURNSTILE_ENFORCE === "on" &&
+  !!env.TURNSTILE_SECRET_KEY &&
+  !!env.TURNSTILE_SITE_KEY   // no formato esperado
 ```
 
-Só o valor exato `on` ativa (`ON`, `true`, `1` não). Ter o secret **não** ativa nada. `TURNSTILE_ENFORCE=on` sem secret é configuração incompleta: **não ativa** e registra um aviso sanitizado uma vez por isolate (sem valores). Isso é fail-open de **configuração**; com a verificação ativa, o Siteverify continua **fail-closed**: token ausente, inválido, expirado, reutilizado, hostname ou action errados → 400 `captcha`; Siteverify indisponível ou lento (> 5 s) → 503 `captcha_unavailable`. Nunca vira bypass. Token: string, não vazia, ≤ 2048 caracteres, validado antes de chamar a Cloudflare. O `remoteip` **não** é enviado ao Siteverify (opcional; o IP só continua como hash nos contadores). Hostnames válidos: `lucksrei.com` e `www.lucksrei.com`; `workers.dev`, `localhost`, `127.0.0.1` e `::1` são ignorados mesmo se constarem em `TURNSTILE_HOSTNAMES`.
+Só o valor exato `on` ativa (`ON`, `true`, `1` não). **Nada vindo do cliente decide se o Turnstile é obrigatório.** `TURNSTILE_ENFORCE=on` com qualquer chave faltando é configuração incompleta: **não ativa** e registra um aviso sanitizado uma vez por isolate, citando só os **nomes** do que falta (nunca valores). Isso é fail-open de **configuração**; com tudo completo, o Siteverify continua **fail-closed**: token ausente, inválido, expirado, reutilizado, hostname ou action errados → 400 `captcha`; Siteverify indisponível ou lento (> 5 s) → 503 `captcha_unavailable`. Nunca vira bypass. A presença da sitekey é só *readiness*; a segurança real é o token + Siteverify (`success === true`, hostname, action `contact`, uso único, validade). Token: string, não vazia, ≤ 2048 caracteres, validado antes de chamar a Cloudflare. O `remoteip` **não** é enviado ao Siteverify (opcional; o IP só continua como hash nos contadores).
 
 ### Matriz de estados
 
-| | sitekey no HTML | `TURNSTILE_SECRET_KEY` | `TURNSTILE_ENFORCE` | resultado |
+| | sitekey (Worker) | secret | enforce | resultado |
 |---|---|---|---|---|
-| A | não | não | não | fluxo antigo; nenhuma chamada à Cloudflare, nenhum script de terceiros |
-| B | sim | não | não | widget roda; token enviado se existir; servidor ignora; se o widget falhar o formulário **continua enviando** |
-| C | sim | sim | não | preparação: igual a B; ainda **não** obrigatório |
-| D | sim | sim | `on` | **obrigatório**: token validado no servidor; sem token/inválido → nada é enviado |
-| E | não | sim | não | formulário funciona |
-| F | não | sim | `on` | **configuração quebrada que o servidor não consegue ver** (ver abaixo) |
-| F2 | não | não | `on` | enforcement não ativa (sem secret) + aviso; formulário funciona |
+| A | não | não | off | fluxo antigo; nenhum widget nem script de terceiros |
+| B | sim | não | off | widget aparece; token pode ser gerado; servidor ignora; widget falho **não** bloqueia o envio |
+| C | sim | sim | off | preparação completa; formulário envia mesmo se o Turnstile falhar; ainda não obrigatório |
+| D | sim | sim | **on** | **obrigatório**: token validado no servidor; sem token/inválido → nada é enviado |
+| E | não | sim | off | fluxo antigo |
+| F | não | sim | on | configuração incompleta: aviso, **não exige**, formulário funciona |
+| G | sim | não | on | configuração incompleta: aviso, **não exige**, formulário funciona |
+| H | não | não | on | idem F/G |
 
-**Limite do estado F:** o servidor não tem como saber se o HTML publicado tem sitekey, e confiar num campo enviado pelo navegador permitiria a um robô se declarar "sem widget" e escapar. Por isso a defesa é operacional: só ligue `TURNSTILE_ENFORCE=on` depois do smoke test do passo 4 (widget carregando no site publicado); se errar, a rejeição aparece no log como `contact: turnstile recusado: missing` e o rollback é `TURNSTILE_ENFORCE=off`, imediato, sem deploy.
+Não existe combinação de configuração incompleta que derrube o formulário. Única situação em que o formulário recusa é o estado D de verdade (tudo configurado e ligado) quando o visitante não consegue um token (script bloqueado, rota de config indisponível, widget mudo): aí a recusa é o comportamento pretendido (falha fechada) e a mensagem pede para tentar de novo.
 
 ### Tema e idioma
 O widget é renderizado com o tema real do site (`data-theme` de `<html>`, o mesmo que `theme-boot.js` define) e com o idioma atual (PT/EN/ES). Quando o botão de tema alterna (`data-theme` muda) ou o evento `lucksrei:locale` dispara, o widget é removido e renderizado de novo (o Turnstile não tem troca de tema/idioma "in place"); o token é refeito sozinho.
 
-### Ativação (ordem)
-1. **Criar o widget** em Cloudflare → Turnstile: tipo **Managed** (não Invisible), hostnames `lucksrei.com` e `www.lucksrei.com` (nada de `workers.dev`). Copie a **Site Key** (pública).
-2. Colocar a Site Key em `data-turnstile-sitekey=""` nos dois formulários (`index.html` e `contact/index.html`), commit, push e deploy. `TURNSTILE_ENFORCE` ausente/off. O widget pode ser observado sem bloquear o contato.
-3. Criar o secret `TURNSTILE_SECRET_KEY` no Worker (Settings → Variables and Secrets, tipo *Secret*). `TURNSTILE_ENFORCE` ainda ausente/off: tudo preparado, sem enforcement.
-4. **Smoke test** no site publicado: widget carrega; PT/EN/ES; tema claro/escuro; celular; console do navegador (nenhuma violação nova, inclusive a CSP Report-Only); o formulário continua enviando.
-5. Definir a variável de texto `TURNSTILE_ENFORCE` = `on` (Settings → Variables and Secrets, tipo *Text*). O `wrangler.jsonc` tem `"keep_vars": true`; sem isso, o Wrangler apagaria variáveis do painel no próximo deploy (documentado no esquema do Wrangler). Só agora o Turnstile é obrigatório.
-6. Enviar uma mensagem real e conferir Siteverify, Resend, caixa de entrada e o Turnstile Analytics.
+### Ativação (ordem; nenhum deploy de HTML é necessário)
+1. **Criar o widget** em Cloudflare → Turnstile: tipo **Managed** (não Invisible), hostnames `lucksrei.com` e `www.lucksrei.com` (nada de `workers.dev`).
+2. No Worker `lucksrei-site` → *Settings → Variables and Secrets*, criar a variável de texto `TURNSTILE_SITE_KEY` com a Site Key. `TURNSTILE_ENFORCE` continua ausente/`off`.
+3. Verificar no site publicado: o widget aparece; celular; PT/EN/ES; tema claro/escuro; console (nenhuma violação nova, inclusive a CSP Report-Only).
+4. Criar o secret `TURNSTILE_SECRET_KEY` (tipo *Secret*). `TURNSTILE_ENFORCE` ainda ausente/`off`.
+5. Enviar uma mensagem real ainda com enforcement desligado e conferir que chega.
+6. **Só depois**, definir `TURNSTILE_ENFORCE` = `on`. Conferir Siteverify, Resend, caixa de entrada e o Turnstile Analytics.
 
-### Rollback
-- **Principal:** `TURNSTILE_ENFORCE=off` (ou remover a variável): a exigência some na hora, sem deploy de HTML.
-- Remover o secret também deixa o Turnstile não obrigatório.
-- Para tirar o widget da tela, esvazie `data-turnstile-sitekey` nos dois formulários em outro deploy.
+### Rollback (imediato, sem deploy)
+- **Principal:** `TURNSTILE_ENFORCE=off` (ou remover a variável): a exigência some na hora.
+- Remover o secret **ou** a sitekey também deixa o Turnstile não obrigatório.
+- Para tirar o widget da tela: remover `TURNSTILE_SITE_KEY` (o front para de carregá-lo na próxima visita).
 
 ### Limitações conhecidas
 - Mudança de idioma ou tema recria o widget (ver acima); não há troca "in place".
-- O estado F (acima) só é evitado pela ordem de ativação.
 - A CSP completa ainda é Report-Only; o Turnstile real nunca rodou aqui (só stub), então a validação com sitekey real em preview/produção ainda é necessária antes de endurecer.
+- No estado D, o formulário depende da disponibilidade da rota de config, da Cloudflare (script e Siteverify) e do navegador permitir o widget.
 
 ## Cloudflare: o que fica no painel (o repositório não alcança)
 
@@ -211,7 +229,7 @@ Auditoria por padrões (GitHub, AWS, Resend, Turnstile, Slack, Google, Stripe, c
 |---|---|
 | Cabeçalhos / CSP | apagar a linha do cabeçalho em `_headers` e fazer push (deploy automático); a CSP completa está em Report-Only e não bloqueia |
 | Limites de aplicação | remover o bloco `ratelimits` do `wrangler.jsonc` (o código já passa sem binding) |
-| Turnstile | `TURNSTILE_ENFORCE=off` (imediato, sem deploy); remover o secret também desativa |
+| Turnstile | `TURNSTILE_ENFORCE=off` (imediato, sem deploy); remover o secret ou `TURNSTILE_SITE_KEY` também desativa a exigência |
 | Regras da Cloudflare | desativar a regra no painel |
 | Ruleset do GitHub | desativar/apagar o ruleset |
 

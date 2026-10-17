@@ -28,14 +28,20 @@ for (const p of ["/", "/apps/", "/contact/", "/visitors/", "/projects/fan-hub/"]
 {
   const r = await get("/");
   const html = await r.text();
-  const m = html.match(/data-turnstile-sitekey="([^"]*)"/);
-  info(`Turnstile no HTML: ${m && m[1] ? "sitekey configurada" : "sitekey vazia (verificação desligada)"}`);
+  ok(!/data-turnstile-sitekey|0x4[A-Za-z0-9_-]{15,}/.test(html), "HTML sem sitekey nem chave do Turnstile embutida (a sitekey vem de /api/turnstile-config)");
   const c = r.headers.get("content-security-policy") || "";
   info(`CSP de recursos: ${/default-src/.test(c) ? "APLICADA" : "em Report-Only (promover depois de validar o console)"}`);
 }
 for (const [p, method, status] of [["/api/visit", "GET", 405], ["/api/whoami", "POST", 405], ["/api/visitors", "DELETE", 405], ["/api/contact", "GET", 405], ["/api/nao-existe", "GET", 404]]) {
   const r = await get(p, { method });
   ok(r.status === status && r.headers.get("x-content-type-options") === "nosniff" && r.headers.get("cross-origin-resource-policy") === "same-origin", `${method} ${p} → ${status} com cabeçalhos da API (${r.status})`);
+}
+{
+  const r = await get("/api/turnstile-config");
+  const j = await r.json().catch(() => null);
+  ok(r.status === 200 && j && Object.keys(j).sort().join() === "enabled,sitekey" && (j.enabled === (typeof j.sitekey === "string")) && r.headers.get("cache-control") === "no-store", `GET /api/turnstile-config → 200 só com { enabled, sitekey } (${r.status}; enabled=${j && j.enabled})`);
+  const r2 = await get("/api/turnstile-config", { method: "POST" });
+  ok(r2.status === 405, `POST /api/turnstile-config → 405 (${r2.status})`);
 }
 for (const p of ["/api/whoami", "/api/visitors"]) {
   const r = await get(p);
