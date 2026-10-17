@@ -27,7 +27,7 @@ Toda resposta da API leva: `X-Content-Type-Options: nosniff`, `Referrer-Policy: 
 | `X-Frame-Options` + CSP `frame-ancestors 'none'` | `DENY` | o site não pode ser embutido (clickjacking) |
 | `Permissions-Policy` | câmera, microfone, localização, pagamento, USB, captura de tela e sensores desligados | o site não usa nenhum |
 | `Cross-Origin-Opener-Policy` | `same-origin` | isola a janela de outras origens |
-| `Strict-Transport-Security` | `max-age=604800` (7 dias) | só HTTPS; **sem `includeSubDomains` e sem `preload`** de propósito |
+| `Strict-Transport-Security` | `max-age=2592000` (30 dias) | só HTTPS; **sem `includeSubDomains` e sem `preload`** de propósito |
 | `Content-Security-Policy` (aplicada) | política completa (abaixo) | bloqueia recursos fora da allowlist |
 | `Content-Security-Policy-Report-Only` | removida | a política completa foi promovida para enforcement |
 
@@ -258,7 +258,7 @@ Auditoria por padrões (GitHub, AWS, Resend, Turnstile, Slack, Google, Stripe, c
 
 ### Ainda pendente
 - Comportamento real dos contadores `ratelimits` sob volume.
-- Hardening opcional adicional (HSTS maior, GitHub ruleset e controles gratuitos de segurança).
+- Hardening opcional adicional (aumentar HSTS futuramente para 6–12 meses após período estável, GitHub ruleset e controles gratuitos de segurança).
 
 ## Verificação
 
