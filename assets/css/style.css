@@ -1053,7 +1053,7 @@ main{ counter-reset: sec; }
   transition: width .35s var(--ease), height .35s var(--ease), border-color .35s var(--ease);
 }
 .work-item:hover::before{ width: 36px; height: 36px; border-color: var(--border-gold-hover); }
-#projetos .eyebrow[data-sec]::after, #own .apps-group-head h2::after{
+#projetos .eyebrow[data-sec]::after{
   content: ""; display: inline-block; width: 21px; height: 14px; margin-left: 10px; vertical-align: -2px;
   background: url("/assets/img/brand/lucksrei-crown.webp") center / contain no-repeat; opacity: .9;
 }

@@ -158,7 +158,7 @@
       root.appendChild(sec);
     });
 
-    filtersEl.textContent = "";
+    if (filtersEl) filtersEl.textContent = "";
     function addFilter(id) {
       var b = el("button", "apps-filter");
       b.type = "button";
@@ -168,8 +168,10 @@
       b.addEventListener("click", function () { setFilter(id, true); });
       filtersEl.appendChild(b);
     }
-    addFilter("all");
-    data.groups.forEach(function (g) { addFilter(g.id); });
+    if (filtersEl) {
+      addFilter("all");
+      data.groups.forEach(function (g) { addFilter(g.id); });
+    }
     setFilter(activeFilter, false);
   }
 
@@ -177,7 +179,7 @@
     var ids = ["all"].concat(data.groups.map(function (g) { return g.id; }));
     if (ids.indexOf(id) < 0) id = "all";
     activeFilter = id;
-    filtersEl.querySelectorAll(".apps-filter").forEach(function (b) {
+    if (filtersEl) filtersEl.querySelectorAll(".apps-filter").forEach(function (b) {
       b.setAttribute("aria-pressed", b.getAttribute("data-filter") === id ? "true" : "false");
     });
     root.querySelectorAll(".apps-group").forEach(function (sec) { sec.hidden = !(id === "all" || id === sec.id); });
