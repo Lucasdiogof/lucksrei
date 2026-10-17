@@ -811,5 +811,6 @@
   "contact.form.fail": "Your message was not sent. What you wrote was kept, so you can try again.",
   "contact.form.fail_network": "Couldn't reach the server. What you wrote was kept, so you can try again.",
   "contact.form.fail_rate": "Too many attempts. Please wait a few minutes and try again.",
+  "contact.form.fail_captcha": "Couldn't complete the security check. Please try again in a moment.",
   "contact.form.fail_unavailable": "Message delivery isn't available right now. Please write to marketing@lucksrei.com instead."
 };

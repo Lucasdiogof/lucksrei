@@ -1,5 +1,6 @@
 {
   "name": "lucksrei-site",
+  "keep_vars": true,
   "main": "worker/index.mjs",
   "compatibility_date": "2026-09-09",
   "assets": {
@@ -15,5 +16,10 @@
       "database_id": "244f20e5-166c-4f6c-bfa1-0ad648902fab",
       "migrations_dir": "migrations"
     }
+  ],
+  "ratelimits": [
+    { "name": "RL_VISIT", "namespace_id": "7301", "simple": { "limit": 30, "period": 60 } },
+    { "name": "RL_VISIT_COLO", "namespace_id": "7302", "simple": { "limit": 300, "period": 60 } },
+    { "name": "RL_CONTACT", "namespace_id": "7303", "simple": { "limit": 10, "period": 60 } }
   ]
 }
