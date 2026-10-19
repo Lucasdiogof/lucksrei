@@ -67,6 +67,9 @@
       { id: 'orbijob', name: 'OrbiJob', subtitle: { en: 'Global job search aggregator', 'pt-BR': 'Agregador global de vagas', es: 'Agregador global de empleo' }, group: 'own', sector: 'jobs',
         logo: '/assets/img/apps/orbijob.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null, webUrl: 'https://orbijob.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, period: '2026-10/present', technologies: ['Flutter', 'Supabase', 'GitHub Actions', 'ML Kit', 'Firebase'] },
+      { id: 'bebometro', name: 'Bebômetro', subtitle: { en: 'Track nights out, drinks, expenses and split the bill with friends', 'pt-BR': 'Registre seus rolês, bebidas, gastos e divida a conta com a galera', es: 'Registra tus salidas, bebidas y gastos, y divide la cuenta con amigos' }, group: 'own', sector: 'lifestyle',
+        logo: '/assets/img/apps/bebometro.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null, webUrl: 'https://bebometro.lucksrei.com',
+        downloads: null, rating: null, reviewCount: null, period: '2026-10/present', technologies: ['Flutter', 'Supabase', 'Cloudflare Workers'] },
 
       /* ---- profissionais ---- */
       { id: 'toro', name: 'Toro Investimentos', subtitle: { en: 'Now Santander Corretora', 'pt-BR': 'Atualmente Santander Corretora', es: 'Actualmente Santander Corretora' }, group: 'professional', sector: 'fintech',
