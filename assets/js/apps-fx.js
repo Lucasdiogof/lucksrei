@@ -3,7 +3,6 @@
  *  - tom do produto (--t) tirado do próprio logo (ou da cor do case) → borda, luz e anel do logo por app;
  *  - luz que segue o ponteiro (--mx/--my) e borda que percorre o card no hover;
  *  - entrada escalonada ao rolar (IntersectionObserver), índice "01 · SETOR";
- *  - stack com no máximo 3 chips + "+N" (o resto vai no title);
  *  - produto com case: o card inteiro abre o case (link esticado; lojas continuam links próprios);
  *  - cabeçalho do grupo com a contagem e o fio dourado que se desenha.
  * Tudo em transform/opacity (a borda animada usa @property só durante o hover). Reduced motion: tudo parado. */
@@ -62,17 +61,6 @@
     idx.setAttribute("aria-hidden", "true");
     if (sec) sec.insertBefore(idx, sec.firstChild);
     else card.querySelector(".app-top").appendChild(idx);
-
-    // stack: no máximo 3 chips + "+N"
-    var chips = card.querySelectorAll(".app-chips .chip");
-    if (chips.length > 3) {
-      var rest = [];
-      for (var k = 3; k < chips.length; k++) { rest.push(chips[k].textContent); chips[k].remove(); }
-      var more = document.createElement("span");
-      more.className = "chip d-more"; more.textContent = "+" + rest.length; more.title = rest.join(" · ");
-      more.setAttribute("aria-label", rest.join(", "));
-      card.querySelector(".app-chips").appendChild(more);
-    }
 
     // case: o card inteiro vira o link do case (sem link dentro de link: o próprio .app-case é esticado)
     var c = card.querySelector(".app-case");

@@ -1821,7 +1821,6 @@ html[data-theme="light"][data-amb="contact"] .page-hero h1::after{ background: l
 .d-idx::after{ content: "·"; margin-left: 8px; color: var(--text-faint); }
 .d-card .app-name{ font-size: 17px; letter-spacing: -.01em; transition: color .2s var(--ease); }
 .d-card:hover .app-name{ color: color-mix(in srgb, var(--t) 35%, var(--text)); }
-.d-more{ color: var(--gold) !important; border-color: var(--border-gold) !important; cursor: help; }
 
 /* card com case: o link do case cobre o card; lojas por cima */
 .d-has-case .app-case::after{ content: ""; position: absolute; inset: 0; z-index: 3; border-radius: inherit; }
