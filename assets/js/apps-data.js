@@ -86,7 +86,7 @@
         logo: '/assets/img/apps/iza.webp', platforms: ['android', 'ios'],
         androidUrl: 'https://play.google.com/store/apps/details?id=vc.com.iza.izaapp&hl=pt_BR',
         iosUrl: 'https://apps.apple.com/br/app/iza-seguradora-s-a/id1526181722',
-        downloads: null, rating: null, reviewCount: null, period: '2020-10/2021-03', technologies: ['Flutter', 'Firebase'] },
+        downloads: null, rating: null, reviewCount: null, period: '2020-10/2021-03', technologies: ['Flutter', 'GetX', 'gRPC', 'Firebase Cloud Messaging', 'Remote Config', 'SQLite', 'Zendesk', 'Facebook Login'] },
       { id: 'boosteragro', name: 'BoosterAGRO', subtitle: { en: 'Digital agriculture', 'pt-BR': 'Agricultura digital', es: 'Agricultura digital' }, group: 'professional', sector: 'agtech',
         logo: '/assets/img/apps/boosteragro.webp', platforms: ['android', 'ios'],
         androidUrl: 'https://play.google.com/store/apps/details?id=com.boosteragtech.boosteragro&hl=pt_BR',
