@@ -71,7 +71,12 @@
         logo: '/assets/img/apps/bebometro.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null, webUrl: 'https://bebometro.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, period: '2026-10/present', technologies: ['Flutter', 'Supabase', 'Cloudflare Workers'] },
 
-      /* ---- profissionais ---- */
+      /* ---- profissionais (do mais recente para o mais antigo, pelo fim do período) ---- */
+      { id: 'tabela-fone', name: 'Tabela Fone', subtitle: { en: 'Price intelligence for used phone retailers', 'pt-BR': 'Inteligência de preços para lojistas de celulares usados', es: 'Inteligencia de precios para tiendas de celulares usados' }, group: 'professional', sector: 'retailtech',
+        logo: '/assets/img/apps/tabela-fone.webp', platforms: ['android', 'ios'],
+        androidUrl: 'https://play.google.com/store/apps/details?id=com.tabelafone.app&hl=pt_BR',
+        iosUrl: 'https://apps.apple.com/br/app/tabela-fone/id6781041082',
+        downloads: null, rating: null, reviewCount: null, period: '2026-03/2026-09', technologies: ['Flutter', 'Supabase', 'Cubit/BLoC'] },
       { id: 'toro', name: 'Toro Investimentos', subtitle: { en: 'Now Santander Corretora', 'pt-BR': 'Atualmente Santander Corretora', es: 'Actualmente Santander Corretora' }, group: 'professional', sector: 'fintech',
         logo: '/assets/img/apps/toro-investimentos.webp', platforms: ['android', 'ios'],
         androidUrl: 'https://play.google.com/store/apps/details?id=br.com.toroinvestimentos&hl=pt_BR',
@@ -82,11 +87,6 @@
         androidUrl: 'https://play.google.com/store/apps/details?id=vc.com.iza.izaapp&hl=pt_BR',
         iosUrl: 'https://apps.apple.com/br/app/iza-seguradora-s-a/id1526181722',
         downloads: null, rating: null, reviewCount: null, period: '2020-10/2021-03', technologies: ['Flutter', 'Firebase'] },
-      { id: 'tabela-fone', name: 'Tabela Fone', subtitle: { en: 'Price intelligence for used phone retailers', 'pt-BR': 'Inteligência de preços para lojistas de celulares usados', es: 'Inteligencia de precios para tiendas de celulares usados' }, group: 'professional', sector: 'retailtech',
-        logo: '/assets/img/apps/tabela-fone.webp', platforms: ['android', 'ios'],
-        androidUrl: 'https://play.google.com/store/apps/details?id=com.tabelafone.app&hl=pt_BR',
-        iosUrl: 'https://apps.apple.com/br/app/tabela-fone/id6781041082',
-        downloads: null, rating: null, reviewCount: null, period: '2026-03/2026-09', technologies: ['Flutter', 'Supabase', 'Cubit/BLoC'] },
       { id: 'boosteragro', name: 'BoosterAGRO', subtitle: { en: 'Digital agriculture', 'pt-BR': 'Agricultura digital', es: 'Agricultura digital' }, group: 'professional', sector: 'agtech',
         logo: '/assets/img/apps/boosteragro.webp', platforms: ['android', 'ios'],
         androidUrl: 'https://play.google.com/store/apps/details?id=com.boosteragtech.boosteragro&hl=pt_BR',
