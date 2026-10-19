@@ -1,0 +1,109 @@
+/* Proposta B — Product Gallery. Tokens do Royal Tech; --t = tom do produto (case ou média do logo). */
+.lab-b{ --t: var(--gold); }
+.lab-b .b-group{ margin: 0 0 96px; }
+.lab-b .b-head{ max-width: 760px; margin-bottom: 28px; }
+.lab-b .b-head h2{ font-size: clamp(26px, 3vw, 36px); letter-spacing: -.02em; margin: 0 0 8px; }
+.lab-b .b-head p{ color: var(--text-dim); font-size: 15.5px; line-height: 1.65; margin: 0; }
+.lab-b .b-facts{ margin-top: 14px !important; font-family: var(--font-mono); font-size: 12px !important; letter-spacing: .08em; text-transform: uppercase; color: var(--gold) !important; }
+.lab-b a:focus-visible{ outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+/* ---------- bento dos produtos próprios ---------- */
+.lab-b .b-bento{ display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
+.lab-b .b-span-7{ grid-column: span 7; } .lab-b .b-span-5{ grid-column: span 5; } .lab-b .b-span-6{ grid-column: span 6; }
+.lab-b .b-feature{
+  position: relative; display: flex; flex-direction: column; min-width: 0; overflow: hidden;
+  border: 1px solid var(--border-subtle); border-radius: 16px; background: var(--panel);
+  transition: border-color .2s var(--ease), transform .25s var(--ease);
+}
+.lab-b .b-feature.has-case:hover, .lab-b .b-feature:focus-within{ border-color: color-mix(in srgb, var(--t) 45%, transparent); }
+.lab-b .b-feature.has-case:hover{ transform: translateY(-3px); }
+/* palco: tom do produto em degradê radial bem baixo, linha de horizonte e o logo grande */
+.lab-b .b-stage{
+  position: relative; display: grid; place-items: center; height: 220px;
+  background:
+    radial-gradient(60% 90% at 50% 100%, color-mix(in srgb, var(--t) 22%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--t) 6%, var(--panel-2)), var(--panel));
+  border-bottom: 1px solid color-mix(in srgb, var(--t) 18%, var(--border));
+}
+.lab-b .b-span-7 .b-stage{ height: 260px; }
+.lab-b .b-span-6 .b-stage{ height: 180px; }
+.lab-b .b-stage-logo{
+  width: 112px; height: 112px; border-radius: 26px; object-fit: contain; background: var(--panel-2);
+  box-shadow: 0 24px 50px rgba(0,0,0,.35), 0 0 0 1px color-mix(in srgb, var(--t) 30%, transparent);
+  transition: transform .3s var(--ease);
+}
+.lab-b .b-span-6 .b-stage-logo{ width: 88px; height: 88px; border-radius: 21px; }
+.lab-b .b-feature.has-case:hover .b-stage-logo{ transform: translateY(-4px) scale(1.02); }
+.lab-b .b-body{ display: flex; flex-direction: column; gap: 8px; padding: 24px 26px 22px; flex: 1; }
+.lab-b .b-kicker{ margin: 0; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: color-mix(in srgb, var(--t) 70%, var(--text-dim)); }
+.lab-b .b-name{ margin: 0; font-size: clamp(22px, 2.2vw, 28px); letter-spacing: -.02em; line-height: 1.15; }
+.lab-b .b-title-link{ color: inherit; text-decoration: none; }
+.lab-b .b-title-link::after{ content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }   /* placa inteira clicável → case */
+.lab-b .b-sub{ margin: 0; color: var(--text-dim); font-size: 15px; line-height: 1.55; max-width: 46ch; }
+.lab-b .b-stack{ margin: 4px 0 0; font-family: var(--font-mono); font-size: 12px; line-height: 1.6; color: var(--text-faint); }
+.lab-b .b-foot{ display: flex; align-items: center; flex-wrap: wrap; gap: 10px 16px; margin-top: auto; padding-top: 14px; border-top: 1px solid var(--border); }
+.lab-b .b-plat{ display: inline-flex; gap: 10px; font-size: 12.5px; color: var(--text-faint); }
+.lab-b .b-plat span + span::before{ content: "·"; margin-right: 10px; color: var(--border-strong); }
+.lab-b .b-go{ margin-left: auto; font-size: 13.5px; font-weight: 600; color: color-mix(in srgb, var(--t) 75%, var(--text)); }
+.lab-b .b-stores{ position: relative; z-index: 2; display: inline-flex; gap: 6px; }   /* acima do link esticado */
+.lab-b .b-store{
+  display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px;
+  border: 1px solid var(--border-strong); color: var(--text-dim); background: var(--panel);
+  transition: border-color .2s var(--ease), color .2s var(--ease);
+}
+.lab-b .b-store svg{ width: 15px; height: 15px; fill: currentColor; }
+.lab-b .b-store:hover{ border-color: var(--gold); color: var(--text); }
+
+/* ---------- profissionais: cards horizontais, tom só no quadrado do logo ---------- */
+.lab-b .b-pro-grid{ display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.lab-b .b-pro{
+  display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 18px; align-items: start;
+  padding: 20px; border: 1px solid var(--border-subtle); border-radius: 14px; background: var(--panel);
+}
+.lab-b .b-pro-tile{
+  width: 72px; height: 72px; border-radius: 18px; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--t) 14%, var(--panel-2)); border: 1px solid color-mix(in srgb, var(--t) 22%, var(--border));
+}
+.lab-b .b-pro-logo{ width: 56px; height: 56px; border-radius: 14px; object-fit: contain; }
+.lab-b .b-pro-body{ min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.lab-b .b-pro-name{ margin: 0; font-size: 17px; line-height: 1.25; letter-spacing: -.01em; }
+.lab-b .b-pro-sub{ margin: 0; font-size: 13.5px; color: var(--text-dim); line-height: 1.5; }
+.lab-b .b-pro-meta{ margin: 4px 0 0; font-family: var(--font-mono); font-size: 11.5px; color: var(--text-faint); letter-spacing: .02em; }
+.lab-b .b-pro-body{ align-self: stretch; }
+.lab-b .b-pro-foot{ margin-top: auto; padding-top: 12px; }
+.lab-b .b-private{ font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-faint); line-height: 1.4; }
+
+/* ---------- Cooper: vitrine compacta de marcas ---------- */
+.lab-b .b-coop-grid{ list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.lab-b .b-coop{
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px;
+  padding: 18px 12px 14px; border: 1px solid var(--border-subtle); border-radius: 14px; background: color-mix(in srgb, var(--panel) 70%, transparent);
+}
+.lab-b .b-coop-logo{ width: 52px; height: 52px; border-radius: 13px; object-fit: contain; background: var(--panel-2); }
+.lab-b .b-coop-name{ font-size: 13.5px; line-height: 1.3; color: var(--text); min-height: 2.6em; display: flex; align-items: center; }
+.lab-b .b-coop .b-store{ width: 34px; height: 34px; }
+.lab-b .b-coop .b-private{ text-align: center; max-width: 90px; }
+
+@media (max-width: 1080px){
+  .lab-b .b-pro-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lab-b .b-coop-grid{ grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 860px){
+  .lab-b .b-bento{ grid-template-columns: 1fr; }
+  .lab-b .b-span-7, .lab-b .b-span-5, .lab-b .b-span-6{ grid-column: auto; }
+  .lab-b .b-stage, .lab-b .b-span-7 .b-stage{ height: 180px; }
+  .lab-b .b-span-6 .b-stage{ height: 150px; }
+  .lab-b .b-coop-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 620px){
+  .lab-b .b-pro-grid{ grid-template-columns: 1fr; }
+  .lab-b .b-pro{ grid-template-columns: 60px minmax(0, 1fr); }
+  .lab-b .b-pro-tile{ width: 60px; height: 60px; border-radius: 15px; }
+  .lab-b .b-pro-logo{ width: 46px; height: 46px; }
+  .lab-b .b-coop-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lab-b .b-body{ padding: 20px; }
+  .lab-b .b-stage-logo{ width: 88px; height: 88px; border-radius: 21px; }
+}
+@media (hover: none){ .lab-b .b-feature.has-case:hover{ transform: none; } .lab-b .b-feature.has-case:hover .b-stage-logo{ transform: none; } }
+@media (prefers-reduced-motion: reduce){ .lab-b *{ transition: none !important; } }
+[data-theme="light"] .lab-b .b-stage-logo{ box-shadow: 0 14px 30px rgba(18,26,46,.14), 0 0 0 1px color-mix(in srgb, var(--t) 30%, transparent); }
