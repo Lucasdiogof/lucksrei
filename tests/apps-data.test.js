@@ -57,6 +57,9 @@ d.apps.forEach(function (a) {
   if (a.group === "cooper" && a.androidUrl) check(/id=br\.com\.cooper\.[a-z]+$/.test(a.androidUrl), "pacote Android Cooper inesperado em " + a.id);
 });
 check(d.apps.filter(function (a) { return a.group === "cooper" && a.androidUrl && a.iosUrl; }).length === 19, "19 apps Cooper devem ter Android e iOS");
+// web: só URL https de subdomínio lucksrei.com, e La Pelve fica sem até a revisão de segurança
+d.apps.forEach(function (a) { if (a.webUrl) check(/^https:\/\/[a-z]+\.lucksrei\.com$/.test(a.webUrl), "webUrl inesperada em " + a.id); });
+check(!d.apps.filter(function (a) { return a.id === "la-pelve"; })[0].webUrl, "La Pelve não pode ter webUrl antes da liberação de segurança");
 // CTA da home: o fallback estático precisa bater com o cálculo
 var home = fs.readFileSync(path.join(root, "index.html"), "utf8");
 var m = home.match(/id="apps-more"[^>]*>\+(\d+)</);
