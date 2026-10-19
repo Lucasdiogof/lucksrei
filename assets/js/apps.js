@@ -50,7 +50,7 @@
     a.rel = "noopener noreferrer";
     a.setAttribute("aria-label", I.t(isAndroid ? "apps.store_android_aria" : "apps.store_ios_aria", { name: app.name }));
     a.innerHTML = isAndroid ? ICON_PLAY : ICON_APPLE;
-    a.appendChild(document.createTextNode(isAndroid ? "Google Play" : "App Store"));
+    a.appendChild(document.createTextNode(isAndroid ? "Android" : "iOS"));
     return a;
   }
 
@@ -120,13 +120,20 @@
     var platforms = (app.platforms || []).slice();
     if (app.androidUrl && platforms.indexOf("android") < 0) platforms.push("android");
     if (app.iosUrl && platforms.indexOf("ios") < 0) platforms.push("ios");
+    var plats = el("div", "app-plats");
     ["android", "ios", "web"].forEach(function (p) {
       if (platforms.indexOf(p) < 0) return;
-      if (p === "android" && app.androidUrl) foot.appendChild(storeLink(app, "android"));
-      else if (p === "ios" && app.iosUrl) foot.appendChild(storeLink(app, "ios"));
-      else if (p === "web" && app.webUrl) foot.appendChild(webLink(app));
-      else foot.appendChild(el("span", "store-tag", p === "android" ? "Android" : p === "ios" ? "iOS" : "Web"));
+      if (p === "android" && app.androidUrl) plats.appendChild(storeLink(app, "android"));
+      else if (p === "ios" && app.iosUrl) plats.appendChild(storeLink(app, "ios"));
+      else if (p === "web" && app.webUrl) plats.appendChild(webLink(app));
+      else {
+        var tag = el("span", "store-tag");
+        tag.innerHTML = p === "android" ? ICON_PLAY : p === "ios" ? ICON_APPLE : ICON_WEB;
+        tag.appendChild(document.createTextNode(p === "android" ? "Android" : p === "ios" ? "iOS" : "Web"));
+        plats.appendChild(tag);
+      }
     });
+    if (plats.childNodes.length) foot.appendChild(plats);
     if (app.private && !app.androidUrl && !app.iosUrl) foot.appendChild(el("span", "app-note", I.t("apps.private")));
     if (app.caseUrl) {
       var c = el("a", "app-case", I.t("apps.case"));

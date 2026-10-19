@@ -786,18 +786,20 @@ figure.fig{ margin: 0; }
 .app-chips{ display: flex; flex-wrap: wrap; gap: 6px; }
 .app-chips .chip{ font-size: 11.5px; padding: 3px 7px; }
 .app-foot{ margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding-top: 4px; }
+.app-plats{ display: flex; flex-wrap: nowrap; gap: 6px; }
 .store{
-  display: inline-flex; align-items: center; gap: 7px; text-decoration: none;
-  border: 1px solid var(--border-strong); border-radius: 8px; padding: 6px 10px;
-  font-size: 12.5px; font-weight: 600; color: var(--text-dim);
+  display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
+  border: 1px solid var(--border-strong); border-radius: 8px; padding: 6px 9px;
+  font-size: 12.5px; font-weight: 600; white-space: nowrap; color: var(--text-dim);
   transition: border-color .2s var(--ease), color .2s var(--ease), background .2s var(--ease);
 }
 .store svg{ width: 14px; height: 14px; fill: currentColor; flex: none; }
 .store:hover{ border-color: var(--accent); color: var(--text); background: var(--glow-soft); }
 .store-tag{
-  display: inline-flex; align-items: center; border: 1px solid var(--border); border-radius: 8px;
-  padding: 6px 10px; font-size: 12.5px; color: var(--text-faint);
+  display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); border-radius: 8px;
+  padding: 6px 9px; font-size: 12.5px; color: var(--text-faint); white-space: nowrap;
 }
+.store-tag svg{ width: 14px; height: 14px; fill: currentColor; flex: none; }
 .app-note{ font-size: 12.5px; color: var(--text-faint); }
 .app-case{ font-size: 12.5px; font-weight: 600; color: var(--accent); text-decoration: none; margin-left: auto; }
 .app-case:hover{ color: var(--accent-strong); }
