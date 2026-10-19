@@ -1,0 +1,82 @@
+/* Proposta D — polimento do /apps atual (mesma grade e mesmos cards de assets/css/style.css). */
+@property --d-a{ syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+
+/* ---------- cabeçalho do grupo: contagem grande + fio dourado que se desenha ---------- */
+.apps-group{ margin-bottom: 64px; }
+.d-head{ position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 20px; max-width: none; padding-bottom: 18px; margin-bottom: 26px; }
+.d-head > :not(.d-count):not(.d-line){ grid-column: 2; }
+.d-count{
+  grid-row: 1 / span 2; align-self: center; font-family: var(--font-mono); font-size: 44px; line-height: 1; letter-spacing: -.04em;
+  color: transparent; -webkit-text-stroke: 1px var(--gold);
+}
+.d-head h2{ font-size: clamp(22px, 2.4vw, 28px); letter-spacing: -.02em; }
+.d-head p{ max-width: 70ch; }
+.d-line{ position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, var(--gold), var(--border) 40%, transparent); transform-origin: left; }
+.d-line::before{ content: ""; position: absolute; left: 3px; top: -1px; width: 26px; height: 3px; background: linear-gradient(90deg, #b18535, #eecc6d 60%, #dbb250); transform: skewX(-50deg); }
+
+/* ---------- card: tom do próprio app ---------- */
+.d-card{ --t: var(--gold); --mx: 30%; --my: 0%; isolation: isolate; overflow: hidden; }
+.d-card::before{                                          /* faixa de tom no topo (parada) */
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 2px; z-index: 1; pointer-events: none;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--t) 70%, transparent), transparent);
+  opacity: .55; transition: opacity .25s var(--ease);
+}
+.d-glow{                                                  /* luz que segue o ponteiro */
+  position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0;
+  background: radial-gradient(420px circle at var(--mx) var(--my), color-mix(in srgb, var(--t) 16%, transparent), transparent 60%);
+  transition: opacity .3s var(--ease);
+}
+.d-edge{                                                  /* borda viva: luz que percorre o contorno, só no hover */
+  position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit; padding: 1px; opacity: 0;
+  background: conic-gradient(from var(--d-a), transparent 0deg, color-mix(in srgb, var(--t) 90%, white) 40deg, transparent 90deg, transparent 180deg, rgba(238,204,109,.8) 220deg, transparent 270deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  transition: opacity .3s var(--ease);
+}
+.d-card:hover .d-glow, .d-card:focus-within .d-glow{ opacity: 1; }
+.d-card:hover .d-edge, .d-card:focus-within .d-edge{ opacity: 1; animation: d-spin 3.2s linear infinite; }
+.d-card:hover::before{ opacity: 1; }
+@keyframes d-spin{ to{ --d-a: 360deg; } }
+.app-card.d-card:hover, .app-card.d-card:focus-within{ border-color: color-mix(in srgb, var(--t) 40%, transparent); }
+
+/* logo: anel no tom e leve subida; um reflexo passa uma vez no hover */
+.d-card .app-logo{ position: relative; box-shadow: 0 0 0 1px color-mix(in srgb, var(--t) 22%, transparent); transition: transform .3s var(--ease), box-shadow .3s var(--ease); }
+.d-card .app-logo::after{
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(110deg, transparent 35%, rgba(255,255,255,.45) 50%, transparent 65%);
+  transform: translateX(-120%);
+}
+.d-card:hover .app-logo{ transform: translateY(-3px) scale(1.04); box-shadow: 0 14px 30px rgba(0,0,0,.35), 0 0 0 1px color-mix(in srgb, var(--t) 55%, transparent); }
+.d-card:hover .app-logo::after{ transform: translateX(120%); transition: transform .8s var(--ease); }
+
+/* índice e setor */
+.d-idx{ font-family: var(--font-mono); color: color-mix(in srgb, var(--t) 75%, var(--text-faint)); margin-right: 8px; }
+.d-idx::after{ content: "·"; margin-left: 8px; color: var(--text-faint); }
+.d-card .app-name{ font-size: 17px; letter-spacing: -.01em; transition: color .2s var(--ease); }
+.d-card:hover .app-name{ color: color-mix(in srgb, var(--t) 35%, var(--text)); }
+.d-more{ color: var(--gold) !important; border-color: var(--border-gold) !important; cursor: help; }
+
+/* card com case: o link do case cobre o card; lojas por cima */
+.d-has-case .app-case::after{ content: ""; position: absolute; inset: 0; z-index: 3; border-radius: inherit; }
+.d-has-case .store{ position: relative; z-index: 4; }
+.d-has-case{ cursor: pointer; }
+.d-card .app-case{ transition: color .2s var(--ease); }
+.d-card .app-case:focus-visible{ outline: none; }
+.d-card:has(.app-case:focus-visible){ outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* entrada escalonada (JS põe .d-pre e depois .d-in) */
+.d-pre{ opacity: 0; transform: translateY(14px); }
+.d-pre.d-in{ opacity: 1; transform: none; transition: opacity .6s var(--ease), transform .6s var(--ease); transition-delay: calc(var(--i, 0) * 45ms); }
+.d-head.d-pre .d-line{ transform: scaleX(0); }
+.d-head.d-pre.d-in .d-line{ transform: none; transition: transform 1s var(--ease) .15s; }
+.d-pre.d-in.app-card:hover{ transform: translateY(-3px); transition-delay: 0s; }
+
+[data-theme="light"] .d-card .app-logo::after{ background: linear-gradient(110deg, transparent 35%, rgba(255,255,255,.7) 50%, transparent 65%); }
+[data-theme="light"] .d-card:hover .app-logo{ box-shadow: 0 10px 22px rgba(18,26,46,.14), 0 0 0 1px color-mix(in srgb, var(--t) 55%, transparent); }
+
+@media (max-width: 560px){ .d-count{ font-size: 32px; } .d-head{ column-gap: 14px; } }
+@media (hover: none){ .d-edge, .d-glow{ display: none; } .d-card:hover .app-logo{ transform: none; } }
+@media (prefers-reduced-motion: reduce){
+  .d-edge{ animation: none !important; } .d-pre{ opacity: 1; transform: none; }
+  .d-card .app-logo::after{ display: none; } .d-card *, .d-card{ transition: none !important; }
+}

@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 const here = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(here, "../..");
 const src = fs.readFileSync(path.join(root, "apps/index.html"), "utf8");
-const NAMES = { a: "Editorial App Directory", b: "Product Gallery", c: "Signature Lucksrei" };
+const NAMES = { d: "Atual polido", a: "Editorial App Directory", b: "Product Gallery", c: "Signature Lucksrei" };
 
 const bar = (k) => `
 <nav class="lab-bar" aria-label="Lab">
@@ -27,10 +27,12 @@ for (const k of Object.keys(NAMES)) {
     .replace("<title>", `<meta name="robots" content="noindex, nofollow">\n<title>[Lab ${k.toUpperCase()}] `)
     .replace('<link rel="stylesheet" href="/assets/css/style.css">',
       `<link rel="stylesheet" href="/assets/css/style.css">\n<link rel="stylesheet" href="/_lab/apps-catalog/${k}.css">`)
-    .replace('<script src="/assets/js/apps.js"></script>',
-      `<script src="/_lab/apps-catalog/lab-common.js"></script>\n<script src="/_lab/apps-catalog/${k}.js"></script>`)
+    .replace('<script src="/assets/js/apps.js"></script>', k === "d"
+      // D = a página atual polida: mantém o apps.js oficial e só acrescenta as camadas de d-fx.js
+      ? `<script src="/assets/js/apps.js"></script>\n<script src="/_lab/apps-catalog/d-fx.js"></script>`
+      : `<script src="/_lab/apps-catalog/lab-common.js"></script>\n<script src="/_lab/apps-catalog/${k}.js"></script>`)
     .replace("</body>", `${bar(k)}\n</body>`);
-  if (!html.includes(`${k}.js`)) throw new Error("apps.js não encontrado em apps/index.html");
+  if (!html.includes(k === "d" ? "d-fx.js" : `${k}.js`)) throw new Error("apps.js não encontrado em apps/index.html");
   fs.writeFileSync(path.join(here, `${k}.html`), html);
 }
-console.log("ok: a.html b.html c.html");
+console.log("ok: " + Object.keys(NAMES).map((k) => k + ".html").join(" "));
