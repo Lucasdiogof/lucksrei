@@ -245,7 +245,7 @@ Auditoria por padrões (GitHub, AWS, Resend, Turnstile, Slack, Google, Stripe, c
 
 | mudança | como voltar |
 |---|---|
-| Cabeçalhos / CSP | apagar a linha do cabeçalho em `_headers` e fazer push (deploy automático); a CSP completa está em Report-Only e não bloqueia |
+| Cabeçalhos / CSP | apagar a linha do cabeçalho em `_headers` e fazer push (deploy automático); a CSP completa é aplicada (bloqueia o que não está na política), então reverter é apagar a linha `Content-Security-Policy` |
 | Limites de aplicação | remover o bloco `ratelimits` do `wrangler.jsonc` (o código já passa sem binding) |
 | Turnstile | `TURNSTILE_ENFORCE=off` (imediato, sem deploy); remover o secret ou `TURNSTILE_SITE_KEY` também desativa a exigência |
 | Regras da Cloudflare | desativar a regra no painel |
