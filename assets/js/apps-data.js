@@ -59,7 +59,7 @@
         logo: '/assets/img/apps/aprovaura.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/aprovaura/id6817047910', webUrl: 'https://aprovaura.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'Gemini', 'Edge Functions', 'Offline cache'], caseUrl: '/projects/aura/' },
       { id: 'la-pelve', name: 'La Pelve', subtitle: { en: 'Clinical management for pelvic physiotherapy', 'pt-BR': 'Gestão clínica para fisioterapia pélvica', es: 'Gestión clínica para fisioterapia pélvica' }, group: 'own', sector: 'health',
-        logo: '/assets/img/apps/la-pelve.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/la-pelve/id6811234099',
+        logo: '/assets/img/apps/la-pelve.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/la-pelve/id6811234099', webUrl: 'https://lapelve.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'Offline-first', 'Encrypted SQLite', 'WhatsApp API'], caseUrl: '/projects/la-pelve/' },
       { id: 'busaogyn', name: 'BusãoGyn', subtitle: { en: 'Bus arrivals and live tracking in Goiânia', 'pt-BR': 'Chegadas e ônibus ao vivo em Goiânia', es: 'Llegadas y autobuses en vivo en Goiânia' }, group: 'own', sector: 'mobility',
         logo: '/assets/img/apps/busaogyn.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null, webUrl: 'https://busaogyn.lucksrei.com',
