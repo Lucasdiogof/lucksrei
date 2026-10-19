@@ -205,6 +205,7 @@
   "apps.sector.health": "Salud",
   "apps.sector.insurtech": "InsurTech",
   "apps.sector.jobs": "Empleo",
+  "apps.sector.lifestyle": "Estilo de vida",
   "apps.sector.management": "Gestión",
   "apps.sector.mobility": "Movilidad",
   "apps.sector.retailtech": "RetailTech",
