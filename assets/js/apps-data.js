@@ -50,22 +50,22 @@
     apps: [
       /* ---- meus produtos ---- */
       { id: 'fan-hub', name: 'Goiás App', subtitle: { en: 'Goiás fan app', 'pt-BR': 'App do torcedor do Goiás', es: 'App de la hinchada del Goiás' }, group: 'own', sector: 'sports',
-        logo: '/assets/img/apps/fan-hub.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null,
+        logo: '/assets/img/apps/fan-hub.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null, webUrl: 'https://goias.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'Cloudflare Workers', 'TypeScript', 'Firebase'], caseUrl: '/projects/fan-hub/' },
       { id: 'match-queue', name: 'Match Queue', subtitle: { en: 'Matchmaking for competitive teams', 'pt-BR': 'Matchmaking para times competitivos', es: 'Matchmaking para equipos competitivos' }, group: 'own', sector: 'games',
-        logo: '/assets/img/apps/match-queue.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/match-queue/id6810790338',
+        logo: '/assets/img/apps/match-queue.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/match-queue/id6810790338', webUrl: 'https://matchqueue.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase Realtime', 'RLS', 'Firebase'], caseUrl: '/projects/match-queue/' },
       { id: 'aprovaura', name: 'Aprovaura', subtitle: { en: 'Study for entrance exams and tests', 'pt-BR': 'Estudo para vestibulares e provas', es: 'Estudio para exámenes de ingreso y pruebas' }, group: 'own', sector: 'education',
-        logo: '/assets/img/apps/aprovaura.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/aprovaura/id6817047910',
+        logo: '/assets/img/apps/aprovaura.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/aprovaura/id6817047910', webUrl: 'https://aprovaura.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'Gemini', 'Edge Functions', 'Offline cache'], caseUrl: '/projects/aura/' },
       { id: 'la-pelve', name: 'La Pelve', subtitle: { en: 'Clinical management for pelvic physiotherapy', 'pt-BR': 'Gestão clínica para fisioterapia pélvica', es: 'Gestión clínica para fisioterapia pélvica' }, group: 'own', sector: 'health',
         logo: '/assets/img/apps/la-pelve.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/la-pelve/id6811234099',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'Offline-first', 'Encrypted SQLite', 'WhatsApp API'], caseUrl: '/projects/la-pelve/' },
       { id: 'busaogyn', name: 'BusãoGyn', subtitle: { en: 'Bus arrivals and live tracking in Goiânia', 'pt-BR': 'Chegadas e ônibus ao vivo em Goiânia', es: 'Llegadas y autobuses en vivo en Goiânia' }, group: 'own', sector: 'mobility',
-        logo: '/assets/img/apps/busaogyn.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null,
+        logo: '/assets/img/apps/busaogyn.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null, webUrl: 'https://busaogyn.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Cloudflare Workers', 'TypeScript', 'MapLibre', 'Real-time'] },
       { id: 'orbijob', name: 'OrbiJob', subtitle: { en: 'Global job search aggregator', 'pt-BR': 'Agregador global de vagas', es: 'Agregador global de empleo' }, group: 'own', sector: 'jobs',
-        logo: '/assets/img/apps/orbijob.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null,
+        logo: '/assets/img/apps/orbijob.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null, webUrl: 'https://orbijob.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, period: '2026-10/present', technologies: ['Flutter', 'Supabase', 'GitHub Actions', 'ML Kit', 'Firebase'] },
 
       /* ---- profissionais ---- */

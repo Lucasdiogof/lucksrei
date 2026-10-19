@@ -211,6 +211,7 @@
   "apps.sector.sports": "Deportes",
   "apps.store_android_aria": "Ver {name} en Google Play (se abre en una pestaña nueva)",
   "apps.store_ios_aria": "Ver {name} en la App Store (se abre en una pestaña nueva)",
+  "apps.store_web_aria": "Ver {name} en la web (se abre en una pestaña nueva)",
 
   /* ---- visitors ---- */
   "visitors.breadcrumb": "<a href=\"/\">Lucksrei</a> / Visitantes",

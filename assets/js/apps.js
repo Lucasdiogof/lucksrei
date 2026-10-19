@@ -9,6 +9,7 @@
   if (!data || !I || !root) return;
 
   var ICON_PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 3.4v17.2c0 .8.9 1.3 1.6.9l14-8.6c.6-.4.6-1.3 0-1.7L7.1 2.5c-.7-.4-1.6.1-1.6.9z"/></svg>';
+  var ICON_WEB = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm6.9 9h-3.1a15.6 15.6 0 00-1.2-5.3A8 8 0 0118.9 11zM12 4.1c.8 1 1.9 3.2 2.2 6.9H9.8C10.1 7.300 11.200 5.100 12 4.100zM4.300 13h3.100c.1 1.900.5 3.700 1.200 5.300A8 8 0 014.300 13zm3.100-2H4.300a8 8 0 014.300-5.300C7.900 7.300 7.500 9.100 7.400 11zM12 19.900c-.8-1-1.900-3.200-2.200-6.900h4.400c-.3 3.700-1.400 5.900-2.200 6.900zm3.400-1.600c.7-1.600 1.100-3.400 1.200-5.300h3.100a8 8 0 01-4.300 5.300z"/></svg>';
   var ICON_APPLE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>';
 
   var activeFilter = "all";
@@ -50,6 +51,17 @@
     a.setAttribute("aria-label", I.t(isAndroid ? "apps.store_android_aria" : "apps.store_ios_aria", { name: app.name }));
     a.innerHTML = isAndroid ? ICON_PLAY : ICON_APPLE;
     a.appendChild(document.createTextNode(isAndroid ? "Google Play" : "App Store"));
+    return a;
+  }
+
+  function webLink(app) {
+    var a = el("a", "store");
+    a.href = app.webUrl;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.setAttribute("aria-label", I.t("apps.store_web_aria", { name: app.name }));
+    a.innerHTML = ICON_WEB;
+    a.appendChild(document.createTextNode("Web"));
     return a;
   }
 
@@ -112,6 +124,7 @@
       if (platforms.indexOf(p) < 0) return;
       if (p === "android" && app.androidUrl) foot.appendChild(storeLink(app, "android"));
       else if (p === "ios" && app.iosUrl) foot.appendChild(storeLink(app, "ios"));
+      else if (p === "web" && app.webUrl) foot.appendChild(webLink(app));
       else foot.appendChild(el("span", "store-tag", p === "android" ? "Android" : p === "ios" ? "iOS" : "Web"));
     });
     if (app.private && !app.androidUrl && !app.iosUrl) foot.appendChild(el("span", "app-note", I.t("apps.private")));
