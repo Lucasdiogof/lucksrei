@@ -23,13 +23,11 @@ check(h["cross-origin-opener-policy"] === "same-origin", "COOP same-origin");
 var hsts = h["strict-transport-security"] || "";
 check(/^max-age=\d+$/.test(hsts), "HSTS só com max-age (sem includeSubDomains nem preload): " + hsts);
 check(Number(hsts.split("=")[1]) >= 86400 && Number(hsts.split("=")[1]) <= 31536000, "HSTS conservador (1 dia a 1 ano)");
-// CSP aplicada: só diretivas que não podem quebrar renderização
+// CSP completa aplicada (458bf53 tirou do Report-Only): sem curingas e sem execução insegura
 var csp = h["content-security-policy"] || "";
 check(/frame-ancestors 'none'/.test(csp) && /object-src 'none'/.test(csp) && /base-uri 'self'/.test(csp) && /form-action 'self'/.test(csp), "CSP aplicada: frame-ancestors, object-src, base-uri, form-action");
-check(!/default-src|script-src|style-src/.test(csp.replace(/Report-Only/, "")), "a política aplicada não restringe carregamento de recursos (isso fica no Report-Only até validar)");
-
-// ---- política completa (Report-Only): sem curingas e sem execução insegura
-var ro = h["content-security-policy-report-only"] || "";
+check(!h["content-security-policy-report-only"], "sem política Report-Only duplicada (a completa já é aplicada)");
+var ro = csp;
 var dirs = {};
 ro.split(";").forEach(function (d) { d = d.trim(); if (d) dirs[d.split(/\s+/)[0]] = d.split(/\s+/).slice(1); });
 check(dirs["default-src"] && dirs["default-src"].join() === "'self'", "default-src 'self'");
@@ -44,7 +42,7 @@ check((dirs["frame-ancestors"] || []).join() === "'none'" && (dirs["object-src"]
 
 // ---- cada hash da CSP corresponde a um <style> inline real, e cada <style> inline tem hash
 var ignore = read(".assetsignore").split(/\r?\n/).map(function (s) { return s.trim(); }).filter(Boolean);
-var htmlFiles = cp.execSync("git ls-files '*.html'", { cwd: root }).toString().split("\n").filter(Boolean).filter(function (f) {
+var htmlFiles = cp.execFileSync("git", ["ls-files", "*.html"], { cwd: root }).toString().split("\n").filter(Boolean).filter(function (f) {
   return !ignore.some(function (i) { return f === i || f.indexOf(i + "/") === 0; });
 });
 var inlineStyleHashes = {};
@@ -54,7 +52,7 @@ var handlers = [];
 htmlFiles.forEach(function (f) {
   var s = read(f);
   (s.match(/<style\b[^>]*>[\s\S]*?<\/style>/g) || []).forEach(function (b) {
-    var body = b.replace(/^<style\b[^>]*>/, "").replace(/<\/style>$/, "");
+    var body = b.replace(/^<style\b[^>]*>/, "").replace(/<\/style>$/, "").replace(/\r\n/g, "\n"); // o git guarda LF; checkout no Windows vira CRLF
     inlineStyleHashes["sha256-" + crypto.createHash("sha256").update(body, "utf8").digest("base64")] = f;
   });
   (s.match(/<script\b[^>]*>[\s\S]*?<\/script>/g) || []).forEach(function (b) {
