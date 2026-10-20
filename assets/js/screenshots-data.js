@@ -2740,6 +2740,1254 @@
         "whatsapp"
       ]
     }
+  },
+  "bebometro": {
+    "dir": "bebometro",
+    "slots": {
+      "login": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "signup": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "home": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "start-outing": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "outing": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "budget": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "by-person": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "table": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "scenario": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "catalog": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "drink-detail": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "drink-sources": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "custom-drink": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "new-order": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "shared-bottle": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "repeat": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "bill": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "tab": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "split": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "share-split": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "end-outing": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "summary": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "summary-table": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "history": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "stats": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "games": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "game-setup": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "game-play": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "tip-glass": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "bafometro": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "custom-cards": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "settings": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      }
+    },
+    "blocks": {
+      "j1": [
+        "login",
+        "signup",
+        "home"
+      ],
+      "j2": [
+        "start-outing",
+        "outing",
+        "budget",
+        "by-person",
+        "table",
+        "scenario"
+      ],
+      "j3": [
+        "catalog",
+        "drink-detail",
+        "drink-sources",
+        "custom-drink",
+        "new-order",
+        "shared-bottle",
+        "repeat"
+      ],
+      "j4": [
+        "bill",
+        "tab",
+        "split",
+        "share-split"
+      ],
+      "j5": [
+        "end-outing",
+        "summary",
+        "summary-table",
+        "history",
+        "stats"
+      ],
+      "j6": [
+        "games",
+        "game-setup",
+        "game-play",
+        "tip-glass",
+        "bafometro",
+        "custom-cards",
+        "settings"
+      ]
+    }
+  },
+  "orbijob": {
+    "dir": "orbijob",
+    "slots": {
+      "login": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "signup": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "home": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "explore": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "filters": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "job-detail": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "no-results": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "job-menu": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "recommendations": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "why": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "save-search": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "saved-searches": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "notifications": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "application-kit": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "applications": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "application-detail": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "compare": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "profile-hub": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "professional-profile": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "resumes": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "resume-review": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "settings": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      },
+      "language": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ],
+          "en": [
+            738,
+            1597
+          ],
+          "es": [
+            738,
+            1597
+          ]
+        }
+      }
+    },
+    "blocks": {
+      "j1": [
+        "login",
+        "signup",
+        "home"
+      ],
+      "j2": [
+        "explore",
+        "filters",
+        "job-detail",
+        "no-results",
+        "job-menu"
+      ],
+      "j3": [
+        "recommendations",
+        "why",
+        "save-search",
+        "saved-searches",
+        "notifications"
+      ],
+      "j4": [
+        "application-kit",
+        "applications",
+        "application-detail",
+        "compare"
+      ],
+      "j5": [
+        "profile-hub",
+        "professional-profile",
+        "resumes",
+        "resume-review"
+      ],
+      "j6": [
+        "settings",
+        "language"
+      ]
+    }
   }
 };
 

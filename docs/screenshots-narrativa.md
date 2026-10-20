@@ -1,10 +1,16 @@
 # Screenshots dos cases como jornada narrativa
 
-As capturas dos quatro produtos próprios (Goiás App, Aprovaura, La Pelve e Match Queue) seguem uma história: entrada, uso principal e funcionalidades. Cada etapa é um bloco `data-shots="<produto>:jN"` na página do case, com eyebrow ("Etapa 01"), título curto e introdução em pt-BR, en e es (chaves `journey.*` em `assets/i18n/*.js`). A ordem das telas de cada etapa fica em `assets/js/screenshots-data.js` (`blocks`).
+As capturas dos produtos próprios (Goiás App, Aprovaura, La Pelve, Match Queue, OrbiJob e Bebômetro) seguem uma história: entrada, uso principal e funcionalidades. Cada etapa é um bloco `data-shots="<produto>:jN"` na página do case, com eyebrow ("Etapa 01"), título curto e introdução em pt-BR, en e es (chaves `journey.*` em `assets/i18n/*.js`). A ordem das telas de cada etapa fica em `assets/js/screenshots-data.js` (`blocks`).
 
 Regras: nenhuma captura foi alterada, criada ou removida; cada uma aparece uma única vez; listas vêm antes dos detalhes; login e cadastro abrem a história; o `tests/i18n.test.js` valida a ordem, a unicidade, os textos e a ordem de renderização no HTML.
 
 Fora da narrativa (mantida no acervo): `aprovaura/essay-themes` (pt-BR), que duplica a lista de temas de `essay-list`.
+
+## OrbiJob e Bebômetro
+Capturas do app real em pt-BR, en e es (738 px de largura), com dados fictícios: uma pessoa inventada, e-mails example.com e nenhum dado pessoal.
+O OrbiJob foi capturado por teste de widget do próprio app (fontes reais, dados em memória, 2x); o Bebômetro por um build web do app
+com entrada local (sem Supabase, sem sincronização), navegado por Playwright. Não são capturas de aparelho. Como refazer: `tools/capture-apps/README.md`.
+OrbiJob: 23 telas em 6 etapas. Bebômetro: 32 telas em 6 etapas. Telas que dependem de câmera, mapa ou notificação nativa não foram incluídas.
 
 ## Telas que não existem no acervo (não foram inventadas)
 - Goiás App: Quiz do Verdão (só aparece como cartão em Desafios) e as telas de resultado de Adivinhe a Escalação e Adivinhe o Jogador.
