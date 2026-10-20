@@ -753,6 +753,7 @@ figure.fig{ margin: 0; }
 .apps-filter:hover{ border-color: var(--border-strong); color: var(--text); }
 .apps-filter[aria-pressed="true"]{ border-color: var(--accent); color: var(--text); background: var(--glow-soft); }
 .apps-filter[aria-pressed="true"] .count{ color: var(--accent); }
+@media (max-width: 480px){ .apps-filters{ gap: 6px; margin-bottom: 28px; } .apps-filter{ padding: 7px 11px; font-size: 13px; gap: 6px; } }
 
 .apps-group{ padding: 0; margin-bottom: 36px; }
 .apps-group[hidden]{ display: none; }

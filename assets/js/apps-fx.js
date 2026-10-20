@@ -99,7 +99,16 @@
     sec.querySelectorAll(".app-card").forEach(enhanceCard);
   }
 
-  function run() { root.querySelectorAll(".apps-group").forEach(enhanceGroup); }
+  // rede de segurança: o que já está na tela não pode ficar esmaecido se o IntersectionObserver atrasar (aba em segundo plano, troca de filtro)
+  function revealVisible() {
+    root.querySelectorAll(".d-pre:not(.d-in)").forEach(function (e) {
+      var r = e.getBoundingClientRect();
+      if (r.height && r.top < window.innerHeight) { e.classList.add("d-in"); if (io) io.unobserve(e); }
+    });
+  }
+  function run() { root.querySelectorAll(".apps-group").forEach(enhanceGroup); if (io) setTimeout(revealVisible, 900); }
   run();
+  window.addEventListener("hashchange", function () { setTimeout(revealVisible, 900); });
+  root.parentNode.addEventListener("click", function (e) { if (e.target.closest && e.target.closest(".apps-filter")) setTimeout(revealVisible, 900); });
   document.addEventListener("lucksrei:locale", function () { setTimeout(run, 0); });   // apps.js re-renderiza na troca de idioma
 })();

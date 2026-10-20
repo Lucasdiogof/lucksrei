@@ -213,4 +213,5 @@
   validate();
   render();
   document.addEventListener("lucksrei:locale", render);
+  window.addEventListener("hashchange", function () { setFilter((location.hash || "").replace("#", ""), false); });
 })();
