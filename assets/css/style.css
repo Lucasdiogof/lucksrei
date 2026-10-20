@@ -703,6 +703,31 @@ figure.fig{ margin: 0; }
 .legal-body p, .legal-body li{ color: var(--text-dim); font-size: 15.5px; line-height: 1.75; margin-bottom: 10px; }
 .legal-body ul{ padding-left: 20px; list-style: disc; }
 
+/* ---------- project legal and support pages: shared editorial reading rail ----------
+ * Locale variants inside [data-legal] have the same two-section structure:
+ * hero above, legal article below. The article uses max-width:760px inline;
+ * match that exact width in the hero to keep breadcrumbs, title and body aligned.
+ * Scoped away from project showcases and the Lucksrei homepage.
+ */
+main > [data-legal] > .page-hero{ padding: 48px 0 36px; }
+main > [data-legal] > .page-hero > .container{ max-width: 760px; }
+main > [data-legal] > .page-hero h1{
+  max-width: 100%; font-size: clamp(30px, 4.2vw, 42px); line-height: 1.17;
+  margin: 14px 0; text-wrap: balance;
+}
+main > [data-legal] > .page-hero .lead{ max-width: 100%; font-size: 16px; }
+main > [data-legal] > .page-hero .breadcrumb{ overflow-wrap: anywhere; }
+main > [data-legal] > section:not(.page-hero){ padding: 42px 0 72px; }
+main > [data-legal] .legal-body h2{ line-height: 1.35; margin-top: 34px; }
+main > [data-legal] .legal-body .legal-draft + h2{ margin-top: 28px; }
+main > [data-legal] .legal-body a{ overflow-wrap: anywhere; }
+@media (max-width: 700px){
+  main > [data-legal] > .page-hero{ padding: 36px 0 26px; }
+  main > [data-legal] > .page-hero h1{ font-size: clamp(28px, 8.4vw, 36px); margin: 10px 0 12px; }
+  main > [data-legal] > section:not(.page-hero){ padding: 30px 0 52px; }
+  main > [data-legal] .legal-body h2{ margin-top: 28px; }
+}
+
 
 /* ---------- metrics footer (home) ---------- */
 .metric .label strong{ display: block; color: var(--text-dim); font-size: 14px; font-weight: 600; margin-bottom: 2px; }
