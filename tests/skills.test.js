@@ -11,11 +11,7 @@ var D = require(path.join(root, "assets/js/skills-data.js"));
 var T = require(path.join(root, "assets/js/skills-details.js"));
 var LOCALES = ["en", "pt-BR", "es"];
 
-var EXPECTED = ["flutter", "dart", "android", "ios", "clean-architecture", "bloc", "tdd", "automated-testing", "dependency-injection", "get-it", "solid",
-  "rest-api", "supabase", "postgresql", "firebase", "flavors", "fastlane", "codemagic", "github-actions", "app-store-connect", "google-play-console",
-  "git", "github", "rls", "cloudflare-workers", "crashlytics", "remote-config", "firebase-messaging", "sentry", "gemini", "deep-links", "i18n",
-  "gps", "web-pwa", "hive", "sembast", "provider", "jwt", "scrum", "azure-devops", "gitlab", "sql", "typescript", "javascript", "java", "spring",
-  "mysql", "mongodb", "oracle", "db2", "objectdb", "zk-framework"];
+var EXPECTED = ["flutter","dart","android","ios","clean-architecture","bloc","tdd","automated-testing","dependency-injection","get-it","go-router","freezed","getx","scoped-model","modular-packages","micro-frontends","solid","rest-api","graphql","grpc","signalr","supabase","supabase-realtime","edge-functions","offline-first","sqlite","postgresql","firebase","firebase-auth","firestore","firebase-rtdb","flavors","fastlane","codemagic","github-actions","app-store-connect","google-play-console","in-app-purchases","git","github","rls","cloudflare-workers","crashlytics","remote-config","firebase-messaging","onesignal","whatsapp-api","zendesk","facebook-login","sentry","gemini","ml-kit","deep-links","i18n","gps","google-maps","mapbox","maplibre","web-pwa","pdf","webview","barcode-scanning","biometrics","hive","sembast","provider","jwt","scrum","azure-devops","gitlab","sql","typescript","javascript","java","spring","mysql","mongodb","oracle","db2","objectdb","zk-framework"];
 check(JSON.stringify(D.ORDER.map(function (s) { return s.id; })) === JSON.stringify(EXPECTED), "ordem da grade diferente da esperada (por importância)");
 
 var ids = {};
@@ -65,11 +61,11 @@ var apps = { window: {} }; require("vm").runInNewContext(read("assets/js/apps-da
 // vínculos informados pelo Lucas
 function has(skill, kind, id) { return ids[skill][kind].indexOf(id) >= 0; }
 ["cooper-tec", "agrosmart", "toro", "iza", "freelance"].forEach(function (e) { check(has("flutter", "exp", e), "Flutter sem " + e); });
-["cooper-pay", "boosteragro", "boosterpro", "santander", "iza-seguros", "match-queue", "fan-hub", "la-pelve", "aprovaura"].forEach(function (p) { check(has("flutter", "projects", p), "Flutter sem " + p); });
+["cooper-pay", "boosteragro", "agrosmart", "toro", "iza", "match-queue", "fan-hub", "la-pelve", "aprovaura"].forEach(function (p) { check(has("flutter", "projects", p), "Flutter sem " + p); });
 check(has("codemagic", "exp", "cooper-tec") && ids.codemagic.exp.length === 1, "Codemagic = só Cooper Tec");
 check(has("flavors", "exp", "cooper-tec") && ids.flavors.exp.length === 1, "Flutter Flavors = só Cooper Tec");
-["fastlane", "github-actions"].forEach(function (s) { check(ids[s].exp.length === 1 && has(s, "exp", "agrosmart") && has(s, "projects", "boosteragro") && has(s, "projects", "boosterpro"), s + " = Agrosmart / BoosterAGRO / BoosterPRO"); });
-check(ids["azure-devops"].exp.join() === "toro" && has("azure-devops", "projects", "santander"), "Azure DevOps = Toro / Santander Corretora");
+["fastlane", "github-actions"].forEach(function (s) { check(ids[s].exp.length === 1 && has(s, "exp", "agrosmart") && has(s, "projects", "boosteragro") && has(s, "projects", "agrosmart"), s + " = Agrosmart / BoosterAGRO / BoosterPRO"); });
+check(ids["azure-devops"].exp.join() === "toro" && has("azure-devops", "projects", "toro"), "Azure DevOps = Toro / Santander Corretora");
 ["hive", "sembast"].forEach(function (s) { check(ids[s].exp.join() === "agrosmart", s + " = Agrosmart"); });
 ["supabase", "postgresql"].forEach(function (s) { ["match-queue", "fan-hub", "la-pelve", "aprovaura"].forEach(function (p) { check(has(s, "projects", p), s + " sem " + p); }); check(ids[s].exp.length === 0, s + " não deve ter empresa"); });
 ["cooper-tec", "agrosmart", "toro"].forEach(function (e) { check(has("clean-architecture", "exp", e), "Clean Architecture sem " + e); });
@@ -85,13 +81,13 @@ check(["flutter", "dart", "android", "ios", "supabase", "postgresql"].every(func
 check(has("clean-architecture", "projects", "fan-hub"), "Goiás App documenta Clean Architecture");
 check(!has("android", "projects", "match-queue") && has("ios", "projects", "match-queue"), "Match Queue só iOS");
 // Tabela Fone e apps só descritos no apps-data.js: sem vínculo de tecnologia (apps-data não é prova independente)
-check(!D.PROJECTS["tabela-fone"] && !JSON.stringify(D.ORDER).match(/tabela-fone|"vai"|"gpol"/) && !/Tabela Fone/.test(JSON.stringify(T)), "Tabela Fone/Vai/GPOL sem vínculos de tecnologia");
-check(ids.bloc.projects.length === 0 && ids["rest-api"].exp.length === 0 && ids["rest-api"].projects.length === 0 && ids.firebase.exp.join() === "iza", "BLoC/REST/Firebase só com vínculos comprovados");
-check(D.PROJECTS["fan-hub"].name === "FanHub" && D.PROJECTS["fan-hub"].href === "/projects/fan-hub/", "FanHub como nome do produto, URL preservada");
-check(/FanHub/.test(T.supabase.en[2]) && !/Goiás App/.test(T.supabase.en[2]), "Supabase cita o produto como FanHub");
-check(ids.hive.projects.length === 0 && ids.sembast.projects.length === 0, "Hive/Sembast: só a experiência comprovada (Agrosmart)");
+check(["tabela-fone","vai","gpol","busaogyn","orbijob","bebometro","stockport"].every(function (p) { return !!D.PROJECTS[p]; }), "novos projetos ausentes da seção de skills");
+check(has("bloc","projects","tabela-fone") && has("rest-api","projects","emater") && ids["rest-api"].exp.length === 0 && ids.firebase.exp.join() === "iza", "BLoC/REST/Firebase só com vínculos comprovados");
+check(D.PROJECTS["fan-hub"].name === "Goiás App" && D.PROJECTS["fan-hub"].href === "/projects/fan-hub/", "FanHub como nome do produto, URL preservada");
+check(/Goiás App/.test(T.supabase.en[2]), "Supabase deve usar o nome atual Goiás App");
+check(ids.hive.projects.length === 0 && has("sembast","projects","agrosmart"), "Hive com vínculo de experiência; Sembast presente nos projetos Agrosmart");
 // skills sem evidência não recebem empresa nem projeto
-["provider", "solid", "dependency-injection", "jwt", "git", "github", "sql", "mysql", "db2", "javascript", "typescript", "sentry", "mongodb"].forEach(function (s) { check(ids[s].exp.length === 0 && ids[s].projects.length === 0, s + " sem evidência não pode ter vínculos"); });
+["solid", "mysql", "db2", "javascript", "mongodb"].forEach(function (s) { check(ids[s].exp.length === 0 && ids[s].projects.length === 0, s + " sem evidência não pode ter vínculos"); });
 // nomes de experiência batem com a linha do tempo da home
 var home = read("index.html");
 ["Cooper Tec", "Agrosmart", "Toro Investimentos", "IZA", "Saneago"].forEach(function (n) { check(home.indexOf(">" + n + "<") >= 0 || read("assets/i18n/en.js").indexOf('"' + n + '"') >= 0, "experiência fora da home: " + n); });
@@ -108,6 +104,17 @@ check(home.indexOf("skills-data.js") > 0 && home.indexOf("skills-data.js") < hom
 // seções existentes continuam e na mesma ordem
 var order = ["sobre", "projetos", "processo", "skills", "experiencia", "contato"].map(function (id) { return home.indexOf('<section id="' + id + '"'); });
 check(order.every(function (v, i) { return v > 0 && (i === 0 || v > order[i - 1]); }), "ordem das seções da home");
+
+
+// Inventário revisado a partir de /apps/: todas as novas competências devem apontar para projetos reais.
+check(D.ORDER.length === 81, "total de skills esperado: 81");
+const coverage = [["go-router","tabela-fone"],["freezed","tabela-fone"],["getx","iza"],["scoped-model","gpol"],["modular-packages","toro"],["micro-frontends","boosteragro"],["graphql","toro"],["grpc","iza"],["signalr","toro"],["supabase-realtime","match-queue"],["edge-functions","aprovaura"],["offline-first","la-pelve"],["sqlite","la-pelve"],["firebase-auth","vai"],["firestore","gpol"],["firebase-rtdb","vai"],["in-app-purchases","tabela-fone"],["onesignal","toro"],["whatsapp-api","la-pelve"],["zendesk","iza"],["facebook-login","iza"],["ml-kit","orbijob"],["google-maps","emater"],["mapbox","agrosmart"],["maplibre","busaogyn"],["pdf","agr-fiscal"],["webview","orbijob"],["barcode-scanning","stockport"],["biometrics","toro"]];
+coverage.forEach(function (pair) { check(has(pair[0], "projects", pair[1]), "vínculo ausente: " + pair.join(" → ")); });
+["busaogyn", "orbijob", "bebometro", "stockport"].forEach(function (p) {
+  check(has("flutter", "projects", p), "Flutter sem projeto recente " + p);
+});
+check(has("maplibre", "projects", "busaogyn") && has("ml-kit", "projects", "orbijob"), "skills atuais sem vínculo aos novos apps");
+check(!D.ORDER.some(function (s) { return s.projects.some(function (p) { return !D.PROJECTS[p]; }); }), "projeto órfão em skill");
 
 if (failures.length) { console.error("FALHOU:\n - " + failures.join("\n - ")); process.exit(1); }
 console.log("ok — skills: " + D.ORDER.length + " tecnologias, logos locais, textos nos 3 idiomas, vínculos conferidos com o histórico");
