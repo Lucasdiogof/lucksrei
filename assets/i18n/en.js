@@ -289,7 +289,7 @@
 
   /* ---- matchqueue ---- */
   "matchqueue.s1.div1": "<a href=\"/\">Lucksrei</a> / <a href=\"/#projetos\">Projects</a> / Match Queue",
-  "matchqueue.s1.div2": "App privacy policy",
+  "matchqueue.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/match-queue/privacy/\">App privacy policy</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/match-queue/data-deletion/\">Account and data deletion</a>",
   "matchqueue.s1.p1": "A real-time search queue for EA SPORTS FC teams: one member searches at a time and the next in line takes over automatically. The server decides; the app only asks and follows.",
   "matchqueue.s2.div1": "<strong>Teams &amp; members</strong>Team creation, invites and member management.",
   "matchqueue.s2.div2": "<strong>Search queue</strong>One active search per team, with automatic expiration.",
