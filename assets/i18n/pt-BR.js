@@ -293,7 +293,7 @@
 
   /* ---- matchqueue ---- */
   "matchqueue.s1.div1": "<a href=\"/\">Lucksrei</a> / <a href=\"/#projetos\">Projetos</a> / Match Queue",
-  "matchqueue.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/match-queue/privacy/\">Política de Privacidade do app</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/match-queue/data-deletion/\">Exclusão de conta e dados</a>",
+  "matchqueue.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/match-queue/privacy/\">Política de Privacidade do app</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/match-queue/data-deletion/\">Exclusão de conta e dados</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/match-queue/support/\">Suporte</a>",
   "matchqueue.s1.p1": "Fila de busca em tempo real para times de EA SPORTS FC: um membro busca por vez e o próximo da fila assume sozinho. O servidor decide; o app só pede e acompanha.",
   "matchqueue.s2.div1": "<strong>Times &amp; membros</strong>Criação de time, convites e gestão de membros.",
   "matchqueue.s2.div2": "<strong>Fila de busca</strong>Uma busca ativa por time, com expiração automática.",
@@ -312,7 +312,7 @@
 
   /* ---- aprovaura ---- */
   "aprovaura.s1.div1": "<a href=\"/\">Lucksrei</a> / <a href=\"/#projetos\">Projetos</a> / Aprovaura",
-  "aprovaura.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/aura/privacy/\">Política de Privacidade do app</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/aura/data-deletion/\">Exclusão de conta e dados</a>",
+  "aprovaura.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/aura/privacy/\">Política de Privacidade do app</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/aura/data-deletion/\">Exclusão de conta e dados</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/aura/support/\">Suporte</a>",
   "aprovaura.s1.p1": "App de estudo para vestibulares e provas, com questões por matéria, simulados, revisão de erros e correção de redação.",
   "aprovaura.s2.div1": "<strong>Banco de questões</strong>Perguntas e respostas organizadas por matéria.",
   "aprovaura.s2.div10": "<strong>Multiplataforma</strong>O mesmo app em Android e iOS.",
@@ -331,7 +331,7 @@
 
   /* ---- lapelve ---- */
   "lapelve.s1.div1": "<a href=\"/\">Lucksrei</a> / <a href=\"/#projetos\">Projetos</a> / La Pelve",
-  "lapelve.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/la-pelve/privacy/\">Política de Privacidade do app</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/la-pelve/data-deletion/\">Exclusão de conta e dados</a>",
+  "lapelve.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/la-pelve/privacy/\">Política de Privacidade do app</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/la-pelve/data-deletion/\">Exclusão de conta e dados</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/la-pelve/support/\">Suporte</a>",
   "lapelve.s1.p1": "App de gestão clínica para fisioterapeutas pélvicos: agenda, prontuário, evolução e controle de pagamentos.",
   "lapelve.s2.div1": "<strong>Agenda</strong>Organização de horários e atendimentos.",
   "lapelve.s2.div2": "<strong>Pacientes</strong>Cadastro e histórico por paciente.",

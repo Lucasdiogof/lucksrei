@@ -6,8 +6,8 @@
 <meta name="theme-color" content="#040405">
 <script src="/assets/js/theme-boot.js"></script>
 <script src="/assets/js/i18n-boot.js"></script>
-<title>Política de Privacidade — Match Queue | Lucksrei</title>
-<meta name="description" content="Política de privacidade do aplicativo Match Queue: quais dados coletamos, como usamos, com quem compartilhamos e como excluir sua conta.">
+<title>Privacy policy — Match Queue | Lucksrei</title>
+<meta name="description" content="Match Queue privacy policy: account data, teams and match searches, providers, retention, account deletion and your rights.">
 <link rel="canonical" href="https://lucksrei.com/projects/match-queue/privacy/">
 <link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/assets/img/favicon-192.png">
@@ -15,10 +15,16 @@
 <link rel="stylesheet" href="/assets/css/style.css">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Lucksrei">
-<meta property="og:title" content="Política de Privacidade — Match Queue">
-<meta property="og:description" content="Quais dados o Match Queue coleta, como usa, com quem compartilha e como excluir sua conta.">
+<meta property="og:title" content="Privacy policy — Match Queue">
+<meta property="og:description" content="Match Queue privacy policy: account data, teams and match searches, providers, retention, account deletion and your rights.">
 <meta property="og:url" content="https://lucksrei.com/projects/match-queue/privacy/">
 <meta name="twitter:card" content="summary">
+<style>
+html[lang="pt-BR"] [data-legal]:not([data-legal="pt-BR"]),
+html[lang="en"] [data-legal]:not([data-legal="en"]),
+html[lang="es"] [data-legal]:not([data-legal="es"]){ display:none; }
+.legal-draft{ font-size:13px; color:var(--text-dim); border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--panel); padding:10px 14px; margin-bottom:24px; }
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main" data-i18n="nav.skip">Skip to content</a>
@@ -58,130 +64,136 @@
   </div>
 </header>
 
-<main id="main" lang="pt-BR">
-  <div class="container pt-only-notice-wrap"><p class="pt-only-notice" lang="en" data-i18n="privacy.notice">This privacy policy is available in Portuguese only.</p></div>
+<main id="main">
+<div data-legal="en" lang="en">
   <section class="page-hero lk-grid">
     <div class="container">
-      <div class="breadcrumb"><a href="/">Lucksrei</a> / <a href="/#projetos">Projetos</a> / <a href="/projects/match-queue/">Match Queue</a> / Privacidade</div>
+      <div class="breadcrumb"><a href="/">Lucksrei</a> / Match Queue / Privacy</div>
       <span class="eyebrow">Legal</span>
-      <h1>Política de Privacidade — Match Queue</h1>
-      <p class="lead">Última atualização: 22 de outubro de 2026. Esta política é específica do aplicativo Match Queue e complementa a <a href="/privacy/">política institucional da Lucksrei</a>.</p>
+      <h1>Privacy policy — Match Queue</h1>
+      <p class="lead">What Match Queue stores, why, who it is shared with and how to delete it. Specific to the app; it complements <a href="/privacy/">Lucksrei's institutional policy</a>.</p>
     </div>
   </section>
-
   <section>
     <div class="container legal-body" style="max-width:760px">
-      <h2>1. Responsável pelo aplicativo</h2>
-      <p>
-        O Match Queue é operado por Lucas Diogo Franca (CNPJ 54.868.173/0001-55).
-        Dúvidas sobre esta Política podem ser enviadas para
-        <a href="mailto:marketing@lucksrei.com">marketing@lucksrei.com</a>.
-      </p>
+      <p class="legal-draft">Updated October 22, 2026. It describes how the app works today and is not legal advice.</p>
 
-      <h2>2. Quais dados coletamos</h2>
-      <p>Coletamos apenas o necessário para o app funcionar:</p>
-      <ul>
-        <li>Dados de conta: e-mail e senha (armazenada de forma segura pelo provedor de autenticação, nunca em texto simples).</li>
-        <li>Perfil da conta: seu nome de exibição, a(s) plataforma(s) em que você joga e sua divisão de Rivals.</li>
-        <li>Identificadores internos: um ID único gerado para você, e um para cada Time que você cria ou participa.</li>
-        <li>Escalação: o elenco que você monta (jogadores, técnico e formação).</li>
-        <li>Times: nome, tag, imagem da logo (se o dono do time enviar uma) e histórico de atividade dos times dos quais você participa.</li>
-        <li>Favoritos do mercado: os jogadores que você marca como favoritos.</li>
-        <li>Dados de busca de partida: buscas de partida, filas e histórico de busca (se você encontrou partida ou cancelou, e quando) seus e do seu time.</li>
-        <li>Registros de Weekend League e Rivals: contagem de vitórias/derrotas que você mesmo informa.</li>
-        <li>Token de notificação push (Firebase Cloud Messaging), se você permitir notificações.</li>
-        <li>Perfil público: se você ativar essa opção nas configurações, escolhe um endereço público; o link exibe seu nome, e você decide individualmente se ele também mostra sua escalação, divisão de Rivals, registro de Weekend League e estatísticas.</li>
-      </ul>
-
-      <h2>3. Provedores que usamos</h2>
-      <p>
-        Usamos o Supabase (banco de dados, autenticação e hospedagem de API) e o Firebase
-        (notificações push e relatório de falhas). Esses provedores processam dados em nosso
-        nome, seguindo suas próprias políticas de segurança, e não têm permissão para usar
-        seus dados para fins próprios.
-      </p>
-
-      <h2>4. Para que usamos seus dados</h2>
-      <p>
-        Usamos os dados coletados exclusivamente para: autenticar sua conta; organizar a fila
-        de busca de partida do seu time; exibir seu histórico e estatísticas; enviar
-        notificações sobre sua vez na fila ou eventos do time (se você permitir); e, caso você
-        ative o perfil público, exibir nele as informações que você escolher mostrar. Não
-        vendemos seus dados nem os usamos para publicidade.
-      </p>
-
-      <h2>5. Armazenamento e segurança</h2>
-      <p>
-        Os dados ficam armazenados em servidores do Supabase, protegidos por controle de
-        acesso em nível de linha (Row Level Security): cada usuário só consegue ler/editar o
-        que é seu ou o que seu time compartilha com você. Senhas nunca são armazenadas em
-        texto simples. Comunicação entre o app e o servidor é feita sempre por HTTPS.
-      </p>
-
-      <h2>6. Retenção</h2>
-      <p>
-        Mantemos seus dados enquanto sua conta existir. Histórico de partidas do seu time é
-        mantido mesmo após você excluir sua conta, mas de forma anônima (sem seu nome
-        associado) para não apagar o histórico compartilhado dos demais membros do time.
-      </p>
-
-      <h2>7. Exclusão de conta</h2>
-      <p>
-        Você pode excluir sua conta a qualquer momento em Conta → Excluir minha conta, ou,
-        se não tiver mais acesso ao app, pedir pelo e-mail na
-        <a href="/projects/match-queue/data-deletion/">página de exclusão de conta e dados</a>.
-        A exclusão remove seu login, perfil, escalações, registros de Weekend League e
-        Rivals, favoritos do mercado, dispositivos registrados, preferências e notificações,
-        convites e pedidos de entrada, buscas ativas e perfil público. Se você for o único
-        integrante de um time, o time inteiro é removido, com a imagem da logo. Se o time
-        tiver outros integrantes, você sai e a posse passa para o integrante mais antigo. O
-        histórico de partidas e buscas do time permanece sem identificar você. Essa ação é
-        permanente e não pode ser desfeita.
-      </p>
-
-      <h2>8. Compartilhamento de dados</h2>
-      <p>
-        Não compartilhamos seus dados com terceiros para fins de marketing. Compartilhamos
-        dados apenas com os provedores de infraestrutura citados na seção 3, na medida
-        necessária para o app funcionar, e quando exigido por lei.
-      </p>
-
-      <h2>9. Seus direitos</h2>
-      <p>
-        Você pode, a qualquer momento: acessar e editar seu nome de exibição pelo próprio app; ativar ou desativar seu perfil público e escolher quais
-        informações ele exibe (a escalação, a divisão de Rivals, o registro de Weekend
-        League e as estatísticas); e excluir sua conta e os dados associados a ela. Para qualquer outra
-        solicitação sobre seus dados, entre em contato pelo
-        <a href="mailto:marketing@lucksrei.com">marketing@lucksrei.com</a>.
-      </p>
-
-      <h2>10. Menores de idade</h2>
-      <p>
-        O Match Queue não é direcionado a menores de 13 anos e não coleta intencionalmente
-        dados de crianças. Se você é responsável por um menor e acredita que ele nos forneceu
-        dados pessoais, entre em contato para que possamos removê-los.
-      </p>
-
-      <h2>11. Mudanças nesta política</h2>
-      <p>
-        Podemos atualizar esta Política de tempos em tempos. Mudanças relevantes serão
-        comunicadas dentro do app. A data no topo desta página sempre indica a versão mais
-        recente. O mesmo texto está disponível dentro do app, também em inglês e espanhol.
-      </p>
-
-      <h2>12. Marca e afiliação</h2>
-      <p>
-        O Match Queue é um aplicativo independente, feito por fã, e não é afiliado, endossado
-        ou patrocinado pela EA SPORTS, Electronic Arts, FIFA ou qualquer uma de suas
-        afiliadas. Todas as marcas, nomes e imagens de terceiros mencionados pertencem aos
-        seus respectivos donos e são usados apenas para identificar do que o aplicativo trata.
-      </p>
-
-      <div class="hero-ctas" style="margin-top:32px">
-        <a class="btn btn-ghost" href="/projects/match-queue/">Voltar para o Match Queue</a>
-      </div>
+<h2>1. Who runs this app</h2>
+<p>Match Queue is operated by Lucas Diogo Franca (CNPJ 54.868.173/0001-55). Questions about this Policy can be sent to <a href="mailto:marketing@lucksrei.com?subject=Match%20Queue%20privacidade">marketing@lucksrei.com</a>.</p>
+<h2>2. What data we collect</h2>
+<p>We only collect what the app needs to work:</p>
+<ul><li>Account data: email and password (stored securely by our authentication provider, never in plain text).</li><li>Account profile: your display name, the platform(s) you play on, and your Rivals division.</li><li>Internal identifiers: a unique ID generated for you, and one for each Team you create or join.</li><li>Squad: the lineup you build (players, manager, and formation).</li><li>Teams: name, tag, logo image (if the team owner uploads one), and activity history of the teams you belong to.</li><li>Market favorites: the players you mark as favorites.</li><li>Match search data: match searches, queues, and search history (whether you found a match or cancelled, and when) for you and your team.</li><li>Weekend League and Rivals records: win/loss counts you enter yourself.</li><li>Push notification token (Firebase Cloud Messaging), if you allow notifications.</li><li>Public profile: if you turn this on in settings, you choose a public address; the link shows your name, and you individually decide whether it also shows your squad, Rivals division, Weekend League record, and stats.</li></ul>
+<h2>3. Providers we use</h2>
+<p>We use Supabase (database, authentication, and API hosting) and Firebase (push notifications and crash reporting). These providers process data on our behalf under their own security policies and are not allowed to use your data for their own purposes. In the web version, Cloudflare delivers the app files and receives technical network data from the visit (such as IP address and time); Firebase is not used on the web.</p>
+<h2>4. Why we use your data</h2>
+<p>We use the data we collect exclusively to: authenticate you; run your team's match search queue; show your history and stats; send notifications about your turn in the queue or team events (if you allow it); and, if you enable a public profile, display on it whatever you choose to show. We do not sell your data or use it for advertising.</p>
+<h2>5. Storage and security</h2>
+<p>Data is stored on Supabase servers, protected by Row Level Security: each user can only read/edit what belongs to them or what their team shares with them. Passwords are never stored in plain text. Communication between the app and the server is always over HTTPS.</p>
+<h2>6. Retention</h2>
+<p>We keep your data for as long as your account exists. Your team's match history is kept even after you delete your account, but anonymized (with your name removed) so we don't erase the shared history of the other team members.</p>
+<h2>7. Account deletion</h2>
+<p>You can delete your account at any time under Account → Delete my account or, if you no longer have access to the app, request it by e-mail (<a href="mailto:marketing@lucksrei.com?subject=Match%20Queue%20privacidade">marketing@lucksrei.com</a>). Deletion removes your sign-in, profile, squads, Weekend League and Rivals records, market favorites, registered devices, notification preferences and notifications, invitations and join requests, active searches and public profile. If you are the only member of a team, the whole team is removed, including its logo image. If the team has other members, you leave and ownership passes to the longest-standing member. The team's match and search history stays without identifying you. This action is permanent and cannot be undone.</p>
+<p><a href="/projects/match-queue/data-deletion/">How to delete your Match Queue account and data</a></p>
+<h2>8. Data sharing</h2>
+<p>We do not share your data with third parties for marketing. We only share data with the infrastructure providers listed in section 3, to the extent needed for the app to work, and when required by law.</p>
+<h2>9. Your rights</h2>
+<p>You can, at any time: access and edit your display name from within the app; turn your public profile on or off and choose what it shows (squad, Rivals division, Weekend League record, and stats); and delete your account and its associated data. For any other request about your data, contact us at <a href="mailto:marketing@lucksrei.com?subject=Match%20Queue%20privacidade">marketing@lucksrei.com</a>.</p>
+<h2>10. Children</h2>
+<p>Match Queue is not directed at children under 13 and does not knowingly collect data from them. If you are a parent or guardian and believe a child has provided us personal data, please contact us so we can remove it.</p>
+<h2>11. Changes to this policy</h2>
+<p>We may update this Policy from time to time. Material changes will be communicated inside the app. The date at the top of this page always reflects the latest version.</p>
+<h2>12. Trademarks and affiliation</h2>
+<p>Match Queue is an independent application and is not affiliated with or endorsed by any game publisher, football organization, or third-party brand.</p>
+<div class="hero-ctas" style="margin-top:32px"><a class="btn btn-ghost" href="/projects/match-queue/">Back to Match Queue</a><a class="btn btn-ghost" href="/projects/match-queue/data-deletion/">Account and data deletion</a><a class="btn btn-ghost" href="/projects/match-queue/support/">Support</a></div>
     </div>
   </section>
+</div>
+<div data-legal="pt-BR" lang="pt-BR">
+  <section class="page-hero lk-grid">
+    <div class="container">
+      <div class="breadcrumb"><a href="/">Lucksrei</a> / Match Queue / Privacidade</div>
+      <span class="eyebrow">Legal</span>
+      <h1>Política de privacidade — Match Queue</h1>
+      <p class="lead">O que o Match Queue guarda, para quê, com quem é compartilhado e como excluir. Específica do app; complementa a <a href="/privacy/">política institucional da Lucksrei</a>.</p>
+    </div>
+  </section>
+  <section>
+    <div class="container legal-body" style="max-width:760px">
+      <p class="legal-draft">Atualizada em 22 de outubro de 2026. Descreve como o app funciona hoje e não substitui orientação jurídica.</p>
+
+<h2>1. Responsável pelo aplicativo</h2>
+<p>O Match Queue é operado por Lucas Diogo Franca (CNPJ 54.868.173/0001-55). Dúvidas sobre esta Política podem ser enviadas para <a href="mailto:marketing@lucksrei.com?subject=Match%20Queue%20privacidade">marketing@lucksrei.com</a>.</p>
+<h2>2. Quais dados coletamos</h2>
+<p>Coletamos apenas o necessário para o app funcionar:</p>
+<ul><li>Dados de conta: e-mail e senha (armazenada de forma segura pelo provedor de autenticação, nunca em texto simples).</li><li>Perfil da conta: seu nome de exibição, a(s) plataforma(s) em que você joga e sua divisão de Rivals.</li><li>Identificadores internos: um ID único gerado para você, e um para cada Time que você cria ou participa.</li><li>Escalação: o elenco que você monta (jogadores, técnico e formação).</li><li>Times: nome, tag, imagem da logo (se o dono do time enviar uma) e histórico de atividade dos times dos quais você participa.</li><li>Favoritos do mercado: os jogadores que você marca como favoritos.</li><li>Dados de busca de partida: buscas de partida, filas e histórico de busca (se você encontrou partida ou cancelou, e quando) seus e do seu time.</li><li>Registros de Weekend League e Rivals: contagem de vitórias/derrotas que você mesmo informa.</li><li>Token de notificação push (Firebase Cloud Messaging), se você permitir notificações.</li><li>Perfil público: se você ativar essa opção nas configurações, escolhe um endereço público; o link exibe seu nome, e você decide individualmente se ele também mostra sua escalação, divisão de Rivals, registro de Weekend League e estatísticas.</li></ul>
+<h2>3. Provedores que usamos</h2>
+<p>Usamos o Supabase (banco de dados, autenticação e hospedagem de API) e o Firebase (notificações push e relatório de falhas). Esses provedores processam dados em nosso nome, seguindo suas próprias políticas de segurança, e não têm permissão para usar seus dados para fins próprios. Na versão web, a Cloudflare entrega os arquivos do aplicativo e recebe dados técnicos de rede da visita (como endereço IP e horário); o Firebase não é usado na web.</p>
+<h2>4. Para que usamos seus dados</h2>
+<p>Usamos os dados coletados exclusivamente para: autenticar sua conta; organizar a fila de busca de partida do seu time; exibir seu histórico e estatísticas; enviar notificações sobre sua vez na fila ou eventos do time (se você permitir); e, caso você ative o perfil público, exibir nele as informações que você escolher mostrar. Não vendemos seus dados nem os usamos para publicidade.</p>
+<h2>5. Armazenamento e segurança</h2>
+<p>Os dados ficam armazenados em servidores do Supabase, protegidos por controle de acesso em nível de linha (Row Level Security): cada usuário só consegue ler/editar o que é seu ou o que seu time compartilha com você. Senhas nunca são armazenadas em texto simples. Comunicação entre o app e o servidor é feita sempre por HTTPS.</p>
+<h2>6. Retenção</h2>
+<p>Mantemos seus dados enquanto sua conta existir. Histórico de partidas do seu time é mantido mesmo após você excluir sua conta, mas de forma anônima (sem seu nome associado) para não apagar o histórico compartilhado dos demais membros do time.</p>
+<h2>7. Exclusão de conta</h2>
+<p>Você pode excluir sua conta a qualquer momento em Conta → Excluir minha conta ou, se não tiver mais acesso ao app, pedir por e-mail (<a href="mailto:marketing@lucksrei.com?subject=Match%20Queue%20privacidade">marketing@lucksrei.com</a>). A exclusão remove seu login, perfil, escalações, registros de Weekend League e Rivals, favoritos do mercado, dispositivos registrados, preferências e notificações, convites e pedidos de entrada, buscas ativas e perfil público. Se você for o único integrante de um time, o time inteiro é removido, com a imagem da logo. Se o time tiver outros integrantes, você sai e a posse passa para o integrante mais antigo. O histórico de partidas e buscas do time permanece sem identificar você. Essa ação é permanente e não pode ser desfeita.</p>
+<p><a href="/projects/match-queue/data-deletion/">Como excluir a conta e os dados do Match Queue</a></p>
+<h2>8. Compartilhamento de dados</h2>
+<p>Não compartilhamos seus dados com terceiros para fins de marketing. Compartilhamos dados apenas com os provedores de infraestrutura citados na seção 3, na medida necessária para o app funcionar, e quando exigido por lei.</p>
+<h2>9. Seus direitos</h2>
+<p>Você pode, a qualquer momento: acessar e editar seu nome de exibição pelo próprio app; ativar ou desativar seu perfil público e escolher quais informações ele exibe (a escalação, a divisão de Rivals, o registro de Weekend League e as estatísticas); e excluir sua conta e os dados associados a ela. Para qualquer outra solicitação sobre seus dados, entre em contato pelo <a href="mailto:marketing@lucksrei.com?subject=Match%20Queue%20privacidade">marketing@lucksrei.com</a>.</p>
+<h2>10. Menores de idade</h2>
+<p>O Match Queue não é direcionado a menores de 13 anos e não coleta intencionalmente dados de crianças. Se você é responsável por um menor e acredita que ele nos forneceu dados pessoais, entre em contato para que possamos removê-los.</p>
+<h2>11. Mudanças nesta política</h2>
+<p>Podemos atualizar esta Política de tempos em tempos. Mudanças relevantes serão comunicadas dentro do app. A data no topo desta página sempre indica a versão mais recente.</p>
+<h2>12. Marca e afiliação</h2>
+<p>O Match Queue é um aplicativo independente e não é afiliado nem endossado por nenhuma editora de jogos, organização de futebol ou marca de terceiros.</p>
+<div class="hero-ctas" style="margin-top:32px"><a class="btn btn-ghost" href="/projects/match-queue/">Voltar para o Match Queue</a><a class="btn btn-ghost" href="/projects/match-queue/data-deletion/">Exclusão de conta e dados</a><a class="btn btn-ghost" href="/projects/match-queue/support/">Suporte</a></div>
+    </div>
+  </section>
+</div>
+<div data-legal="es" lang="es">
+  <section class="page-hero lk-grid">
+    <div class="container">
+      <div class="breadcrumb"><a href="/">Lucksrei</a> / Match Queue / Privacidad</div>
+      <span class="eyebrow">Legal</span>
+      <h1>Política de privacidad — Match Queue</h1>
+      <p class="lead">Qué guarda Match Queue, para qué, con quién se comparte y cómo eliminarlo. Específica de la app; complementa la <a href="/privacy/">política institucional de Lucksrei</a>.</p>
+    </div>
+  </section>
+  <section>
+    <div class="container legal-body" style="max-width:760px">
+      <p class="legal-draft">Actualizada el 22 de octubre de 2026. Describe cómo funciona la app hoy y no sustituye el asesoramiento jurídico.</p>
+
+<h2>1. Responsable de la aplicación</h2>
+<p>Match Queue es operado por Lucas Diogo Franca (CNPJ 54.868.173/0001-55). Puedes enviar preguntas sobre esta Política a <a href="mailto:marketing@lucksrei.com?subject=Match%20Queue%20privacidade">marketing@lucksrei.com</a>.</p>
+<h2>2. Qué datos recopilamos</h2>
+<p>Solo recopilamos lo necesario para que la app funcione:</p>
+<ul><li>Datos de cuenta: correo electrónico y contraseña (almacenada de forma segura por el proveedor de autenticación, nunca en texto plano).</li><li>Perfil de la cuenta: tu nombre visible, la(s) plataforma(s) en la(s) que juegas y tu división de Rivals.</li><li>Identificadores internos: un ID único generado para ti, y uno para cada Equipo que crees o al que te unas.</li><li>Alineación: el equipo que armas (jugadores, técnico y formación).</li><li>Equipos: nombre, etiqueta, imagen del logo (si el dueño del equipo sube una) e historial de actividad de los equipos a los que perteneces.</li><li>Favoritos del mercado: los jugadores que marcas como favoritos.</li><li>Datos de búsqueda de partida: búsquedas de partida, colas e historial de búsqueda (si encontraste partida o cancelaste, y cuándo) tuyos y de tu equipo.</li><li>Registros de Weekend League y Rivals: conteo de victorias/derrotas que tú mismo ingresas.</li><li>Token de notificación push (Firebase Cloud Messaging), si permites notificaciones.</li><li>Perfil público: si activas esta opción en la configuración, eliges una dirección pública; el enlace muestra tu nombre, y decides individualmente si también muestra tu alineación, división de Rivals, registro de Weekend League y estadísticas.</li></ul>
+<h2>3. Proveedores que usamos</h2>
+<p>Usamos Supabase (base de datos, autenticación y alojamiento de API) y Firebase (notificaciones push y reporte de errores). Estos proveedores procesan datos en nuestro nombre, siguiendo sus propias políticas de seguridad, y no pueden usar tus datos para fines propios. En la versión web, Cloudflare entrega los archivos de la aplicación y recibe datos técnicos de red de la visita (como dirección IP y hora); Firebase no se usa en la web.</p>
+<h2>4. Para qué usamos tus datos</h2>
+<p>Usamos los datos recopilados exclusivamente para: autenticar tu cuenta; organizar la cola de búsqueda de partida de tu equipo; mostrar tu historial y estadísticas; enviar notificaciones sobre tu turno en la cola o eventos del equipo (si lo permites); y, si activas el perfil público, mostrar en él la información que elijas mostrar. No vendemos tus datos ni los usamos para publicidad.</p>
+<h2>5. Almacenamiento y seguridad</h2>
+<p>Los datos se almacenan en servidores de Supabase, protegidos por Row Level Security: cada usuario solo puede leer/editar lo que es suyo o lo que su equipo comparte con él. Las contraseñas nunca se almacenan en texto plano. La comunicación entre la app y el servidor siempre se realiza por HTTPS.</p>
+<h2>6. Retención</h2>
+<p>Conservamos tus datos mientras tu cuenta exista. El historial de partidas de tu equipo se conserva incluso después de que elimines tu cuenta, pero de forma anónima (sin tu nombre asociado) para no borrar el historial compartido de los demás miembros del equipo.</p>
+<h2>7. Eliminación de cuenta</h2>
+<p>Puedes eliminar tu cuenta en cualquier momento en Cuenta → Eliminar mi cuenta o, si ya no tienes acceso a la app, pedirlo por correo (<a href="mailto:marketing@lucksrei.com?subject=Match%20Queue%20privacidade">marketing@lucksrei.com</a>). La eliminación borra tu acceso, perfil, alineaciones, registros de Weekend League y Rivals, favoritos del mercado, dispositivos registrados, preferencias y notificaciones, invitaciones y solicitudes de ingreso, búsquedas activas y perfil público. Si eres el único integrante de un equipo, se elimina todo el equipo, incluida la imagen del logo. Si el equipo tiene otros integrantes, sales y la propiedad pasa al integrante más antiguo. El historial de partidas y búsquedas del equipo permanece sin identificarte. Esta acción es permanente y no se puede deshacer.</p>
+<p><a href="/projects/match-queue/data-deletion/">Cómo eliminar tu cuenta y tus datos de Match Queue</a></p>
+<h2>8. Compartición de datos</h2>
+<p>No compartimos tus datos con terceros con fines de marketing. Solo compartimos datos con los proveedores de infraestructura mencionados en la sección 3, en la medida necesaria para que la app funcione, y cuando la ley lo exija.</p>
+<h2>9. Tus derechos</h2>
+<p>Puedes, en cualquier momento: acceder y editar tu nombre visible desde la propia app; activar o desactivar tu perfil público y elegir qué muestra (la alineación, la división de Rivals, el registro de Weekend League y las estadísticas); y eliminar tu cuenta y los datos asociados a ella. Para cualquier otra solicitud sobre tus datos, contáctanos en <a href="mailto:marketing@lucksrei.com?subject=Match%20Queue%20privacidade">marketing@lucksrei.com</a>.</p>
+<h2>10. Menores de edad</h2>
+<p>Match Queue no está dirigido a menores de 13 años y no recopila datos de niños de forma intencional. Si eres responsable de un menor y crees que nos proporcionó datos personales, contáctanos para que podamos eliminarlos.</p>
+<h2>11. Cambios en esta política</h2>
+<p>Podemos actualizar esta Política de vez en cuando. Los cambios relevantes se comunicarán dentro de la app. La fecha en la parte superior de esta página siempre indica la versión más reciente.</p>
+<h2>12. Marca y afiliación</h2>
+<p>Match Queue es una aplicación independiente y no está afiliada ni respaldada por ninguna editora de videojuegos, organización de fútbol ni marca de terceros.</p>
+<div class="hero-ctas" style="margin-top:32px"><a class="btn btn-ghost" href="/projects/match-queue/">Volver a Match Queue</a><a class="btn btn-ghost" href="/projects/match-queue/data-deletion/">Eliminación de cuenta y datos</a><a class="btn btn-ghost" href="/projects/match-queue/support/">Soporte</a></div>
+    </div>
+  </section>
+</div>
 </main>
 
 <footer class="site-footer">

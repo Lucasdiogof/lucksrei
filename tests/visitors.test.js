@@ -384,7 +384,7 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
   check(/estatísticas agregadas de acesso por país e por estado ou região/.test(D["pt-BR"]["privacy.site.p3b"]) && /Não são armazenados IP, cidade, localização precisa ou identificadores pessoais/.test(D["pt-BR"]["privacy.site.p3b"]), "pt-BR: estatísticas agregadas (país e estado) sem IP/cidade");
   check(/aggregated access statistics by country and by state or region/.test(D.en["privacy.site.p3b"]) && /No IP address, city, precise location or personal identifiers are stored/.test(D.en["privacy.site.p3b"]), "en: estatísticas agregadas (país e estado) sem IP/cidade");
   check(/estadísticas agregadas de acceso por país y por estado o región/.test(D.es["privacy.site.p3b"]) && /no se almacenan la dirección IP, la ciudad, la ubicación precisa ni identificadores personales/.test(D.es["privacy.site.p3b"]), "es: estatísticas agregadas (país e estado) sem IP/cidade");
-  check(D["pt-BR"]["privacy.notice"] && read("projects/aura/privacy/index.html").indexOf("privacy.notice") > 0, "aviso 'só em português' continua nas políticas dos apps");
+  ["aura", "match-queue", "la-pelve"].forEach(function (app) { var pp = read("projects/" + app + "/privacy/index.html"); check(pp.indexOf("pt-only-notice") < 0 && /data-legal="en"/.test(pp) && /data-legal="es"/.test(pp), "política de " + app + " nos 3 idiomas, sem aviso 'só em português'"); });
   var main = read("assets/js/main.js");
   check(/sessionStorage\.getItem\("lk\.v"\)/.test(main) && /sendBeacon\("\/api\/visit"\)/.test(main) && !/document\.cookie/.test(main), "beacon por sessão de aba, sem cookie");
   var svg = read("assets/img/visitors/world.svg");
