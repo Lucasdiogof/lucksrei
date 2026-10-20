@@ -148,6 +148,8 @@
   "home.projetos.span9": "Ver case study <span class=\"showcase-go-arrow\">→</span>",
   "home.projetos.span10": "Rolês · Registro",
   "home.projetos.p6": "Registre o rolê: bebidas, gastos e comanda dividida, com mesa ilustrada e jogos offline para a turma.",
+  "home.projetos.span12": "Vagas · Carreira",
+  "home.projetos.p7": "Busque vagas públicas de muitas fontes pelo mundo, salve pesquisas com alertas e acompanhe cada etapa das candidaturas.",
   "home.s1.div1": "<a class=\"btn btn-primary\" href=\"#projetos\">Ver projetos</a> <a class=\"btn btn-ghost\" href=\"#sobre\">Sobre mim</a>",
   "home.s1.div2": "<a href=\"https://www.linkedin.com/in/lucas-diogo-aa39b9174/\" target=\"_blank\" rel=\"noopener\">LinkedIn ↗</a> <a href=\"https://github.com/Lucasdiogof\" target=\"_blank\" rel=\"noopener\">GitHub ↗</a> <a href=\"/contact/\">Contato</a>",
   "home.s1.figcaption1": "<strong>Lucas Diogo</strong>Senior Mobile Developer",

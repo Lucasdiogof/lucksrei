@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>OrbiJob — filme promocional</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@font-face{font-family:"OJ Grotesk";src:url(assets/fonts/space-grotesk-latin-500-normal.woff2) format("woff2");font-weight:500}
+@font-face{font-family:"OJ Grotesk";src:url(assets/fonts/space-grotesk-latin-600-normal.woff2) format("woff2");font-weight:600}
+@font-face{font-family:"OJ Grotesk";src:url(assets/fonts/space-grotesk-latin-700-normal.woff2) format("woff2");font-weight:700}
+@font-face{font-family:"OJ Inter";src:url(assets/fonts/inter-latin-500-normal.woff2) format("woff2");font-weight:500}
+@font-face{font-family:"OJ Inter";src:url(assets/fonts/inter-latin-600-normal.woff2) format("woff2");font-weight:600}
+@font-face{font-family:"OJ Inter";src:url(assets/fonts/inter-latin-700-normal.woff2) format("woff2");font-weight:700}
+@font-face{font-family:"OJ Mono";src:url(assets/fonts/jetbrains-mono-latin-500-normal.woff2) format("woff2");font-weight:500}
+:root{--violet:#A298FF;--violet-deep:#5B4CF6;--ink:#F5F7FC;--muted:#A7B0C2;--bg:#0D111B;--surface:#151B28;--line:#30394B;--success:#6BD79B}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;background:#000;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;background:var(--bg);overflow:hidden;font-family:"OJ Inter",system-ui,sans-serif;color:var(--ink)}
+#stage canvas{position:absolute;left:0;top:0;width:1920px;height:1080px}
+#cam{position:absolute;inset:0}
+.o{position:absolute;left:50%;top:50%;transform-origin:50% 50%;display:none}
+.k{font-family:"OJ Grotesk",system-ui,sans-serif;font-weight:700;color:var(--ink);line-height:1.02;white-space:nowrap;text-align:center;letter-spacing:-.025em;padding:.3em 0}
+.k .c{display:inline-block;padding:.3em .02em .22em;margin:-.3em -.02em -.22em}
+.k .w{display:inline-block;white-space:nowrap}
+.k>div+div{margin-top:.04em}
+.v .c{background:linear-gradient(180deg,#D8D3FF 0%,#A298FF 55%,#7C6BFF 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mono{font:500 22px/1 "OJ Mono",monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--violet);white-space:nowrap;text-align:center}
+.mono.dim{color:var(--muted)}
+.txt{font:600 36px/1.2 "OJ Inter";color:var(--ink);white-space:nowrap;text-align:center;letter-spacing:-.01em}
+.txt.sm{font:500 24px/1.2 "OJ Inter";color:var(--muted)}
+.chip{padding:16px 30px;border-radius:999px;border:2px solid var(--line);font:600 26px/1 "OJ Inter";color:var(--muted);background:rgba(21,27,40,.85);white-space:nowrap;text-align:center}
+.chip.on{background:linear-gradient(180deg,#B9B0FF,#7C6BFF);border-color:#C9C2FF;color:#12103A;box-shadow:0 0 40px rgba(162,152,255,.45)}
+.reason{display:flex;gap:16px;align-items:center;padding:18px 28px;border-radius:20px;border:2px solid var(--line);background:linear-gradient(180deg,rgba(29,37,53,.95),rgba(21,27,40,.95));font:600 27px/1.15 "OJ Inter";color:var(--ink);white-space:nowrap;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.reason i{width:14px;height:14px;border-radius:50%;background:var(--violet);box-shadow:0 0 14px var(--violet);flex:none}
+.stage{font:600 25px/1 "OJ Mono";letter-spacing:.06em;text-transform:none;color:var(--muted);white-space:nowrap;text-align:center}
+.stage.on{color:var(--ink)}
+.tok{padding:18px 30px;border-radius:999px;border:2px solid rgba(162,152,255,.7);background:rgba(21,27,40,.92);font:700 34px/1 "OJ Grotesk";color:var(--ink);white-space:nowrap;box-shadow:0 0 30px rgba(162,152,255,.25)}
+.note{padding:14px 24px;border-radius:16px;border:2px solid rgba(162,152,255,.55);background:rgba(29,37,53,.96);font:600 23px/1 "OJ Inter";color:var(--ink);white-space:nowrap}
+.pl{font:500 19px/1 "OJ Mono";letter-spacing:.12em;text-transform:uppercase;color:#E4E0FF;white-space:nowrap;text-shadow:0 0 12px rgba(13,17,27,.9)}
+#logo{width:920px;height:250px;overflow:visible}
+#vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 85% at 50% 50%,transparent 55%,rgba(5,7,12,.55) 100%)}
+#fade{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+#ui{position:fixed;left:0;right:0;bottom:0;padding:14px 22px;background:linear-gradient(transparent,rgba(0,0,0,.8));display:flex;gap:14px;align-items:center;color:#b9b4ee;font:600 13px "OJ Inter";opacity:0;transition:opacity .25s;z-index:9}
+body:hover #ui{opacity:1}
+#ui input{flex:1;accent-color:#A298FF}
+#ui button{background:#A298FF;border:0;border-radius:6px;padding:6px 14px;font:700 13px "OJ Inter";color:#12103A;cursor:pointer}
+body.render #ui{display:none}
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="bg" width="1920" height="1080"></canvas>
+  <canvas id="main" width="1920" height="1080"></canvas>
+  <div id="cam"></div>
+  <canvas id="fx" width="1920" height="1080"></canvas>
+  <div id="vig"></div>
+  <div id="fade"></div>
+</div>
+<div id="ui"><button id="pp">Pausar</button><input id="sc" type="range" min="0" max="43" step="0.01" value="0"><span id="tc"></span><span>espaço: pausa · ←/→: ±1 s</span></div>
+
+<script>
+"use strict";
+/* ───────────── utilidades ───────────── */
+const W = 1920, H = 1080, DURATION = 43;
+const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const P = (t, a, b) => cl((t - a) / (b - a));
+const lerp = (a, b, x) => a + (b - a) * x;
+const E = {
+  out3: x => 1 - Math.pow(1 - x, 3), out4: x => 1 - Math.pow(1 - x, 4),
+  io2: x => x * x * (3 - 2 * x), io3: x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2,
+  in3: x => x * x * x, in2: x => x * x
+};
+function spr(x, w = 14, z = .5) { if (x <= 0) return 0; const k = Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w * x) * (Math.cos(w * k * x) + z / k * Math.sin(w * k * x)); }
+function rng(seed) { let a = seed >>> 0; return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const $ = id => document.getElementById(id);
+const pun = (t, t0, a, k = 5, w = 18) => t < t0 ? 0 : a * Math.exp(-k * (t - t0)) * Math.cos(w * (t - t0));
+const RAD = Math.PI / 180;
+
+function T(el, p) {
+  const a = p.a === undefined ? 1 : p.a;
+  if (a <= .003) { if (el._v !== 0) { el.style.display = "none"; el._v = 0; } return; }
+  if (el._v !== 1) { el.style.display = el._d || "block"; el._v = 1; }
+  const s = p.s === undefined ? 1 : p.s;
+  el.style.transform = `translate(${(p.x || 0).toFixed(2)}px,${(p.y || 0).toFixed(2)}px) translate(-50%,-50%) rotate(${(p.rz || 0).toFixed(2)}deg) scale(${((p.sx || 1) * s).toFixed(4)},${((p.sy || 1) * s).toFixed(4)})`;
+  el.style.opacity = a >= .999 ? "" : a.toFixed(3);
+  el.style.filter = p.b > .15 ? `blur(${p.b.toFixed(1)}px)` : "";
+}
+function mk(el, text) {
+  el.innerHTML = ""; el._cs = [];
+  text.split(" ").forEach((word, wi, arr) => {
+    const w = document.createElement("span"); w.className = "w";
+    [...word].forEach(ch => { const c = document.createElement("span"); c.className = "c"; c.textContent = ch; w.appendChild(c); el._cs.push(c); });
+    el.appendChild(w); if (wi < arr.length - 1) { const sp = document.createElement("span"); sp.style.cssText = "display:inline-block;width:.26em"; el.appendChild(sp); }
+  });
+}
+function two(el, a, b) { el.innerHTML = ""; const l1 = document.createElement("div"), l2 = document.createElement("div"); el.appendChild(l1); el.appendChild(l2); mk(l1, a); mk(l2, b); l2.classList.add("v"); el._cs = [...l1._cs, ...l2._cs]; }
+function kin(el, t, t0, o = {}) {
+  const st = o.st === undefined ? .03 : o.st, d = o.d || .6, dy = o.dy === undefined ? 70 : o.dy, bl = o.bl === undefined ? 10 : o.bl, out = o.out;
+  el._cs.forEach((c, i) => {
+    const x = (t - t0 - i * st) / d, e = spr(x * .62, 13, .6);
+    let a = cl(x * 2.2), y = (1 - e) * dy, s = 1 + (1 - e) * .35, b = (1 - cl(x * 1.6)) * bl;
+    if (out) { const xo = cl((t - out.t0 - i * (out.st || .015)) / (out.d || .4)), eo = E.in3(xo); y -= eo * (out.dy || 140); a *= 1 - cl(xo * 1.4); b += xo * 8; s *= 1 - eo * .2; }
+    c.style.opacity = a >= .999 ? "" : a.toFixed(3);
+    c.style.transform = a <= .002 ? "translateY(0)" : `translateY(${y.toFixed(1)}px) scale(${s.toFixed(3)})`;
+    c.style.filter = b > .2 ? `blur(${b.toFixed(1)}px)` : "";
+  });
+}
+const cam$ = $("cam"), els = {};
+function el(id, cls, html, style, disp) { const e = document.createElement("div"); e.className = "o " + (cls || ""); if (html) e.innerHTML = html; if (style) e.style.cssText = style; if (disp) e._d = disp; e.id = id; cam$.appendChild(e); els[id] = e; return e; }
+
+/* ───────────── dados (só o que o OrbiJob de fato faz) ───────────── */
+const WORDS = [["PT", "Programador de software"], ["EN", "Software developer"], ["ES", "Desarrollador de software"], ["DE", "Softwareentwickler"], ["SV", "Programvaruutvecklare"], ["NL", "Software ontwikkelaar"], ["FR", "Développeur de logiciels"]];
+const STAGES = ["Interessado", "Inscrito", "Triagem", "Entrevista", "Proposta", "Contratado"];
+// fontes reais do app; [nome, lat, lon, dx, dy, rótulo?]
+const PINS = [
+  ["Nova York", 40.7, -74, -26, -22, 1], ["América Latina", -33.4, -70.6, -28, 6, 1],
+  ["Inglaterra", 51.5, -0.1, -22, -26, 1], ["Espanha", 40.4, -3.7, -24, 10, 1], ["França", 48.9, 2.4, 0, 0, 0], ["Bélgica", 50.8, 4.4, 0, 0, 0],
+  ["Alemanha", 51.2, 6.8, 18, -34, 1], ["Tchéquia", 50.1, 14.4, 26, 6, 0], ["Suécia", 59.3, 18.1, 22, -28, 1],
+  ["Taiwan", 25, 121.5, -28, -22, 1], ["Nova Zelândia", -41.3, 174.8, -28, 6, 1]
+];
+
+/* ───────────── DOM ───────────── */
+const WM = '<g transform="translate(120 0)"><path d="M16.85 0.7000000000000001Q10.350000000000001 0.7000000000000001 6.4750000000000005 -2.9250000000000003Q2.6 -6.550000000000001 2.6 -13.350000000000001V-21.650000000000002Q2.6 -28.450000000000003 6.4750000000000005 -32.075Q10.350000000000001 -35.7 16.85 -35.7Q23.400000000000002 -35.7 27.25 -32.075Q31.1 -28.450000000000003 31.1 -21.650000000000002V-13.350000000000001Q31.1 -6.550000000000001 27.25 -2.9250000000000003Q23.400000000000002 0.7000000000000001 16.85 0.7000000000000001ZM16.85 -4.7Q20.75 -4.7 22.925 -6.975Q25.1 -9.25 25.1 -13.15V-21.85Q25.1 -25.75 22.925 -28.025Q20.75 -30.3 16.85 -30.3Q13.0 -30.3 10.825 -28.025Q8.65 -25.75 8.65 -21.85V-13.15Q8.65 -9.25 10.825 -6.975Q13.0 -4.7 16.85 -4.7Z" fill="#F4F4F6" transform="translate(0 67.50)"/><path d="M42.650000000000006 0.0V-35.0H57.60000000000001Q60.900000000000006 -35.0 63.35000000000001 -33.85Q65.80000000000001 -32.7 67.17500000000001 -30.625Q68.55000000000001 -28.55 68.55000000000001 -25.650000000000002V-25.1Q68.55000000000001 -21.85 67.0 -19.9Q65.45 -17.95 63.25 -17.05V-16.25Q65.2 -16.150000000000002 66.325 -14.900000000000002Q67.45 -13.65 67.45 -11.55V0.0H61.45V-10.700000000000001Q61.45 -11.950000000000001 60.775000000000006 -12.725000000000001Q60.10000000000001 -13.5 58.60000000000001 -13.5H48.7V0.0ZM48.7 -18.95H57.0Q59.60000000000001 -18.95 61.075 -20.325000000000003Q62.550000000000004 -21.700000000000003 62.550000000000004 -24.0V-24.450000000000003Q62.550000000000004 -26.8 61.10000000000001 -28.175Q59.650000000000006 -29.55 57.0 -29.55H48.7Z" fill="#F4F4F6" transform="translate(0 67.50)"/><path d="M78.60000000000001 0.0V-5.300000000000001H83.30000000000001V-29.700000000000003H78.60000000000001V-35.0H96.50000000000001Q99.65 -35.0 102.025 -33.925Q104.4 -32.85 105.72500000000001 -30.875Q107.05000000000001 -28.900000000000002 107.05000000000001 -26.150000000000002V-25.700000000000003Q107.05000000000001 -23.3 106.15 -21.75Q105.25000000000001 -20.200000000000003 104.00000000000001 -19.35Q102.75000000000001 -18.5 101.60000000000001 -18.150000000000002V-17.3Q102.75000000000001 -17.0 104.07500000000002 -16.175Q105.4 -15.350000000000001 106.32500000000002 -13.775000000000002Q107.25000000000001 -12.200000000000001 107.25000000000001 -9.700000000000001V-9.200000000000001Q107.25000000000001 -6.3500000000000005 105.87500000000001 -4.275Q104.50000000000001 -2.2 102.12500000000001 -1.1Q99.75000000000001 0.0 96.65 0.0ZM89.30000000000001 -5.45H95.95000000000002Q98.35000000000001 -5.45 99.775 -6.625Q101.20000000000002 -7.800000000000001 101.20000000000002 -9.950000000000001V-10.4Q101.20000000000002 -12.55 99.80000000000001 -13.725000000000001Q98.4 -14.9 95.95000000000002 -14.9H89.30000000000001ZM89.30000000000001 -20.35H95.9Q98.20000000000002 -20.35 99.62500000000001 -21.5Q101.05000000000001 -22.650000000000002 101.05000000000001 -24.700000000000003V-25.200000000000003Q101.05000000000001 -27.25 99.62500000000001 -28.4Q98.20000000000002 -29.55 95.9 -29.55H89.30000000000001Z" fill="#F4F4F6" transform="translate(0 67.50)"/><path d="M118.40000000000002 0.0V-35.0H124.45000000000002V0.0Z" fill="#F4F4F6" transform="translate(0 67.50)"/><path d="M146.70000000000005 0.7000000000000001Q141.35000000000002 0.7000000000000001 138.22500000000002 -2.225Q135.10000000000002 -5.15 135.10000000000002 -10.5V-13.65H141.10000000000002V-10.5Q141.10000000000002 -7.9 142.50000000000003 -6.4Q143.90000000000003 -4.9 146.55000000000004 -4.9Q149.05000000000004 -4.9 150.32500000000005 -6.4Q151.60000000000002 -7.9 151.60000000000002 -10.5V-29.55H145.60000000000002V-35.0H161.55000000000004V-29.55H157.65000000000003V-10.5Q157.65000000000003 -5.050000000000001 154.75000000000003 -2.1750000000000003Q151.85000000000002 0.7000000000000001 146.70000000000005 0.7000000000000001Z" fill="#F4F4F6" transform="translate(0 67.50)"/><path d="M186.05000000000004 0.7000000000000001Q179.55000000000004 0.7000000000000001 175.67500000000004 -2.9250000000000003Q171.80000000000004 -6.550000000000001 171.80000000000004 -13.350000000000001V-21.650000000000002Q171.80000000000004 -28.450000000000003 175.67500000000004 -32.075Q179.55000000000004 -35.7 186.05000000000004 -35.7Q192.60000000000005 -35.7 196.45000000000005 -32.075Q200.30000000000004 -28.450000000000003 200.30000000000004 -21.650000000000002V-13.350000000000001Q200.30000000000004 -6.550000000000001 196.45000000000005 -2.9250000000000003Q192.60000000000005 0.7000000000000001 186.05000000000004 0.7000000000000001ZM186.05000000000004 -4.7Q189.95000000000005 -4.7 192.12500000000006 -6.975Q194.30000000000004 -9.25 194.30000000000004 -13.15V-21.85Q194.30000000000004 -25.75 192.12500000000006 -28.025Q189.95000000000005 -30.3 186.05000000000004 -30.3Q182.20000000000005 -30.3 180.02500000000003 -28.025Q177.85000000000005 -25.75 177.85000000000005 -21.85V-13.15Q177.85000000000005 -9.25 180.02500000000003 -6.975Q182.20000000000005 -4.7 186.05000000000004 -4.7Z" fill="#F4F4F6" transform="translate(0 67.50)"/><path d="M210.70000000000005 0.0V-5.300000000000001H215.40000000000003V-29.700000000000003H210.70000000000005V-35.0H228.60000000000002Q231.75000000000003 -35.0 234.12500000000003 -33.925Q236.50000000000003 -32.85 237.82500000000005 -30.875Q239.15000000000003 -28.900000000000002 239.15000000000003 -26.150000000000002V-25.700000000000003Q239.15000000000003 -23.3 238.25000000000003 -21.75Q237.35000000000002 -20.200000000000003 236.10000000000002 -19.35Q234.85000000000002 -18.5 233.70000000000005 -18.150000000000002V-17.3Q234.85000000000002 -17.0 236.175 -16.175Q237.50000000000003 -15.350000000000001 238.425 -13.775000000000002Q239.35000000000002 -12.200000000000001 239.35000000000002 -9.700000000000001V-9.200000000000001Q239.35000000000002 -6.3500000000000005 237.97500000000002 -4.275Q236.60000000000002 -2.2 234.22500000000002 -1.1Q231.85000000000002 0.0 228.75000000000003 0.0ZM221.40000000000003 -5.45H228.05000000000004Q230.45000000000005 -5.45 231.87500000000006 -6.625Q233.30000000000004 -7.800000000000001 233.30000000000004 -9.950000000000001V-10.4Q233.30000000000004 -12.55 231.90000000000003 -13.725000000000001Q230.50000000000003 -14.9 228.05000000000004 -14.9H221.40000000000003ZM221.40000000000003 -20.35H228.00000000000003Q230.30000000000004 -20.35 231.72500000000002 -21.5Q233.15000000000003 -22.650000000000002 233.15000000000003 -24.700000000000003V-25.200000000000003Q233.15000000000003 -27.25 231.72500000000002 -28.4Q230.30000000000004 -29.55 228.00000000000003 -29.55H221.40000000000003Z" fill="#F4F4F6" transform="translate(0 67.50)"/></g>';
+function logoSvg(id) {
+  return `<svg id="${id}svg" viewBox="0 0 367.6 100" width="920" height="250" style="overflow:visible"><defs><mask id="${id}m" maskUnits="userSpaceOnUse" x="0" y="-20" width="400" height="140"><rect class="wmr" x="96" y="-20" width="0" height="140" fill="#fff"/></mask></defs>
+  <g class="arcs"><g class="arcA"><path d="M75.08 31.78A31 31 0 0 1 31.78 75.08" stroke="#F4F4F6" stroke-width="13" fill="none"/></g><g class="arcB"><path d="M24.92 68.22A31 31 0 0 1 68.22 24.92" stroke="#F4F4F6" stroke-width="13" fill="none"/></g></g><circle class="dot" cx="50" cy="50" r="9" fill="#A593FF"/>
+  <g mask="url(#${id}m)" class="wm">${WM}</g></svg>`;
+}
+el("logo1", "", logoSvg("L1")); el("logo2", "", logoSvg("L2"));
+el("lab1", "mono", "Busca global de vagas");
+el("hB", "k", ""); two(els.hB, "Vagas do", "mundo inteiro.");
+el("hC", "k", ""); two(els.hC, "Sua profissão,", "em sete idiomas.");
+el("hD", "k", ""); two(els.hD, "Recomendação", "com motivo.");
+el("hE", "k", ""); two(els.hE, "Alertas das", "suas buscas.");
+el("hF", "k", ""); two(els.hF, "Sua candidatura,", "etapa por etapa.");
+["hB", "hC", "hD", "hE", "hF"].forEach(k => { els[k].style.fontSize = "100px"; });
+["Presencial", "Híbrido", "Remoto"].forEach((n, i) => el("wm" + i, "chip", n));
+el("srcNote", "mono dim", "Fontes públicas · atribuição em cada vaga", "font-size:18px");
+for (let i = 0; i < PINS.length; i++) el("pl" + i, "pl", PINS[i][0]);
+WORDS.forEach((w, i) => { el("wd" + i, "k", ""); mk(els["wd" + i], w[1]); });
+el("capC", "txt", "Digite em um idioma. Encontre em todos.");
+el("escoNote", "mono dim", "ESCO © União Europeia · CC BY 4.0", "font-size:15px");
+el("gNum", "k", "87"); els.gNum.style.fontSize = "190px";
+el("gLab", "mono", "Compatibilidade"); el("gOf", "mono dim", "de 100", "font-size:20px");
+el("gConf", "txt sm", "Confiança alta", "font-size:22px");
+["Mesma profissão em outro idioma: Programador de software", "Remota, aberta a candidatos de qualquer lugar", "Escrita em português, um idioma do seu perfil"].forEach((t, i) => el("rs" + i, "reason", "<i></i><span>" + t + "</span>"));
+["A cada hora", "Diário", "Semanal"].forEach((n, i) => el("al" + i, "chip", n, "font-size:22px;padding:12px 24px"));
+el("capE", "txt", "Só vagas abertas e verificadas recentemente.");
+STAGES.forEach((n, i) => el("st" + i, "stage", n));
+el("remind", "note", "Entrevista nas próximas 24 horas"); el("stK", "mono", "Etapa", "font-size:20px"); STAGES.forEach((n, i) => { el("cw" + i, "k", n); els["cw" + i].style.fontSize = "56px"; });
+el("capF", "txt", "Você decide a etapa."); el("capF2", "txt sm", "O OrbiJob nunca contata o empregador.");
+const TOK = ["87", "Remoto", "Programador de software", "FR", "Entrevista", "Semanal", "Híbrido", "Contratado"];
+TOK.forEach((n, i) => el("tk" + i, "tok", n, i === 2 ? "font-size:28px" : ""));
+el("tag1", "k", ""); mk(els.tag1, "Oportunidades no mundo inteiro."); el("tag2", "k v", ""); mk(els.tag2, "Sua carreira organizada.");
+els.tag1.style.fontSize = els.tag2.style.fontSize = "64px";
+
+/* ───────────── canvas ───────────── */
+const bgc = $("bg").getContext("2d"), mc = $("main").getContext("2d"), fx = $("fx").getContext("2d");
+function sprite(size, draw) { const c = document.createElement("canvas"); c.width = c.height = size; draw(c.getContext("2d"), size); return c; }
+const SP = {
+  dot: sprite(64, (g, s) => { const r = g.createRadialGradient(s / 2, s / 2, 0, s / 2, s / 2, s / 2); r.addColorStop(0, "rgba(255,255,255,1)"); r.addColorStop(.18, "rgba(214,208,255,.95)"); r.addColorStop(.5, "rgba(140,124,255,.38)"); r.addColorStop(1, "rgba(120,100,255,0)"); g.fillStyle = r; g.fillRect(0, 0, s, s); })
+};
+const BURSTS = [], RINGS = [];
+function B(t, x, y, n, o = {}) { const r = rng(Math.round(t * 1000) * 7 + n), ps = []; for (let i = 0; i < n; i++) { const a = r() * 6.2832; ps.push({ a, sp: lerp(o.v0 || 120, o.v1 || 700, Math.pow(r(), .7)), life: lerp(.7, 1.8, r()), sz: lerp(.8, 3.2, r()), tw: r() * 6.28 }); } BURSTS.push({ t, x, y, ps, g: o.g === undefined ? 0 : o.g, k: o.k || 3.2, sc: o.sc || 7, col: o.col }); }
+function R(t, x, y, r1, dur = .9, w = 8, a = .9, col) { RINGS.push({ t, x, y, r1, dur, w, a, col }); }
+const DUST = (() => { const r = rng(5), a = []; for (let i = 0; i < 80; i++) a.push({ x: r() * W, y: r() * H, sz: lerp(1, 3, r()), sp: lerp(4, 14, r()), ph: r() * 6.28, tw: lerp(1.2, 3, r()) }); return a; })();
+
+// terra: pontos sobre a esfera, amostrados do mapa do mundo (Natural Earth, Equal Earth)
+const GA = [1.340264, -0.081106, 0.000893, 0.003796];
+function eqe(lon, lat) { const lam = lon * RAD, phi = lat * RAD, th = Math.asin(Math.sqrt(3) / 2 * Math.sin(phi)), t2 = th * th, t6 = Math.pow(th, 6); return [2 * Math.sqrt(3) * lam * Math.cos(th) / (3 * (GA[0] + 3 * GA[1] * t2 + t6 * (7 * GA[2] + 9 * GA[3] * t2))), th * (GA[0] + GA[1] * t2 + t6 * (GA[2] + GA[3] * t2))]; }
+let LAND = [];
+function buildLand(img) {
+  const cw = 1000, ch = 440, c = document.createElement("canvas"); c.width = cw; c.height = ch; const g = c.getContext("2d"); g.drawImage(img, 0, 0, cw, 439.1);
+  const d = g.getImageData(0, 0, cw, ch).data, mx = eqe(180, -16.3)[0], sc = 1000 / (2 * mx), ymax = eqe(0, 83.6)[1], N = 16000, ga = Math.PI * (3 - Math.sqrt(5));
+  for (let i = 0; i < N; i++) {
+    const phi = Math.asin(1 - 2 * (i + .5) / N), lon = ((i * ga) % (2 * Math.PI)) / RAD - 180 + 0, p = eqe(lon, phi / RAD), px = Math.round((p[0] + mx) * sc), py = Math.round((ymax - p[1]) * sc);
+    if (px < 0 || px >= cw || py < 0 || py >= ch) continue;
+    if (d[(py * cw + px) * 4 + 3] > 128) LAND.push([lon * RAD, Math.cos(phi), Math.sin(phi)]);
+  }
+}
+function drawGlobe(g, cx, cy, Rr, lon0, tilt, alpha, t, pinFx) {
+  const ct = Math.cos(tilt * RAD), st = Math.sin(tilt * RAD), l0 = lon0 * RAD;
+  // halo + disco
+  let gr = g.createRadialGradient(cx, cy, Rr * .85, cx, cy, Rr * 1.5); gr.addColorStop(0, `rgba(124,107,255,${.28 * alpha})`); gr.addColorStop(1, "rgba(124,107,255,0)"); g.fillStyle = gr; g.beginPath(); g.arc(cx, cy, Rr * 1.5, 0, 7); g.fill();
+  gr = g.createRadialGradient(cx - Rr * .35, cy - Rr * .4, Rr * .1, cx, cy, Rr); gr.addColorStop(0, `rgba(36,40,82,${.95 * alpha})`); gr.addColorStop(1, `rgba(14,17,34,${.95 * alpha})`); g.fillStyle = gr; g.beginPath(); g.arc(cx, cy, Rr, 0, 7); g.fill();
+  g.strokeStyle = `rgba(190,180,255,${.55 * alpha})`; g.lineWidth = 2; g.beginPath(); g.arc(cx, cy, Rr, 0, 7); g.stroke();
+  const proj = (lon, cphi, sphi) => { const dl = lon - l0, x = cphi * Math.sin(dl), y = sphi, z = cphi * Math.cos(dl); return [x, y * ct - z * st, y * st + z * ct]; };
+  // meridianos e paralelos
+  g.lineWidth = 1; g.strokeStyle = `rgba(162,152,255,${.14 * alpha})`;
+  for (let la = -60; la <= 60; la += 30) { g.beginPath(); let pen = false; for (let lo = -180; lo <= 180; lo += 4) { const p = proj(lo * RAD, Math.cos(la * RAD), Math.sin(la * RAD)); if (p[2] > 0) { const X = cx + p[0] * Rr, Y = cy - p[1] * Rr; pen ? g.lineTo(X, Y) : g.moveTo(X, Y); pen = true; } else pen = false; } g.stroke(); }
+  for (let lo = -180; lo < 180; lo += 30) { g.beginPath(); let pen = false; for (let la = -90; la <= 90; la += 4) { const p = proj(lo * RAD, Math.cos(la * RAD), Math.sin(la * RAD)); if (p[2] > 0) { const X = cx + p[0] * Rr, Y = cy - p[1] * Rr; pen ? g.lineTo(X, Y) : g.moveTo(X, Y); pen = true; } else pen = false; } g.stroke(); }
+  // terra
+  const sz = Math.max(2, Rr / 120);
+  for (let i = 0; i < LAND.length; i++) { const L = LAND[i], p = proj(L[0], L[1], L[2]); if (p[2] <= 0.02) continue; const k = Math.pow(p[2], .6); g.fillStyle = `rgba(${lerp(150, 225, k) | 0},${lerp(135, 218, k) | 0},255,${(.3 + .7 * k) * alpha})`; g.fillRect(cx + p[0] * Rr - sz / 2, cy - p[1] * Rr - sz / 2, sz, sz); }
+  // pinos
+  if (pinFx) pinFx(proj, cx, cy, Rr);
+}
+
+/* ───────────── câmera e fundo ───────────── */
+function camera(t) {
+  let s = 1 + .01 * Math.sin(t * .6);
+  s += pun(t, 3.0, .045, 6, 17) + pun(t, 38.2, .05, 6, 17) + pun(t, 5.7, .02, 6, 14) + pun(t, 25.6, .02, 7, 15);
+  s += .03 * E.io2(P(t, 5.8, 12)) * (1 - P(t, 12, 12.8)) + .025 * E.io2(P(t, 30.4, 36));
+  return { s, x: 8 * Math.sin(t * .37), y: 6 * Math.cos(t * .29), r: .3 * Math.sin(t * .31) };
+}
+function drawBG(t, cam) {
+  const g = bgc; g.globalCompositeOperation = "source-over"; g.fillStyle = "#0D111B"; g.fillRect(0, 0, W, H);
+  const cx = W / 2 + cam.x * 1.5, cy = H / 2 + cam.y;
+  const k = .55 + .25 * P(t, 2.6, 3.4) * (1 - P(t, 5, 6)) + .2 * P(t, 38.2, 39) + .08 * Math.sin(t * .8);
+  let gr = g.createRadialGradient(cx, cy - 40, 0, cx, cy - 40, 900); gr.addColorStop(0, `rgba(80,66,200,${(.32 * k).toFixed(3)})`); gr.addColorStop(.5, `rgba(40,34,110,${(.16 * k).toFixed(3)})`); gr.addColorStop(1, "rgba(13,17,27,0)"); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+  // grade de pontos com paralaxe e uma onda de luz que passa
+  const sp = 64, ox = (-cam.x * .6 + t * 3) % sp, oy = (-cam.y * .6 + t * 1.6) % sp; g.fillStyle = "rgba(162,152,255,.16)";
+  for (let y = -sp + oy; y < H + sp; y += sp) for (let x = -sp + ox; x < W + sp; x += sp) { const d = Math.hypot(x - W / 2, y - H / 2), wave = Math.max(0, 1 - Math.abs(d - ((t * 160) % 1500)) / 90); g.globalAlpha = (.55 + .45 * Math.sin(x * .013 + y * .017 + t * .8)) * .55 + wave * .6; g.fillRect(x, y, 2.4, 2.4); }
+  g.globalAlpha = 1;
+  // anéis orbitais ambientes (eco do logotipo)
+  g.save(); g.translate(cx, cy); g.lineWidth = 1.5;
+  [[640, .34, .5], [860, .3, -.45], [1100, .26, .15]].forEach(([r, e, tl], i) => { g.rotate(0); g.strokeStyle = `rgba(162,152,255,${.1 - i * .02})`; g.beginPath(); g.ellipse(0, 0, r, r * e, tl + t * .02 * (i % 2 ? -1 : 1), 0, 7); g.stroke(); });
+  g.restore();
+}
+
+function drawFX(t, cam) {
+  const g = fx; g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, W, H); g.globalCompositeOperation = "lighter";
+  for (const d of DUST) { const y = (d.y - t * d.sp + 3000) % (H + 40) - 20, tw = .5 + .5 * Math.sin(t * d.tw + d.ph); g.globalAlpha = .1 + .35 * tw * tw; const s = d.sz * 6; g.drawImage(SP.dot, d.x + Math.sin(t * .5 + d.ph) * 14 - s / 2, y - s / 2, s, s); }
+  g.save(); g.translate(W / 2 + cam.x, H / 2 + cam.y); g.rotate(cam.r * RAD); g.scale(cam.s, cam.s);
+  for (const b of BURSTS) { const age = t - b.t; if (age < 0 || age > 2.1) continue; for (const p of b.ps) { if (age > p.life) continue; const d = p.sp * (1 - Math.exp(-b.k * age)) / b.k, x = b.x + Math.cos(p.a) * d, y = b.y + Math.sin(p.a) * d + .5 * b.g * age * age, k = 1 - age / p.life; g.globalAlpha = Math.pow(k, 1.3) * (.65 + .35 * Math.sin(p.tw + age * 28)); const s = p.sz * b.sc * (.5 + .5 * k); g.drawImage(SP.dot, x - s / 2, y - s / 2, s, s); } }
+  g.globalAlpha = 1;
+  for (const r of RINGS) { const u = (t - r.t) / r.dur; if (u < 0 || u > 1) continue; g.strokeStyle = `rgba(${r.col || "190,180,255"},${(r.a * (1 - u)).toFixed(3)})`; g.lineWidth = Math.max(1, r.w * (1 - u)); g.beginPath(); g.arc(r.x, r.y, r.r1 * E.out3(u), 0, 7); g.stroke(); }
+  // rastros da convergência
+  if (t > 36.9 && t < 38.3) for (let i = 0; i < 8; i++) for (let k = 1; k <= 12; k++) { const q = tokPos(i, t - k * .022); if (!q.vis) continue; g.globalAlpha = (1 - k / 13) * .6 * q.a; const s = 38 - k * 2.2; g.drawImage(SP.dot, q.x - s / 2, q.y - s / 2, s, s); }
+  g.restore();
+  const fl = Math.max(0, 1 - Math.abs(t - 3.02) / .12) * .5 + Math.max(0, 1 - Math.abs(t - 38.2) / .14) * .6;
+  if (fl > .01) { g.globalAlpha = fl; const gr = g.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, 900); gr.addColorStop(0, "rgba(235,230,255,1)"); gr.addColorStop(.4, "rgba(124,107,255,.5)"); gr.addColorStop(1, "rgba(91,76,246,0)"); g.fillStyle = gr; g.fillRect(0, 0, W, H); }
+  g.globalAlpha = 1; g.globalCompositeOperation = "source-over";
+}
+
+/* ───────────── efeitos programados ───────────── */
+B(1.5, 0, 0, 30, { v0: 60, v1: 300 }); R(1.55, 0, 0, 260, 1.0, 6, .6);
+B(3.0, 0, 0, 120, { v0: 200, v1: 1000 }); R(3.0, 0, 0, 700, 1.1, 12); R(3.1, 0, 0, 480, .9, 5, .6);
+B(5.7, 0, 0, 60, { v0: 150, v1: 600 }); R(5.7, 0, 70, 520, 1.0, 8, .6);
+for (let i = 0; i < 7; i++) R(13.6 + i * .78, 0, 90, 90, .7, 5, .6);
+B(20.1, 0, 30, 50, { v0: 120, v1: 520 });
+B(25.5, 0, 60, 60, { v0: 120, v1: 520 }); R(25.5, 0, 60, 560, 1.0, 8, .6);
+B(38.2, 0, 0, 160, { v0: 250, v1: 1300 }); R(38.2, 0, 0, 900, 1.2, 16); R(38.3, 0, 0, 600, 1.0, 7, .6);
+
+/* ───────────── logotipo animado ───────────── */
+const U0 = 920 / 367.6, SHIFT = (183.8 - 50);
+function logoUpdate(id, t, c) {
+  const e = els[id], svg = e.firstElementChild;
+  const arcs = svg.querySelector(".arcA"), arcb = svg.querySelector(".arcB"), dot = svg.querySelector(".dot"), wmr = svg.querySelector(".wmr");
+  const u = P(t, c.a0, c.a1), e4 = E.out4(u), op = E.out3(P(t, c.a0, c.a0 + .4));
+  const tr = (g, rot, sc) => g.setAttribute("transform", `translate(50 50) rotate(${rot.toFixed(2)}) scale(${sc.toFixed(3)}) translate(-50 -50)`);
+  tr(arcs, 200 * (1 - e4), 1 + 2.4 * (1 - e4)); tr(arcb, -200 * (1 - e4), 1 + 2.4 * (1 - e4));
+  arcs.setAttribute("opacity", op.toFixed(3)); arcb.setAttribute("opacity", op.toFixed(3));
+  const ds = spr(t - c.dot, 12, .55), land = pun(t, c.a1, .0), pulse = 1 + (t > c.a1 ? .25 * Math.exp(-8 * (t - c.a1)) * Math.cos(24 * (t - c.a1)) : 0);
+  dot.setAttribute("r", (9 * ds * pulse).toFixed(2));
+  const wp = E.io3(P(t, c.w0, c.w1)), wo = c.out ? E.io3(P(t, c.out, c.out + .6)) : 0, wr = wp * (1 - wo);
+  wmr.setAttribute("width", (310 * wr).toFixed(1)); wmr.setAttribute("x", "96");
+  const sm = E.io3(P(t, c.w0 - .05, c.w1)), s = lerp(c.s0, c.s1, sm) * (1 - (c.out ? E.io3(P(t, c.out, c.out + .7)) * .6 : 0));
+  const sx = SHIFT * U0 * s * (1 - wr), y = lerp(c.y0, c.y1, sm);
+  const vis = (t >= c.dot - .01 && t < (c.end || 999)) ? (c.out ? 1 - E.in2(P(t, c.out + .35, c.out + .7)) : 1) : 0;
+  T(e, { x: sx, y, s, a: vis });
+}
+const LOGO_A = { dot: 1.0, a0: 1.5, a1: 3.0, w0: 3.35, w1: 4.5, s0: 2.0, s1: 1.0, y0: 0, y1: -70, out: 5.0, end: 6.1 };
+const LOGO_E = { dot: 36.9, a0: 37.2, a1: 38.2, w0: 38.55, w1: 39.5, s0: 1.7, s1: .84, y0: 0, y1: -115 };
+
+/* ───────────── cenas ───────────── */
+function sceneA(t) {
+  logoUpdate("logo1", t, LOGO_A);
+  const su = E.out3(P(t, 4.5, 5.2)), so = E.in2(P(t, 5.0, 5.4));
+  els.lab1.style.letterSpacing = lerp(.7, .22, su).toFixed(3) + "em"; T(els.lab1, { x: 0, y: 160, a: su * (1 - so), b: (1 - su) * 6 });
+}
+// anéis de abertura e glow
+function drawIntro(g, t) {
+  if (t > 6.2) return;
+  const out = 1 - E.in2(P(t, 5.0, 5.8));
+  [[170, .3, .35, .3], [260, .36, -.5, .55], [380, .32, .9, .8]].forEach(([r, e, tl, d], i) => {
+    const p = E.out3(P(t, d, d + 1.2)); if (p <= 0) return; const a0 = t * (.5 + i * .12) * (i % 2 ? -1 : 1);
+    g.strokeStyle = `rgba(190,180,255,${(.6 * out).toFixed(3)})`; g.lineWidth = 2.5; g.beginPath(); g.ellipse(0, 0, r * (1 + .4 * E.in2(P(t, 5.0, 5.8))), r * e * (1 + .4 * E.in2(P(t, 5.0, 5.8))), tl, a0, a0 + Math.PI * 2 * p); g.stroke();
+    if (p < 1) { const a = a0 + Math.PI * 2 * p; g.fillStyle = "#fff"; g.beginPath(); g.arc(Math.cos(a) * r * Math.cos(tl) - Math.sin(a) * r * e * Math.sin(tl), Math.cos(a) * r * Math.sin(tl) + Math.sin(a) * r * e * Math.cos(tl), 4, 0, 7); g.fill(); }
+  });
+  const gl = spr(t - 1.0, 9, .6) * (1 - E.in2(P(t, 3.0, 3.4)) * .3) * out;
+  if (gl > 0) { const gr = g.createRadialGradient(0, 0, 0, 0, 0, 220 * gl + 20); gr.addColorStop(0, "rgba(200,190,255,.55)"); gr.addColorStop(1, "rgba(124,107,255,0)"); g.fillStyle = gr; g.beginPath(); g.arc(0, 0, 220 * gl + 20, 0, 7); g.fill(); }
+}
+
+// B — globo
+const lonB = t => lerp(-98, 172, E.io2(P(t, 5.9, 12.4)));
+const PINT = (() => { const a = []; PINS.forEach((p, i) => { let ta = 12.4; for (let t = 5.9; t <= 12.4; t += .02) { let d = Math.abs(((lonB(t) - p[2] + 540) % 360) - 180); if (d < 34) { ta = t; break; } } a.push(ta); }); return a; })();
+function globeScene(g, t) {
+  // B: globo central; C: pano de fundo grande e apagado; D–E: some
+  const gi = spr(t - 5.65, 9, .75), dB = E.io3(P(t, 12.0, 12.9)), outC = E.in2(P(t, 19.2, 20.0));
+  let Rr = lerp(295, 540, dB) * gi, cy = lerp(48, 30, dB), al = lerp(1, .34, dB) * (1 - outC);
+  if (t < 5.65 || al <= .01 || t > 20.1) return;
+  const lon0 = t < 12.4 ? lonB(t) : lonB(12.4) + (t - 12.4) * 7;
+  drawGlobe(g, 0, cy, Rr, lon0, 18, al, t, (proj, cx, cy2, R2) => {
+    PINS.forEach((p, i) => {
+      const pr = proj(p[2] * RAD, Math.cos(p[1] * RAD), Math.sin(p[1] * RAD)); if (pr[2] <= .05) return;
+      const age = t - PINT[i]; if (age < 0) return; const ap = E.out3(cl(age / .4)), X = cx + pr[0] * R2, Y = cy2 - pr[1] * R2, vz = cl(pr[2] * 2);
+      g.globalAlpha = al * ap * vz; const rr = (age < 1.2 ? 20 * E.out3(age / 1.2) : 20); g.strokeStyle = "rgba(235,230,255,.9)"; g.lineWidth = 2;
+      if (age < 1.2) { g.globalAlpha *= 1 - age / 1.2; g.beginPath(); g.arc(X, Y, rr, 0, 7); g.stroke(); g.globalAlpha = al * ap * vz; }
+      const gr = g.createRadialGradient(X, Y, 0, X, Y, 26 * ap); gr.addColorStop(0, "rgba(255,255,255,1)"); gr.addColorStop(.3, "rgba(190,180,255,.9)"); gr.addColorStop(1, "rgba(124,107,255,0)"); g.fillStyle = gr; g.beginPath(); g.arc(X, Y, 26 * ap, 0, 7); g.fill(); g.globalAlpha = 1;
+      p._s = [X, Y, ap * vz * al];
+    });
+  });
+}
+function sceneB(t) {
+  const on = t > 5.7 && t < 13.1;
+  if (!on) { ["hB", "wm0", "wm1", "wm2", "srcNote"].forEach(k => T(els[k], { a: 0 })); for (let i = 0; i < PINS.length; i++) T(els["pl" + i], { a: 0 }); return; }
+  T(els.hB, { x: 0, y: -365, a: 1 }); kin(els.hB, t, 6.2, { out: { t0: 12.0 } });
+  const act = Math.floor((t - 9.8) / .8), ex = E.in3(P(t, 12.1, 12.7));
+  for (let i = 0; i < 3; i++) { const u = E.out3(P(t, 9.0 + i * .12, 9.5 + i * .12)), on2 = (t >= 9.8 && (act % 3) === i); els["wm" + i].classList.toggle("on", on2); T(els["wm" + i], { x: (i - 1) * 270, y: 448 + (1 - u) * 40 + ex * 70, s: on2 ? 1 + .05 * Math.exp(-10 * ((t - 9.8) % .8)) : 1, a: u * (1 - ex) }); }
+  T(els.srcNote, { x: 0, y: 515, a: E.out3(P(t, 9.4, 10)) * (1 - ex) });
+  PINS.forEach((p, i) => { const s = p._s, show = p[5] && s && t < 12.5 && (t - PINT[i]) < 2.2 && (t - PINT[i]) > 0; T(els["pl" + i], { x: s ? s[0] + p[3] * 1.6 : 0, y: s ? s[1] + p[4] * 1.6 : 0, a: show ? s[2] * E.out3(P(t - PINT[i], .15, .6)) * (1 - E.in2(P(t - PINT[i], 1.7, 2.2))) : 0 }); });
+}
+
+// C — idiomas
+const LANG_CY = 60, LANG_RX = 450, LANG_RY = 205;
+function langRing(g, t) {
+  const a = E.out3(P(t, 12.9, 13.6)) * (1 - E.io3(P(t, 19.8, 20.5)) * .0), tr = E.io3(P(t, 19.7, 20.5));
+  if (t < 12.9 || t > 20.6) return; const cy = lerp(LANG_CY, 10, tr), rx = lerp(LANG_RX, 200, tr), ry = lerp(LANG_RY, 200, tr), nodesA = a * (1 - tr);
+  g.lineWidth = 2; g.strokeStyle = `rgba(162,152,255,${(.4 * a).toFixed(3)})`; g.beginPath(); g.ellipse(0, cy, rx, ry, 0, 0, 7); g.stroke();
+  const cur = Math.min(6, Math.max(0, Math.floor((t - 13.6) / .78))), ph = ((t - 13.6) / .78) - cur;
+  for (let i = 0; i < 7; i++) {
+    const ang = (-90 + i * 360 / 7) * RAD, X = Math.cos(ang) * rx, Y = cy + Math.sin(ang) * ry, ti = 13.6 + i * .78, act = t >= ti && t < ti + .78, past = t >= ti;
+    const pop = act ? 1 + .12 * Math.exp(-9 * (t - ti)) : 1;
+    if (act) { const gr = g.createRadialGradient(X, Y, 0, X, Y, 70); gr.addColorStop(0, "rgba(162,152,255,.7)"); gr.addColorStop(1, "rgba(162,152,255,0)"); g.globalAlpha = nodesA; g.fillStyle = gr; g.beginPath(); g.arc(X, Y, 70, 0, 7); g.fill(); }
+    g.globalAlpha = nodesA; g.fillStyle = act ? "#B9B0FF" : (past ? "rgba(46,52,92,1)" : "rgba(29,37,53,1)"); g.strokeStyle = act ? "#fff" : (past ? "rgba(162,152,255,.9)" : "rgba(122,132,156,.8)"); g.lineWidth = 2.5; g.beginPath(); g.arc(X, Y, 36 * pop, 0, 7); g.fill(); g.stroke();
+    g.fillStyle = act ? "#12103A" : "#E4E0FF"; g.font = '500 23px "OJ Mono"'; g.textAlign = "center"; g.textBaseline = "middle"; g.fillText(WORDS[i][0], X, Y + 1); g.globalAlpha = 1;
+  }
+  // cometa entre o nó atual e o próximo
+  if (t >= 13.6 && t < 19.3 && nodesA > 0) { const a0 = (-90 + cur * 360 / 7) * RAD, a1 = a0 + 2 * Math.PI / 7, aa = lerp(a0, a1, E.io2(clamp01(ph))); for (let k = 0; k < 14; k++) { const ak = aa - k * .018; g.globalAlpha = nodesA * (1 - k / 14) * .8; g.fillStyle = "#fff"; g.beginPath(); g.arc(Math.cos(ak) * rx, cy + Math.sin(ak) * ry, 5 - k * .3, 0, 7); g.fill(); } g.globalAlpha = 1; }
+}
+const clamp01 = x => cl(x);
+function sceneC(t) {
+  const on = t > 12.7 && t < 20.7;
+  if (!on) { ["hC", "capC", "escoNote"].forEach(k => T(els[k], { a: 0 })); WORDS.forEach((w, i) => T(els["wd" + i], { a: 0 })); return; }
+  T(els.hC, { x: 0, y: -385, a: 1 }); kin(els.hC, t, 13.1, { out: { t0: 19.3 } });
+  WORDS.forEach((w, i) => {
+    const e = els["wd" + i], ti = 13.6 + i * .78, u = P(t, ti, ti + .45), o = P(t, ti + .56, ti + .78), last = i === 6;
+    const fs = Math.min(104, 790 / (w[1].length * .56)); e.style.fontSize = fs.toFixed(0) + "px";
+    const a = (t >= ti ? E.out3(P(t, ti, ti + .2)) : 0) * (1 - (last ? E.in2(P(t, 19.3, 19.8)) : E.in2(o)));
+    e._cs.forEach(c => { c.style.transform = ""; c.style.filter = ""; });
+    T(e, { x: 0, y: LANG_CY + (1 - E.out3(u)) * 40 - (last ? 0 : E.in2(o)) * 40, s: lerp(.9, 1, E.out3(u)), a, b: (1 - E.out3(u)) * 8 + E.in2(o) * 6 });
+  });
+  T(els.capC, { x: 0, y: 462, a: E.out3(P(t, 13.4, 14)) * (1 - E.in2(P(t, 19.3, 19.8))) });
+  T(els.escoNote, { x: 0, y: 512, a: .85 * E.out3(P(t, 13.6, 14.2)) * (1 - E.in2(P(t, 19.3, 19.8))) });
+}
+
+// D — compatibilidade
+function gauge(g, t) {
+  if (t < 19.9 || t > 26.2) return;
+  const a = E.out3(P(t, 20.2, 20.8)) * (1 - E.in2(P(t, 25.2, 25.8))), cy = 10, r = 200, v = E.io3(P(t, 20.6, 22.4)) * .87;
+  g.lineWidth = 16; g.lineCap = "round"; g.strokeStyle = `rgba(48,57,75,${.9 * a})`; g.beginPath(); g.arc(0, cy, r, 0, 7); g.stroke();
+  const a0 = -Math.PI / 2, a1 = a0 + Math.PI * 2 * v; const gr = g.createLinearGradient(-r, cy - r, r, cy + r); gr.addColorStop(0, "#7C6BFF"); gr.addColorStop(1, "#D8D3FF");
+  g.globalAlpha = a; g.strokeStyle = gr; g.shadowColor = "rgba(162,152,255,.8)"; g.shadowBlur = 24; g.beginPath(); g.arc(0, cy, r, a0, a1); g.stroke(); g.shadowBlur = 0;
+  g.fillStyle = "#fff"; g.beginPath(); g.arc(Math.cos(a1) * r, cy + Math.sin(a1) * r, 12, 0, 7); g.fill(); g.globalAlpha = 1; g.lineCap = "butt";
+  // confiança: 3 segmentos
+  for (let i = 0; i < 3; i++) { const on = t > 22.6 + i * .2; g.globalAlpha = a; g.fillStyle = on ? "#A298FF" : "rgba(48,57,75,1)"; const x = -58 + i * 40; g.beginPath(); g.roundRect(x, cy + 112, 34, 10, 5); g.fill(); } g.globalAlpha = 1;
+}
+function sceneD(t) {
+  const on = t > 19.8 && t < 26.3;
+  if (!on) { ["hD", "gNum", "gLab", "gOf", "gConf", "rs0", "rs1", "rs2"].forEach(k => T(els[k], { a: 0 })); return; }
+  const out = 1 - E.in2(P(t, 25.2, 25.8));
+  T(els.hD, { x: 0, y: -385, a: 1 }); kin(els.hD, t, 20.2, { out: { t0: 25.1 } });
+  const n = Math.round(87 * E.io3(P(t, 20.6, 22.4)));
+  if (els.gNum._n !== n) { els.gNum.innerHTML = ""; els.gNum.textContent = n; els.gNum._n = n; els.gNum.className = "o k"; }
+  T(els.gNum, { x: 0, y: -12, s: 1 + pun(t, 22.4, .06, 8, 22), a: E.out3(P(t, 20.5, 21)) * out });
+  T(els.gLab, { x: 0, y: -222, a: E.out3(P(t, 20.6, 21.2)) * out }); T(els.gOf, { x: 0, y: 76, a: E.out3(P(t, 21, 21.6)) * out });
+  T(els.gConf, { x: 0, y: 156, a: E.out3(P(t, 22.5, 23)) * out });
+  for (let i = 0; i < 3; i++) { const ti = 22.5 + i * .55, e = spr(t - ti, 11, .62); T(els["rs" + i], { x: lerp(i % 2 ? -700 : 700, 0, e), y: 300 + i * 78, a: P(t, ti, ti + .12) * out }); }
+}
+
+// E — alertas: três órbitas, três frequências
+const ORB = [[110, 1.2], [195, 3.0], [280, 6.0]], ORBY = 40;
+function alertOrbits(g, t) {
+  if (t < 25.3 || t > 30.8) return;
+  const a = E.out3(P(t, 25.5, 26.1)) * (1 - E.in2(P(t, 29.9, 30.5))), c = lerp(10, ORBY, E.io3(P(t, 25.3, 25.9)));
+  ORB.forEach(([r, per], i) => {
+    const rr = r * E.out3(P(t, 25.4 + i * .12, 26.1 + i * .12)); g.lineWidth = 2; g.strokeStyle = `rgba(162,152,255,${(.32 * a).toFixed(3)})`; g.beginPath(); g.arc(0, c, rr, 0, 7); g.stroke();
+    const t0 = 26.2, ang = (-90 + 360 * ((t - t0) / per)) * RAD; if (t < t0) return;
+    for (let k = 0; k < 18; k++) { const ak = ang - k * .02 * (3 / (1 + i)); g.globalAlpha = a * (1 - k / 18) * .7; g.fillStyle = "#fff"; g.beginPath(); g.arc(Math.cos(ak) * rr, c + Math.sin(ak) * rr, 7 - k * .3, 0, 7); g.fill(); }
+    g.globalAlpha = a; g.fillStyle = "#fff"; g.shadowColor = "rgba(162,152,255,1)"; g.shadowBlur = 22; g.beginPath(); g.arc(Math.cos(ang) * rr, c + Math.sin(ang) * rr, 9, 0, 7); g.fill(); g.shadowBlur = 0; g.globalAlpha = 1;
+    // pings a cada volta completa
+    const lap = Math.floor((t - t0) / per), age = (t - t0) - lap * per; if (lap >= 1 || age < .0) { }
+    const since = (t - t0) % per; if (t - t0 > per * .98 || since < .6) { const k2 = since < .6 ? since / .6 : 0; if (t - t0 >= per - .02 && since < .6 || since < .6 && t - t0 >= per) { g.globalAlpha = a * (1 - k2); g.strokeStyle = "rgba(235,230,255,.9)"; g.lineWidth = 4 * (1 - k2) + 1; g.beginPath(); g.arc(0, c, rr + 40 * k2, 0, 7); g.stroke(); g.globalAlpha = 1; } }
+  });
+  // núcleo: notificação
+  const beat = [26.2 + 1.2, 26.2 + 2.4, 26.2 + 3.0, 26.2 + 3.6, 26.2 + 4.8].reduce((s, q) => s + (t > q ? Math.exp(-7 * (t - q)) : 0), 0);
+  g.globalAlpha = a; const gr = g.createRadialGradient(0, c, 0, 0, c, 70 + 30 * beat); gr.addColorStop(0, "rgba(255,255,255,1)"); gr.addColorStop(.25, "rgba(190,180,255,.95)"); gr.addColorStop(1, "rgba(124,107,255,0)"); g.fillStyle = gr; g.beginPath(); g.arc(0, c, 70 + 30 * beat, 0, 7); g.fill(); g.globalAlpha = 1;
+}
+function sceneE(t) {
+  const on = t > 25.4 && t < 30.9;
+  if (!on) { ["hE", "al0", "al1", "al2", "capE"].forEach(k => T(els[k], { a: 0 })); return; }
+  const out = 1 - E.in2(P(t, 29.9, 30.5));
+  T(els.hE, { x: 0, y: -385, a: 1 }); kin(els.hE, t, 25.8, { out: { t0: 29.8 } });
+  ORB.forEach(([r], i) => { const u = spr(t - (26.6 + i * .25), 11, .62); T(els["al" + i], { x: 0, y: ORBY - r, s: Math.max(.01, u), a: P(t, 26.6 + i * .25, 26.7 + i * .25) * out }); });
+  T(els.capE, { x: 0, y: 440, a: E.out3(P(t, 27.4, 28)) * out });
+}
+
+// F — candidatura: anel orbital de etapas (eco do logotipo)
+const PR = 215, PCY = 25, STOPS = [31.5, 32.2, 32.9, 33.6, 34.3, 35.0];
+const pAng = i => (-90 + 60 * i) * RAD, pPos = (i, r = PR) => [Math.cos(pAng(i)) * r, PCY + Math.sin(pAng(i)) * r];
+function pipeP(t) { let p = 0; for (let i = 0; i < STOPS.length; i++) if (t >= STOPS[i]) p = i; if (p >= 5) return 5; return p + E.io2(P(t, STOPS[p] + .22, STOPS[p + 1])); }
+function pipeline(g, t) {
+  if (t < 31.0 || t > 36.5) return;
+  const a = E.out3(P(t, 31.1, 31.8)) * (1 - E.in2(P(t, 35.9, 36.4))), pi = pipeP(t), gc = E.io2(P(t, 35.0, 35.7)), close = E.io3(P(t, 35.0, 35.8));
+  const head = -90 + 60 * pi + 60 * close;
+  g.globalAlpha = a; g.lineCap = "round";
+  // brilho central
+  let gr = g.createRadialGradient(0, PCY, 0, 0, PCY, PR); gr.addColorStop(0, `rgba(${lerp(124, 80, gc) | 0},${lerp(107, 200, gc) | 0},${lerp(255, 140, gc) | 0},.22)`); gr.addColorStop(1, "rgba(124,107,255,0)"); g.fillStyle = gr; g.beginPath(); g.arc(0, PCY, PR, 0, 7); g.fill();
+  // trilha e marcas
+  g.lineWidth = 14; g.strokeStyle = "rgba(48,57,75,.85)"; g.beginPath(); g.arc(0, PCY, PR, 0, 7); g.stroke();
+  for (let k = 0; k < 90; k++) { const ang = (-90 + k * 4) * RAD, lit = (-90 + k * 4) <= head + .5, big = k % 15 === 0, r0 = PR + 26, r1 = PR + (big ? 44 : 36); g.lineWidth = big ? 3 : 2; g.strokeStyle = lit ? (gc > .5 ? "rgba(107,215,155,.85)" : "rgba(190,180,255,.85)") : "rgba(122,132,156,.35)"; g.beginPath(); g.moveTo(Math.cos(ang) * r0, PCY + Math.sin(ang) * r0); g.lineTo(Math.cos(ang) * r1, PCY + Math.sin(ang) * r1); g.stroke(); }
+  // arco de progresso (violeta → verde ao contratar)
+  const a0 = -90 * RAD, a1 = head * RAD;
+  [[0, "#7C6BFF", "#D8D3FF", "rgba(162,152,255,.85)"], [1, "#2FA96B", "#B5F5D0", "rgba(107,215,155,.9)"]].forEach(([m, c0, c1, sh]) => {
+    const al = m ? gc : 1 - gc; if (al <= .01) return; g.globalAlpha = a * al; const gg = g.createLinearGradient(-PR, PCY - PR, PR, PCY + PR); gg.addColorStop(0, c0); gg.addColorStop(1, c1); g.strokeStyle = gg; g.shadowColor = sh; g.shadowBlur = 26; g.lineWidth = 14; g.beginPath(); g.arc(0, PCY, PR, a0, a1); g.stroke(); g.shadowBlur = 0; });
+  g.globalAlpha = a;
+  // nós
+  for (let i = 0; i < 6; i++) {
+    const [x, y] = pPos(i), reached = t >= STOPS[i] - .02 || pi >= i - .02, last = i === 5 && t >= STOPS[5];
+    const dt = t - STOPS[i], pop = dt > 0 ? 1 + .3 * Math.exp(-8 * dt) * Math.cos(20 * dt) : 1;
+    if (dt > 0 && dt < .9) { g.strokeStyle = last ? "rgba(107,215,155,.9)" : "rgba(190,180,255,.9)"; g.lineWidth = 3 * (1 - dt / .9) + 1; g.globalAlpha = a * (1 - dt / .9); g.beginPath(); g.arc(x, y, 28 + 46 * E.out3(dt / .9), 0, 7); g.stroke(); g.globalAlpha = a; }
+    g.fillStyle = reached ? (last ? "#6BD79B" : "#A298FF") : "#151B28"; g.strokeStyle = reached ? "#fff" : "#4A5470"; g.lineWidth = 3; g.beginPath(); g.arc(x, y, 27 * pop, 0, 7); g.fill(); g.stroke();
+    if (reached) { g.strokeStyle = "#0D111B"; g.lineWidth = 5; g.lineJoin = "round"; g.beginPath(); g.moveTo(x - 10, y + 1); g.lineTo(x - 3, y + 10); g.lineTo(x + 12, y - 9); g.stroke(); }
+  }
+  // cometa na ponta do arco, some ao concluir
+  const ch = 1 - E.in2(P(t, 35.0, 35.5)); if (ch > .01) { const hx = Math.cos(a1) * PR, hy = PCY + Math.sin(a1) * PR; for (let k = 0; k < 16; k++) { const ak = a1 - k * .03; g.globalAlpha = a * ch * (1 - k / 16) * .8; g.fillStyle = "#fff"; g.beginPath(); g.arc(Math.cos(ak) * PR, PCY + Math.sin(ak) * PR, 8 - k * .4, 0, 7); g.fill(); } g.globalAlpha = a * ch; g.shadowColor = "#fff"; g.shadowBlur = 24; g.fillStyle = "#fff"; g.beginPath(); g.arc(hx, hy, 9, 0, 7); g.fill(); g.shadowBlur = 0; }
+  g.globalAlpha = 1; g.lineCap = "butt";
+}
+B(35.0, pPos(5)[0], pPos(5)[1], 90, { v0: 120, v1: 560, col: "green" }); R(35.0, 0, PCY, 330, 1.1, 8, .8, "107,215,155"); R(35.15, 0, PCY, 220, .9, 5, .6, "107,215,155");
+const SLAB = [["Interessado", "r"], ["Inscrito", "r"], ["Triagem", "r"], ["Entrevista", "c"], ["Proposta", "l"], ["Contratado", "l"]];
+function sceneF(t) {
+  const on = t > 30.9 && t < 36.6;
+  if (!on) { ["hF", "capF", "capF2", "remind", "stK"].forEach(k => T(els[k], { a: 0 })); STAGES.forEach((s, i) => { T(els["st" + i], { a: 0 }); T(els["cw" + i], { a: 0 }); }); return; }
+  const out = 1 - E.in2(P(t, 35.9, 36.4)), pi = pipeP(t);
+  T(els.hF, { x: 0, y: -385, a: 1 }); kin(els.hF, t, 31.1, { out: { t0: 35.8 } });
+  STAGES.forEach((s, i) => {
+    const e = els["st" + i], [x, y] = pPos(i, PR + 58), side = SLAB[i][1], w = s.length * 15.5, dx = side === "r" ? w / 2 + 8 : side === "l" ? -(w / 2 + 8) : 0, dy = side === "c" ? 18 : 0;
+    e.classList.toggle("on", t >= STOPS[i] - .02); T(e, { x: x + dx, y: y + dy, a: E.out3(P(t, 31.3 + i * .06, 31.8 + i * .06)) * out });
+    // palavra central da etapa atual
+    const c = els["cw" + i], t0 = STOPS[i] + .05, t1 = i < 5 ? STOPS[i + 1] - .02 : 99, u = spr(t - t0, 12, .62), o = i < 5 ? E.in2(P(t, t1 - .18, t1)) : 0;
+    c.style.color = i === 5 ? "#6BD79B" : ""; T(c, { x: 0, y: PCY + 22 + (1 - E.out3(P(t, t0, t0 + .35))) * 36 - o * 30, s: lerp(.85, 1, cl(u)), a: (t >= t0 ? E.out3(P(t, t0, t0 + .2)) : 0) * (1 - o) * out, b: (1 - E.out3(P(t, t0, t0 + .35))) * 8 });
+  });
+  T(els.stK, { x: 0, y: PCY - 34, a: E.out3(P(t, 31.5, 32)) * out });
+  const rm = E.out3(P(t, 33.6, 34.1)) * (1 - E.in2(P(t, 34.7, 35.2)));
+  T(els.remind, { x: 0, y: 368, a: rm * out, s: .92 + .08 * rm });
+  T(els.capF, { x: 0, y: 432, a: E.out3(P(t, 34.4, 35)) * out }); T(els.capF2, { x: 0, y: 486, a: E.out3(P(t, 34.8, 35.4)) * out });
+}
+
+// G — encerramento
+const TKA = [0, 1, 2, 3, 4, 5, 6, 7].map(i => i / 8 * Math.PI * 2 + .4), TKR = [330, 380, 330, 380, 330, 380, 330, 380];
+function tokPos(i, t) {
+  const t0 = 36.3 + i * .05, appear = E.out3(P(t, t0, t0 + .45)), u = P(t, 36.8, 38.15), e = E.in3(u);
+  const ang = TKA[i] + 4.2 * E.in2(u) + (t - 36.8) * .2 * (1 - u), rad = TKR[i] * (1 - e);
+  return { x: Math.cos(ang) * rad, y: Math.sin(ang) * rad * .8, a: appear * (t < 38.2 ? 1 : 0), s: lerp(.1, 1, spr(t - t0, 11, .55)) * (1 - E.in2(P(t, 37.9, 38.2)) * .7), vis: t > t0 && t < 38.2 };
+}
+function sceneG(t) {
+  const on = t > 36.2;
+  for (let i = 0; i < 8; i++) { const q = tokPos(i, t); T(els["tk" + i], { x: q.x, y: q.y, s: q.s, a: on && t < 38.25 ? q.a : 0 }); }
+  logoUpdate("logo2", t, LOGO_E);
+  T(els.tag1, { x: 0, y: 140, a: t > 39.4 ? 1 : 0 }); kin(els.tag1, t, 39.45, { st: .018 });
+  T(els.tag2, { x: 0, y: 225, a: t > 39.75 ? 1 : 0 }); kin(els.tag2, t, 39.8, { st: .022 });
+}
+// anéis centrais do final (eco do logotipo)
+function finalRings(g, t) {
+  if (t < 38.2) return; const a = E.out3(P(t, 38.2, 39)) * (1 - E.in2(P(t, 42.2, 43)));
+  g.lineWidth = 1.5; [[330, .3, .5], [470, .28, -.4]].forEach(([r, e, tl], i) => { g.strokeStyle = `rgba(162,152,255,${(.18 * a).toFixed(3)})`; g.beginPath(); g.ellipse(0, -25, r, r * e, tl + t * .03 * (i ? -1 : 1), 0, 7); g.stroke(); });
+}
+
+/* ───────────── render determinístico ───────────── */
+function render(t) {
+  t = cl(t, 0, DURATION);
+  const cam = camera(t);
+  cam$.style.transform = `translate(${cam.x.toFixed(2)}px,${cam.y.toFixed(2)}px) rotate(${cam.r.toFixed(3)}deg) scale(${cam.s.toFixed(4)})`;
+  drawBG(t, cam);
+  const g = mc; g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, W, H); g.save(); g.translate(W / 2 + cam.x, H / 2 + cam.y); g.rotate(cam.r * RAD); g.scale(cam.s, cam.s);
+  drawIntro(g, t); globeScene(g, t); langRing(g, t); gauge(g, t); alertOrbits(g, t); pipeline(g, t); finalRings(g, t); g.restore();
+  sceneA(t); sceneB(t); sceneC(t); sceneD(t); sceneE(t); sceneF(t); sceneG(t);
+  drawFX(t, cam);
+  $("fade").style.opacity = Math.min(1, E.in2(P(t, 42.2, 43)) + (1 - E.out3(P(t, 0, .35)))).toFixed(3);
+}
+window.render = render; window.DURATION = DURATION;
+
+/* ───────────── carregamento e reprodução ───────────── */
+const worldImg = new Image(); const worldP = new Promise(r => { worldImg.onload = r; worldImg.onerror = r; }); worldImg.src = "assets/world.svg";
+window.ready = Promise.all([document.fonts.load('700 40px "OJ Grotesk"'), document.fonts.load('600 20px "OJ Inter"'), document.fonts.load('500 20px "OJ Mono"'), document.fonts.load('500 20px "OJ Inter"'), document.fonts.load('700 20px "OJ Inter"'), worldP]).then(() => document.fonts.ready).then(() => { buildLand(worldImg); window.READY = true; });
+const q = new URLSearchParams(location.search), isRender = q.has("render");
+if (isRender) document.body.classList.add("render");
+const stage$ = $("stage");
+function fit() { if (isRender) { stage$.style.transform = "none"; return; } const s = Math.min(innerWidth / W, innerHeight / H); stage$.style.transform = `translate(${(innerWidth - W * s) / 2}px,${(innerHeight - H * s) / 2}px) scale(${s})`; }
+addEventListener("resize", fit); fit();
+if (!isRender) window.ready.then(() => {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let t = q.has("t") ? +q.get("t") : 0, playing = !reduce && !q.has("t"), last = performance.now();
+  if (reduce && !q.has("t")) t = DURATION - 2.6;
+  const sc = $("sc"), tc = $("tc"), pp = $("pp"); sc.max = DURATION;
+  function frame(now) { const dt = (now - last) / 1000; last = now; if (playing) { t += dt; if (t >= DURATION) t = 0; } render(t); sc.value = t; tc.textContent = t.toFixed(2) + " / " + DURATION.toFixed(2); pp.textContent = playing ? "Pausar" : "Reproduzir"; requestAnimationFrame(frame); }
+  pp.onclick = () => { playing = !playing; }; sc.oninput = () => { t = +sc.value; };
+  addEventListener("keydown", e => { if (e.code === "Space") { playing = !playing; e.preventDefault(); } if (e.code === "ArrowRight") t = Math.min(DURATION, t + 1); if (e.code === "ArrowLeft") t = Math.max(0, t - 1); });
+  requestAnimationFrame(frame);
+});
+</script>
+</body>
+</html>

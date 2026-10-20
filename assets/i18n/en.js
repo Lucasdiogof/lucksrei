@@ -148,6 +148,8 @@
   "home.projetos.span9": "View case study <span class=\"showcase-go-arrow\">→</span>",
   "home.projetos.span10": "Nights out · Tracking",
   "home.projetos.p6": "Log your night out: drinks, spending and a split tab, with an illustrated table and offline party games.",
+  "home.projetos.span12": "Jobs · Careers",
+  "home.projetos.p7": "Search public job listings from many sources worldwide, save searches with alerts and track every application step.",
   "home.s1.div1": "<a class=\"btn btn-primary\" href=\"#projetos\">View projects</a> <a class=\"btn btn-ghost\" href=\"#sobre\">About me</a>",
   "home.s1.div2": "<a href=\"https://www.linkedin.com/in/lucas-diogo-aa39b9174/\" target=\"_blank\" rel=\"noopener\">LinkedIn ↗</a> <a href=\"https://github.com/Lucasdiogof\" target=\"_blank\" rel=\"noopener\">GitHub ↗</a> <a href=\"/contact/\">Contact</a>",
   "home.s1.figcaption1": "<strong>Lucas Diogo</strong>Senior Mobile Developer",
