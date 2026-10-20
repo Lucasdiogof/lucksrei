@@ -14,6 +14,12 @@ var LOCALES = ["en", "pt-BR", "es"];
 var EXPECTED = ["flutter","dart","android","ios","clean-architecture","bloc","tdd","automated-testing","dependency-injection","get-it","go-router","freezed","getx","scoped-model","modular-packages","micro-frontends","solid","rest-api","graphql","grpc","signalr","supabase","supabase-realtime","edge-functions","offline-first","sqlite","postgresql","firebase","firebase-auth","firestore","firebase-rtdb","flavors","fastlane","codemagic","github-actions","app-store-connect","google-play-console","in-app-purchases","git","github","rls","cloudflare-workers","crashlytics","remote-config","firebase-messaging","onesignal","whatsapp-api","zendesk","facebook-login","sentry","gemini","ml-kit","deep-links","i18n","gps","google-maps","mapbox","maplibre","web-pwa","pdf","webview","barcode-scanning","biometrics","hive","sembast","provider","jwt","scrum","azure-devops","gitlab","sql","typescript","javascript","java","spring","mysql","mongodb","oracle","db2","objectdb","zk-framework"];
 check(JSON.stringify(D.ORDER.map(function (s) { return s.id; })) === JSON.stringify(EXPECTED), "ordem da grade diferente da esperada (por importância)");
 
+// Conceitos e produtos sem logotipo distinto confiável devem usar a apresentação sem imagem.
+var TEXT_ONLY = ["modular-packages","micro-frontends","firebase-auth","firestore","firebase-rtdb"];
+TEXT_ONLY.forEach(function (id) {
+  var s = D.ORDER.find(function (item) { return item.id === id; });
+  check(s && s.text === true, id + ": deve ser apresentado apenas com texto");
+});
 var ids = {};
 D.ORDER.forEach(function (s) {
   check(!ids[s.id], "id duplicado: " + s.id); ids[s.id] = s;
