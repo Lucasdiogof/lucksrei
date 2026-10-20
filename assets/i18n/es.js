@@ -148,7 +148,6 @@
   "home.projetos.span9": "Ver case study <span class=\"showcase-go-arrow\">→</span>",
   "home.projetos.span10": "Salidas · Registro",
   "home.projetos.p6": "Registra tu salida: bebidas, gastos y cuenta dividida, con mesa ilustrada y juegos sin conexión para el grupo.",
-  "home.projetos.span11": "En desarrollo",
   "home.s1.div1": "<a class=\"btn btn-primary\" href=\"#projetos\">Ver proyectos</a> <a class=\"btn btn-ghost\" href=\"#sobre\">Sobre mí</a>",
   "home.s1.div2": "<a href=\"https://www.linkedin.com/in/lucas-diogo-aa39b9174/\" target=\"_blank\" rel=\"noopener\">LinkedIn ↗</a> <a href=\"https://github.com/Lucasdiogof\" target=\"_blank\" rel=\"noopener\">GitHub ↗</a> <a href=\"/contact/\">Contacto</a>",
   "home.s1.figcaption1": "<strong>Lucas Diogo</strong>Senior Mobile Developer",
