@@ -3,7 +3,7 @@
  * Para editar: mexa só aqui e em assets/js/skills-details.js (textos nos 3 idiomas).
  *
  * order  ordem exata da grade, por importância para o perfil Senior Flutter (núcleo mobile e arquitetura → backend → entrega → observabilidade → legado). Cada item:
- *   id       slug; logo em /assets/img/skills/<id>.svg (ext: "png" quando o logo só existe em PNG; wide: true para logo largo, que mantém a altura do ícone; text: true = sem logo, só o nome centralizado em branco)
+ *   id       slug; logo em /assets/img/skills/<id>.svg (ext: "png" quando o logo só existe em PNG; wide: true para logo largo, que mantém a altura do ícone; text: true = sem logo, apenas o nome centralizado com a tipografia padrão da grade)
  *   name     nome próprio (não traduzido). label = nome traduzível quando o item é um conceito
  *   exp      ids de EXPERIENCES onde há evidência (vazio = nenhuma atribuição)
  *   projects ids de PROJECTS onde há evidência
@@ -65,7 +65,7 @@
 { id: "tdd", name: "TDD", exp: ["cooper-tec"], projects: [], related: ["automated-testing", "clean-architecture"] },
 { id: "automated-testing", name: "Automated Testing", label: { en: "Automated Testing", "pt-BR": "Testes Automatizados", es: "Pruebas Automatizadas" }, exp: ["cooper-tec"], projects: ["orbijob", "bebometro", "stockport"], related: ["tdd", "github-actions"] },
 { id: "dependency-injection", name: "Dependency Injection", text: true, label: { en: "Dependency Injection", "pt-BR": "Injeção de Dependência", es: "Inyección de Dependencias" }, exp: [], projects: ["orbijob", "stockport"], related: ["clean-architecture", "solid", "get-it"] },
-{ id: "get-it", name: "get_it", ext: "png", exp: [], projects: OWN, related: ["dependency-injection", "flutter", "bloc"] },
+{ id: "get-it", name: "GetIt", ext: "png", exp: [], projects: OWN, related: ["dependency-injection", "flutter", "bloc"] },
 { id: "go-router", name: "go_router", exp: [], projects: ["tabela-fone"], related: ["flutter", "deep-links"] },
 { id: "freezed", name: "Freezed", exp: [], projects: ["tabela-fone"], related: ["dart", "clean-architecture"] },
 { id: "getx", name: "GetX", exp: [], projects: ["iza"], related: ["flutter", "bloc"] },
