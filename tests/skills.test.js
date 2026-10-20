@@ -35,7 +35,9 @@ check(D.ORDER.findIndex(function (s) { return s.id === "flavors"; }) > 50 &&
 var STYLE = read("assets/css/style.css");
 check(!/\.skill\.is-text\s*\{[^}]*border/.test(STYLE), "cards só-texto não devem ter borda especial");
 check(!/\.skill\.is-text:hover\s+\.skill-name/.test(STYLE), "cards só-texto sem destaque dourado exclusivo");
-check(/\.skill\.is-text\s+\.skill-name\s*\{[^}]*font-size:\s*13\.5px/.test(STYLE), "fonte dos cards só-texto deve seguir o padrão Flutter Flavors");
+check(!/\.skill\.is-text\s+\.skill-name\s*\{/.test(STYLE), "cards só-texto devem herdar integralmente a tipografia de .skill-name");
+check(/\.skill-name\s*\{[^}]*font-family:\s*var\(--font-mono\);[^}]*font-size:\s*11\.5px/.test(STYLE), "tipografia base igual à de Supabase Edge Functions");
+check(D.ORDER.find(function (s) { return s.id === "get-it"; }).name === "GetIt", "nome visual do get_it deve ser GetIt");
 var ids = {};
 D.ORDER.forEach(function (s) {
   check(!ids[s.id], "id duplicado: " + s.id); ids[s.id] = s;

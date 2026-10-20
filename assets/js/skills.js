@@ -51,7 +51,7 @@
       b.setAttribute("data-skill", s.id);
       b.setAttribute("aria-haspopup", "dialog");
       b.setAttribute("aria-label", t("skills.open", { name: label(s) }));
-      if (s.text) b.classList.add("is-text");          // sem logo: só o nome, centralizado em branco
+      if (s.text) b.classList.add("is-text");          // sem logo: mesma tipografia da grade, apenas o nome
       else { var img = logo(s.id, 40); img.loading = "lazy"; b.appendChild(img); }
       b.appendChild(el("span", "skill-name", label(s)));
       li.appendChild(b);
