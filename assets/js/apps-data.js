@@ -66,10 +66,10 @@
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Cloudflare Workers', 'TypeScript', 'MapLibre', 'Real-time'] },
       { id: 'orbijob', name: 'OrbiJob', subtitle: { en: 'Global job search aggregator', 'pt-BR': 'Agregador global de vagas', es: 'Agregador global de empleo' }, group: 'own', sector: 'jobs',
         logo: '/assets/img/apps/orbijob.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null, webUrl: 'https://orbijob.lucksrei.com',
-        downloads: null, rating: null, reviewCount: null, period: '2026-10/present', technologies: ['Flutter', 'Supabase', 'GitHub Actions', 'ML Kit', 'Firebase'] },
+        downloads: null, rating: null, reviewCount: null, period: '2026-10/present', technologies: ['Flutter', 'Supabase', 'GitHub Actions', 'ML Kit', 'Firebase'], caseUrl: '/projects/orbijob/' },
       { id: 'bebometro', name: 'Bebômetro', subtitle: { en: 'Track nights out, drinks, expenses and split the bill with friends', 'pt-BR': 'Registre seus rolês, bebidas, gastos e divida a conta com a galera', es: 'Registra tus salidas, bebidas y gastos, y divide la cuenta con amigos' }, group: 'own', sector: 'lifestyle',
         logo: '/assets/img/apps/bebometro.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null, webUrl: 'https://bebometro.lucksrei.com',
-        downloads: null, rating: null, reviewCount: null, period: '2026-10/present', technologies: ['Flutter', 'Supabase', 'Cloudflare Workers'] },
+        downloads: null, rating: null, reviewCount: null, period: '2026-10/present', technologies: ['Flutter', 'Supabase', 'Cloudflare Workers'], caseUrl: '/projects/bebometro/' },
 
       /* ---- profissionais (do mais recente para o mais antigo, pelo fim do período) ---- */
       { id: 'tabela-fone', name: 'Tabela Fone', subtitle: { en: 'Price intelligence for used phone retailers', 'pt-BR': 'Inteligência de preços para lojistas de celulares usados', es: 'Inteligencia de precios para tiendas de celulares usados' }, group: 'professional', sector: 'retailtech',
