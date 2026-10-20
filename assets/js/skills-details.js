@@ -13,6 +13,151 @@
   "use strict";
 
   return {
+    "go-router": {
+      en: ["Declarative routing for Flutter.","Defines nested routes, URL parameters, redirections and deep-link navigation using Flutter Router APIs.","Used for routes and navigation in Tabela Fone."],
+      "pt-BR": ["Navegação declarativa no Flutter.","Define rotas aninhadas, parâmetros, redirecionamentos e deep links com as APIs Router do Flutter.","Utilizado na navegação do Tabela Fone."],
+      es: ["Navegación declarativa en Flutter.","Define rutas anidadas, parámetros, redirecciones y enlaces profundos con las API Router de Flutter.","Utilizado para la navegación de Tabela Fone."]
+    },
+    "freezed": {
+      en: ["Immutable models and unions in Dart.","Generates copyWith, equality, serialization helpers and sealed union-style data models for Dart applications.","Used for models and state handling in Tabela Fone."],
+      "pt-BR": ["Modelos imutáveis e uniões em Dart.","Gera copyWith, igualdade, auxiliares de serialização e modelos com variantes tipadas para aplicações Dart.","Utilizado para modelos e estados no Tabela Fone."],
+      es: ["Modelos inmutables y uniones en Dart.","Genera copyWith, igualdad, serialización y modelos con variantes tipadas para aplicaciones Dart.","Utilizado para modelos y estados en Tabela Fone."]
+    },
+    "getx": {
+      en: ["Flutter state and navigation toolkit.","Provides reactive state, dependency management and navigation utilities for Flutter applications.","Part of the IZA Seguradora mobile stack."],
+      "pt-BR": ["Estado e navegação para Flutter.","Disponibiliza estado reativo, gestão de dependências e utilitários de navegação no Flutter.","Integra a stack mobile da IZA Seguradora."],
+      es: ["Estado y navegación para Flutter.","Proporciona estado reactivo, gestión de dependencias y utilidades de navegación en Flutter.","Forma parte del stack móvil de IZA Seguradora."]
+    },
+    "scoped-model": {
+      en: ["Legacy Flutter state management.","Shares observable models across widget subtrees and notifies dependent widgets when values change.","Used in the GPOL project, reflecting an earlier Flutter architecture."],
+      "pt-BR": ["Gerência de estado legada do Flutter.","Compartilha modelos observáveis pela árvore de widgets e notifica os componentes quando os valores mudam.","Utilizado no GPOL, representando uma arquitetura Flutter mais antiga."],
+      es: ["Gestión de estado heredada de Flutter.","Comparte modelos observables en el árbol de widgets y notifica cambios a sus componentes.","Utilizado en GPOL como parte de una arquitectura Flutter anterior."]
+    },
+    "modular-packages": {
+      en: ["Shared modules with clear boundaries.","Organizes features into reusable packages with explicit dependencies and independent responsibilities.","Used in the modular Flutter architecture at Toro Investimentos."],
+      "pt-BR": ["Módulos reutilizáveis e desacoplados.","Organiza funcionalidades em pacotes reutilizáveis, com dependências explícitas e responsabilidades próprias.","Utilizado na arquitetura Flutter modular da Toro Investimentos."],
+      es: ["Módulos reutilizables y desacoplados.","Organiza funciones en paquetes reutilizables con dependencias explícitas y responsabilidades definidas.","Utilizado en la arquitectura Flutter modular de Toro Investimentos."]
+    },
+    "micro-frontends": {
+      en: ["Composable frontend applications.","Splits interface capabilities into smaller independently maintained modules integrated into a common application.","Part of the Agrosmart and BoosterAGRO mobile architecture."],
+      "pt-BR": ["Interfaces compostas por módulos.","Divide funcionalidades visuais em módulos menores, mantidos separadamente e integrados numa aplicação.","Presente na arquitetura mobile da Agrosmart e do BoosterAGRO."],
+      es: ["Interfaces compuestas por módulos.","Divide funcionalidades visuales en módulos más pequeños que se integran en una aplicación común.","Presente en la arquitectura móvil de Agrosmart y BoosterAGRO."]
+    },
+    "graphql": {
+      en: ["Typed API queries and mutations.","Clients request precisely selected fields through schemas, queries, mutations and subscriptions.","Used for data communication at Toro Investimentos."],
+      "pt-BR": ["Consultas e mutações tipadas em APIs.","Clientes selecionam os campos necessários por meio de esquemas, consultas, mutações e assinaturas.","Utilizado na comunicação de dados da Toro Investimentos."],
+      es: ["Consultas y mutaciones tipadas en API.","Los clientes seleccionan campos mediante esquemas, consultas, mutaciones y suscripciones.","Utilizado para comunicación de datos en Toro Investimentos."]
+    },
+    "grpc": {
+      en: ["Efficient typed remote procedures.","Uses Protocol Buffers and HTTP/2 to connect services through generated strongly typed client interfaces.","Used among the integrations of IZA Seguradora."],
+      "pt-BR": ["Chamadas remotas eficientes e tipadas.","Usa Protocol Buffers e HTTP/2 para conectar serviços por interfaces de cliente fortemente tipadas.","Utilizado nas integrações da IZA Seguradora."],
+      es: ["Procedimientos remotos eficientes y tipados.","Usa Protocol Buffers y HTTP/2 para conectar servicios mediante interfaces de cliente tipadas.","Utilizado en las integraciones de IZA Seguradora."]
+    },
+    "signalr": {
+      en: ["Live server-to-client communication.","A real-time messaging library that supports persistent connections and automatic transport negotiation.","Used for live updates in Toro Investimentos."],
+      "pt-BR": ["Comunicação ao vivo entre cliente e servidor.","Biblioteca de mensagens em tempo real com conexões persistentes e negociação automática de transporte.","Utilizada para atualizações em tempo real na Toro Investimentos."],
+      es: ["Comunicación en vivo entre cliente y servidor.","Biblioteca de mensajería en tiempo real con conexiones persistentes y selección automática de transporte.","Utilizada para actualizaciones en vivo en Toro Investimentos."]
+    },
+    "supabase-realtime": {
+      en: ["Realtime synchronization powered by Supabase.","Broadcast, presence and Postgres change feeds keep distributed clients synchronized as events happen.","Used for matchmaking state and team updates in Match Queue."],
+      "pt-BR": ["Sincronização em tempo real via Supabase.","Broadcast, presença e eventos do Postgres sincronizam clientes distribuídos conforme as alterações ocorrem.","Utilizado para estados de matchmaking e atualizações de times no Match Queue."],
+      es: ["Sincronización en tiempo real con Supabase.","Broadcast, presencia y cambios de Postgres sincronizan clientes mientras ocurren los eventos.","Utilizado para matchmaking y equipos en Match Queue."]
+    },
+    "edge-functions": {
+      en: ["Serverless functions close to data workflows.","Deploys isolated TypeScript or JavaScript endpoints for authenticated backend tasks and external integrations.","Used for server-side operations across Aprovaura, OrbiJob, Bebômetro, StockPort and La Pelve."],
+      "pt-BR": ["Funções serverless para regras de backend.","Executa endpoints TypeScript ou JavaScript para operações autenticadas e integrações externas.","Utilizadas em operações de servidor do Aprovaura, OrbiJob, Bebômetro, StockPort e La Pelve."],
+      es: ["Funciones serverless para lógica de backend.","Ejecuta endpoints TypeScript o JavaScript para operaciones autenticadas e integraciones externas.","Utilizadas en procesos de Aprovaura, OrbiJob, Bebômetro, StockPort y La Pelve."]
+    },
+    "offline-first": {
+      en: ["Useful flows even without connectivity.","Designs local reads, queued changes and recovery after reconnecting instead of treating network loss as a blank screen.","Applied to offline workflows in La Pelve and the Agrosmart ecosystem."],
+      "pt-BR": ["Fluxos úteis mesmo sem conexão.","Projeta leituras locais, operações pendentes e recuperação após reconexão, sem tornar o app inútil offline.","Aplicado a fluxos offline do La Pelve e do ecossistema Agrosmart."],
+      es: ["Funciones útiles incluso sin conexión.","Diseña lecturas locales, cambios pendientes y recuperación tras reconectarse sin vaciar la aplicación.","Aplicado a flujos offline de La Pelve y el ecosistema Agrosmart."]
+    },
+    "sqlite": {
+      en: ["Embedded relational database for devices.","Persists structured data locally with transactions, indexes and queries, including encrypted local storage when configured.","Used for local persistence in La Pelve and IZA Seguradora."],
+      "pt-BR": ["Banco relacional embarcado no dispositivo.","Persiste dados estruturados localmente com transações, índices e consultas; admite criptografia quando configurada.","Utilizado na persistência local do La Pelve e da IZA Seguradora."],
+      es: ["Base de datos relacional integrada en dispositivos.","Guarda datos estructurados localmente con transacciones, índices y consultas; admite cifrado configurado.","Utilizado para persistencia local en La Pelve e IZA Seguradora."]
+    },
+    "firebase-auth": {
+      en: ["Identity and login with Firebase.","Provides user sign-in, identity tokens and authentication state across client applications.","Used in the Vai and GPOL mobile applications."],
+      "pt-BR": ["Identidade e login com Firebase.","Fornece autenticação, tokens de identidade e estado de sessão para aplicações cliente.","Utilizado nos aplicativos Vai e GPOL."],
+      es: ["Identidad e inicio de sesión con Firebase.","Proporciona autenticación, tokens de identidad y estado de sesión para aplicaciones cliente.","Utilizado en las aplicaciones Vai y GPOL."]
+    },
+    "firestore": {
+      en: ["Cloud document database for applications.","Stores indexed documents and collections with real-time listeners and offline client capabilities.","Used as the database in GPOL."],
+      "pt-BR": ["Banco de documentos na nuvem.","Armazena documentos e coleções indexadas com listeners em tempo real e recursos offline no cliente.","Utilizado como banco de dados do GPOL."],
+      es: ["Base de documentos en la nube.","Almacena documentos y colecciones indexadas con eventos en tiempo real y capacidades sin conexión.","Utilizado como base de datos en GPOL."]
+    },
+    "firebase-rtdb": {
+      en: ["Live synchronization with Firebase RTDB.","A cloud-hosted JSON tree synchronizes subscribed clients when data changes.","Used for real-time data in the Vai mobility platform."],
+      "pt-BR": ["Sincronização ao vivo com Firebase RTDB.","Banco de dados em árvore JSON sincroniza clientes conectados conforme os dados mudam.","Utilizado para dados em tempo real na plataforma de mobilidade Vai."],
+      es: ["Sincronización en vivo con Firebase RTDB.","Base de datos en árbol JSON sincroniza clientes conectados cuando los datos cambian.","Utilizado para datos en tiempo real en la plataforma Vai."]
+    },
+    "in-app-purchases": {
+      en: ["Digital purchases within mobile apps.","Integrates store-managed purchase flows, products and entitlements under Apple and Google billing requirements.","Used for paid features in Tabela Fone."],
+      "pt-BR": ["Compras digitais dentro de aplicativos.","Integra fluxos de compra, produtos e direitos de acesso gerenciados pelas lojas Apple e Google.","Utilizado nos recursos pagos do Tabela Fone."],
+      es: ["Compras digitales dentro de aplicaciones.","Integra compras, productos y derechos de acceso administrados por las tiendas de Apple y Google.","Utilizado para funciones de pago en Tabela Fone."]
+    },
+    "onesignal": {
+      en: ["Push notification and engagement platform.","Delivers messages and notifications to mobile audiences through an external messaging service.","Used in Toro Investimentos and the Agrosmart ecosystem."],
+      "pt-BR": ["Plataforma de notificações e comunicação.","Entrega notificações e mensagens ao público mobile por meio de um serviço de comunicação.","Utilizada na Toro Investimentos e no ecossistema Agrosmart."],
+      es: ["Plataforma de notificaciones y comunicación.","Entrega notificaciones y mensajes a usuarios móviles mediante un servicio externo.","Utilizada en Toro Investimentos y el ecosistema Agrosmart."]
+    },
+    "whatsapp-api": {
+      en: ["Business messaging integrations.","Connects business workflows to WhatsApp messaging APIs through authenticated backend operations.","Used for clinic notification and communication workflows in La Pelve."],
+      "pt-BR": ["Integrações de mensagens empresariais.","Conecta fluxos de negócio às APIs de mensagens do WhatsApp por operações autenticadas no backend.","Utilizada nas rotinas de comunicação e notificações do La Pelve."],
+      es: ["Integraciones de mensajería empresarial.","Conecta procesos del negocio con API de WhatsApp mediante operaciones autenticadas de backend.","Utilizada para comunicaciones y notificaciones de La Pelve."]
+    },
+    "zendesk": {
+      en: ["Customer support platform integration.","Connects application support experiences with service requests and customer assistance tooling.","Part of the IZA Seguradora mobile integration stack."],
+      "pt-BR": ["Integração com plataforma de suporte.","Conecta experiências de atendimento do aplicativo a ferramentas de solicitações e assistência ao cliente.","Presente nas integrações mobile da IZA Seguradora."],
+      es: ["Integración con plataforma de soporte.","Conecta la atención en la aplicación con herramientas de solicitudes y asistencia al cliente.","Presente en las integraciones móviles de IZA Seguradora."]
+    },
+    "facebook-login": {
+      en: ["Third-party identity provider sign-in.","Allows users to authenticate through a Facebook account using an OAuth-based login integration.","Used among the sign-in options in IZA Seguradora."],
+      "pt-BR": ["Login com provedor externo de identidade.","Permite autenticação pela conta Facebook por integração de login baseada em OAuth.","Utilizado entre as opções de login da IZA Seguradora."],
+      es: ["Inicio de sesión con proveedor externo.","Permite autenticación mediante una cuenta de Facebook con integración de inicio de sesión OAuth.","Utilizado entre las opciones de acceso de IZA Seguradora."]
+    },
+    "ml-kit": {
+      en: ["On-device machine learning for mobile.","Google's mobile SDK processes tasks such as text recognition and translation on supported devices.","Used for local translation features in OrbiJob."],
+      "pt-BR": ["Aprendizado de máquina no próprio aparelho.","SDK mobile do Google para tarefas como reconhecimento de texto e tradução local em aparelhos compatíveis.","Utilizado na tradução local de vagas no OrbiJob."],
+      es: ["Aprendizaje automático en el dispositivo.","SDK móvil de Google para tareas como reconocimiento de texto y traducción local en dispositivos compatibles.","Utilizado para traducción local de ofertas en OrbiJob."]
+    },
+    "google-maps": {
+      en: ["Maps, places and location search.","Combines map visualization, geographic APIs and place discovery for location-aware application features.","Used in EMATER-GO Mobi and Vai."],
+      "pt-BR": ["Mapas, lugares e busca geográfica.","Combina visualização de mapas, APIs geográficas e descoberta de locais em funcionalidades de localização.","Utilizado no EMATER-GO Mobi e no Vai."],
+      es: ["Mapas, lugares y búsqueda geográfica.","Combina visualización de mapas, API geográficas y búsqueda de lugares para funciones basadas en ubicación.","Utilizado en EMATER-GO Mobi y Vai."]
+    },
+    "mapbox": {
+      en: ["Custom maps and geospatial visualization.","Provides map rendering, styles and geospatial interactions for location-rich applications.","Used in the Agrosmart and BoosterAGRO mobile products."],
+      "pt-BR": ["Mapas customizados e visualização geográfica.","Fornece renderização, estilos e interações geoespaciais para aplicações orientadas a localização.","Utilizado nos produtos mobile Agrosmart e BoosterAGRO."],
+      es: ["Mapas personalizados y visualización geográfica.","Proporciona mapas, estilos e interacciones geoespaciales para aplicaciones basadas en ubicación.","Utilizado en los productos móviles Agrosmart y BoosterAGRO."]
+    },
+    "maplibre": {
+      en: ["Open-source vector map rendering.","Displays interactive vector maps with customizable styles and geographic overlays.","Used for maps and bus positioning in BusãoGyn."],
+      "pt-BR": ["Renderização open source de mapas vetoriais.","Exibe mapas interativos com estilos personalizáveis e camadas geográficas.","Utilizado nos mapas e na posição dos ônibus do BusãoGyn."],
+      es: ["Renderizado open source de mapas vectoriales.","Muestra mapas interactivos con estilos personalizados y capas geográficas.","Utilizado en mapas y ubicación de autobuses de BusãoGyn."]
+    },
+    "pdf": {
+      en: ["Generate printable application documents.","Creates structured reports, receipts and shareable documents with attention to typography and data integrity.","Used for AGR Fiscal documents and StockPort sales receipts."],
+      "pt-BR": ["Geração de documentos imprimíveis.","Cria relatórios, recibos e documentos compartilháveis com cuidado tipográfico e integridade de dados.","Utilizado nos documentos do AGR Fiscal e recibos de venda do StockPort."],
+      es: ["Generación de documentos imprimibles.","Crea informes, recibos y documentos compartibles cuidando tipografía e integridad de datos.","Utilizado en documentos de AGR Fiscal y recibos de ventas de StockPort."]
+    },
+    "webview": {
+      en: ["Embedded browser experiences in mobile apps.","Renders external web pages inside the app while handling navigation, permissions and web session isolation.","Used for viewing job portals in OrbiJob."],
+      "pt-BR": ["Navegação Web integrada ao aplicativo.","Renderiza sites dentro do app com controle de navegação, permissões e isolamento de sessões.","Utilizado para abrir portais de vagas no OrbiJob."],
+      es: ["Navegación Web integrada en aplicaciones.","Renderiza sitios en la app con control de navegación, permisos y aislamiento de sesiones.","Utilizado para abrir portales de empleo en OrbiJob."]
+    },
+    "barcode-scanning": {
+      en: ["Fast data capture with camera scanners.","Reads barcode values through camera integrations and supports manual input when scanning is unavailable.","Used to identify products in StockPort inventory and sales."],
+      "pt-BR": ["Captura rápida de códigos de barras.","Lê códigos com a câmera e oferece digitação manual quando o scanner não está disponível.","Utilizado para identificar produtos no estoque e nas vendas do StockPort."],
+      es: ["Captura rápida de códigos de barras.","Lee códigos mediante cámara y permite introducirlos manualmente cuando no hay escáner.","Utilizado para identificar productos y ventas en StockPort."]
+    },
+    "biometrics": {
+      en: ["Biometric verification in mobile apps.","Uses operating-system biometric prompts to confirm access to protected actions and sensitive screens.","Part of the mobile authentication stack at Toro Investimentos."],
+      "pt-BR": ["Verificação biométrica em aplicativos.","Usa os mecanismos biométricos do sistema para confirmar acesso a ações e telas protegidas.","Presente na autenticação mobile da Toro Investimentos."],
+      es: ["Verificación biométrica en aplicaciones.","Usa los mecanismos biométricos del sistema para confirmar el acceso a acciones y pantallas protegidas.","Presente en la autenticación móvil de Toro Investimentos."]
+    },
     flutter: {
       en: ["Cross-platform UI toolkit for Android and iOS.", "Google's open-source toolkit for building natively compiled mobile, web and desktop apps from a single Dart codebase.", "My main tool since 2019: production apps for Android and iOS in fintech, agrotech, insurance, government and my own products, from architecture to store release."],
       "pt-BR": ["Toolkit de UI multiplataforma para Android e iOS.", "Toolkit open source do Google para criar apps mobile, web e desktop compilados nativamente a partir de uma única base de código em Dart.", "Minha principal ferramenta desde 2019: apps de produção para Android e iOS em fintech, agrotech, seguros, governo e produtos próprios, da arquitetura à publicação nas lojas."],
@@ -39,14 +184,14 @@
       es: ["Un código, varias identidades de app.", "Variantes de build en Flutter que generan apps distintas desde el mismo código, cada una con su nombre, identificador, assets y configuración.", "En Cooper Tec, apps white-label del ecosistema Cooper Pay con identidades y configuraciones distintas. Cooper Pay Corporate es la solución PJ, no un flavor white-label como los demás."]
     },
     bloc: {
-      en: ["State management with streams.", "BLoC separates business logic from the UI using streams of events and states; Cubit is its simpler, method-driven variant.", "State management with BLoC and Cubit in the Flutter apps at Cooper Tec and Agrosmart: events and states kept apart from the UI, which keeps presentation logic testable."],
-      "pt-BR": ["Gerenciamento de estado com streams.", "O BLoC separa a lógica de negócio da UI usando fluxos de eventos e estados; o Cubit é a variante mais simples, baseada em métodos.", "Gerenciamento de estado com BLoC e Cubit nos apps Flutter da Cooper Tec e da Agrosmart: eventos e estados separados da UI, o que mantém a lógica de apresentação testável."],
-      es: ["Gestión de estado con streams.", "BLoC separa la lógica de negocio de la UI mediante flujos de eventos y estados; Cubit es su variante más simple, basada en métodos.", "Gestión de estado con BLoC y Cubit en las apps Flutter de Cooper Tec y Agrosmart: eventos y estados separados de la UI, lo que mantiene la lógica de presentación testeable."]
+      en: ["State management with streams.","BLoC separates business logic from the UI using streams of events and states; Cubit is its simpler, method-driven variant.","State-management patterns used at Cooper Tec, Agrosmart, Tabela Fone, OrbiJob and StockPort, with testable presentation logic."],
+      "pt-BR": ["Gerenciamento de estado com streams.","O BLoC separa a lógica de negócio da UI usando fluxos de eventos e estados; o Cubit é a variante mais simples, baseada em métodos.","Padrões de estado utilizados na Cooper Tec, Agrosmart, Tabela Fone, OrbiJob e StockPort, com lógica de apresentação testável."],
+      es: ["Gestión de estado con streams.","BLoC separa la lógica de negocio de la UI mediante flujos de eventos y estados; Cubit es su variante más simple, basada en métodos.","Patrones de estado utilizados en Cooper Tec, Agrosmart, Tabela Fone, OrbiJob y StockPort, con lógica de presentación comprobable."]
     },
     provider: {
-      en: ["Dependency and state provider for Flutter.", "A Flutter package that exposes values and state to the widget tree and rebuilds only the widgets that depend on them.", "Used in Flutter to expose state and dependencies to the widget tree and rebuild only the widgets that depend on them, in line with the presentation/domain separation of Clean Architecture."],
-      "pt-BR": ["Provedor de dependências e estado para Flutter.", "Pacote do Flutter que expõe valores e estado para a árvore de widgets e reconstrói apenas os widgets que dependem deles.", "Usado no Flutter para expor estado e dependências à árvore de widgets e reconstruir apenas os widgets que dependem deles, alinhado à separação entre apresentação e domínio da Clean Architecture."],
-      es: ["Proveedor de dependencias y estado para Flutter.", "Paquete de Flutter que expone valores y estado al árbol de widgets y reconstruye solo los widgets que dependen de ellos.", "Se usa en Flutter para exponer estado y dependencias al árbol de widgets y reconstruir solo los widgets que dependen de ellos, en línea con la separación entre presentación y dominio de Clean Architecture."]
+      en: ["Dependency and state provider for Flutter.","A Flutter package that exposes values and state to the widget tree and rebuilds only the widgets that depend on them.","Used for Flutter presentation state and dependency exposure, including the EMATER-GO Mobi project."],
+      "pt-BR": ["Provedor de dependências e estado para Flutter.","Pacote do Flutter que expõe valores e estado para a árvore de widgets e reconstrói apenas os widgets que dependem deles.","Utilizado no estado da apresentação Flutter e na exposição de dependências, incluindo o projeto EMATER-GO Mobi."],
+      es: ["Proveedor de dependencias y estado para Flutter.","Paquete de Flutter que expone valores y estado al árbol de widgets y reconstruye solo los widgets que dependen de ellos.","Utilizado para estado de presentación Flutter y exposición de dependencias, incluido el proyecto EMATER-GO Mobi."]
     },
     "clean-architecture": {
       en: ["Layered architecture with clear boundaries.", "An architecture style that separates presentation, domain and data so business rules do not depend on frameworks, databases or the UI.", "The structure of the Flutter apps at Cooper Tec, Agrosmart and Toro Investimentos, and of the Goiás App (domain, data and presentation layers), keeping features testable and easier to evolve."],
@@ -69,29 +214,29 @@
       es: ["Conectar capas sin dependencias rígidas.", "Técnica en la que los objetos reciben sus dependencias en lugar de crearlas, lo que desacopla capas y facilita las pruebas.", "Conecta repositorios, data sources y casos de uso con la capa de presentación mediante constructores e interfaces, de modo que cada capa pueda sustituirse por un fake en las pruebas."]
     },
     "automated-testing": {
-      en: ["Unit and widget tests that guard releases.", "Automated checks that verify behavior on every change, from unit tests of business rules to widget tests of the UI.", "Unit tests are part of my architecture practice, practiced as TDD at Cooper Tec."],
-      "pt-BR": ["Testes unitários e de widget que protegem os releases.", "Verificações automáticas que validam o comportamento a cada mudança, de testes unitários das regras de negócio a testes de widget da UI.", "Testes unitários fazem parte da minha prática de arquitetura, aplicados como TDD na Cooper Tec."],
-      es: ["Pruebas unitarias y de widget que protegen los releases.", "Verificaciones automáticas que validan el comportamiento en cada cambio, desde pruebas unitarias de reglas de negocio hasta pruebas de widget de la UI.", "Las pruebas unitarias forman parte de mi práctica de arquitectura, aplicadas como TDD en Cooper Tec."]
+      en: ["Unit and widget tests that guard releases.","Automated checks that verify behavior on every change, from unit tests of business rules to widget tests of the UI.","Regression tests for features, state and integrations in OrbiJob, Bebômetro and StockPort, alongside tests at Cooper Tec."],
+      "pt-BR": ["Testes unitários e de widget que protegem os releases.","Verificações automáticas que validam o comportamento a cada mudança, de testes unitários das regras de negócio a testes de widget da UI.","Testes de regressão de funcionalidades, estado e integrações no OrbiJob, Bebômetro e StockPort, além dos testes na Cooper Tec."],
+      es: ["Pruebas unitarias y de widget que protegen los releases.","Verificaciones automáticas que validan el comportamiento en cada cambio, desde pruebas unitarias de reglas de negocio hasta pruebas de widget de la UI.","Pruebas de regresión de funciones, estado e integraciones en OrbiJob, Bebômetro y StockPort, además de Cooper Tec."]
     },
     "rest-api": {
-      en: ["Talking to backends over HTTP.", "An architectural style for web services that exposes resources over HTTP, usually exchanging JSON.", "Integration of mobile apps with web-service backends: HTTP requests, JSON serialization, error handling and authentication, kept in the data layer of the app."],
-      "pt-BR": ["Conversando com backends via HTTP.", "Estilo arquitetural de serviços web que expõe recursos via HTTP, normalmente trocando JSON.", "Integração de apps mobile com backends de web services: requisições HTTP, serialização JSON, tratamento de erros e autenticação, mantidos na camada de dados do app."],
-      es: ["Hablar con backends por HTTP.", "Estilo arquitectónico de servicios web que expone recursos por HTTP, normalmente intercambiando JSON.", "Integración de apps móviles con backends de servicios web: peticiones HTTP, serialización JSON, manejo de errores y autenticación, mantenidos en la capa de datos de la app."]
+      en: ["Talking to backends over HTTP.","An architectural style for web services that exposes resources over HTTP, usually exchanging JSON.","HTTP and JSON integrations with backend services, including public-sector mobile applications EMATER-GO Mobi and AGR Fiscal."],
+      "pt-BR": ["Conversando com backends via HTTP.","Estilo arquitetural de serviços web que expõe recursos via HTTP, normalmente trocando JSON.","Integrações HTTP e JSON com serviços de backend, incluindo os aplicativos públicos EMATER-GO Mobi e AGR Fiscal."],
+      es: ["Hablar con backends por HTTP.","Estilo arquitectónico de servicios web que expone recursos por HTTP, normalmente intercambiando JSON.","Integraciones HTTP y JSON con servicios de backend, incluidas las aplicaciones públicas EMATER-GO Mobi y AGR Fiscal."]
     },
     supabase: {
-      en: ["Open-source backend on top of PostgreSQL.", "A backend platform with a Postgres database, authentication, storage and real-time features.", "The backend of my own products: Match Queue, FanHub, La Pelve and Aprovaura, with Postgres, authentication and real-time features."],
-      "pt-BR": ["Backend open source sobre PostgreSQL.", "Plataforma de backend com banco Postgres, autenticação, storage e recursos em tempo real.", "O backend dos meus produtos próprios: Match Queue, FanHub, La Pelve e Aprovaura, com Postgres, autenticação e recursos em tempo real."],
-      es: ["Backend de código abierto sobre PostgreSQL.", "Plataforma de backend con base de datos Postgres, autenticación, storage y funciones en tiempo real.", "El backend de mis productos propios: Match Queue, FanHub, La Pelve y Aprovaura, con Postgres, autenticación y funciones en tiempo real."]
+      en: ["Open-source backend on top of PostgreSQL.","A backend platform with a Postgres database, authentication, storage and real-time features.","The backend of Match Queue, Goiás App, La Pelve, Aprovaura, OrbiJob, Bebômetro and StockPort: identity, data, storage and backend functions."],
+      "pt-BR": ["Backend open source sobre PostgreSQL.","Plataforma de backend com banco Postgres, autenticação, storage e recursos em tempo real.","Backend do Match Queue, Goiás App, La Pelve, Aprovaura, OrbiJob, Bebômetro e StockPort: identidade, dados, arquivos e funções de servidor."],
+      es: ["Backend de código abierto sobre PostgreSQL.","Plataforma de backend con base de datos Postgres, autenticación, storage y funciones en tiempo real.","Backend de Match Queue, Goiás App, La Pelve, Aprovaura, OrbiJob, Bebômetro y StockPort: identidad, datos, archivos y funciones del servidor."]
     },
     postgresql: {
-      en: ["Relational database.", "An open-source relational database known for reliability, SQL compliance and extensibility.", "The database behind my own products through Supabase: Match Queue, FanHub, La Pelve and Aprovaura."],
-      "pt-BR": ["Banco de dados relacional.", "Banco relacional open source conhecido por confiabilidade, aderência ao SQL e extensibilidade.", "O banco de dados dos meus produtos próprios via Supabase: Match Queue, FanHub, La Pelve e Aprovaura."],
-      es: ["Base de datos relacional.", "Base de datos relacional de código abierto conocida por su fiabilidad, cumplimiento de SQL y extensibilidad.", "La base de datos de mis productos propios a través de Supabase: Match Queue, FanHub, La Pelve y Aprovaura."]
+      en: ["Relational database.","An open-source relational database known for reliability, SQL compliance and extensibility.","Relational storage for Match Queue, Goiás App, La Pelve, Aprovaura, OrbiJob, Bebômetro and StockPort through their Supabase projects."],
+      "pt-BR": ["Banco de dados relacional.","Banco relacional open source conhecido por confiabilidade, aderência ao SQL e extensibilidade.","Persistência relacional de Match Queue, Goiás App, La Pelve, Aprovaura, OrbiJob, Bebômetro e StockPort nos respectivos projetos Supabase."],
+      es: ["Base de datos relacional.","Base de datos relacional de código abierto conocida por su fiabilidad, cumplimiento de SQL y extensibilidad.","Persistencia relacional de Match Queue, Goiás App, La Pelve, Aprovaura, OrbiJob, Bebômetro y StockPort en sus proyectos Supabase."]
     },
     firebase: {
-      en: ["Google's backend services for apps.", "A suite of managed services for apps, including Firestore and Realtime Database, authentication, messaging and crash reporting.", "Used with Flutter at IZA (Firebase and NoSQL), and Firebase Cloud Messaging delivers the notifications in Match Queue."],
-      "pt-BR": ["Serviços de backend do Google para apps.", "Conjunto de serviços gerenciados para apps, incluindo Firestore e Realtime Database, autenticação, mensageria e relatório de falhas.", "Usado com Flutter na IZA (Firebase e NoSQL), e o Firebase Cloud Messaging entrega as notificações do Match Queue."],
-      es: ["Servicios de backend de Google para apps.", "Conjunto de servicios gestionados para apps, incluidos Firestore y Realtime Database, autenticación, mensajería y reporte de fallos.", "Se usa con Flutter en IZA (Firebase y NoSQL), y Firebase Cloud Messaging entrega las notificaciones de Match Queue."]
+      en: ["Google's backend services for apps.","A suite of managed services for apps, including Firestore and Realtime Database, authentication, messaging and crash reporting.","Used in IZA and GPOL integrations, messaging in Match Queue and Goiás App, and push notifications in OrbiJob."],
+      "pt-BR": ["Serviços de backend do Google para apps.","Conjunto de serviços gerenciados para apps, incluindo Firestore e Realtime Database, autenticação, mensageria e relatório de falhas.","Utilizado em integrações da IZA e do GPOL, mensagens do Match Queue e Goiás App e notificações push do OrbiJob."],
+      es: ["Servicios de backend de Google para apps.","Conjunto de servicios gestionados para apps, incluidos Firestore y Realtime Database, autenticación, mensajería y reporte de fallos.","Utilizado en integraciones de IZA y GPOL, mensajería de Match Queue y Goiás App y notificaciones push de OrbiJob."]
     },
     jwt: {
       en: ["Signed tokens for API authentication.", "JSON Web Token: a compact, signed token that carries claims between a client and a server.", "Used to authenticate API calls from mobile apps: the token is sent in the Authorization header, and expiration and renewal are handled on the client."],
@@ -124,9 +269,9 @@
       es: ["Automatización de builds y releases móviles.", "Herramienta de código abierto que automatiza el build, la firma, las pruebas y la publicación de apps Android e iOS.", "Automatización de builds y releases en Agrosmart, para BoosterAGRO y BoosterPRO."]
     },
     "github-actions": {
-      en: ["Workflows that run on every change.", "GitHub's automation platform, used to run builds, tests and deployments from repository events.", "CI/CD pipelines at Agrosmart, automating builds and releases of BoosterAGRO and BoosterPRO."],
-      "pt-BR": ["Workflows que rodam a cada mudança.", "Plataforma de automação do GitHub, usada para rodar builds, testes e deploys a partir de eventos do repositório.", "Pipelines de CI/CD na Agrosmart, automatizando builds e releases do BoosterAGRO e do BoosterPRO."],
-      es: ["Workflows que se ejecutan en cada cambio.", "Plataforma de automatización de GitHub, usada para ejecutar builds, pruebas y despliegues a partir de eventos del repositorio.", "Pipelines de CI/CD en Agrosmart, automatizando builds y releases de BoosterAGRO y BoosterPRO."]
+      en: ["Workflows that run on every change.","GitHub's automation platform, used to run builds, tests and deployments from repository events.","Build and test automation at Agrosmart, and repository CI workflows for newer products such as OrbiJob and StockPort."],
+      "pt-BR": ["Workflows que rodam a cada mudança.","Plataforma de automação do GitHub, usada para rodar builds, testes e deploys a partir de eventos do repositório.","Automação de builds e testes na Agrosmart e workflows de CI para produtos recentes, como OrbiJob e StockPort."],
+      es: ["Workflows que se ejecutan en cada cambio.","Plataforma de automatización de GitHub, usada para ejecutar builds, pruebas y despliegues a partir de eventos del repositorio.","Automatización de compilaciones y pruebas en Agrosmart y flujos CI para productos recientes como OrbiJob y StockPort."]
     },
     "azure-devops": {
       en: ["Microsoft's repositories and pipelines.", "A suite for source control, work tracking and CI/CD pipelines.", "CI/CD at Toro Investimentos, on the app now known as Santander Corretora."],
@@ -149,9 +294,9 @@
       es: ["Sistemas server-side y web.", "Lenguaje de propósito general y orientado a objetos, muy usado en aplicaciones corporativas y web.", "Antes de lo móvil, desarrollé sistemas web en Java en Memora Processos Inovadores y en Saneago. Esa actuación fue Java/Web, no móvil."]
     },
     sql: {
-      en: ["The language of relational data.", "The standard language for querying and modifying data in relational databases.", "Queries, joins, aggregations and schema design for relational data, including the PostgreSQL behind Supabase in my own products."],
-      "pt-BR": ["A linguagem dos dados relacionais.", "Linguagem padrão para consultar e modificar dados em bancos relacionais.", "Consultas, joins, agregações e modelagem de esquema para dados relacionais, incluindo o PostgreSQL por trás do Supabase nos meus produtos próprios."],
-      es: ["El lenguaje de los datos relacionales.", "Lenguaje estándar para consultar y modificar datos en bases de datos relacionales.", "Consultas, joins, agregaciones y diseño de esquemas para datos relacionales, incluido PostgreSQL detrás de Supabase en mis productos propios."]
+      en: ["The language of relational data.","The standard language for querying and modifying data in relational databases.","SQL queries, schemas and access policies across Supabase products, including the stock, sales and financial data model in StockPort."],
+      "pt-BR": ["A linguagem dos dados relacionais.","Linguagem padrão para consultar e modificar dados em bancos relacionais.","Consultas, esquemas e políticas SQL nos produtos Supabase, incluindo o modelo de estoque, vendas e financeiro do StockPort."],
+      es: ["El lenguaje de los datos relacionales.","Lenguaje estándar para consultar y modificar datos en bases de datos relacionales.","Consultas, esquemas y políticas SQL en productos Supabase, incluido el modelo de inventario, ventas y finanzas de StockPort."]
     },
     mysql: {
       en: ["Relational database.", "A widely used open-source relational database management system.", "Relational modeling and SQL queries on MySQL, one of the relational databases I work with alongside PostgreSQL and DB2."],
@@ -174,39 +319,39 @@
       es: ["El lenguaje de la web.", "El lenguaje de scripting que corre en todos los navegadores, en servidores y en runtimes de borde.", "Usado en trabajos web como este portafolio, hecho en HTML, CSS y JavaScript puros y servido por un Cloudflare Worker."]
     },
     typescript: {
-      en: ["JavaScript with types.", "A typed superset of JavaScript that compiles to plain JavaScript.", "Adds static types to JavaScript in web and edge code, catching mistakes at compile time and documenting the shape of data."],
-      "pt-BR": ["JavaScript com tipos.", "Superconjunto tipado de JavaScript que compila para JavaScript puro.", "Adiciona tipagem estática ao JavaScript em código web e de borda, detectando erros em tempo de compilação e documentando o formato dos dados."],
-      es: ["JavaScript con tipos.", "Superconjunto tipado de JavaScript que compila a JavaScript puro.", "Añade tipado estático a JavaScript en código web y de borde, detectando errores en compilación y documentando la forma de los datos."]
+      en: ["JavaScript with types.","A typed superset of JavaScript that compiles to plain JavaScript.","Typed server and edge code in Goiás App, BusãoGyn and OrbiJob, including API adapters and Cloudflare Workers."],
+      "pt-BR": ["JavaScript com tipos.","Superconjunto tipado de JavaScript que compila para JavaScript puro.","Código tipado de servidor e edge no Goiás App, BusãoGyn e OrbiJob, incluindo adaptadores de API e Cloudflare Workers."],
+      es: ["JavaScript con tipos.","Superconjunto tipado de JavaScript que compila a JavaScript puro.","Código tipado de servidor y edge en Goiás App, BusãoGyn y OrbiJob, incluidos adaptadores de API y Cloudflare Workers."]
     },
     "web-pwa": {
-      en: ["Flutter apps that also run in the browser.", "Flutter's web target compiles the same Dart code to the browser; as a Progressive Web App it can be installed and work like an app.", "My four products ship web/PWA builds from the same Flutter codebase as the mobile apps, sharing the backend and the business rules."],
-      "pt-BR": ["Apps Flutter que também rodam no navegador.", "O alvo web do Flutter compila o mesmo código Dart para o navegador; como Progressive Web App, pode ser instalado e funcionar como um app.", "Meus quatro produtos têm versão web/PWA gerada da mesma base Flutter dos apps mobile, compartilhando o backend e as regras de negócio."],
-      es: ["Apps Flutter que también funcionan en el navegador.", "El destino web de Flutter compila el mismo código Dart para el navegador; como Progressive Web App se puede instalar y funcionar como una app.", "Mis cuatro productos tienen versión web/PWA generada desde la misma base Flutter de las apps móviles, compartiendo el backend y las reglas de negocio."]
+      en: ["Flutter apps that also run in the browser.","Flutter's web target compiles the same Dart code to the browser; as a Progressive Web App it can be installed and work like an app.","Flutter Web delivery for Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob, Bebômetro and StockPort."],
+      "pt-BR": ["Apps Flutter que também rodam no navegador.","O alvo web do Flutter compila o mesmo código Dart para o navegador; como Progressive Web App, pode ser instalado e funcionar como um app.","Distribuição Flutter Web para Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob, Bebômetro e StockPort."],
+      es: ["Apps Flutter que también funcionan en el navegador.","El destino web de Flutter compila el mismo código Dart para el navegador; como Progressive Web App se puede instalar y funcionar como una app.","Distribución Flutter Web para Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob, Bebômetro y StockPort."]
     },
     "deep-links": {
-      en: ["Links that open a specific screen of the app.", "Android App Links and iOS Universal Links route a URL straight into the right screen, with a web fallback when the app is not installed.", "Invite links in Match Queue: the link opens the app on the right team and falls back to the web version, with verified domain files for Android and iOS."],
-      "pt-BR": ["Links que abrem uma tela específica do app.", "Android App Links e iOS Universal Links levam uma URL direto para a tela certa, com a versão web como alternativa quando o app não está instalado.", "Links de convite no Match Queue: o link abre o app no time certo ou cai na versão web, com os arquivos de domínio verificado para Android e iOS."],
-      es: ["Enlaces que abren una pantalla específica de la app.", "Android App Links e iOS Universal Links llevan una URL directo a la pantalla correcta, con la versión web como alternativa cuando la app no está instalada.", "Enlaces de invitación en Match Queue: el enlace abre la app en el equipo correcto o la versión web, con los archivos de dominio verificado para Android e iOS."]
+      en: ["Links that open a specific screen of the app.","Android App Links and iOS Universal Links route a URL straight into the right screen, with a web fallback when the app is not installed.","Team invite links in Match Queue, app navigation in Tabela Fone and authentication callbacks in StockPort."],
+      "pt-BR": ["Links que abrem uma tela específica do app.","Android App Links e iOS Universal Links levam uma URL direto para a tela certa, com a versão web como alternativa quando o app não está instalado.","Links de convite de equipe no Match Queue, navegação no Tabela Fone e callbacks de autenticação no StockPort."],
+      es: ["Enlaces que abren una pantalla específica de la app.","Android App Links e iOS Universal Links llevan una URL directo a la pantalla correcta, con la versión web como alternativa cuando la app no está instalada.","Enlaces de invitación de equipos en Match Queue, navegación en Tabela Fone y retornos de autenticación en StockPort."]
     },
     i18n: {
-      en: ["Apps in more than one language.", "Internationalization prepares the code for several languages and localization delivers the translated texts, formats and content.", "Aprovaura runs in Portuguese, English and Spanish, interface and study content included; this portfolio follows the same approach."],
-      "pt-BR": ["Apps em mais de um idioma.", "Internacionalização prepara o código para vários idiomas e a localização entrega os textos, formatos e conteúdos traduzidos.", "O Aprovaura funciona em português, inglês e espanhol, da interface ao conteúdo de estudo; este portfólio segue a mesma abordagem."],
-      es: ["Apps en más de un idioma.", "La internacionalización prepara el código para varios idiomas y la localización entrega los textos, formatos y contenidos traducidos.", "Aprovaura funciona en portugués, inglés y español, de la interfaz al contenido de estudio; este portafolio sigue el mismo enfoque."]
+      en: ["Apps in more than one language.","Internationalization prepares the code for several languages and localization delivers the translated texts, formats and content.","Localized interfaces in Aprovaura, OrbiJob, Bebômetro and StockPort, with Portuguese, English and Spanish content."],
+      "pt-BR": ["Apps em mais de um idioma.","Internacionalização prepara o código para vários idiomas e a localização entrega os textos, formatos e conteúdos traduzidos.","Interfaces localizadas no Aprovaura, OrbiJob, Bebômetro e StockPort, com conteúdos em português, inglês e espanhol."],
+      es: ["Apps en más de un idioma.","La internacionalización prepara el código para varios idiomas y la localización entrega los textos, formatos y contenidos traducidos.","Interfaces localizadas en Aprovaura, OrbiJob, Bebômetro y StockPort, con contenido en portugués, inglés y español."]
     },
     gps: {
-      en: ["Device location in mobile apps.", "Location services read the device position through GPS and the network, with runtime permissions on Android and iOS.", "Location features in the Cooper Pay apps at Cooper Tec and real-time GPS tracking in freelance projects such as a ride-hailing app."],
-      "pt-BR": ["Localização do aparelho em apps mobile.", "Os serviços de localização leem a posição do aparelho por GPS e rede, com permissões em tempo de execução no Android e no iOS.", "Recursos de localização nos apps Cooper Pay na Cooper Tec e rastreamento por GPS em tempo real em projetos freelance, como um app de mobilidade."],
-      es: ["Ubicación del dispositivo en apps móviles.", "Los servicios de ubicación leen la posición del dispositivo por GPS y red, con permisos en tiempo de ejecución en Android e iOS.", "Funciones de ubicación en las apps Cooper Pay en Cooper Tec y seguimiento GPS en tiempo real en proyectos freelance, como una app de movilidad."]
+      en: ["Device location in mobile apps.","Location services read the device position through GPS and the network, with runtime permissions on Android and iOS.","Location-based features across Cooper Tec and freelance projects, plus map and place flows in BusãoGyn and Bebômetro."],
+      "pt-BR": ["Localização do aparelho em apps mobile.","Os serviços de localização leem a posição do aparelho por GPS e rede, com permissões em tempo de execução no Android e no iOS.","Funcionalidades de localização na Cooper Tec e projetos freelancer, além de mapas e locais no BusãoGyn e Bebômetro."],
+      es: ["Ubicación del dispositivo en apps móviles.","Los servicios de ubicación leen la posición del dispositivo por GPS y red, con permisos en tiempo de ejecución en Android e iOS.","Funciones de localización en Cooper Tec y proyectos freelance, además de mapas y lugares en BusãoGyn y Bebômetro."]
     },
     rls: {
-      en: ["Access rules enforced by the database.", "A PostgreSQL feature that filters rows per user with policies, so each user only reads and writes their own data, whatever the client sends.", "Policies in Match Queue and La Pelve: each team or professional only sees their own records, with sensitive actions behind database functions."],
-      "pt-BR": ["Regras de acesso aplicadas pelo banco.", "Recurso do PostgreSQL que filtra linhas por usuário com políticas, para que cada um só leia e grave os próprios dados, independentemente do que o cliente envia.", "Políticas no Match Queue e no La Pelve: cada time ou profissional vê só os próprios registros, com as ações sensíveis atrás de funções do banco."],
-      es: ["Reglas de acceso aplicadas por la base de datos.", "Función de PostgreSQL que filtra filas por usuario con políticas, para que cada uno solo lea y escriba sus propios datos, sin importar lo que envíe el cliente.", "Políticas en Match Queue y La Pelve: cada equipo o profesional ve solo sus propios registros, con las acciones sensibles detrás de funciones de la base."]
+      en: ["Access rules enforced by the database.","A PostgreSQL feature that filters rows per user with policies, so each user only reads and writes their own data, whatever the client sends.","PostgreSQL policies protect user and company data in Match Queue, La Pelve, OrbiJob, Bebômetro and StockPort, beyond checks in the UI."],
+      "pt-BR": ["Regras de acesso aplicadas pelo banco.","Recurso do PostgreSQL que filtra linhas por usuário com políticas, para que cada um só leia e grave os próprios dados, independentemente do que o cliente envia.","Políticas do PostgreSQL protegem dados de usuários e empresas no Match Queue, La Pelve, OrbiJob, Bebômetro e StockPort, além das validações da interface."],
+      es: ["Reglas de acceso aplicadas por la base de datos.","Función de PostgreSQL que filtra filas por usuario con políticas, para que cada uno solo lea y escriba sus propios datos, sin importar lo que envíe el cliente.","Las políticas de PostgreSQL protegen datos de usuarios y empresas en Match Queue, La Pelve, OrbiJob, Bebômetro y StockPort, además de la interfaz."]
     },
     "cloudflare-workers": {
-      en: ["Serverless code at the edge.", "Cloudflare's serverless platform runs JavaScript/TypeScript close to the user, with storage options such as KV and D1.", "Data integration for FanHub, plus the server side of this portfolio, including the privacy-friendly visitor map."],
-      "pt-BR": ["Código serverless na borda.", "Plataforma serverless da Cloudflare que roda JavaScript/TypeScript perto do usuário, com opções de armazenamento como KV e D1.", "Integração de dados do FanHub e a parte servidor deste portfólio, incluindo o mapa de visitantes sem dados pessoais."],
-      es: ["Código serverless en el borde.", "Plataforma serverless de Cloudflare que ejecuta JavaScript/TypeScript cerca del usuario, con opciones de almacenamiento como KV y D1.", "Integración de datos de FanHub y la parte de servidor de este portafolio, incluido el mapa de visitantes sin datos personales."]
+      en: ["Serverless code at the edge.","Cloudflare's serverless platform runs JavaScript/TypeScript close to the user, with storage options such as KV and D1.","Used for server-side routes and APIs in BusãoGyn, Goiás App, Bebômetro and OrbiJob, alongside hosting this portfolio."],
+      "pt-BR": ["Código serverless na borda.","Plataforma serverless da Cloudflare que roda JavaScript/TypeScript perto do usuário, com opções de armazenamento como KV e D1.","Utilizado em rotas e APIs de servidor no BusãoGyn, Goiás App, Bebômetro e OrbiJob, além da hospedagem deste portfólio."],
+      es: ["Código serverless en el borde.","Plataforma serverless de Cloudflare que ejecuta JavaScript/TypeScript cerca del usuario, con opciones de almacenamiento como KV y D1.","Utilizado en rutas y API de servidor de BusãoGyn, Goiás App, Bebômetro y OrbiJob, además del hospedaje de este portafolio."]
     },
     crashlytics: {
       en: ["Crash reports from real users.", "Firebase's crash reporting tool: groups crashes and errors with stack traces, device data and the affected app version.", "Crash monitoring at Toro Investimentos (now Santander Corretora), used to prioritize fixes by impact on users."],
@@ -219,14 +364,14 @@
       es: ["Comportamiento de la app cambiado sin nueva versión.", "Servicio de Firebase que entrega parámetros a las apps instaladas, usado para feature flags, lanzamientos graduales y ajustes sin pasar por las tiendas.", "Feature flags y parámetros remotos en la app de Toro Investimentos (hoy Santander Corretora)."]
     },
     "firebase-messaging": {
-      en: ["Push notifications for Android and iOS.", "Firebase Cloud Messaging delivers notifications and data messages to devices, using APNs on iOS.", "Push notifications in FanHub: device tokens, APNs setup on iOS and messages that open the right screen."],
-      "pt-BR": ["Notificações push para Android e iOS.", "O Firebase Cloud Messaging entrega notificações e mensagens de dados aos aparelhos, usando o APNs no iOS.", "Notificações push no FanHub: tokens dos aparelhos, configuração do APNs no iOS e mensagens que abrem a tela certa."],
-      es: ["Notificaciones push para Android e iOS.", "Firebase Cloud Messaging entrega notificaciones y mensajes de datos a los dispositivos, usando APNs en iOS.", "Notificaciones push en FanHub: tokens de los dispositivos, configuración de APNs en iOS y mensajes que abren la pantalla correcta."]
+      en: ["Push notifications for Android and iOS.","Firebase Cloud Messaging delivers notifications and data messages to devices, using APNs on iOS.","Push notification delivery in Goiás App and OrbiJob, including device registration and notification handling."],
+      "pt-BR": ["Notificações push para Android e iOS.","O Firebase Cloud Messaging entrega notificações e mensagens de dados aos aparelhos, usando o APNs no iOS.","Entrega de notificações push no Goiás App e OrbiJob, incluindo registro de dispositivos e tratamento das mensagens."],
+      es: ["Notificaciones push para Android e iOS.","Firebase Cloud Messaging entrega notificaciones y mensajes de datos a los dispositivos, usando APNs en iOS.","Entrega de notificaciones push en Goiás App y OrbiJob, incluido registro de dispositivos y tratamiento de mensajes."]
     },
     sentry: {
-      en: ["Error and performance monitoring.", "A monitoring platform that captures errors, stack traces and performance data from apps and backends, with alerts and release tracking.", "Error tracking in Flutter apps: grouped issues by release, breadcrumbs to reproduce problems and alerts when a new version introduces failures."],
-      "pt-BR": ["Monitoramento de erros e performance.", "Plataforma de monitoramento que captura erros, stack traces e dados de performance de apps e backends, com alertas e acompanhamento por versão.", "Rastreamento de erros em apps Flutter: problemas agrupados por versão, breadcrumbs para reproduzir falhas e alertas quando uma versão nova introduz erros."],
-      es: ["Monitoreo de errores y rendimiento.", "Plataforma de monitoreo que captura errores, stack traces y datos de rendimiento de apps y backends, con alertas y seguimiento por versión.", "Seguimiento de errores en apps Flutter: problemas agrupados por versión, breadcrumbs para reproducir fallos y alertas cuando una versión nueva introduce errores."]
+      en: ["Error and performance monitoring.","A monitoring platform that captures errors, stack traces and performance data from apps and backends, with alerts and release tracking.","Crash diagnostics and issue tracking in the Toro Investimentos mobile app stack."],
+      "pt-BR": ["Monitoramento de erros e performance.","Plataforma de monitoramento que captura erros, stack traces e dados de performance de apps e backends, com alertas e acompanhamento por versão.","Diagnóstico de falhas e acompanhamento de erros na stack mobile da Toro Investimentos."],
+      es: ["Monitoreo de errores y rendimiento.","Plataforma de monitoreo que captura errores, stack traces y datos de rendimiento de apps y backends, con alertas y seguimiento por versión.","Diagnóstico de fallos y seguimiento de errores en el stack móvil de Toro Investimentos."]
     },
     gemini: {
       en: ["Google's generative AI models via API.", "The Gemini API gives access to Google's multimodal models for text generation, analysis and structured output.", "Essay grading in Aprovaura: the text is sent from a backend function and comes back as an estimated score with feedback per ENEM competency."],
@@ -269,9 +414,9 @@
       es: ["Base de datos de documentos (NoSQL).", "Base de datos NoSQL que guarda documentos en formato JSON con esquema flexible, índices y pipelines de agregación.", "Modelado de documentos y consultas para backends de apps: colecciones diseñadas a partir de cómo las pantallas leen los datos."]
     },
     "get-it": {
-      en: ["Service locator for Dart and Flutter.", "A simple service locator that registers dependencies once and resolves them anywhere, including singletons, lazy singletons and factories.", "Dependency wiring in my own products (Match Queue, FanHub, La Pelve and Aprovaura): repositories, services and blocs registered in one place and resolved by layer."],
-      "pt-BR": ["Service locator para Dart e Flutter.", "Service locator simples que registra as dependências uma vez e as resolve em qualquer ponto, com singletons, lazy singletons e factories.", "Ligação das dependências nos meus produtos (Match Queue, FanHub, La Pelve e Aprovaura): repositórios, serviços e blocs registrados num só lugar e resolvidos por camada."],
-      es: ["Service locator para Dart y Flutter.", "Service locator simple que registra las dependencias una vez y las resuelve en cualquier punto, con singletons, lazy singletons y factories.", "Conexión de dependencias en mis productos (Match Queue, FanHub, La Pelve y Aprovaura): repositorios, servicios y blocs registrados en un solo lugar y resueltos por capa."]
+      en: ["Service locator for Dart and Flutter.", "A simple service locator that registers dependencies once and resolves them anywhere, including singletons, lazy singletons and factories.", "Dependency wiring in my own products (Match Queue, Goiás App, La Pelve and Aprovaura): repositories, services and blocs registered in one place and resolved by layer."],
+      "pt-BR": ["Service locator para Dart e Flutter.", "Service locator simples que registra as dependências uma vez e as resolve em qualquer ponto, com singletons, lazy singletons e factories.", "Ligação das dependências nos meus produtos (Match Queue, Goiás App, La Pelve e Aprovaura): repositórios, serviços e blocs registrados num só lugar e resolvidos por camada."],
+      es: ["Service locator para Dart y Flutter.", "Service locator simple que registra las dependencias una vez y las resuelve en cualquier punto, con singletons, lazy singletons y factories.", "Conexión de dependencias en mis productos (Match Queue, Goiás App, La Pelve y Aprovaura): repositorios, servicios y blocs registrados en un solo lugar y resueltos por capa."]
     }
   };
 });
