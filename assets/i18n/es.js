@@ -310,7 +310,7 @@
 
   /* ---- aprovaura ---- */
   "aprovaura.s1.div1": "<a href=\"/\">Lucksrei</a> / <a href=\"/#projetos\">Proyectos</a> / Aprovaura",
-  "aprovaura.s1.div2": "Política de privacidad de la app",
+  "aprovaura.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/aura/privacy/\">Política de privacidad de la app</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/aura/data-deletion/\">Eliminación de cuenta y datos</a>",
   "aprovaura.s1.p1": "App de estudio para exámenes de ingreso y pruebas, con preguntas por materia, simulacros, revisión de errores y corrección de redacciones.",
   "aprovaura.s2.div1": "<strong>Banco de preguntas</strong>Preguntas y respuestas organizadas por materia.",
   "aprovaura.s2.div10": "<strong>Multiplataforma</strong>La misma app en Android e iOS.",
@@ -329,7 +329,7 @@
 
   /* ---- lapelve ---- */
   "lapelve.s1.div1": "<a href=\"/\">Lucksrei</a> / <a href=\"/#projetos\">Proyectos</a> / La Pelve",
-  "lapelve.s1.div2": "Política de privacidad de la app",
+  "lapelve.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/la-pelve/privacy/\">Política de privacidad de la app</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/la-pelve/data-deletion/\">Eliminación de cuenta y datos</a>",
   "lapelve.s1.p1": "App de gestión clínica para fisioterapeutas pélvicos: agenda, historia clínica, evolución y control de pagos.",
   "lapelve.s2.div1": "<strong>Agenda</strong>Organización de horarios y atenciones.",
   "lapelve.s2.div2": "<strong>Pacientes</strong>Registro e historial por paciente.",

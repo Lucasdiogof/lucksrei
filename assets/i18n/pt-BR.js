@@ -310,7 +310,7 @@
 
   /* ---- aprovaura ---- */
   "aprovaura.s1.div1": "<a href=\"/\">Lucksrei</a> / <a href=\"/#projetos\">Projetos</a> / Aprovaura",
-  "aprovaura.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/aura/privacy/\">Política de Privacidade do app</a>",
+  "aprovaura.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/aura/privacy/\">Política de Privacidade do app</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/aura/data-deletion/\">Exclusão de conta e dados</a>",
   "aprovaura.s1.p1": "App de estudo para vestibulares e provas, com questões por matéria, simulados, revisão de erros e correção de redação.",
   "aprovaura.s2.div1": "<strong>Banco de questões</strong>Perguntas e respostas organizadas por matéria.",
   "aprovaura.s2.div10": "<strong>Multiplataforma</strong>O mesmo app em Android e iOS.",
@@ -329,7 +329,7 @@
 
   /* ---- lapelve ---- */
   "lapelve.s1.div1": "<a href=\"/\">Lucksrei</a> / <a href=\"/#projetos\">Projetos</a> / La Pelve",
-  "lapelve.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/la-pelve/privacy/\">Política de Privacidade do app</a>",
+  "lapelve.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/la-pelve/privacy/\">Política de Privacidade do app</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/la-pelve/data-deletion/\">Exclusão de conta e dados</a>",
   "lapelve.s1.p1": "App de gestão clínica para fisioterapeutas pélvicos: agenda, prontuário, evolução e controle de pagamentos.",
   "lapelve.s2.div1": "<strong>Agenda</strong>Organização de horários e atendimentos.",
   "lapelve.s2.div2": "<strong>Pacientes</strong>Cadastro e histórico por paciente.",

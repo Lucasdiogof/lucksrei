@@ -310,7 +310,7 @@
 
   /* ---- aprovaura ---- */
   "aprovaura.s1.div1": "<a href=\"/\">Lucksrei</a> / <a href=\"/#projetos\">Projects</a> / Aprovaura",
-  "aprovaura.s1.div2": "App privacy policy",
+  "aprovaura.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/aura/privacy/\">App privacy policy</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/aura/data-deletion/\">Account and data deletion</a>",
   "aprovaura.s1.p1": "A study app for entrance exams and tests, with questions by subject, mock exams, mistake review and essay grading.",
   "aprovaura.s2.div1": "<strong>Question bank</strong>Questions and answers organized by subject.",
   "aprovaura.s2.div10": "<strong>Cross-platform</strong>The same app on Android and iOS.",
@@ -329,7 +329,7 @@
 
   /* ---- lapelve ---- */
   "lapelve.s1.div1": "<a href=\"/\">Lucksrei</a> / <a href=\"/#projetos\">Projects</a> / La Pelve",
-  "lapelve.s1.div2": "App privacy policy",
+  "lapelve.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/la-pelve/privacy/\">App privacy policy</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/la-pelve/data-deletion/\">Account and data deletion</a>",
   "lapelve.s1.p1": "A clinical management app for pelvic physiotherapists: schedule, patient records, progress notes and payment tracking.",
   "lapelve.s2.div1": "<strong>Schedule</strong>Organization of time slots and appointments.",
   "lapelve.s2.div2": "<strong>Patients</strong>Records and history per patient.",
