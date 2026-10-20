@@ -406,6 +406,7 @@ section{ padding: 88px 0; }
 .work-item[data-product="aura"]{ --p: #7fbfe0; --mix: 12%; }
 .work-item[data-product="bebometro"]{ --p: #f2a81d; --mix: 8%; }
 .work-item[data-product="orbijob"]{ --p: #a298ff; --mix: 8%; }
+.work-item[data-product="busaogyn"]{ --p: #ffc53d; --mix: 8%; }
 .work-item:hover{ border-color: color-mix(in srgb, var(--p) 40%, var(--border)); }
 .work-copy{ display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 44px 44px 40px; }
 .work-copy h3{ font-size: clamp(28px, 3.4vw, 42px); margin-bottom: 14px; transition: color .2s var(--ease); }
@@ -453,6 +454,7 @@ section{ padding: 88px 0; }
 .work-item[data-product="aura"] .work-plate.has-video{ background: #0B0F1A; }
 .work-item[data-product="bebometro"] .work-plate.has-video{ background: #050403; }
 .work-item[data-product="orbijob"] .work-plate.has-video{ background: #0d111b; }
+.work-item[data-product="busaogyn"] .work-plate.has-video{ background: #0b0a08; }
 
 .work-wide{ grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr); }
 .work-wide .work-copy{ order: 2; }

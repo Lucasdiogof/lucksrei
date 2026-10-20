@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>BusãoGyn — filme promocional</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+@font-face{font-family:"BG Geist";src:url(assets/fonts/Geist-Medium.ttf) format("truetype");font-weight:500}
+@font-face{font-family:"BG Geist";src:url(assets/fonts/Geist-SemiBold.ttf) format("truetype");font-weight:600}
+@font-face{font-family:"BG Geist";src:url(assets/fonts/Geist-Bold.ttf) format("truetype");font-weight:700}
+@font-face{font-family:"BG Mono";src:url(assets/fonts/GeistMono-Medium.ttf) format("truetype");font-weight:500}
+@font-face{font-family:"BG Mono";src:url(assets/fonts/GeistMono-Bold.ttf) format("truetype");font-weight:700}
+:root{--amber:#FFC53D;--green:#3DD9A0;--lime:#7BD321;--ink:#F6F6F2;--muted:#A9A89C;--bg:#0B0A08;--card:#15120C;--line:#2C261A}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;background:#000;overflow:hidden}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;background:var(--bg);overflow:hidden;font-family:"BG Geist",system-ui,sans-serif;color:var(--ink)}
+#stage canvas{position:absolute;left:0;top:0;width:1920px;height:1080px}
+#cam{position:absolute;inset:0}
+.o{position:absolute;left:50%;top:50%;transform-origin:50% 50%;display:none}
+.k{font-family:"BG Geist";font-weight:700;color:var(--ink);line-height:1.02;white-space:nowrap;text-align:center;letter-spacing:-.03em;padding:.3em 0}
+.k .c{display:inline-block;padding:.3em .02em .22em;margin:-.3em -.02em -.22em}
+.k .w{display:inline-block;white-space:nowrap}
+.k>div+div{margin-top:.04em}
+.am .c{background:linear-gradient(180deg,#FFE08A 0%,#FFC53D 55%,#E59B00 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mono{font:500 22px/1 "BG Mono",monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);white-space:nowrap;text-align:center}
+.mono.dim{color:var(--muted)}
+.txt{font:600 34px/1.2 "BG Geist";color:var(--ink);white-space:nowrap;text-align:center;letter-spacing:-.01em}
+.txt.sm{font:500 24px/1.2 "BG Geist";color:var(--muted)}
+.badge{width:132px;height:100px;border-radius:22px;background:linear-gradient(180deg,#FFD25E,#FFC53D 60%,#E8A100);border:3px solid #FFE9A8;display:flex;align-items:center;justify-content:center;font:700 56px/1 "BG Mono";color:#1A1300;letter-spacing:-.02em;box-shadow:0 18px 50px rgba(0,0,0,.45),0 0 40px rgba(255,197,61,.28)}
+.badge.sm{width:104px;height:80px;border-radius:18px;font-size:44px}
+.rc{width:980px;height:132px;border-radius:26px;background:linear-gradient(180deg,#1d1810,#14110a);border:2px solid #3a3220;display:flex;align-items:center;gap:26px;padding:0 30px 0 22px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.rc .dest{font:700 40px/1 "BG Geist";letter-spacing:-.01em;flex:1;white-space:nowrap;min-width:0}
+.rc .chip{flex:none;width:226px;justify-content:center}
+.rc .min{font:700 64px/1 "BG Mono";letter-spacing:-.04em;color:var(--ink);width:150px;flex:none;display:flex;justify-content:flex-end;align-items:baseline}
+.rc .min i{font:500 26px "BG Mono";font-style:normal;color:var(--muted);margin-left:6px}
+.chip{padding:16px 26px;border-radius:999px;font:700 26px/1 "BG Mono";letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;text-align:center;display:flex;gap:12px;align-items:center}
+.chip.rt{background:#0E3A2C;color:#3DD9A0;border:2px solid rgba(61,217,160,.5)}
+.chip.sc{background:#2A251B;color:#D9D9D9;border:2px solid rgba(217,217,217,.3)}
+.chip.un{background:#3A1F0C;color:#FF9B57;border:2px solid rgba(255,155,87,.45)}
+.chip i{width:12px;height:12px;border-radius:50%;background:currentColor}
+.rc .chip{padding:10px 18px;font-size:21px}
+#pill{width:640px;height:104px;border-radius:52px;background:rgba(21,18,12,.92);border:2px solid #3a3220;box-shadow:0 24px 70px rgba(0,0,0,.55);display:flex;align-items:center;padding:0 14px 0 34px;gap:22px}
+#pill .code{font:700 52px/1 "BG Mono";letter-spacing:.12em;color:var(--ink);flex:1;white-space:nowrap}
+#pill .code u{display:inline-block;width:4px;height:52px;background:var(--amber);vertical-align:-8px;margin-left:4px;text-decoration:none}
+#pill .go{width:78px;height:78px;border-radius:40px;background:linear-gradient(180deg,#FFD25E,#FFC53D);display:flex;align-items:center;justify-content:center}
+#hud{padding:14px 30px;border-radius:44px;background:rgba(21,18,12,.92);border:2px solid #3a3220;display:flex;gap:16px;align-items:center;font:600 30px/1 "BG Geist";white-space:nowrap}
+#hud i{width:16px;height:16px;border-radius:50%;background:var(--green);box-shadow:0 0 18px var(--green)}
+#hud span{font:500 28px "BG Mono";color:var(--muted)}
+#ctx{width:640px;height:116px;border-radius:30px;background:rgba(21,18,12,.94);border:2px solid #3a3220;display:flex;align-items:center;gap:24px;padding:0 26px 0 18px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+#ctx .badge{width:104px;height:80px;font-size:44px;border-radius:18px}
+#ctx b{display:block;font:700 34px/1.1 "BG Geist"}
+#ctx em{display:block;font:500 22px/1.2 "BG Mono";color:var(--amber);font-style:normal;letter-spacing:.06em;margin-top:6px;text-transform:uppercase}
+#cen{width:96px;height:96px;border-radius:30px;background:rgba(21,18,12,.94);border:2px solid #3a3220;display:flex;align-items:center;justify-content:center}
+#eta{padding:18px 32px;border-radius:26px;background:rgba(21,18,12,.95);border:2px solid #3a3220;font:700 54px/1 "BG Mono";color:var(--ink);white-space:nowrap;display:flex;align-items:baseline;gap:14px}
+#eta i{font:500 26px "BG Geist";font-style:normal;color:var(--muted)}
+.fav{width:560px;height:130px;border-radius:26px;background:linear-gradient(180deg,#1d1810,#14110a);border:2px solid #3a3220;display:flex;align-items:center;gap:22px;padding:0 28px;box-shadow:0 24px 60px rgba(0,0,0,.5);font:700 38px/1.1 "BG Geist"}
+.fav small{display:block;font:500 22px "BG Mono";color:var(--muted);margin-top:8px;letter-spacing:.04em}
+#logo{width:520px;height:520px}
+#logo img{width:100%;height:100%;display:block}
+#wm{font:700 150px/1 "BG Geist";letter-spacing:-.045em;white-space:nowrap;padding:.12em 0}
+#wm b{font-weight:700;color:var(--ink)}#wm span{color:var(--amber)}
+.tok{white-space:nowrap}
+#vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 85% at 50% 50%,transparent 55%,rgba(4,4,3,.6) 100%)}
+#fade{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+#ui{position:fixed;left:0;right:0;bottom:0;padding:14px 22px;background:linear-gradient(transparent,rgba(0,0,0,.8));display:flex;gap:14px;align-items:center;color:#d8c58a;font:600 13px "BG Geist";opacity:0;transition:opacity .25s;z-index:9}
+body:hover #ui{opacity:1}
+#ui input{flex:1;accent-color:#FFC53D}
+#ui button{background:#FFC53D;border:0;border-radius:6px;padding:6px 14px;font:700 13px "BG Geist";color:#1A1300;cursor:pointer}
+body.render #ui{display:none}
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="map" width="1920" height="1080"></canvas>
+  <canvas id="main" width="1920" height="1080"></canvas>
+  <div id="cam"></div>
+  <canvas id="fx" width="1920" height="1080"></canvas>
+  <div id="vig"></div>
+  <div id="fade"></div>
+</div>
+<div id="ui"><button id="pp">Pausar</button><input id="sc" type="range" min="0" max="42" step="0.01" value="0"><span id="tc"></span><span>espaço: pausa · ←/→: ±1 s</span></div>
+
+<script>
+"use strict";
+const W = 1920, H = 1080, DURATION = 42;
+const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const P = (t, a, b) => cl((t - a) / (b - a));
+const lerp = (a, b, x) => a + (b - a) * x;
+const E = { out3: x => 1 - Math.pow(1 - x, 3), out4: x => 1 - Math.pow(1 - x, 4), io2: x => x * x * (3 - 2 * x), io3: x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2, in3: x => x * x * x, in2: x => x * x };
+function spr(x, w = 14, z = .5) { if (x <= 0) return 0; const k = Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w * x) * (Math.cos(w * k * x) + z / k * Math.sin(w * k * x)); }
+function rng(seed) { let a = seed >>> 0; return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+const $ = id => document.getElementById(id);
+const pun = (t, t0, a, k = 5, w = 18) => t < t0 ? 0 : a * Math.exp(-k * (t - t0)) * Math.cos(w * (t - t0));
+const RAD = Math.PI / 180;
+
+function T(el, p) {
+  const a = p.a === undefined ? 1 : p.a;
+  if (a <= .003) { if (el._v !== 0) { el.style.display = "none"; el._v = 0; } return; }
+  if (el._v !== 1) { el.style.display = el._d || "block"; el._v = 1; }
+  const s = p.s === undefined ? 1 : p.s;
+  el.style.transform = `translate(${(p.x || 0).toFixed(2)}px,${(p.y || 0).toFixed(2)}px) translate(-50%,-50%) rotate(${(p.rz || 0).toFixed(2)}deg) scale(${((p.sx || 1) * s).toFixed(4)},${((p.sy || 1) * s).toFixed(4)})`;
+  el.style.opacity = a >= .999 ? "" : a.toFixed(3);
+  el.style.filter = p.b > .15 ? `blur(${p.b.toFixed(1)}px)` : "";
+}
+function mk(el, text) {
+  el.innerHTML = ""; el._cs = [];
+  text.split(" ").forEach((word, wi, arr) => {
+    const w = document.createElement("span"); w.className = "w";
+    [...word].forEach(ch => { const c = document.createElement("span"); c.className = "c"; c.textContent = ch; w.appendChild(c); el._cs.push(c); });
+    el.appendChild(w); if (wi < arr.length - 1) { const sp = document.createElement("span"); sp.style.cssText = "display:inline-block;width:.26em"; el.appendChild(sp); }
+  });
+}
+function two(el, a, b) { el.innerHTML = ""; const l1 = document.createElement("div"), l2 = document.createElement("div"); el.appendChild(l1); el.appendChild(l2); mk(l1, a); mk(l2, b); l2.classList.add("am"); el._cs = [...l1._cs, ...l2._cs]; }
+function kin(el, t, t0, o = {}) {
+  const st = o.st === undefined ? .03 : o.st, d = o.d || .6, dy = o.dy === undefined ? 70 : o.dy, bl = o.bl === undefined ? 10 : o.bl, out = o.out;
+  el._cs.forEach((c, i) => {
+    const x = (t - t0 - i * st) / d, e = spr(x * .62, 13, .6);
+    let a = cl(x * 2.2), y = (1 - e) * dy, s = 1 + (1 - e) * .35, b = (1 - cl(x * 1.6)) * bl;
+    if (out) { const xo = cl((t - out.t0 - i * (out.st || .015)) / (out.d || .4)), eo = E.in3(xo); y -= eo * (out.dy || 140); a *= 1 - cl(xo * 1.4); b += xo * 8; s *= 1 - eo * .2; }
+    c.style.opacity = a >= .999 ? "" : a.toFixed(3);
+    c.style.transform = a <= .002 ? "translateY(0)" : `translateY(${y.toFixed(1)}px) scale(${s.toFixed(3)})`;
+    c.style.filter = b > .2 ? `blur(${b.toFixed(1)}px)` : "";
+  });
+}
+const cam$ = $("cam"), els = {};
+function el(id, cls, html, style, disp) { const e = document.createElement("div"); e.className = "o " + (cls || ""); if (html) e.innerHTML = html; if (style) e.style.cssText = style; if (disp) e._d = disp; e.id = id; cam$.appendChild(e); els[id] = e; return e; }
+
+/* ───── DOM ───── */
+el("logo", "", '<img src="assets/logo.png" alt="">');
+el("wm", "", "<b>Busão</b><span>Gyn</span>");
+el("h1", "k", ""); two(els.h1, "Cadê", "o busão?"); els.h1.style.fontSize = "190px";
+el("tag0", "txt sm", "Saiba onde seu ônibus está.", "font-size:34px");
+el("hB", "k", ""); two(els.hB, "Digite o código", "do ponto."); els.hB.style.fontSize = "100px";
+el("pill", "", '<svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#A9A89C" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg><div class="code"><span id="codeTxt"></span><u></u></div><div class="go"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1A1300" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>', "", "flex");
+el("plab", "mono dim", "Código na placa do ponto", "font-size:20px");
+const ROUTES = [["003", "T MARANATA", 12], ["003", "T PAULO GARCIA", 3], ["004", "CENTRO", 4]];
+ROUTES.forEach((r, i) => el("rc" + i, "rc", `<div class="badge sm">${r[0]}</div><div class="dest">${r[1]}</div><div class="chip rt"><i></i>Tempo real</div><div class="min"><span class="mv">${r[2]}</span><i>min</i></div>`, "", "flex"));
+el("hC", "k", ""); two(els.hC, "Cada chegada", "diz de onde vem."); els.hC.style.fontSize = "96px";
+el("q0", "chip rt", "<i></i>Tempo real"); el("q1", "chip sc", "<i></i>Programado"); el("q2", "chip un", "<i></i>Não confirmado");
+["Posição do GPS da fonte", "Horário de tabela", "Sem confirmação"].forEach((t, i) => el("ql" + i, "txt sm", t, "font-size:30px"));
+el("capC", "txt", "Dado antigo nunca aparece como ao vivo.");
+el("hD", "k", ""); two(els.hD, "Acompanhe", "no mapa."); els.hD.style.fontSize = "100px";
+el("hud", "", '<i></i>Ao vivo <span id="hudAge">há 4 s</span>', "", "flex");
+el("ctx", "", '<div class="badge">003</div><div><b>Ônibus 50501</b><em>Indo para T Paulo Garcia</em></div>', "", "flex");
+el("eta", "", '<span id="etaN">6</span><i>min até o ponto 30402</i>', "", "flex");
+el("hE", "k", ""); two(els.hE, "Seus pontos,", "guardados."); els.hE.style.fontSize = "100px";
+el("fav", "fav", '<svg id="favStar" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#FFC53D" stroke-width="2" stroke-linejoin="round"><path id="starP" d="M12 2.8l2.9 6 6.5.9-4.7 4.6 1.1 6.5L12 17.7l-5.8 3.1 1.1-6.5L2.6 9.7l6.5-.9z"/></svg><div>Ponto 30402<small>16 linhas</small></div>', "", "flex");
+el("capE", "txt", "Favoritos e recentes ficam só no seu aparelho.");
+el("tag1", "k", ""); mk(els.tag1, "Saiba onde"); el("tag2", "k am", ""); mk(els.tag2, "seu ônibus está.");
+els.tag1.style.fontSize = els.tag2.style.fontSize = "92px";
+el("tag3", "txt sm", "Goiânia e Região Metropolitana", "font-size:30px");
+
+/* ───── mapa (ruas) ───── */
+const mapc = $("map").getContext("2d"), mc = $("main").getContext("2d"), fx = $("fx").getContext("2d");
+const STREETS = (() => {
+  const r = rng(77), out = [];
+  const add = (x0, y0, x1, y1, w, d) => out.push({ x0, y0, x1, y1, w, d });
+  // grade principal rotacionada
+  for (let k = -22; k <= 22; k++) {
+    const off = k * 170 + (r() - .5) * 40, ang = .30;
+    const ca = Math.cos(ang), sa = Math.sin(ang);
+    for (let seg = -4; seg < 4; seg++) { if (r() < .22) continue; const a = seg * 700 + r() * 200, b = a + 420 + r() * 380; add(-sa * off + ca * a, ca * off + sa * a, -sa * off + ca * b, ca * off + sa * b, 2.2, r()); }
+    const ang2 = ang + Math.PI / 2, c2 = Math.cos(ang2), s2 = Math.sin(ang2);
+    for (let seg = -4; seg < 4; seg++) { if (r() < .3) continue; const a = seg * 700 + r() * 200, b = a + 320 + r() * 380; add(-s2 * off + c2 * a, c2 * off + s2 * a, -s2 * off + c2 * b, c2 * off + s2 * b, 2.2, r()); }
+  }
+  // avenidas
+  [[-.52, -300], [-.1, 120], [.62, -520], [1.1, 380], [.2, -760], [-.9, 260]].forEach(([ang, off], i) => { const ca = Math.cos(ang), sa = Math.sin(ang); add(-sa * off - ca * 4000, ca * off - sa * 4000, -sa * off + ca * 4000, ca * off + sa * 4000, 7, i * .04); });
+  return out;
+})();
+const GA = .30, gR = (a, o) => [Math.cos(GA) * a - Math.sin(GA) * o, Math.sin(GA) * a + Math.cos(GA) * o];
+const ROUTE = [[-1900, 340], [-700, 340], [-700, 0], [300, 0], [300, -340], [1400, -340], [1400, -680], [2600, -680]];
+// a rota são ruas de verdade: entram no mapa como ruas comuns
+for (let i = 0; i < ROUTE.length - 1; i++) { const A = gR(...ROUTE[i]), Bp = gR(...ROUTE[i + 1]); STREETS.push({ x0: A[0], y0: A[1], x1: Bp[0], y1: Bp[1], w: 3.2, d: 0 }); }
+const PATH = (() => {
+  const pts = [], R0 = 80, n = ROUTE.length; let cur = ROUTE[0];
+  const push = q => pts.push(gR(q[0], q[1]));
+  push(ROUTE[0]);
+  for (let i = 1; i < n - 1; i++) {
+    const p0 = ROUTE[i - 1], p1 = ROUTE[i], p2 = ROUTE[i + 1], d1 = Math.hypot(p1[0] - p0[0], p1[1] - p0[1]), d2 = Math.hypot(p2[0] - p1[0], p2[1] - p1[1]);
+    const a = [p1[0] + (p0[0] - p1[0]) / d1 * R0, p1[1] + (p0[1] - p1[1]) / d1 * R0], c = [p1[0] + (p2[0] - p1[0]) / d2 * R0, p1[1] + (p2[1] - p1[1]) / d2 * R0];
+    push(a); for (let k = 1; k < 10; k++) { const u = k / 10; push([(1 - u) * (1 - u) * a[0] + 2 * u * (1 - u) * p1[0] + u * u * c[0], (1 - u) * (1 - u) * a[1] + 2 * u * (1 - u) * p1[1] + u * u * c[1]]); } push(c);
+  }
+  push(ROUTE[n - 1]);
+  const cum = [0]; for (let i = 1; i < pts.length; i++) cum.push(cum[i - 1] + Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]));
+  return { pts, cum, len: cum[cum.length - 1] };
+})();
+function pathAt(sv) {
+  const { pts, cum, len } = PATH; sv = cl(sv, 0, len - 1); let lo = 0, hi = cum.length - 1; while (hi - lo > 1) { const m = (lo + hi) >> 1; if (cum[m] <= sv) lo = m; else hi = m; }
+  const f = (sv - cum[lo]) / Math.max(1e-6, cum[hi] - cum[lo]); return [lerp(pts[lo][0], pts[hi][0], f), lerp(pts[lo][1], pts[hi][1], f)];
+}
+const busS = t => lerp(800, 4700, E.io2(P(t, 19.6, 31.2)));
+function posAt(sv) { const a = pathAt(sv), b = pathAt(sv + 14); return { x: a[0], y: a[1], ang: Math.atan2(b[1] - a[1], b[0] - a[0]) }; }
+function busPos(t) { return posAt(busS(t)); }
+function mapCam(t) {
+  // wide: abertura / pontos; D: segue o ônibus
+  let cx = 0, cy = 0, z = .8 + .06 * P(t, 0, 5);
+  if (t < 12) { cx = -200 + 18 * t; cy = 60; z = .78 + .0125 * t; }
+  else if (t < 19.6) { cx = lerp(-60, -400, P(t, 12, 19.6)); cy = lerp(40, 300, P(t, 12, 19.6)); z = lerp(.9, 1.2, E.io2(P(t, 17.5, 19.6))); }
+  if (t >= 19.6 && t < 32.6) {
+    const k = E.io3(P(t, 19.6, 21.2)), b = busPos(t - .18), lag = busPos(t - .45);
+    let tx = b.x, ty = b.y;
+    const pcx = lerp(-400, tx, k), pcy = lerp(300, ty, k); cx = pcx; cy = pcy; z = lerp(1.2, 2.3, k) * (1 - .55 * E.io2(P(t, 31.6, 32.6)));
+  } else if (t >= 32.6) { cx = lerp(cx, 400, 0); cy = 0; z = 1; const b = busPos(31.2); cx = b.x; cy = b.y; z = 1.05; }
+  return { cx, cy, z };
+}
+const DAYN = t => E.io3(P(t, 34.0, 35.2));   // 0 = noturno, 1 = claro (varredura circular)
+const dayR = t => 0;
+function drawStreets(g, t, day, mcam, reveal, alpha) {
+  g.save(); g.translate(W / 2, H / 2); g.scale(mcam.z, mcam.z); g.translate(-mcam.cx, -mcam.cy); g.lineCap = "round";
+  const lw = k => k / mcam.z * (mcam.z > 1 ? 1 : 1) + (mcam.z > 1.4 ? .6 : 0);
+  for (const pass of [0, 1]) {
+    for (const s of STREETS) {
+      if ((s.w > 5) !== (pass === 1)) continue;
+      const rv = cl((reveal - s.d * .6) / .4); if (rv <= 0) continue;
+      const x1 = lerp(s.x0, s.x1, rv), y1 = lerp(s.y0, s.y1, rv);
+      if (day) { g.strokeStyle = "rgba(205,208,196,1)"; g.lineWidth = s.w + 2.6; g.beginPath(); g.moveTo(s.x0, s.y0); g.lineTo(x1, y1); g.stroke(); g.strokeStyle = "#FFFFFF"; g.lineWidth = s.w; g.beginPath(); g.moveTo(s.x0, s.y0); g.lineTo(x1, y1); g.stroke(); }
+      else { g.strokeStyle = s.w > 5 ? `rgba(120,104,58,${.95 * alpha})` : `rgba(82,72,42,${.95 * alpha})`; g.lineWidth = s.w * (s.w > 5 ? 1.3 : 1.5); g.beginPath(); g.moveTo(s.x0, s.y0); g.lineTo(x1, y1); g.stroke(); }
+    }
+  }
+  g.restore();
+}
+function drawMap(t) {
+  const g = mapc, mcam = mapCam(t), reveal = E.out3(P(t, .2, 3.2)) * 1.3;
+  g.setTransform(1, 0, 0, 1, 0, 0); g.fillStyle = "#0B0A08"; g.fillRect(0, 0, W, H);
+  const glow = g.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, 900); glow.addColorStop(0, "rgba(255,197,61,.10)"); glow.addColorStop(1, "rgba(255,197,61,0)"); g.fillStyle = glow; g.fillRect(0, 0, W, H);
+  const dim = (t < 5.6 ? 1 : t < 19.6 ? .38 : t < 32.6 ? 1 : .5);
+  const dm = t >= 5.6 && t < 19.6 ? lerp(1, .38, E.io2(P(t, 5.6, 6.8))) * (1 - .62 * E.io2(P(t, 18.6, 19.6)) * 0 ) : (t >= 19.6 && t < 32.6 ? lerp(.38, 1, E.io2(P(t, 19.2, 20.4))) : (t >= 32.6 ? lerp(1, .5, E.io2(P(t, 32.6, 33.6))) : dim));
+  drawStreets(g, t, false, mcam, reveal, dm);
+  const dr = dayR(t);
+  if (dr > 4) {
+    g.save(); g.beginPath(); g.arc(W / 2, H / 2, dr, 0, 7); g.clip(); g.fillStyle = "#E9EBE3"; g.fillRect(0, 0, W, H); drawStreets(g, t, true, mcam, 2, 1); g.restore();
+    g.strokeStyle = `rgba(255,197,61,${(.9 * (1 - P(t, 35.2, 35.6))).toFixed(3)})`; g.lineWidth = 6; g.beginPath(); g.arc(W / 2, H / 2, dr, 0, 7); g.stroke();
+  }
+  // marcadores de ônibus
+  if (t >= 19.4 && t < 33.6) {
+    const day = (x, y) => Math.hypot(x - W / 2, y - H / 2) < dr;
+    const proj = (wx, wy) => [W / 2 + (wx - mcam.cx) * mcam.z, H / 2 + (wy - mcam.cy) * mcam.z];
+    const bus = (x, y, ang, sel, a, fill) => {
+      g.save(); g.translate(x, y); g.rotate(ang); g.globalAlpha = a; const L = (sel ? 118 : 84) * Math.min(1.4, mcam.z / 1.6 + .55), Wd = L * .46;
+      if (sel) { const gr = g.createRadialGradient(0, 0, 0, 0, 0, L * 1.2); gr.addColorStop(0, "rgba(255,197,61,.45)"); gr.addColorStop(1, "rgba(255,197,61,0)"); g.fillStyle = gr; g.beginPath(); g.arc(0, 0, L * 1.2, 0, 7); g.fill(); }
+      g.fillStyle = fill; g.strokeStyle = sel ? "#FFF0B8" : "rgba(255,255,255,.35)"; g.lineWidth = sel ? 4 : 3; g.beginPath(); g.roundRect(-L / 2, -Wd / 2, L, Wd, Wd * .3); g.fill(); g.stroke();
+      g.fillStyle = sel ? "#2a1d00" : "rgba(20,20,20,.7)"; g.beginPath(); g.roundRect(L * .18, -Wd * .36, L * .26, Wd * .72, 5); g.fill();
+      g.fillStyle = sel ? "rgba(26,19,0,.5)" : "rgba(255,255,255,.18)"; for (let i = 0; i < 3; i++) { g.beginPath(); g.roundRect(-L * .4 + i * L * .17, -Wd * .3, L * .12, Wd * .6, 4); g.fill(); }
+      g.restore();
+    };
+    // outros ônibus do ponto: andam na mesma rota, envelhecem e somem
+    const OTH = [[-420, 22.4, 28.6], [650, 22.9, 31], [1150, 23.4, 29.8]];
+    OTH.forEach(([ds, t0, t1], i) => {
+      const sv = busS(t - .2) + ds + (t - 22) * (i - 1) * 14, q = posAt(sv), [x, y] = proj(q.x, q.y);
+      const a = E.out3(P(t, t0, t0 + .6)) * (1 - E.in2(P(t, t1 - .8, t1)));
+      const stale = t > t1 - 2.2;
+      bus(x, y, q.ang, false, a * (stale ? .55 : .95), stale ? "rgba(120,110,90,.35)" : "#6B6554");
+    });
+    // trilha calculada
+    const bp = busPos(t - .18), [bx, by] = proj(bp.x, bp.y), ta = E.out3(P(t, 20.4, 21.4)) * (1 - E.in2(P(t, 31.6, 32.4)));
+    if (ta > .01) { g.save(); g.lineCap = "round"; for (let k = 0; k < 26; k++) { const q = busPos(t - .18 - k * .07), [qx, qy] = proj(q.x, q.y); g.globalAlpha = ta * (1 - k / 26) * .9; g.fillStyle = "#FFC53D"; g.beginPath(); g.arc(qx, qy, (14 - k * .42) * Math.min(1.4, mcam.z / 1.6 + .5), 0, 7); g.fill(); } g.restore(); }
+    const sa = E.out3(P(t, 19.8, 20.6)) * (1 - E.in2(P(t, 31.8, 32.6)));
+    if (sa > .01) bus(bx, by, bp.ang, true, sa, "#FFC53D");
+    // pulso a cada atualização (compressão do tempo: a cada 4 s)
+    for (let k = 0; k < 4; k++) { const tp = 21.0 + k * 4 + (k > 1 ? 0 : 0), u = (t - tp) / .9; if (u > 0 && u < 1 && t < 32) { g.strokeStyle = `rgba(255,197,61,${(.7 * (1 - u)).toFixed(3)})`; g.lineWidth = 5 * (1 - u) + 1; g.beginPath(); g.arc(bx, by, 60 + 150 * E.out3(u), 0, 7); g.stroke(); } }
+  }
+}
+
+/* ───── canvas principal: logo, anel, pin ───── */
+const SP = { dot: (() => { const c = document.createElement("canvas"); c.width = c.height = 64; const g = c.getContext("2d"); const r = g.createRadialGradient(32, 32, 0, 32, 32, 32); r.addColorStop(0, "rgba(255,255,255,1)"); r.addColorStop(.2, "rgba(255,226,140,.95)"); r.addColorStop(.5, "rgba(255,197,61,.35)"); r.addColorStop(1, "rgba(255,197,61,0)"); g.fillStyle = r; g.fillRect(0, 0, 64, 64); return c; })() };
+const BURSTS = [], RINGS = [];
+function B(t, x, y, n, o = {}) { const r = rng(Math.round(t * 1000) * 7 + n), ps = []; for (let i = 0; i < n; i++) ps.push({ a: r() * 6.2832, sp: lerp(o.v0 || 120, o.v1 || 700, Math.pow(r(), .7)), life: lerp(.7, 1.8, r()), sz: lerp(.8, 3.2, r()), tw: r() * 6.28 }); BURSTS.push({ t, x, y, ps, k: 3.2, sc: 7, g: o.g || 0 }); }
+function R(t, x, y, r1, dur = .9, w = 8, a = .9, col) { RINGS.push({ t, x, y, r1, dur, w, a, col }); }
+const DUST = (() => { const r = rng(5), a = []; for (let i = 0; i < 70; i++) a.push({ x: r() * W, y: r() * H, sz: lerp(1, 3, r()), sp: lerp(4, 14, r()), ph: r() * 6.28, tw: lerp(1.2, 3, r()) }); return a; })();
+B(2.6, 0, -20, 90, { v0: 200, v1: 900 }); R(2.6, 0, -20, 620, 1.1, 12); R(2.7, 0, -20, 420, .9, 5, .6);
+B(9.4, 0, 120, 30, { v0: 80, v1: 360 }); R(9.4, 270, 0, 160, .7, 6, .7);
+B(37.7, 0, 20, 130, { v0: 250, v1: 1100 }); R(37.7, 0, -20, 700, 1.1, 12, .8); R(37.8, 0, -20, 480, .9, 6, .6);
+
+function logoPhase(t) {
+  // pin cai, anel gira, logo nasce no impacto
+  const u = P(t, 1.2, 2.6), land = t >= 2.6;
+  return { u, land };
+}
+function drawMain(t) {
+  const g = mc; g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, W, H);
+  g.save(); g.translate(W / 2, H / 2);
+  // A: pin caindo + anel
+  if (t > 1 && t < 6.2) {
+    const out = 1 - E.in2(P(t, 5.2, 6.0));
+    const u = P(t, 1.2, 2.55), e = E.in3(u), py = lerp(-620, -20, e);
+    if (t < 2.62) { g.globalAlpha = Math.min(1, (t - 1) * 3); g.fillStyle = "#FFC53D"; g.beginPath(); g.moveTo(0, py + 40); g.bezierCurveTo(-46, py - 8, -46, py - 60, 0, py - 60); g.bezierCurveTo(46, py - 60, 46, py - 8, 0, py + 40); g.fill(); g.fillStyle = "#0B0A08"; g.beginPath(); g.arc(0, py - 24, 14, 0, 7); g.fill(); }
+    // anel verde que se fecha
+    const ra = E.out3(P(t, 2.65, 3.7)) * out, rr = 250 + 10 * Math.sin(t * 2);
+    if (ra > .01) { g.globalAlpha = ra; g.lineWidth = 12; g.lineCap = "round"; const gr = g.createLinearGradient(-260, -260, 260, 260); gr.addColorStop(0, "#7BD321"); gr.addColorStop(1, "#1E9A2A"); g.strokeStyle = gr; g.beginPath(); g.arc(0, -20, 285, -Math.PI / 2, -Math.PI / 2 + Math.PI * 2 * E.out3(P(t, 2.65, 3.8)) * .96); g.stroke(); g.lineWidth = 6; g.strokeStyle = "rgba(255,197,61,.9)"; g.beginPath(); g.arc(0, -20, 318, Math.PI * .1, Math.PI * .1 + Math.PI * 1.3 * E.out3(P(t, 2.9, 4.0))); g.stroke(); }
+    g.globalAlpha = 1;
+  }
+  // chegada: a estrada corre ao encontro da câmera e o ônibus da marca vem de frente
+  if (t > 36.0 && t < 38.9) {
+    const ra = E.out3(P(t, 36.0, 36.6)) * (1 - E.in2(P(t, 38.3, 38.9))), vx = 0, vy = -70;
+    g.globalAlpha = ra;
+    // asfalto: trapézio que sai do ponto de fuga
+    const gr = g.createLinearGradient(0, vy, 0, 540); gr.addColorStop(0, "rgba(40,34,20,0)"); gr.addColorStop(1, "rgba(58,50,30,.85)");
+    g.fillStyle = gr; g.beginPath(); g.moveTo(vx - 6, vy); g.lineTo(vx + 6, vy); g.lineTo(1000, 560); g.lineTo(-1000, 560); g.closePath(); g.fill();
+    g.strokeStyle = "rgba(200,170,90,.55)"; g.lineWidth = 4; g.beginPath(); g.moveTo(vx - 4, vy); g.lineTo(-1000, 560); g.moveTo(vx + 4, vy); g.lineTo(1000, 560); g.stroke();
+    // faixas tracejadas correndo para a câmera
+    const spd = 1.5 + 2.2 * E.out3(P(t, 36.0, 37.2)) * (1 - E.in2(P(t, 37.7, 38.4)));
+    const ph = (36.0 * 0 + t * spd) % 1;
+    for (let k = 0; k < 9; k++) { const d0 = ((k / 9 + ph) % 1), d1 = d0 + .035, y0 = vy + (560 - vy) * d0 * d0, y1 = vy + (560 - vy) * d1 * d1, w0 = 3 + 22 * d0 * d0, w1 = 3 + 22 * d1 * d1; g.fillStyle = `rgba(255,197,61,${(.15 + .85 * d0).toFixed(3)})`; g.beginPath(); g.moveTo(vx - w0, y0); g.lineTo(vx + w0, y0); g.lineTo(vx + w1, y1); g.lineTo(vx - w1, y1); g.closePath(); g.fill(); }
+    // linhas de velocidade
+    const rr2 = rng(31);
+    for (let k = 0; k < 46; k++) { const ang = (rr2() * 2 - 1) * Math.PI * .95 + Math.PI / 2, ph2 = (t * (1.1 + rr2() * 1.3) + rr2()) % 1, r0 = 140 + ph2 * ph2 * 1500, r1 = r0 + 40 + ph2 * 220; g.globalAlpha = ra * (.12 + .5 * ph2) * (1 - E.in2(P(t, 37.6, 38.3))); g.strokeStyle = "#FFE08A"; g.lineWidth = 1.5 + 3 * ph2; g.beginPath(); g.moveTo(vx + Math.cos(ang) * r0, vy + Math.sin(ang) * r0 * .75); g.lineTo(vx + Math.cos(ang) * r1, vy + Math.sin(ang) * r1 * .75); g.stroke(); }
+    // faróis do ônibus que chega (brilho)
+    const bs = lerp(.04, 1, E.out3(P(t, 36.5, 37.7))), fl = E.out3(P(t, 36.7, 37.5)) * (1 - E.in2(P(t, 37.9, 38.5)));
+    if (fl > .01) { g.globalCompositeOperation = "lighter"; [-1, 1].forEach(sg => { const hx = sg * 145 * bs, hy = lerp(-70, 55, E.out3(P(t, 36.5, 37.7))), rg = g.createRadialGradient(hx, hy, 0, hx, hy, 110 + 260 * bs); rg.addColorStop(0, `rgba(255,244,200,${(.9 * fl).toFixed(3)})`); rg.addColorStop(.3, `rgba(255,210,110,${(.35 * fl).toFixed(3)})`); rg.addColorStop(1, "rgba(255,197,61,0)"); g.fillStyle = rg; g.globalAlpha = 1; g.beginPath(); g.arc(hx, hy, 110 + 260 * bs, 0, 7); g.fill(); }); g.globalCompositeOperation = "source-over"; }
+    g.globalAlpha = 1;
+  }
+  g.restore();
+}
+function drawFX(t) {
+  const g = fx; g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, W, H); g.globalCompositeOperation = "lighter";
+  for (const d of DUST) { const y = (d.y - t * d.sp + 3000) % (H + 40) - 20, tw = .5 + .5 * Math.sin(t * d.tw + d.ph); g.globalAlpha = .1 + .35 * tw * tw; const s = d.sz * 6; g.drawImage(SP.dot, d.x + Math.sin(t * .5 + d.ph) * 14 - s / 2, y - s / 2, s, s); }
+  g.save(); g.translate(W / 2, H / 2);
+  for (const b of BURSTS) { const age = t - b.t; if (age < 0 || age > 2.1) continue; for (const p of b.ps) { if (age > p.life) continue; const d = p.sp * (1 - Math.exp(-b.k * age)) / b.k, x = b.x + Math.cos(p.a) * d, y = b.y + Math.sin(p.a) * d + .5 * b.g * age * age, k = 1 - age / p.life; g.globalAlpha = Math.pow(k, 1.3) * (.65 + .35 * Math.sin(p.tw + age * 28)); const s = p.sz * b.sc * (.5 + .5 * k); g.drawImage(SP.dot, x - s / 2, y - s / 2, s, s); } }
+  g.globalAlpha = 1;
+  for (const r of RINGS) { const u = (t - r.t) / r.dur; if (u < 0 || u > 1) continue; g.strokeStyle = `rgba(${r.col || "255,214,120"},${(r.a * (1 - u)).toFixed(3)})`; g.lineWidth = Math.max(1, r.w * (1 - u)); g.beginPath(); g.arc(r.x, r.y, r.r1 * E.out3(u), 0, 7); g.stroke(); }
+  g.restore();
+  const fl = Math.max(0, 1 - Math.abs(t - 2.62) / .12) * .5 + Math.max(0, 1 - Math.abs(t - 37.75) / .14) * .35;
+  if (fl > .01) { g.globalAlpha = fl; const gr = g.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, 900); gr.addColorStop(0, "rgba(255,240,190,1)"); gr.addColorStop(.4, "rgba(255,197,61,.5)"); gr.addColorStop(1, "rgba(255,160,0,0)"); g.fillStyle = gr; g.fillRect(0, 0, W, H); }
+  g.globalAlpha = 1; g.globalCompositeOperation = "source-over";
+}
+
+/* ───── cenas ───── */
+function sceneA(t) {
+  // logo nasce no impacto, depois cede lugar ao "Cadê o busão?"
+  const lu = t >= 2.62 ? spr(t - 2.62, 10, .55) : 0, lo = E.in2(P(t, 5.0, 5.6));
+  T(els.logo, { x: 0, y: -20, s: lerp(.2, 1, lu) * (1 - lo * .25), rz: (1 - lu) * -40, a: t >= 2.62 ? (1 - lo) : 0 });
+  const w0 = E.out3(P(t, 3.6, 4.4)), wo = E.in2(P(t, 5.0, 5.6));
+  T(els.wm, { x: 0, y: 330, s: .9 + .1 * w0, a: w0 * (1 - wo), b: (1 - w0) * 8 });
+  T(els.tag0, { x: 0, y: 440, a: E.out3(P(t, 4.2, 4.9)) * (1 - wo) });
+  // pergunta de abertura antes da marca
+  const on = t < 1.7;
+  T(els.h1, { x: 0, y: -20, a: on ? 1 : 0 }); if (on) kin(els.h1, t, .25, { out: { t0: 1.2, st: .02, d: .4, dy: 200 } });
+}
+const CODE = "30402";
+function sceneB(t) {
+  const on = t > 5.7 && t < 13.2;
+  if (!on) { ["hB", "pill", "plab", "rc0", "rc1", "rc2"].forEach(k => T(els[k], { a: 0 })); return; }
+  const out = E.in3(P(t, 12.2, 12.9));
+  T(els.hB, { x: 0, y: -390, a: 1 }); kin(els.hB, t, 6.0, { out: { t0: 12.0 } });
+  const pu = spr(t - 6.6, 11, .62), py = lerp(60, -90, E.io3(P(t, 9.5, 10.4)));
+  T(els.pill, { x: 0, y: py - out * 40, s: lerp(.8, 1, cl(pu)), a: (t >= 6.6 ? 1 : 0) * (1 - out) });
+  const n = Math.max(0, Math.min(5, Math.floor((t - 7.3) / .34) + (t >= 7.3 ? 1 : 0)));
+  $("codeTxt").textContent = CODE.slice(0, n);
+  T(els.plab, { x: 0, y: py + 100, a: E.out3(P(t, 7.0, 7.6)) * (1 - P(t, 9.4, 9.8)) });
+  // cartões de chegada saem do campo
+  ROUTES.forEach((r, i) => {
+    const t0 = 9.5 + i * .35, u = spr(t - t0, 10, .66), cx = 0, ty = 80 + i * 160, e = E.io3(P(t, t0, t0 + .5));
+    T(els["rc" + i], { x: 0, y: lerp(py, ty + 40, e) + (1 - e) * 0, s: lerp(.5, 1, cl(u)), a: (t >= t0 ? E.out3(P(t, t0, t0 + .2)) : 0) * (1 - out), b: (1 - e) * 6 });
+  });
+  // contagem regressiva dos minutos
+  ROUTES.forEach((r, i) => { const m = Math.max(1, r[2] - Math.floor(P(t, 11.2, 12.6) * 1.6)); els["rc" + i]._mv = els["rc" + i]._mv || els["rc" + i].querySelector(".mv"); els["rc" + i]._mv.textContent = m; });
+}
+function sceneC(t) {
+  const on = t > 12.8 && t < 19.9;
+  if (!on) { ["hC", "q0", "q1", "q2", "ql0", "ql1", "ql2", "capC"].forEach(k => T(els[k], { a: 0 })); return; }
+  const out = E.in3(P(t, 19.0, 19.7));
+  T(els.hC, { x: 0, y: -380, a: 1 }); kin(els.hC, t, 13.1, { out: { t0: 18.9 } });
+  for (let i = 0; i < 3; i++) {
+    const t0 = 13.8 + i * 1.5, u = spr(t - t0, 10, .6), x = (i - 1) * 580, y = -20;
+    T(els["q" + i], { x, y, s: lerp(.4, 1.85, cl(u)), a: (t >= t0 ? 1 : 0) * (1 - out), b: (1 - cl(u)) * 6 });
+    T(els["ql" + i], { x, y: y + 125, a: E.out3(P(t, t0 + .25, t0 + .7)) * (1 - out) });
+  }
+  // pulso do chip "ao vivo"
+  const pulse = 1 + .06 * Math.sin(t * 6); if (t > 14.3) els.q0.style.boxShadow = `0 0 ${20 + 14 * Math.sin(t * 6)}px rgba(61,217,160,.45)`;
+  T(els.capC, { x: 0, y: 300, a: E.out3(P(t, 17.4, 18.1)) * (1 - out) });
+}
+function sceneD(t) {
+  const on = t > 19.2 && t < 33.4;
+  if (!on) { ["hD", "hud", "ctx", "eta"].forEach(k => T(els[k], { a: 0 })); return; }
+  const out = E.in3(P(t, 31.8, 32.6));
+  T(els.hD, { x: 0, y: -400, a: 1 }); kin(els.hD, t, 19.5, { out: { t0: 21.5 } });
+  const age = Math.floor(((t - 20.6) % 4) / 4 * 15); $("hudAge").textContent = "há " + Math.max(1, age) + " s";
+  T(els.hud, { x: -170, y: -460, a: E.out3(P(t, 21.4, 22.0)) * (1 - out) });
+  T(els.ctx, { x: 0, y: -330, a: E.out3(P(t, 21.6, 22.3)) * (1 - out), s: .94 + .06 * E.out3(P(t, 21.6, 22.3)) });
+  const mins = Math.max(1, 6 - Math.floor(P(t, 22, 31) * 5.5)); $("etaN").textContent = mins;
+  T(els.eta, { x: 0, y: 300, a: E.out3(P(t, 22.6, 23.3)) * (1 - out) });
+}
+function sceneE(t) {
+  const on = t > 32.4 && t < 36.6;
+  if (!on) { ["hE", "fav", "capE"].forEach(k => T(els[k], { a: 0 })); return; }
+  const out = E.in3(P(t, 35.8, 36.5));
+  T(els.hE, { x: 0, y: -380, a: 1 }); kin(els.hE, t, 32.7, { out: { t0: 35.7 } });
+  const fu = spr(t - 33.0, 10, .6); T(els.fav, { x: 0, y: -10, s: lerp(.6, 1, cl(fu)), a: (t >= 33.0 ? 1 : 0) * (1 - out) });
+  const sf = E.out3(P(t, 33.6, 34.0)); const sp = $("starP"); sp.setAttribute("fill", sf > .5 ? "#FFC53D" : "none");
+  const bump = 1 + .35 * Math.exp(-9 * Math.max(0, t - 33.7)) * Math.cos(26 * Math.max(0, t - 33.7)) * (t > 33.7 ? 1 : 0); $("favStar").style.transform = `scale(${bump.toFixed(3)})`;
+  if (t > 33.65 && !els.fav._b) { els.fav._b = 1; }
+  T(els.capE, { x: 0, y: 260, a: E.out3(P(t, 34.4, 35.0)) * (1 - out) });
+}
+B(33.7, 0, -10, 40, { v0: 80, v1: 420 }); R(33.7, -150, -10, 150, .8, 6, .8);
+function sceneF(t) {
+  const arr = E.out3(P(t, 36.5, 37.7)), pop = t >= 37.7 ? spr(t - 37.7, 12, .5) : 0, up = E.io2(P(t, 38.6, 39.4));
+  const shake = t > 36.5 && t < 37.7 ? (1 - arr) * 5 * Math.sin(t * 70) : 0;
+  const base = lerp(.04, 1, arr) * (1 + .06 * (pop - 1) * (t >= 37.7 ? 1 : 0));
+  if (t >= 36.5) T(els.logo, { x: shake, y: lerp(lerp(-70, -20, arr), -185, up) + shake * .5, s: base * lerp(1, .52, up), a: P(t, 36.5, 36.8), b: (1 - arr) * 5 });
+  T(els.tag1, { x: 0, y: 70, a: t > 39.5 ? 1 : 0 }); kin(els.tag1, t, 39.55, { st: .03 });
+  T(els.tag2, { x: 0, y: 175, a: t > 39.85 ? 1 : 0 }); kin(els.tag2, t, 39.9, { st: .03 });
+  T(els.tag3, { x: 0, y: 290, a: E.out3(P(t, 40.6, 41.2)) });
+}
+function camera(t) { return { s: 1 + .01 * Math.sin(t * .5) + pun(t, 2.62, .04, 6, 17) + pun(t, 37.75, .03, 6, 17), x: 6 * Math.sin(t * .37), y: 5 * Math.cos(t * .29) }; }
+function render(t) {
+  t = cl(t, 0, DURATION);
+  const cam = camera(t);
+  cam$.style.transform = `translate(${cam.x.toFixed(2)}px,${cam.y.toFixed(2)}px) scale(${cam.s.toFixed(4)})`;
+  drawMap(t); drawMain(t);
+  sceneA(t); sceneB(t); sceneC(t); sceneD(t); sceneE(t); sceneF(t);
+  drawFX(t);
+  $("fade").style.opacity = Math.min(1, E.in2(P(t, 41.2, 42)) + (1 - E.out3(P(t, 0, .3)))).toFixed(3);
+}
+window.render = render; window.DURATION = DURATION;
+
+window.ready = Promise.all([document.fonts.load('700 40px "BG Geist"'), document.fonts.load('600 20px "BG Geist"'), document.fonts.load('500 20px "BG Geist"'), document.fonts.load('500 20px "BG Mono"'), document.fonts.load('700 20px "BG Mono"'), new Promise(r => { const i = document.querySelector("#logo img"); if (i.complete) r(); else { i.onload = i.onerror = r; } })]).then(() => document.fonts.ready).then(() => { window.READY = true; });
+const q = new URLSearchParams(location.search), isRender = q.has("render");
+if (isRender) document.body.classList.add("render");
+const stage$ = $("stage");
+function fit() { if (isRender) { stage$.style.transform = "none"; return; } const s = Math.min(innerWidth / W, innerHeight / H); stage$.style.transform = `translate(${(innerWidth - W * s) / 2}px,${(innerHeight - H * s) / 2}px) scale(${s})`; }
+addEventListener("resize", fit); fit();
+if (!isRender) window.ready.then(() => {
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let t = q.has("t") ? +q.get("t") : 0, playing = !reduce && !q.has("t"), last = performance.now();
+  if (reduce && !q.has("t")) t = DURATION - 1.8;
+  const sc = $("sc"), tc = $("tc"), pp = $("pp"); sc.max = DURATION;
+  function frame(now) { const dt = (now - last) / 1000; last = now; if (playing) { t += dt; if (t >= DURATION) t = 0; } render(t); sc.value = t; tc.textContent = t.toFixed(2) + " / " + DURATION.toFixed(2); pp.textContent = playing ? "Pausar" : "Reproduzir"; requestAnimationFrame(frame); }
+  pp.onclick = () => { playing = !playing; }; sc.oninput = () => { t = +sc.value; };
+  addEventListener("keydown", e => { if (e.code === "Space") { playing = !playing; e.preventDefault(); } if (e.code === "ArrowRight") t = Math.min(DURATION, t + 1); if (e.code === "ArrowLeft") t = Math.max(0, t - 1); });
+  requestAnimationFrame(frame);
+});
+</script>
+</body>
+</html>

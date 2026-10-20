@@ -3988,6 +3988,129 @@
         "language"
       ]
     }
+  },
+  "busaogyn": {
+    "dir": "busaogyn",
+    "slots": {
+      "search": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ]
+        }
+      },
+      "arrivals": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ]
+        }
+      },
+      "arrivals-list": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ]
+        }
+      },
+      "tracking": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ]
+        }
+      },
+      "night-tracking": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ]
+        }
+      },
+      "favorites": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ]
+        }
+      },
+      "lines": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ]
+        }
+      },
+      "settings": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ]
+        }
+      },
+      "night-arrivals": {
+        "locales": [
+          "pt-BR"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1597
+          ]
+        }
+      }
+    },
+    "blocks": {
+      "j1": [
+        "search",
+        "arrivals",
+        "arrivals-list"
+      ],
+      "j2": [
+        "tracking",
+        "night-tracking"
+      ],
+      "j3": [
+        "favorites",
+        "lines"
+      ],
+      "j4": [
+        "settings",
+        "night-arrivals"
+      ]
+    }
   }
 };
 
