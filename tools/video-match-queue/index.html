@@ -185,8 +185,9 @@ O.ring2=D('',O.g,null,'width:100px;height:100px;border-radius:50%;border:1px sol
 O.sparks=[...Array(14)].map(()=>D('',O.g,null,'width:16px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#c9ffdf)'));
 O.ends=[0,1].map(()=>D('',O.g,null,'width:8px;height:8px;border-radius:50%;background:#eafff2;box-shadow:0 0 14px 4px rgba(57,226,125,.75)'));
 O.wm=mkWord(O.g,92);
+O.badge=D('',O.g,'<img src="brand/mq_icon.png" style="width:118px;height:117px;display:block;border-radius:26px;box-shadow:0 0 44px rgba(57,226,125,.38)">','width:118px;height:117px');
 O.tag=D('',O.g,'One at a time in the queue.','width:720px;text-align:center;font-size:15px;font-weight:500;color:var(--dim);letter-spacing:.01em');
-const OCY=338;
+const OCY=372;
 function sceneO(t){const s=t;const on=s<3.45;vis(O.g,on);if(!on)return;
  // two streaks searching for each other
  const k=pr(s,.05,1.05),ke=E.io3(k);
@@ -211,6 +212,7 @@ function sceneO(t){const s=t;const on=s<3.45;vis(O.g,on);if(!on)return;
  wordPut(O.wm,OCY,{bar:barK,up:pr(s,1.22,1.85),dn:pr(s,1.32,1.95),dots:[pr(s,1.95,2.25),pr(s,2.05,2.35),pr(s,2.15,2.45)],o:1-ex,blur:ex*6,barO:1-.55*pr(s,1.9,2.4)});
  const bw=(O.wm.W+92*.6)*E.o4(barK);[0,1].forEach(i=>put(O.ends[i],{x:360+(i?1:-1)*bw/2-4,y:OCY-4,o:(s>1.05?1:0)*(1-pr(s,1.5,1.75))}));
  O.wm.dots.forEach((d,i)=>{if(s>2.5){const ph=((s-2.5)*1.6-i*.18)%1;d.style.opacity=((.45+.55*Math.max(0,Math.sin(ph*Math.PI)))*(1-ex)).toFixed(2)}});
+ put(O.badge,{x:301,y:118+(1-E.o5(pr(s,1.7,2.3)))*14,s:.86+.14*E.o4(pr(s,1.7,2.4)),o:E.o3(pr(s,1.7,2.3))*(1-ex),blur:ex*6});
  put(O.tag,{x:0,y:OCY+150+(1-E.o5(pr(s,2.3,2.8)))*12,o:E.o3(pr(s,2.3,2.8))*(1-ex)});
 }
 
@@ -809,7 +811,7 @@ function sceneR(t){const s=t-T0.R;const on=s>-.01&&s<5.2;vis(R.g,on);if(!on)retu
 const F={g:D('L')};
 F.aur=D('',F.g,null,'width:900px;height:520px;border-radius:50%;background:radial-gradient(50% 50% at 50% 50%,rgba(57,226,125,.22),rgba(57,226,125,.06) 45%,transparent 70%)');
 F.sv=S(F.g,720,720);
-const FCY=330,FC=[360,330];
+const FCY=360,FC=[360,330];
 // the profile card's own border unravels first
 F.outline=pathEl(F.sv,'M98 280 L622 280 Q648 280 648 306 L648 574 Q648 600 622 600 L98 600 Q72 600 72 574 L72 306 Q72 280 98 280 Z','#8ef0b5',2);
 // fragments that leave the panel: Champions (red), Rivals (blue), avatar, queue chip, chemistry, skill ring, card
@@ -830,6 +832,7 @@ F.frag=FRAG.map(h=>D('',F.g,h));
 F.flash=D('',F.g,null,'width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(170,255,205,.7),rgba(57,226,125,.2) 30%,transparent 62%)');
 F.ring=D('',F.g,null,'width:120px;height:120px;border-radius:50%;border:1.5px solid #8ef0b5');
 F.wm=mkWord(F.g,112);
+F.badge=D('',F.g,'<img src="brand/mq_icon.png" style="width:128px;height:127px;display:block;border-radius:28px;box-shadow:0 0 52px rgba(57,226,125,.42)">','width:128px;height:127px');
 F.tag=D('',F.g,'One at a time in the queue.','width:720px;text-align:center;font-size:17px;font-weight:500;color:#b9c2bc;letter-spacing:.01em');
 F.black=D('L',F.g,null,'background:#000;z-index:60');
 const FD=47.3;
@@ -843,6 +846,7 @@ function sceneF(t){const s=t-T0.F;const on=s>-.01;vis(F.g,on);if(!on)return;
  put(F.ring,{x:300,y:FCY-60,s:.3+4*E.o4(pr(s,.85,1.8)),o:(1-pr(s,.85,1.8))*(s>.85?1:0)});
  wordPut(F.wm,FCY,{bar:pr(s,.84,1.3),up:pr(s,.98,1.6),dn:pr(s,1.08,1.7),dots:[pr(s,1.75,1.95),pr(s,1.95,2.15),pr(s,2.15,2.35)],o:1,barO:1-.55*pr(s,1.7,2.2)});
  F.wm.dots.forEach((d,i)=>{if(s>2.45){const ph=((s-2.45)*1.1-i*.22)%1;d.style.opacity=(.5+.5*Math.max(0,Math.sin(ph*Math.PI))).toFixed(2)}});
+ put(F.badge,{x:296,y:96+(1-E.o5(pr(s,1.3,1.95)))*14,s:.86+.14*E.o4(pr(s,1.3,2.0)),o:E.o3(pr(s,1.3,1.95))});
  put(F.tag,{x:0,y:FCY+168+(1-E.o5(pr(s,2.1,2.6)))*12,o:E.o3(pr(s,2.1,2.6))});
  put(F.black,{o:pr(s,3.35,3.75)});
 }
@@ -860,5 +864,5 @@ window.render=function(t){bgUpdate(t);sceneO(t);sceneM(t);sceneT(t);sceneDB(t);s
  const rap=DB.car[CAR_SEL];if(t>=T0.Q&&t<T0.K+1){if(rap.parentNode!==Q.g){Q.g.appendChild(rap)}}else if(rap.parentNode!==DB.persp){DB.persp.appendChild(rap)}
 };
 window.READY=false;
-Promise.all([document.fonts.ready,...['cards/RAP.png','cards/RAP_nostats.png','cards/MGR.png','cards/team_logo.png'].map(src=>new Promise(r=>{const i=new Image();i.onload=r;i.onerror=r;i.src=src}))]).then(()=>{window.render(0);window.READY=true});
+Promise.all([document.fonts.ready,...['cards/RAP.png','cards/RAP_nostats.png','cards/MGR.png','cards/team_logo.png','brand/mq_icon.png'].map(src=>new Promise(r=>{const i=new Image();i.onload=r;i.onerror=r;i.src=src}))]).then(()=>{window.render(0);window.READY=true});
 </script></body></html>
