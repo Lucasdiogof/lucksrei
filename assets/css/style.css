@@ -1770,7 +1770,7 @@ html[data-theme="light"][data-amb="contact"] .page-hero h1::after{ background: l
 @property --d-a{ syntax: "<angle>"; inherits: false; initial-value: 0deg; }
 
 /* ---------- cabeçalho do grupo: contagem grande + fio dourado que se desenha ---------- */
-.apps-group{ margin-bottom: 64px; }
+.apps-group{ margin-bottom: 64px; scroll-margin-top: 96px; }
 .d-head{ position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 20px; max-width: none; padding-bottom: 18px; margin-bottom: 26px; }
 .d-head > :not(.d-count):not(.d-line){ grid-column: 2; }
 .d-count{
