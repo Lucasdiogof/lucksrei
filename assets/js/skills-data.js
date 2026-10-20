@@ -82,7 +82,7 @@
 { id: "sqlite", name: "SQLite", exp: [], projects: ["la-pelve", "iza"], related: ["offline-first", "sql", "postgresql"] },
 { id: "postgresql", name: "PostgreSQL", exp: [], projects: OWN, related: ["supabase", "sql"] },
 { id: "firebase", name: "Firebase", ext: "png", exp: ["iza"], projects: ["iza", "match-queue", "orbijob", "bebometro", "stockport", "tabela-fone", "fan-hub", "aprovaura", "la-pelve"], related: ["flutter", "crashlytics", "remote-config", "firebase-messaging"] },
-{ id: "firebase-auth", name: "Firebase Authentication", text: true, exp: [], projects: ["vai", "gpol"], related: ["firebase", "jwt", "flutter"] },
+{ id: "firebase-auth", name: "Firebase Auth", text: true, exp: [], projects: ["vai", "gpol"], related: ["firebase", "jwt", "flutter"] },
 { id: "fastlane", name: "Fastlane", exp: ["agrosmart"], projects: COOPER_AGRO, related: ["github-actions", "codemagic"] },
 { id: "codemagic", name: "Codemagic", exp: ["cooper-tec"], projects: ["cooper-pay"], related: ["flavors", "fastlane"] },
 { id: "github-actions", name: "GitHub Actions", exp: ["agrosmart"], projects: COOPER_AGRO, related: ["fastlane", "github"] },

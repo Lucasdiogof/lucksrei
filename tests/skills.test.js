@@ -24,11 +24,18 @@ TEXT_ONLY.forEach(function (id) {
 var TEXT_POSITIONS = D.ORDER.map(function (s, i) { return s.text ? i : -1; }).filter(function (i) { return i >= 0; });
 check(TEXT_POSITIONS.every(function (pos, i) { return i === 0 || pos - TEXT_POSITIONS[i - 1] >= 4; }),
   "skills sem ícone devem ficar distribuídas na grade, sem blocos agrupados");
+check(D.ORDER.find(function (s) { return s.id === "firebase-auth"; }).name === "Firebase Auth",
+  "rótulo de Firebase Auth deve permanecer abreviado");
 check(D.ORDER.find(function (s) { return s.id === "firebase-rtdb"; }).name === "Firebase Realtime",
   "rótulo de Firebase Realtime deve permanecer abreviado");
 check(D.ORDER.findIndex(function (s) { return s.id === "flavors"; }) > 50 &&
   D.ORDER.findIndex(function (s) { return s.id === "modular-packages"; }) > 30,
   "Flutter Flavors e Modular Packages devem ficar mais abaixo na grade");
+// O destaque de cards sem logo deve ser tipográfico, sem borda temática ou hover especial.
+var STYLE = read("assets/css/style.css");
+check(!/\.skill\.is-text\s*\{[^}]*border/.test(STYLE), "cards só-texto não devem ter borda especial");
+check(!/\.skill\.is-text:hover\s+\.skill-name/.test(STYLE), "cards só-texto sem destaque dourado exclusivo");
+check(/\.skill\.is-text\s+\.skill-name\s*\{[^}]*font-size:\s*13\.5px/.test(STYLE), "fonte dos cards só-texto deve seguir o padrão Flutter Flavors");
 var ids = {};
 D.ORDER.forEach(function (s) {
   check(!ids[s.id], "id duplicado: " + s.id); ids[s.id] = s;
