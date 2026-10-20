@@ -11,15 +11,16 @@ var failures = [];
 function check(ok, msg) { if (!ok) failures.push(msg); }
 function count(g) { return d.apps.filter(function (a) { return a.group === g; }).length; }
 
-check(d.apps.length === 36, "total deve ser 36, é " + d.apps.length);
+check(d.apps.length === 37, "total deve ser 37, é " + d.apps.length);
 check(count("own") === 7, "own deve ser 7, é " + count("own"));
+check(count("systems") === 1, "systems deve ser 1, é " + count("systems"));
 check(count("professional") === 9, "professional deve ser 9, é " + count("professional"));
 check(count("cooper") === 20, "cooper deve ser 20, é " + count("cooper"));
 var ids = {};
 d.apps.forEach(function (a) {
   check(!ids[a.id], "id duplicado: " + a.id);
   ids[a.id] = 1;
-  check(["own", "professional", "cooper"].indexOf(a.group) >= 0, "group inválido em " + a.id);
+  check(["own", "systems", "professional", "cooper"].indexOf(a.group) >= 0, "group inválido em " + a.id);
   if (a.logo) check(fs.existsSync(path.join(root, a.logo)), "logo inexistente: " + a.logo);
   ["androidUrl", "iosUrl"].forEach(function (k) {
     if (a[k]) check(/^https:\/\/(play\.google\.com|apps\.apple\.com)\//.test(a[k]), k + " suspeita em " + a.id);
@@ -34,11 +35,11 @@ d.apps.forEach(function (a) {
   });
 });
 
-// logos publicadas: 36 WebP, todas referenciadas, nenhuma via /src/
+// logos publicadas: 37 WebP, todas referenciadas, nenhuma via /src/
 var published = fs.readdirSync(path.join(root, "assets/img/apps")).filter(function (n) { return /\.webp$/.test(n); });
-check(published.length === 36, "logos publicadas devem ser 36, são " + published.length);
+check(published.length === 37, "logos publicadas devem ser 37, são " + published.length);
 var referenced = d.apps.filter(function (a) { return a.logo; }).map(function (a) { return path.basename(a.logo); });
-check(referenced.length === 36, "apps com logo devem ser 36, são " + referenced.length);
+check(referenced.length === 37, "apps com logo devem ser 37, são " + referenced.length);
 published.forEach(function (n) { check(referenced.indexOf(n) >= 0, "logo publicada sem app: " + n); });
 d.apps.forEach(function (a) {
   if (a.logo && a.group === "cooper") check(path.basename(a.logo, ".webp") === a.id, "logo/id divergem em " + a.id);
@@ -64,7 +65,8 @@ check(d.apps.filter(function (a) { return a.id === "la-pelve"; })[0].webUrl === 
 var home = fs.readFileSync(path.join(root, "index.html"), "utf8");
 var m = home.match(/id="apps-more"[^>]*>\+(\d+)</);
 var shownCount = d.featured.filter(function (id) { return ids[id]; }).length;
-check(m && Number(m[1]) === d.apps.length - shownCount, "contador estático da home não bate com o dataset");
+check(d.featured.every(function (id) { return d.apps.filter(function (a) { return a.id === id; })[0].group !== "systems"; }), "Systems não pode estar em featured (home)");
+check(m && Number(m[1]) === d.apps.length - count("systems") - shownCount, "contador estático da home não bate com o dataset");
 // nenhuma menção residual no site
 function walk(dir, out) {
   fs.readdirSync(dir).forEach(function (n) {
@@ -80,4 +82,4 @@ walk(root, []).forEach(function (f) {
 });
 
 if (failures.length) { console.error("FALHOU:\n - " + failures.join("\n - ")); process.exit(1); }
-console.log("ok — " + d.apps.length + " apps (own " + count("own") + ", professional " + count("professional") + ", cooper " + count("cooper") + ")");
+console.log("ok — " + d.apps.length + " apps (own " + count("own") + ", systems " + count("systems") + ", professional " + count("professional") + ", cooper " + count("cooper") + ")");

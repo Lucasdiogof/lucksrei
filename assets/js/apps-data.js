@@ -7,7 +7,7 @@
  *   name        nome exibido
  *   subtitle    contexto/empresa. String (nome próprio) ou { en, 'pt-BR', es }
  *   subtitleKey chave i18n alternativa ao subtitle (ex.: 'apps.ecosystem')
- *   group       'own' (meus produtos) | 'professional' | 'cooper'
+ *   group       'own' (meus produtos) | 'systems' (Lucksrei Systems; fora da home) | 'professional' | 'cooper'
  *   sector      id do setor (fintech, insurtech, agtech, govtech, retailtech, mobility, jobs, management, education, health, sports, games, banking) → apps.sector.<id>
  *   logo        caminho do logo; null = placeholder com iniciais.
  *               Para trocar o fallback: salve o arquivo em assets/img/apps/<id>.webp
@@ -27,7 +27,7 @@
  * Nenhum número de downloads/avaliação foi confirmado até aqui: tudo null.
  *
  * TOTAIS ESPERADOS (conferidos por tests/apps-data.test.js e no console da página):
- *   own 6 + professional 9 + cooper 20 = 35.
+ *   own 7 + systems 1 + professional 9 + cooper 20 = 37.
  */
 (function () {
   "use strict";
@@ -42,10 +42,10 @@
   }
 
   window.LUCKSREI_APPS = {
-    expected: { own: 6, professional: 9, cooper: 20, total: 35 },
+    expected: { own: 7, systems: 1, professional: 9, cooper: 20, total: 37 },
     featured: ['fan-hub', 'toro', 'iza', 'aprovaura', 'cooper-pay'],
     // textos dos grupos: apps.filter.<id>, apps.group.<id>.title|intro (assets/i18n)
-    groups: [{ id: 'own' }, { id: 'professional' }, { id: 'cooper' }],
+    groups: [{ id: 'own' }, { id: 'systems' }, { id: 'professional' }, { id: 'cooper' }],
 
     apps: [
       /* ---- meus produtos ---- */
@@ -70,6 +70,11 @@
       { id: 'bebometro', name: 'Bebômetro', subtitle: { en: 'Track nights out, drinks, expenses and split the bill with friends', 'pt-BR': 'Registre seus rolês, bebidas, gastos e divida a conta com a galera', es: 'Registra tus salidas, bebidas y gastos, y divide la cuenta con amigos' }, group: 'own', sector: 'lifestyle',
         logo: '/assets/img/apps/bebometro.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null, webUrl: 'https://bebometro.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, period: '2026-10/present', technologies: ['Flutter', 'Supabase', 'Cloudflare Workers'], caseUrl: '/projects/bebometro/' },
+
+      /* ---- Lucksrei Systems: sistemas genéricos para pequenos negócios. Novo sistema = mais um registro group 'systems' (+ logo em assets/img/apps/<id>.webp). Não entram na home. ---- */
+      { id: 'stockport', name: 'StockPort System', subtitle: { en: 'Inventory, sales, cash register and reporting for small businesses', 'pt-BR': 'Gestão de estoque, vendas, caixa e relatórios para pequenos negócios', es: 'Gestión de inventario, ventas, caja e informes para pequeños negocios' }, group: 'systems', sector: 'retailtech',
+        logo: '/assets/img/apps/stockport.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null,
+        downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'PostgreSQL', 'RLS'] },
 
       /* ---- profissionais (do mais recente para o mais antigo, pelo fim do período) ---- */
       { id: 'tabela-fone', name: 'Tabela Fone', subtitle: { en: 'Price intelligence for used phone retailers', 'pt-BR': 'Inteligência de preços para lojistas de celulares usados', es: 'Inteligencia de precios para tiendas de celulares usados' }, group: 'professional', sector: 'retailtech',

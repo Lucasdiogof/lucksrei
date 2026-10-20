@@ -20,5 +20,5 @@
     img.decoding = "async";
     stack.appendChild(img);
   });
-  more.textContent = "+" + (data.apps.length - shown.length);
+  more.textContent = "+" + (data.apps.filter(function (a) { return a.group !== "systems"; }).length - shown.length); // Systems fica fora da home
 })();
