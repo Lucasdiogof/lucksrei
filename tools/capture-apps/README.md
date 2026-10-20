@@ -1,4 +1,4 @@
-# Capturas dos apps para as páginas de case (Bebômetro e OrbiJob)
+# Capturas dos apps para as páginas de case (Bebômetro, OrbiJob e BusãoGyn)
 
 As telas de `assets/img/bebometro/screens/` e `assets/img/orbijob/screens/` (pt-BR, en, es) são do app real, com dados fictícios
 (pessoa inventada, e-mails example.com) e nenhum dado pessoal. Nada disso é commitado nos repositórios dos apps.
@@ -20,3 +20,14 @@ O app exige conta e sincroniza com o Supabase; para a captura ele roda só local
    (Chromium 390×844 @2x; os toques usam a árvore de semântica do Flutter e os rótulos vêm do ARB do app).
 5. Converter como no OrbiJob para `assets/img/bebometro/screens/`.
 Parâmetros de URL da entrada de captura: `lang`, `out=1` (sem sessão), `idle=1` (sem rolê em andamento).
+
+## BusãoGyn (build web real, API real, 3 idiomas)
+O app não pede conta nem tem dado pessoal, então a captura usa o build web normal e a API pública (dados de ônibus ao vivo):
+1. `cd busaogyn/app && flutter build web --release --output <A>` (o idioma vem do `locale` do Chromium: pt-BR, en-US, es-ES).
+2. Servir `<A>` na porta 8781 (`python3 -m http.server 8781 --bind 127.0.0.1`).
+3. `PW_DIR=<pasta com node_modules/playwright-core> BG_REPO=<repo busaogyn> BG_OUT=<saida> node busaogyn/capture.cjs <pt|en|es> [fluxo,fluxo]`
+   — viewport 390×792 @2x; os toques usam a árvore de semântica do Flutter e os rótulos vêm do ARB do app
+   (`app/lib/l10n/app_<idioma>.arb`). Fluxos: `search`, `arrivals` (+ `arrivals-list`), `tracking`, `night` (tema escuro: chegadas e
+   acompanhamento), `favorites` (+ `lines`), `settings`.
+4. `python3 statusbar.py <tela>-<idioma>.png assets/img/busaogyn/screens/<pt-BR|en|es>/<tela>.webp` (acrescenta a barra do iPhone; saída 738×1597).
+Os minutos e os números de ônibus mudam a cada captura, porque vêm da RMTC no momento.
