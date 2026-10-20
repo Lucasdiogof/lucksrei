@@ -11,7 +11,7 @@ var D = require(path.join(root, "assets/js/skills-data.js"));
 var T = require(path.join(root, "assets/js/skills-details.js"));
 var LOCALES = ["en", "pt-BR", "es"];
 
-var EXPECTED = ["flutter","dart","android","ios","clean-architecture","bloc","tdd","automated-testing","dependency-injection","get-it","go-router","freezed","getx","scoped-model","modular-packages","micro-frontends","solid","rest-api","graphql","grpc","signalr","supabase","supabase-realtime","edge-functions","offline-first","sqlite","postgresql","firebase","firebase-auth","firestore","firebase-rtdb","flavors","fastlane","codemagic","github-actions","app-store-connect","google-play-console","in-app-purchases","git","github","rls","cloudflare-workers","crashlytics","remote-config","firebase-messaging","onesignal","whatsapp-api","zendesk","facebook-login","sentry","gemini","ml-kit","deep-links","i18n","gps","google-maps","mapbox","maplibre","web-pwa","pdf","webview","barcode-scanning","biometrics","hive","sembast","provider","jwt","scrum","azure-devops","gitlab","sql","typescript","javascript","java","spring","mysql","mongodb","oracle","db2","objectdb","zk-framework"];
+var EXPECTED = ["flutter","dart","android","ios","clean-architecture","bloc","tdd","automated-testing","dependency-injection","get-it","go-router","freezed","getx","scoped-model","solid","rest-api","graphql","grpc","signalr","supabase","supabase-realtime","edge-functions","offline-first","sqlite","postgresql","firebase","firebase-auth","fastlane","codemagic","github-actions","app-store-connect","google-play-console","in-app-purchases","git","github","rls","modular-packages","cloudflare-workers","crashlytics","remote-config","firebase-messaging","onesignal","firestore","whatsapp-api","zendesk","facebook-login","sentry","firebase-rtdb","gemini","ml-kit","deep-links","i18n","gps","google-maps","mapbox","maplibre","web-pwa","pdf","flavors","webview","barcode-scanning","biometrics","hive","sembast","micro-frontends","jwt","scrum","azure-devops","gitlab","sql","provider","typescript","javascript","java","spring","mongodb","mysql","db2","objectdb","zk-framework","oracle"];
 check(JSON.stringify(D.ORDER.map(function (s) { return s.id; })) === JSON.stringify(EXPECTED), "ordem da grade diferente da esperada (por importância)");
 
 // Conceitos e produtos sem logotipo distinto confiável devem usar a apresentação sem imagem.
@@ -20,6 +20,15 @@ TEXT_ONLY.forEach(function (id) {
   var s = D.ORDER.find(function (item) { return item.id === id; });
   check(s && s.text === true, id + ": deve ser apresentado apenas com texto");
 });
+// Cards somente com texto devem permanecer distribuídos entre as tecnologias com logos.
+var TEXT_POSITIONS = D.ORDER.map(function (s, i) { return s.text ? i : -1; }).filter(function (i) { return i >= 0; });
+check(TEXT_POSITIONS.every(function (pos, i) { return i === 0 || pos - TEXT_POSITIONS[i - 1] >= 4; }),
+  "skills sem ícone devem ficar distribuídas na grade, sem blocos agrupados");
+check(D.ORDER.find(function (s) { return s.id === "firebase-rtdb"; }).name === "Firebase Realtime",
+  "rótulo de Firebase Realtime deve permanecer abreviado");
+check(D.ORDER.findIndex(function (s) { return s.id === "flavors"; }) > 50 &&
+  D.ORDER.findIndex(function (s) { return s.id === "modular-packages"; }) > 30,
+  "Flutter Flavors e Modular Packages devem ficar mais abaixo na grade");
 var ids = {};
 D.ORDER.forEach(function (s) {
   check(!ids[s.id], "id duplicado: " + s.id); ids[s.id] = s;
