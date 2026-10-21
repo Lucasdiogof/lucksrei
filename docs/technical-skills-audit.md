@@ -73,7 +73,7 @@ Revisão de **81 competências**, dos **17 aplicativos individuais** com tecnolo
 | 50 | Google ML Kit | 2 | 0 | Repositório + catálogo |  |
 | 51 | Deep Links | 3 | 0 | Repositório + catálogo |  |
 | 52 | i18n | 5 | 0 | Repositório + catálogo |  |
-| 53 | GPS | 5 | 2 | Repositório + catálogo | Não inferir GPS apenas porque o app mostra ônibus num mapa. |
+| 53 | GPS | 4 | 2 | Repositório + catálogo | Não inferir GPS apenas porque o app mostra ônibus num mapa. |
 | 54 | Google Maps & Places | 3 | 1 | Catálogo / carreira | Google Maps / Places não comprova GPS do dispositivo. |
 | 55 | Mapbox | 2 | 1 | Catálogo / carreira |  |
 | 56 | MapLibre | 1 | 0 | Repositório + catálogo |  |
