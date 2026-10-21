@@ -34,7 +34,7 @@ function kf(t, keys, ease = E.io3) {
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 function h(html) { const d = document.createElement("div"); d.innerHTML = html.trim(); return d.firstElementChild; }
-const fmtBRL = (v, dec = 2) => "R$ " + v.toLocaleString("pt-BR", { minimumFractionDigits: dec, maximumFractionDigits: dec });
+const brl = c => DATA.brl(c);   // dinheiro sempre em centavos inteiros (data.js)
 const num = (v, dec = 0) => v.toLocaleString("pt-BR", { minimumFractionDigits: dec, maximumFractionDigits: dec });
 
 /* ───── formato ativo ───── */

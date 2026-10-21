@@ -25,12 +25,13 @@ SP.css(`
 .s9-chips{display:flex;gap:14px}
 `);
 SP.scenes.s09 = (function () {
-  const S = { D: 8.4 };
+  const S = { D: 8.0 };
   let csv, pdf, fCsv, fPdf, br, ph, chips, head, cRows = [];
   S.build = function (root) {
     br = h(`<div class="blk s9-br"><div class="bar"><i></i><i></i><i></i><u></u></div></div>`); ph = h(`<div class="blk s9-ph"></div>`);
     root.appendChild(br); root.appendChild(ph);
-    const R = [["21/10/2026", "#1048", "Mariana Souza", "Pix + Dinheiro", "70,00"], ["21/10/2026", "#1047", "—", "Dinheiro", "37,80"], ["21/10/2026", "#1046", "Carlos Mendes", "Débito", "112,40"], ["20/10/2026", "#1045", "—", "Pix", "18,90"], ["20/10/2026", "#1044", "Lúcia Prado", "Crédito", "64,30"], ["20/10/2026", "#1043", "—", "Dinheiro", "9,80"], ["20/10/2026", "#1042", "Mariana Souza", "Pix", "42,50"]];
+    const n = c => brl(c).slice(3);   // CSV: decimal com vírgula, sem "R$"
+    const R = [["21/10/2026", "#" + DATA.SALE.n, DATA.SALE.customer, "Pix + Dinheiro", n(DATA.SALE.total)], ["21/10/2026", "#1047", "—", "Dinheiro", n(DATA.CASH.cashSales[1])], ["21/10/2026", "#1046", "Carlos Mendes", "Débito", n(DATA.P.sabao.price)], ["20/10/2026", "#1045", "—", "Pix", "18,90"], ["20/10/2026", "#1044", "Lúcia Prado", "Crédito", "64,30"], ["20/10/2026", "#1043", "—", "Dinheiro", "9,80"], ["20/10/2026", "#1042", "Mariana Souza", "Pix", "42,50"]];
     csv = h(`<div class="blk s9-csv"><table><tr><th class="rn"></th><th>Data</th><th>Venda</th><th>Cliente</th><th>Pagamento</th><th>Total (R$)</th></tr>${R.map((r, i) => `<tr><td class="rn">${i + 2}</td><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td class="n">${r[4]}</td></tr>`).join("")}</table></div>`);
     pdf = h(`<div class="blk s9-pdf"><div class="hd">${KIT.markLight(30)}StockPort System</div><div class="rule"></div><h2>Recibo · Venda #1048</h2><p>21/10/2026 · Mariana Souza</p>
       ${["Café Torrado 500 g · 2 × R$ 18,90", "Água Mineral 1,5 L · 6 × R$ 3,50", "Caderno 96 folhas · 1 × R$ 14,90"].map(x => `<div style="display:flex;justify-content:space-between;margin-top:18px;font:400 15px 'SP Roboto';color:#334155"><span>${x.split(" · ")[0]}</span><span>${x.split(" · ")[1]}</span></div>`).join("")}
@@ -53,7 +54,7 @@ SP.scenes.s09 = (function () {
     tall: { c0: [540, 960], csv: [540, 740, .9], pdf: [540, 1300, .9], br: [540, 720, .9], ph: [540, 1340, .82], fc: [540, 1010], fp: [540, 1625], ch: [540, 1770], head: [540, 300] },
   });
   S.render = function (t) {
-    const L = LY(), out = E.in3(P(t, 7.6, 8.4));
+    const L = LY(), out = E.in3(P(t, 7.2, 8.0));
     // divisão: começam juntos no centro e se separam
     const sp = E.io5(P(t, .6, 1.8)), ia = E.out3(P(t, .4, 1.1));
     const frame = E.io5(P(t, 3.6, 4.8));   // entram as molduras
@@ -68,7 +69,7 @@ SP.scenes.s09 = (function () {
     put(ph, { x: L.ph[0], y: L.ph[1], s: L.ph[2] * lerp(1.08, 1, frame), o: frame * (1 - out) });
     const ca = E.out4(P(t, 4.6, 5.4)); put(chips, { x: L.ch[0], y: L.ch[1] + (1 - ca) * 16, s: FN === "wide" ? 1 : 1.05, o: ca * (1 - out) });
     put(head, { x: L.head[0], y: L.head[1] });
-    hlAt(head, t, .5, 7.5);
+    hlAt(head, t, .5, 7.1);
   };
   return S;
 })();

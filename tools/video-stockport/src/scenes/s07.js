@@ -36,9 +36,9 @@ SP.css(`
 .s7-pdf .ft{position:absolute;left:50px;right:50px;bottom:30px;display:flex;justify-content:space-between;font:400 13px 'SP Roboto';color:#94A3B8}
 `);
 SP.scenes.s07 = (function () {
-  const S = { D: 13.6 };
+  const S = { D: 14.0 };
   let board, cards = {}, bars = [], line, donut = [], pdf, pdfParts = [], head, kpiV = {}, rule;
-  const DAYS = [820, 940, 760, 1110, 1260, 980, 1040, 1180, 870, 1320, 1150, 990, 1210, 1284.6];
+  const DAYS = DATA.DAYS14, TD = DATA.TODAY, MO = DATA.MONTH;   // centavos
   // layout do painel (px dentro do board)
   const C = {
     vendas: [30, 30, 380, 170], fat: [430, 30, 380, 170], lucro: [830, 30, 380, 170], baixo: [1230, 30, 380, 170],
@@ -48,64 +48,67 @@ SP.scenes.s07 = (function () {
   S.build = function (root) {
     board = h(`<div class="blk p3 s7-board"></div>`); root.appendChild(board);
     const card = (k, html, cls = "") => { const [x, y, w, hh] = C[k]; const e = h(`<div class="s7-c ${cls}" style="width:${w}px;height:${hh}px">${html}</div>`); e._x = x; e._y = y; board.appendChild(e); cards[k] = e; return e; };
-    card("vendas", `<h6>${KIT.ico("receipt", 18, "#64748B")}Vendas hoje</h6><div class="v">23</div><div class="n"><b>+4</b> em relação a ontem</div>`);
-    card("fat", `<h6>${KIT.ico("trend", 18, "#64748B")}Faturamento hoje</h6><div class="v">R$ 1.284,60</div><div class="n"><b>+8%</b> na semana</div>`);
-    card("lucro", `<h6>${KIT.ico("bars", 18, "#64748B")}Lucro hoje · estimado</h6><div class="v">R$ 412,30</div><div class="n">${KIT.ico("lock", 15, "#64748B")}perfis com acesso a custos</div>`);
-    card("baixo", `<h6>${KIT.ico("alert", 18, "#B45309")}Estoque baixo</h6><div class="v">3</div><div class="n">produtos abaixo do mínimo</div>`, "am");
-    const bw = 44, gap = (900 - DAYS.length * bw) / (DAYS.length - 1), mx = 1400;
+    card("vendas", `<h6>${KIT.ico("receipt", 18, "#64748B")}Vendas hoje</h6><div class="v">${TD.sales}</div><div class="n">ticket médio <b style="color:#0F172A">${brl(TD.ticket)}</b></div>`);
+    card("fat", `<h6>${KIT.ico("trend", 18, "#64748B")}Faturamento hoje</h6><div class="v">${brl(TD.revenue)}</div><div class="n">${KIT.ico("receipt", 15, "#64748B")}${TD.sales} vendas registradas</div>`);
+    card("lucro", `<h6>${KIT.ico("bars", 18, "#64748B")}Lucro hoje · estimado</h6><div class="v">${brl(TD.profit)}</div><div class="n">${KIT.ico("lock", 15, "#64748B")}perfis com acesso a custos</div>`);
+    card("baixo", `<h6>${KIT.ico("alert", 18, "#B45309")}Estoque baixo</h6><div class="v">${DATA.LOW.length}</div><div class="n">produtos abaixo do mínimo</div>`, "am");
+    const bw = 44, gap = (900 - DAYS.length * bw) / (DAYS.length - 1), mx = 140000;
     const pts = DAYS.map((v, i) => [10 + i * (bw + gap) + bw / 2, 270 - v / mx * 250]);
     card("chart", `<h5>Faturamento por dia</h5><div class="sbt">Últimos 14 dias</div><svg width="930" height="290" viewBox="0 0 930 290" style="margin-top:18px">
       ${[0, 1, 2, 3].map(i => `<line x1="0" x2="930" y1="${20 + i * 83}" y2="${20 + i * 83}" stroke="#EEF2F7" stroke-width="1.5"/>`).join("")}
       ${DAYS.map((v, i) => `<rect class="br" x="${10 + i * (bw + gap)}" y="${270 - v / mx * 250}" width="${bw}" height="${v / mx * 250}" rx="8" fill="${i === DAYS.length - 1 ? "#2563EB" : "#BFDBFE"}"/>`).join("")}
       <path class="ln" d="${pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + (p[1] - 18).toFixed(1)).join("")}" fill="none" stroke="#0A3D91" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1"/>
       <line x1="0" x2="930" y1="271" y2="271" stroke="#CBD5E1" stroke-width="2"/></svg>`);
-    const PAY = [["Pix", 46, "#2563EB"], ["Dinheiro", 22, "#60A5FA"], ["Débito", 18, "#0A3D91"], ["Crédito", 14, "#93C5FD"]];
+    const COL = { Pix: "#2563EB", Dinheiro: "#60A5FA", "Débito": "#0A3D91", "Crédito": "#93C5FD" }, PAY = Object.keys(TD.pct).map(k => [k, TD.pct[k], COL[k]]);
     let acc = 0;
-    card("pay", `<h5>Por forma de pagamento</h5><div class="sbt">Este mês</div><div style="display:flex;align-items:center;gap:34px;margin-top:26px">
+    card("pay", `<h5>Por forma de pagamento</h5><div class="sbt">Hoje</div><div style="display:flex;align-items:center;gap:34px;margin-top:26px">
       <svg width="240" height="240" viewBox="0 0 240 240" style="transform:rotate(-90deg)">${PAY.map(p => { const s = `<circle class="dn" cx="120" cy="120" r="92" fill="none" stroke="${p[2]}" stroke-width="40" pathLength="100" stroke-dasharray="0 100" data-a="${acc}" data-v="${p[1]}"/>`; acc += p[1]; return s; }).join("")}</svg>
       <div>${PAY.map(p => `<div style="display:flex;align-items:center;gap:12px;height:46px;font:400 19px 'SP Roboto';color:#334155"><i style="width:14px;height:14px;border-radius:4px;background:${p[2]}"></i><span style="width:110px">${p[0]}</span><b style="font-weight:500;color:#0F172A">${p[1]}%</b></div>`).join("")}</div></div>`);
     card("repor", `<h5>Produtos para repor</h5><div style="margin-top:10px">
-      <div class="s7-li">${KIT.ico("alert", 20, "#B45309")}<span class="x"><b>Sabão em Pó 1 kg</b></span>6 / mín. 10</div>
-      <div class="s7-li">${KIT.ico("alert", 20, "#B45309")}<span class="x"><b>Biscoito Água e Sal</b></span>4 / mín. 12</div>
-      <div class="s7-li">${KIT.ico("alert", 20, "#B45309")}<span class="x"><b>Detergente 500 ml</b></span>7 / mín. 15</div></div>`);
+      ${DATA.LOW.map(l => `<div class="s7-li">${KIT.ico("alert", 20, "#B45309")}<span class="x"><b>${l.name}</b></span>${l.q} / mín. ${l.min}</div>`).join("")}</div>`);
     card("top", `<h5>Produtos mais vendidos</h5><div style="margin-top:10px">
       <div class="s7-li"><span class="x"><b>Café Torrado 500 g</b></span><div class="bar"><i style="width:100%"></i></div></div>
       <div class="s7-li"><span class="x"><b>Água Mineral 1,5 L</b></span><div class="bar"><i style="width:82%"></i></div></div>
       <div class="s7-li"><span class="x"><b>Caderno 96 folhas</b></span><div class="bar"><i style="width:54%"></i></div></div></div>`);
-    card("gaveta", `<div style="display:flex;gap:30px"><div style="flex:1"><h6>${KIT.ico("cash", 18, "#64748B")}Gaveta do caixa</h6><div class="v" style="font-size:44px">R$ 180,00</div><div class="n"><span class="chip gr" style="height:28px;font-size:14px;background:#DCFCE7;color:#15803D;border-color:#BBF7D0"><i></i>Caixa fechado</span></div></div>
-      <div style="flex:1;border-left:1px solid #EEF2F7;padding-left:28px"><h6>${KIT.ico("package", 18, "#64748B")}Valor do estoque</h6><div class="v" style="font-size:44px">R$ 18.420</div><div class="n">ao custo médio</div></div></div>`);
+    card("gaveta", `<div style="display:flex;gap:30px"><div style="flex:1"><h6>${KIT.ico("cash", 18, "#64748B")}Gaveta do caixa</h6><div class="v" style="font-size:44px">${brl(DATA.CASH.expected)}</div><div class="n"><span class="chip gr" style="height:28px;font-size:14px;background:#DCFCE7;color:#15803D;border-color:#BBF7D0"><i></i>Caixa fechado</span></div></div>
+      <div style="flex:1;border-left:1px solid #EEF2F7;padding-left:28px"><h6>${KIT.ico("package", 18, "#64748B")}Valor do estoque</h6><div class="v" style="font-size:44px">${brl(1842000)}</div><div class="n">ao custo médio</div></div></div>`);
     Object.values(cards).forEach(e => { e.style.transform = `translate3d(${e._x}px,${e._y}px,0)`; });
     bars = $$(".br", board); line = $(".ln", board); donut = $$(".dn", board);
     kpiV = { vendas: $(".v", cards.vendas), fat: $(".v", cards.fat), lucro: $(".v", cards.lucro), baixo: $(".v", cards.baixo) };
     // relatório PDF
-    const mini = KIT.sparkline(536, 140, DAYS, "#2563EB", true, 3);
+    const mini = KIT.sparkline(536, 140, MO.days, "#2563EB", true, 3);
     pdf = h(`<div class="blk s7-pdf"><div class="hd"><!-- variante clara original da marca (fundo branco) -->${KIT.markLight(40)}<b>StockPort System</b><span>Mercado Bom Dia</span></div><div class="rule"></div>
       <h2>Relatório de vendas</h2><div class="per">01/10/2026 a 21/10/2026 · gerado em 21/10 às 18:40</div>
-      <div class="k"><div><span>Vendas</span><b>412</b></div><div><span>Faturamento</span><b>R$ 24.318</b></div><div><span>Lucro est.</span><b>R$ 7.802</b></div><div><span>Margem</span><b>32%</b></div></div>
+      <div class="k"><div><span>Vendas</span><b>${MO.sales}</b></div><div><span>Faturamento</span><b>${brl(MO.revenue)}</b></div><div><span>Lucro est.</span><b>${brl(MO.profit)}</b></div><div><span>Margem</span><b>${MO.margin}%</b></div></div>
       <div class="ch"><div style="font:500 13px 'SP Roboto';color:#64748B;margin-bottom:6px">FATURAMENTO POR DIA</div>${mini}</div>
-      <table><tr><th>Produto</th><th>Qtd.</th><th>Total</th></tr><tr><td>Café Torrado 500 g</td><td>186</td><td>R$ 3.515,40</td></tr><tr><td>Água Mineral 1,5 L</td><td>402</td><td>R$ 1.407,00</td></tr><tr><td>Caderno 96 folhas</td><td>74</td><td>R$ 1.102,60</td></tr></table>
+      <table><tr><th>Produto</th><th>Qtd.</th><th>Total</th></tr>${MO.top.map(r => `<tr><td>${DATA.P[r.p].name}</td><td>${r.q}</td><td>${brl(r.total)}</td></tr>`).join("")}</table>
       <div class="ft"><span>StockPort System</span><span>página 1 de 2</span></div></div>`);
     root.appendChild(pdf); rule = $(".rule", pdf);
     pdfParts = [$(".hd", pdf), rule, $("h2", pdf), $(".per", pdf), $(".k", pdf), $(".ch", pdf), $("table", pdf), $(".ft", pdf)];
-    head = hl(["Transforme", "movimentações", "em decisões."], "", { accent: 2 }); head.style.fontSize = pick({ wide: 92, sq: 64, tall: 80 }) + "px"; head.style.textAlign = pick({ wide: "left", sq: "left", tall: "center" }); root.appendChild(head);
-    if (FN !== "wide") { head.remove(); head = hl(FN === "tall" ? ["Transforme movimentações", "em decisões."] : ["Transforme movimentações", "em decisões."], "", { accent: 1 }); head.style.fontSize = pick({ sq: 56, tall: 62 }) + "px"; head.style.textAlign = "center"; root.appendChild(head); }
+    head = hl(FN === "wide" ? ["Entenda", "seus resultados."] : ["Entenda seus resultados."], "", { accent: FN === "wide" ? 1 : -1 }); head.style.fontSize = pick({ wide: 96, sq: 62, tall: 76 }) + "px"; head.style.textAlign = pick({ wide: "left", sq: "center", tall: "center" }); root.appendChild(head);
   };
+  // câmera = ponto de foco no board (px do board) + escala. 16:9: do faturamento ao painel inteiro.
+  // 9:16 e 1:1: percorre os detalhes (faturamento → gráfico → formas de pagamento) antes de recuar.
+  const F = { fat: [620, 115], chart: [520, 420], pay: [1320, 420], all: [820, 465] };
+  const CAM = () => pick({
+    wide: [[.4, ...F.fat, 2.6], [3.4, ...F.all, .98]],
+    sq: [[.4, ...F.fat, 1.9], [2.8, ...F.chart, 1.02], [4.6, ...F.chart, 1.02], [5.6, ...F.pay, 1.5], [6.8, ...F.pay, 1.5], [7.6, ...F.all, .62]],
+    tall: [[.4, ...F.fat, 1.65], [2.8, ...F.chart, 1.06], [4.6, ...F.chart, 1.06], [5.6, ...F.pay, 1.6], [6.8, ...F.pay, 1.6], [7.6, ...F.all, .62]],
+  });
   const LY = () => pick({
-    wide: { b: [960, 560, .98], pdf: [1340, 545, .98], head: [110, 545] },
-    sq: { b: [540, 560, .6], pdf: [540, 620, .86], head: [540, 105] },
-    tall: { b: [540, 980, .62], pdf: [540, 1130, 1.02], head: [540, 300] },
+    wide: { b: [960, 560], pdf: [1340, 545, .98], head: [110, 545] },
+    sq: { b: [540, 610], pdf: [540, 640, .84], head: [540, 105] },
+    tall: { b: [540, 1120], pdf: [540, 1180, 1.1], head: [540, 330] },
   });
   S.render = function (t) {
-    const L = LY(), out = E.in3(P(t, 12.4, 13.2));
-    // câmera: começa no card de faturamento (perto) e recua
+    const L = LY(), CK = CAM(), out = E.in3(P(t, 12.8, 13.5));
+    const key = j => kf(t, CK.map(k => [k[0], k[j]]), E.io5);
+    const fx = key(1), fy = key(2), s = key(3);
     const pb = E.io5(P(t, .4, 3.4));
-    const fx = C.fat[0] + C.fat[2] / 2 - 820, fy = C.fat[1] + C.fat[3] / 2 - 465;   // centro do card relativo ao centro do board
-    const near = pick({ wide: 2.6, sq: 2.0, tall: 1.8 });
-    const s = lerp(near * L.b[2], L.b[2], pb);
-    const rx = lerp(0, 14, pb) + Math.sin(t * .35) * 1.5, ry = lerp(0, -9, pb) + Math.sin(t * .27) * 2;
-    const reorg = E.io5(P(t, 7.4, 9.0));
-    const bx = L.b[0] - fx * s * (1 - pb), by = L.b[1] - fy * s * (1 - pb);
-    put(board, { x: bx, y: by, s: s * lerp(1, .9, reorg), rx: rx * (1 - reorg), ry: ry * (1 - reorg), z: -reorg * 300, o: E.out2(P(t, .5, 1.3)) * (1 - E.in2(P(t, 8.0, 9.2))), b: (1 - E.out3(P(t, .5, 1.4))) * 12 });
+    const rx = lerp(0, FN === "wide" ? 14 : 6, pb) + Math.sin(t * .35) * 1.5, ry = lerp(0, FN === "wide" ? -9 : -4, pb) + Math.sin(t * .27) * 2;
+    const reorg = E.io5(P(t, 7.8, 9.4));
+    const bx = L.b[0] - (fx - 820) * s, by = L.b[1] - (fy - 465) * s;
+    put(board, { x: bx, y: by, s: s * lerp(1, .9, reorg), rx: rx * (1 - reorg), ry: ry * (1 - reorg), z: -reorg * 300, o: E.out2(P(t, .5, 1.3)) * (1 - E.in2(P(t, 8.0, 8.9))), b: (1 - E.out3(P(t, .5, 1.4))) * 12 });
     // cards sobem do plano em camadas (parallax) e, na reorganização, convergem para o centro do board
     const order = ["fat", "vendas", "lucro", "baixo", "chart", "pay", "repor", "top", "gaveta"];
     order.forEach((k, i) => {
@@ -116,21 +119,17 @@ SP.scenes.s07 = (function () {
       setS(e, "transform", `translate3d(${gx.toFixed(1)}px,${(gy + (1 - a) * 30).toFixed(1)}px,${z.toFixed(1)}px) scale(${lerp(1, .5, reorg).toFixed(4)})`);
       setS(e, "opacity", a.toFixed(3));
     });
-    // números e gráficos vivos
-    setT(kpiV.fat, fmtBRL(lerp(1203.1, 1284.6, E.out3(P(qt(t), .2, 2.6)))));
-    setT(kpiV.vendas, String(Math.round(lerp(18, 23, E.out3(P(qt(t), 1.4, 3.2))))));
-    setT(kpiV.lucro, fmtBRL(lerp(370, 412.3, E.out3(P(qt(t), 1.6, 3.4)))));
+    // gráficos crescem; os números já aparecem com o valor exato
     bars.forEach((b, i) => { const g = E.out4(P(t, 2.0 + i * .06, 2.9 + i * .06)); setS(b, "transform", `scaleY(${g.toFixed(4)})`); b.style.transformOrigin = "50% 100%"; b.style.transformBox = "fill-box"; });
     setS(line, "strokeDashoffset", (1 - E.io3(P(t, 2.8, 4.2))).toFixed(3));
     donut.forEach((d, i) => { const g = E.out3(P(t, 2.4 + i * .15, 3.4 + i * .15)); d.setAttribute("stroke-dasharray", `${(+d.dataset.v * g - .6).toFixed(2)} 100`); d.setAttribute("stroke-dashoffset", (-(+d.dataset.a)).toString()); });
     // relatório
-    const pi = E.out4(P(t, 8.2, 9.4));
-    const px = FN === "wide" ? lerp(960, L.pdf[0], E.io3(P(t, 9.4, 10.4))) : L.pdf[0];
-    put(pdf, { x: px, y: L.pdf[1] + (1 - pi) * 40, s: L.pdf[2] * lerp(.85, 1, pi), rx: (1 - pi) * 18, ry: FN === "wide" ? lerp(0, -8, E.io3(P(t, 9.4, 10.4))) + Math.sin(t * .5) * 1.5 : 0, z: 40, o: pi * (1 - out) });
-    pdfParts.forEach((p, i) => { const a = E.out3(P(t, 8.6 + i * .12, 9.2 + i * .12)); setS(p, "opacity", a.toFixed(3)); if (p === rule) setS(p, "transform", `scaleX(${a.toFixed(3)})`); });
-    // título (no 16:9 à esquerda do relatório; nos outros acima)
+    const pi = E.out4(P(t, 8.6, 9.8));
+    const px = FN === "wide" ? lerp(960, L.pdf[0], E.io3(P(t, 9.8, 10.8))) : L.pdf[0];
+    put(pdf, { x: px, y: L.pdf[1] + (1 - pi) * 40, s: L.pdf[2] * lerp(.85, 1, pi), rx: (1 - pi) * 18, ry: FN === "wide" ? lerp(0, -8, E.io3(P(t, 9.8, 10.8))) + Math.sin(t * .5) * 1.5 : 0, z: 40, o: pi * (1 - out) });
+    pdfParts.forEach((p, i) => { const a = E.out3(P(t, 9.0 + i * .12, 9.6 + i * .12)); setS(p, "opacity", a.toFixed(3)); if (p === rule) setS(p, "transform", `scaleX(${a.toFixed(3)})`); });
     put(head, { x: L.head[0] + (FN === "wide" ? (head._w || head.offsetWidth) / 2 : 0), y: L.head[1] });
-    if (FN === "sq" || FN === "tall") { hlAt(head, t, 9.6, 12.5); } else hlAt(head, t, 9.7, 12.5);
+    hlAt(head, t, FN === "wide" ? 10.0 : 1.4, 12.8);
   };
   return S;
 })();

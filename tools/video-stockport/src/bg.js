@@ -47,8 +47,8 @@ SP.bg = (function () {
     c.globalAlpha = 1;
     // vinheta
     const vg = c.createRadialGradient(W / 2, H / 2, Math.min(W, H) * .35, W / 2, H / 2, Math.hypot(W, H) * .6); vg.addColorStop(0, "rgba(3,8,20,0)"); vg.addColorStop(1, "rgba(3,8,20,.62)"); c.fillStyle = vg; c.fillRect(0, 0, W, H);
-    // ruído (dither)
-    c.save(); c.globalAlpha = .028; c.translate((Math.floor(t * 24) * 37) % 256, (Math.floor(t * 24) * 91) % 256); c.fillStyle = nzp; c.fillRect(-256, -256, W + 512, H + 512); c.restore();
+    // ruído fixo (dither contra banding nos gradientes; parado para não pesar no encode)
+    c.save(); c.globalAlpha = .022; c.fillStyle = nzp; c.fillRect(0, 0, W, H); c.restore();
   }
   return { render };
 })();

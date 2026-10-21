@@ -22,3 +22,13 @@ Quadros de referência de cada cena: `../ref/` (16:9, 1:1 e 9:16). Contact sheet
 
 Versões curtas: o loop 1:1 tira a cena 6 e encurta esperas de cada cena; o vertical tira as cenas 6 e 9. Os títulos
 mantêm velocidade real; aceleram só pausas, entradas e saídas.
+
+## Refinamento comercial
+- Títulos: "Estoque, vendas e caixa. Tudo em um só lugar." · "Cadastre e organize seus produtos." · "Acompanhe entradas,
+  saídas e estoque baixo." · "Registre vendas com mais agilidade." · "Controle cada movimentação do caixa." · "Clientes
+  e fornecedores com todo o histórico." · "Entenda seus resultados." · "Sua equipe, cada um com o acesso certo." ·
+  "Informações onde você precisa." · fecho com "Licença de uso do software".
+- Estoque em quatro tempos: a caixa pousa (entrada) → o saldo troca 62 → 86 → o histórico recebe a linha → o alerta do
+  sabão. No PDV o total só exibe valores exatos; a confirmação mostra o estoque do café 86 → 84.
+- Fronteiras entre cenas: cada cena termina a saída antes de a próxima entrar (sem painéis sobrepostos).
+- Vertical para marketplace e loop 1:1 com câmera aproximada na coluna que importa; cena "gestão" exclusiva do vertical.

@@ -45,61 +45,67 @@ SP.css(`
 .s4-pst{display:flex;justify-content:space-between;margin:16px 4px 0;font:400 19px 'SP Roboto';color:#8EA3C7;font-variant-numeric:tabular-nums}
 .s4-pst b{color:#E5EDFB;font-weight:500}
 .s4-btn{position:absolute;left:28px;right:28px;bottom:28px;height:66px;border-radius:14px;background:linear-gradient(180deg,#3B7BFF,#2563EB);display:flex;align-items:center;justify-content:center;gap:12px;font:500 22px 'SP Roboto';color:#fff;box-shadow:0 12px 30px rgba(37,99,235,.45)}
-.s4-ok{width:620px;height:430px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.s4-ok{width:680px;height:480px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .s4-ok h4{font:700 44px 'SP Roboto';letter-spacing:-.02em;margin-top:26px}
-.s4-ok p{font:400 22px 'SP Roboto';color:#9fb2d3;margin-top:10px;font-variant-numeric:tabular-nums}
+.s4-ok p{font:400 24px 'SP Roboto';color:#B6C4DD;margin-top:12px;font-variant-numeric:tabular-nums}
+.s4-ok p.st{display:flex;align-items:center;gap:10px;font-size:21px;color:#9CC7FF}
 .s4-ok .cs{display:flex;gap:12px;margin-top:26px}
 .s4-tok{width:96px;height:96px;border-radius:20px;background:rgba(37,99,235,.25);border:2px solid #60A5FA;box-shadow:0 0 30px rgba(37,99,235,.6)}
 `);
 SP.scenes.s04 = (function () {
-  const S = { D: 12.6 }; const PR = KIT.PRODUCTS;
-  let pos, tiles = [], lines = [], tok = [], cust, sum, subN, dsRow, totN, pay, prs = [], methods, btn, ok, okRing, head, srch, cnt, paidN, remN;
+  const S = { D: 13.0 }; const PR = KIT.PRODUCTS;
+  let colL, colR, pos, tiles = [], lines = [], tok = [], cust, sum, subN, dsRow, totN, pay, prs = [], methods, btn, ok, okRing, head, srch, cnt, paidN, remN;
   const CART = [{ id: "cafe", q: 2, t0: 1.7 }, { id: "agua", q: 6, t0: 2.9 }, { id: "caderno", q: 1, t0: 4.0 }];
   S.build = function (root) {
     pos = h(`<div class="pn blk s4-pos"><div class="s4-l"><div class="s4-top"><h3>Nova venda</h3><span class="chip gr"><i></i>Caixa aberto</span></div>
       <div class="s4-search">${KIT.ico("scan", 24, "#60A5FA")}<span class="q"></span><span class="cur"></span><span class="ph">Buscar produto ou ler código de barras</span></div>
-      <div class="s4-grid">${["cafe", "agua", "caderno", "sabao"].map(id => `<div class="s4-tile" data-id="${id}"><div class="pr"></div><div class="th"></div><b>${PR[id].name}</b><span>${fmtBRL(PR[id].price)}</span></div>`).join("")}</div>
-      <div class="s4-pay"><h3>Pagamento</h3><div class="rc">Receber <b>R$ 70,00</b></div>
+      <div class="s4-grid">${["cafe", "agua", "caderno", "sabao"].map(id => `<div class="s4-tile" data-id="${id}"><div class="pr"></div><div class="th"></div><b>${PR[id].name}</b><span>${brl(PR[id].price)}</span></div>`).join("")}</div>
+      <div class="s4-pay"><h3>Pagamento</h3><div class="rc">Receber <b>${brl(DATA.SALE.total)}</b></div>
         <div class="s4-meth">${[["cash", "Dinheiro"], ["pix", "Pix"], ["card", "Débito"], ["card", "Crédito"], ["wallet", "Outro"]].map(m => `<div>${KIT.ico(m[0], 26)}${m[1]}</div>`).join("")}</div>
-        <div class="s4-pr">${KIT.ico("pix", 24, "#60A5FA")}Pix<span class="a">R$ 40,00</span></div>
-        <div class="s4-pr">${KIT.ico("cash", 24, "#60A5FA")}Dinheiro<span class="a">R$ 30,00</span></div>
-        <div class="s4-pst"><span>Pago <b class="pd">R$ 0,00</b></span><span>Falta <b class="rm">R$ 70,00</b></span><span>Troco <b>R$ 0,00</b></span></div>
+        <div class="s4-pr">${KIT.ico("pix", 24, "#60A5FA")}Pix<span class="a">${brl(DATA.SALE.pay[0].v)}</span></div>
+        <div class="s4-pr">${KIT.ico("cash", 24, "#60A5FA")}Dinheiro<span class="a">${brl(DATA.SALE.pay[1].v)}</span></div>
+        <div class="s4-pst"><span>Pago <b class="pd">R$ 0,00</b></span><span>Falta <b class="rm">${brl(DATA.SALE.total)}</b></span><span>Troco <b>R$ 0,00</b></span></div>
         <div class="s4-btn">${KIT.ico("check", 26, "#fff", 2.4)}Confirmar venda</div></div></div>
       <div class="s4-r"><div class="s4-top"><h3>Carrinho</h3><span class="chip sl cnt">0 itens</span></div>
         <div class="s4-cust">${KIT.ico("user", 24)}Sem cliente (toque para escolher)<div class="on">${KIT.avatar("MS", "#2563EB", 40)}<div>Mariana Souza<br><span>Cliente · 12 compras</span></div></div></div>
-        <div class="s4-lines">${CART.map(c => `<div class="s4-ln"><div class="nm"><b>${PR[c.id].name}</b><span>${fmtBRL(PR[c.id].price)} / un.</span></div><div class="s4-step"><i>${KIT.ico("minus", 18)}</i><b>1</b><i>${KIT.ico("plus", 18)}</i></div><div class="tt">R$ 0,00</div></div>`).join("")}</div>
-        <div class="s4-sum"><div><span>Subtotal</span><b class="sb">R$ 0,00</b></div><div class="ds"><span>Desconto</span><b>− R$ 3,70</b></div><div class="tot"><span>Total</span><b class="to">R$ 0,00</b></div></div></div></div>`);
+        <div class="s4-lines">${CART.map(c => `<div class="s4-ln"><div class="nm"><b>${PR[c.id].name}</b><span>${brl(PR[c.id].price)} / un.</span></div><div class="s4-step"><i>${KIT.ico("minus", 18)}</i><b>1</b><i>${KIT.ico("plus", 18)}</i></div><div class="tt">R$ 0,00</div></div>`).join("")}</div>
+        <div class="s4-sum"><div><span>Subtotal</span><b class="sb">R$ 0,00</b></div><div class="ds"><span>Desconto</span><b>${brl(-DATA.SALE.discount)}</b></div><div class="tot"><span>Total</span><b class="to">R$ 0,00</b></div></div></div></div>`);
     root.appendChild(pos);
-    tiles = $$(".s4-tile", pos); tiles.forEach(t => $(".th", t).appendChild(KIT.productThumb(t.dataset.id, 140)));
+    colL = $(".s4-l", pos); colR = $(".s4-r", pos); tiles = $$(".s4-tile", pos); tiles.forEach(t => $(".th", t).appendChild(KIT.productThumb(t.dataset.id, 140)));
     lines = $$(".s4-ln", pos); cust = $(".s4-cust .on", pos); subN = $(".sb", pos); dsRow = $(".ds", pos); totN = $(".to", pos);
     pay = $(".s4-pay", pos); prs = $$(".s4-pr", pos); methods = $$(".s4-meth div", pos); btn = $(".s4-btn", pos); srch = $(".s4-search", pos); cnt = $(".cnt", pos);
     paidN = $(".pd", pos); remN = $(".rm", pos);
     CART.forEach(c => { const e = h(`<div class="blk"></div>`); e.style.width = e.style.height = "110px"; e.appendChild(KIT.productThumb(c.id, 110)); root.appendChild(e); tok.push(e); });
     ok = h(`<div class="pn blk s4-ok"><svg width="150" height="150" viewBox="0 0 150 150"><circle cx="75" cy="75" r="66" fill="rgba(22,163,74,.16)" stroke="#4ADE80" stroke-width="5" pathLength="1" stroke-dasharray="1 1" class="rg"/><path d="M46 77l20 20 40-42" fill="none" stroke="#4ADE80" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" class="ck"/></svg>
-      <h4>Venda registrada.</h4><p>Venda #1048 · 3 itens · R$ 70,00</p><div class="cs"><span class="chip">${KIT.ico("receipt", 18)}Recibo em PDF</span><span class="chip sl">Pix + Dinheiro</span></div></div>`);
+      <h4>Venda registrada.</h4><p>Venda #${DATA.SALE.n} · 9 itens · ${brl(DATA.SALE.total)}</p><p class="st">${KIT.ico("package", 20, "#9CC7FF")} Estoque atualizado · Café ${DATA.stockAfter("cafe", DATA.SALE_IDX)} → ${DATA.stockAfter("cafe", DATA.SALE_IDX + 1)} un.</p><div class="cs"><span class="chip">${KIT.ico("receipt", 18)}Recibo em PDF</span><span class="chip sl">Pix + Dinheiro</span></div></div>`);
     root.appendChild(ok); okRing = [$(".rg", ok), $(".ck", ok)];
-    head = hl(["Venda com agilidade.", "Registre com precisão."], "", { accent: 1 }); head.style.fontSize = pick({ wide: 64, sq: 58, tall: 66 }) + "px"; head.style.textAlign = pick({ wide: "left", sq: "center", tall: "center" }); root.appendChild(head);
+    head = hl(["Registre vendas", "com mais agilidade."], "", { accent: 1 }); head.style.fontSize = pick({ wide: 64, sq: 58, tall: 80 }) + "px"; head.style.textAlign = pick({ wide: "left", sq: "center", tall: "center" }); root.appendChild(head);
   };
-  const LY = () => pick({
-    wide: { p0: [1330, 560, .8], p1: [960, 560, .92], head: [110, 330], ok: [960, 540, 1] },
-    sq: { p0: [540, 640, .76], p1: [540, 560, .82], head: [540, 120], ok: [540, 560, .95] },
-    tall: { p0: [540, 1200, .82], p1: [540, 1120, .84], head: [540, 520], ok: [540, 1120, 1.3] },
+  // câmera sobre o painel: no 16:9 o painel inteiro; no 1:1 e no 9:16 a câmera se aproxima da coluna que importa
+  // (produtos → carrinho → pagamento) para os textos ficarem legíveis no celular. Colunas: esquerda −320, direita +300.
+  const LEFT = -320, RIGHT = 300;
+  const POSE = () => pick({
+    wide: [[0, 1330, 560, .82, -14], [5.8, 1330, 560, .82, -14], [7.0, 960, 545, 1.04, 0]],
+    sq: [[0, 540 - LEFT * 1.0, 600, 1.0, 0, 0], [4.5, 540 - LEFT * 1.0, 600, 1.0, 0, 0], [5.4, 540 - RIGHT * 1.08, 600, 1.08, 0, 1], [6.4, 540 - RIGHT * 1.08, 600, 1.08, 0, 1], [7.2, 540 - LEFT * 1.02, 600, 1.02, 0, 0]],
+    tall: [[0, 540 - LEFT * 1.3, 1150, 1.3, 0, 0], [4.5, 540 - LEFT * 1.3, 1150, 1.3, 0, 0], [5.4, 540 - RIGHT * 1.42, 1150, 1.42, 0, 1], [6.4, 540 - RIGHT * 1.42, 1150, 1.42, 0, 1], [7.2, 540 - LEFT * 1.36, 1150, 1.36, 0, 0]],
   });
-  // tamanho estimado do painel em escala: usado para mirar tokens
+  const OK = () => pick({ wide: [960, 545, 1.05], sq: [540, 600, 1.1], tall: [540, 1150, 1.45] });
+  const HEAD = () => pick({ wide: [110, 330], sq: [540, 135], tall: [540, 330] });
   S.render = function (t) {
-    const L = LY();
-    const pin = E.out4(P(t, .6, 1.8)), mv = E.io5(P(t, 5.4, 6.6)), out = E.in3(P(t, 11.6, 12.6));
-    const okP = E.io3(P(t, 8.6, 9.4));
-    const px = lerp(L.p0[0], L.p1[0], mv), py = lerp(L.p0[1], L.p1[1], mv), ps = lerp(L.p0[2], L.p1[2], mv);
-    // no 16:9 o painel começa levemente inclinado ao lado do título
-    const ry = FN === "wide" ? lerp(-14, 0, mv) * pin + (1 - pin) * -30 : (1 - pin) * -20;
-    put(pos, { x: px + (1 - pin) * 80, y: py, s: ps * (1 - okP * .06), ry, rx: (1 - pin) * 6, z: -okP * 120, o: pin * (1 - out) * (1 - okP * .55), b: okP * 3 });
-    // busca: "caf" digitado
+    const PS = POSE(), key = (j) => kf(t, PS.map(k => [k[0], k[j]]), E.io5);
+    const pin = E.out4(P(t, .6, 1.8)), out = E.in3(P(t, 11.8, 12.5));
+    const okP = E.io3(P(t, 9.0, 9.7));
+    const px = key(1), py = key(2), ps = key(3), ryK = key(4);
+    const ry = ryK * pin + (1 - pin) * (FN === "wide" ? -30 : -14);
+    // fora do 16:9 a coluna fora de foco esmaece (não fica um pedaço de interface cortado na borda)
+    if (FN !== "wide") { const fr = key(5); setS(colL, "opacity", (.1 + .9 * (1 - fr)).toFixed(3)); setS(colR, "opacity", (.1 + .9 * fr).toFixed(3)); }
+    put(pos, { x: px + (1 - pin) * 80, y: py, s: ps * (1 - okP * .05), ry, rx: (1 - pin) * 6, z: -okP * 120, o: pin * (1 - out) * (1 - okP * .6), b: okP * 4 });
+    // busca: "Café" digitado
     const typed = "Café"; const nT = Math.floor(cl(P(t, 1.0, 1.5)) * 4) * (t < 2.6 ? 1 : 0);
     setT($(".q", srch), typed.slice(0, nT)); setS($(".ph", srch), "display", nT ? "none" : ""); setS($(".cur", srch), "opacity", (Math.floor(t * 2.5) % 2 ? 1 : .2).toString());
-    // toque nos cards e voo até o carrinho (coordenadas do palco aproximadas pelo layout do painel)
+    // toque nos cards e voo até o carrinho
     const panelW = 1240 * ps, panelH = 800 * ps, ox = px - panelW / 2, oy = py - panelH / 2;
-    let items = 0, sub = 0;
+    let items = 0, sub = 0;   // centavos inteiros
     CART.forEach((c, i) => {
       const ti = tiles.find(x => x.dataset.id === c.id), tIdx = tiles.indexOf(ti);
       const press = Math.sin(Math.PI * P(t, c.t0 - .25, c.t0 + .15)); setS($(".pr", ti), "opacity", (press * .9 + (t > c.t0 && t < c.t0 + .6 ? .1 : 0)).toFixed(3)); setS(ti, "transform", `scale(${(1 - press * .04).toFixed(4)})`);
@@ -107,31 +113,31 @@ SP.scenes.s04 = (function () {
       const ex = ox + (600 + 30 + 40) * ps, ey = oy + (28 + 62 + 80 + i * 92 + 46) * ps;
       const f = P(t, c.t0, c.t0 + .7), fe = E.io3(f);
       put(tok[i], { x: lerp(sx, ex, fe), y: lerp(sy, ey, fe) - Math.sin(fe * Math.PI) * 120 * ps, s: lerp(1.15, .45, fe) * ps, z: 60, o: f > 0 && f < 1 ? Math.min(1, f * 6, (1 - f) * 5) : 0 });
-      // linha do carrinho
+      // linha do carrinho; a quantidade sobe em degraus e cada valor exibido é preço × quantidade
       const la = E.out4(P(t, c.t0 + .55, c.t0 + 1.0));
       setS(lines[i], "transform", `translateY(${(i * 92 + (1 - la) * 16).toFixed(1)}px)`); setS(lines[i], "opacity", la.toFixed(3));
-      const q = la > 0 ? Math.max(1, Math.min(c.q, 1 + Math.floor(P(qt(t), c.t0 + 1.0, c.t0 + 1.0 + .16 * (c.q - 1)) * (c.q - 1) + 1e-6))) : 0;
-      setT($(".s4-step b", lines[i]), String(q || 1)); setT($(".tt", lines[i]), fmtBRL(PR[c.id].price * (q || 1)));
+      const q = la > 0 ? Math.min(c.q, 1 + Math.floor(Math.max(0, t - (c.t0 + 1.0)) / .16)) : 0;
+      setT($(".s4-step b", lines[i]), String(q || 1)); setT($(".tt", lines[i]), brl(PR[c.id].price * (q || 1)));
       if (la > .5) { items += q; sub += PR[c.id].price * q; }
     });
-    setT(cnt, items === 1 ? "1 item" : items + " itens"); setT(subN, fmtBRL(sub));
-    const dsa = E.out3(P(qt(t), 5.0, 5.5)); setS(dsRow, "opacity", (.25 + .75 * dsa).toFixed(3));
-    setT(totN, fmtBRL(Math.max(0, sub - 3.70 * dsa)));
+    setT(cnt, items === 1 ? "1 item" : items + " itens"); setT(subN, brl(sub));
+    // desconto aplicado de uma vez: o total só mostra valores exatos (subtotal, depois subtotal − desconto)
+    const dOn = t >= 5.3, dsa = E.out3(P(t, 5.3, 5.6)); setS(dsRow, "opacity", (.25 + .75 * dsa).toFixed(3));
+    setT(totN, brl(sub - (dOn ? DATA.SALE.discount : 0)));
+    const tp = Math.sin(Math.PI * P(t, 5.3, 5.9)); setS(totN, "textShadow", tp > .01 ? `0 0 ${(24 * tp).toFixed(1)}px rgba(96,165,250,${(.8 * tp).toFixed(2)})` : "");
     const ca = E.out4(P(t, 4.6, 5.1)); setS(cust, "opacity", ca.toFixed(3)); setS(cust, "transform", `translateY(${((1 - ca) * 10).toFixed(1)}px)`);
-    // pagamento
-    const pa = E.io5(P(t, 6.2, 7.0)); setS(pay, "transform", `translateY(${((1 - pa) * 105).toFixed(2)}%)`); setS(pay, "opacity", pa > .002 ? "1" : "0");
-    const m1 = P(t, 7.2, 7.4) > 0, m2 = P(t, 7.7, 7.9) > 0; methods.forEach((m, i) => m.classList.toggle("on", (i === 1 && m1) || (i === 0 && m2)));
-    prs.forEach((r, i) => { const a = E.out3(P(t, 7.3 + i * .5, 7.7 + i * .5)); setS(r, "opacity", a.toFixed(3)); setS(r, "transform", `translateX(${((1 - a) * 20).toFixed(1)}px)`); });
-    const paid = (P(t, 7.3, 7.6) > 0 ? 40 : 0) + (P(t, 7.8, 8.1) > 0 ? 30 : 0); setT(paidN, fmtBRL(paid)); setT(remN, fmtBRL(70 - paid));
-    const bp = Math.sin(Math.PI * P(t, 8.3, 8.6)); setS(btn, "transform", `scale(${(1 - bp * .04).toFixed(4)})`); setS(btn, "filter", bp > .01 ? `brightness(${(1 + bp * .25).toFixed(3)})` : "");
-    // confirmação
-    const oi = spr(t - 8.7, 10, .7), oa = cl((t - 8.7) * 4);
-    const oOut = E.io3(P(t, 11.0, 12.0));
-    put(ok, { x: lerp(L.ok[0], L.ok[0] + (FN === "wide" ? 520 : 0), oOut), y: L.ok[1] + (FN === "wide" ? 0 : oOut * 300), s: L.ok[2] * lerp(.9, 1, oi) * lerp(1, .35, oOut), z: 80, o: oa * (1 - E.in2(P(t, 11.5, 12.2))) });
-    setS(okRing[0], "strokeDashoffset", (1 - E.out3(P(t, 8.8, 9.5))).toFixed(3)); setS(okRing[1], "strokeDashoffset", (1 - E.out3(P(t, 9.2, 9.7))).toFixed(3));
-    // título
-    put(head, { x: L.head[0] + (FN === "wide" ? (head._w || head.offsetWidth) / 2 : 0), y: L.head[1] });
-    hlAt(head, t, .8, 5.2);
+    // pagamento combinado
+    const pa = E.io5(P(t, 6.6, 7.4)); setS(pay, "transform", `translateY(${((1 - pa) * 105).toFixed(2)}%)`); setS(pay, "opacity", pa > .002 ? "1" : "0");
+    const m1 = t >= 7.6, m2 = t >= 8.1; methods.forEach((m, i) => m.classList.toggle("on", (i === 1 && m1) || (i === 0 && m2)));
+    prs.forEach((r, i) => { const a = E.out3(P(t, 7.7 + i * .5, 8.1 + i * .5)); setS(r, "opacity", a.toFixed(3)); setS(r, "transform", `translateX(${((1 - a) * 20).toFixed(1)}px)`); });
+    const paid = DATA.SALE.pay.reduce((s2, p2, i) => s2 + (t >= 7.8 + i * .5 ? p2.v : 0), 0); setT(paidN, brl(paid)); setT(remN, brl(DATA.SALE.total - paid));
+    const bp = Math.sin(Math.PI * P(t, 8.7, 9.0)); setS(btn, "transform", `scale(${(1 - bp * .04).toFixed(4)})`); setS(btn, "filter", bp > .01 ? `brightness(${(1 + bp * .25).toFixed(3)})` : "");
+    // confirmação: entra, fica e sai no mesmo lugar
+    const O = OK(), oi = E.out4(P(t, 9.35, 9.95)), oo = E.in3(P(t, 11.5, 12.2));
+    put(ok, { x: O[0], y: O[1] + (1 - oi) * 24, s: O[2] * lerp(.94, 1, oi) * lerp(1, .96, oo), z: 80, o: oi * (1 - oo) });
+    setS(okRing[0], "strokeDashoffset", (1 - E.out3(P(t, 9.2, 9.9))).toFixed(3)); setS(okRing[1], "strokeDashoffset", (1 - E.out3(P(t, 9.6, 10.1))).toFixed(3));
+    const H = HEAD(); put(head, { x: H[0] + (FN === "wide" ? (head._w || head.offsetWidth) / 2 : 0), y: H[1] });
+    hlAt(head, t, .8, FN === "wide" ? 5.6 : 8.6);
   };
   return S;
 })();

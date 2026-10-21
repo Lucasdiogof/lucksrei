@@ -18,19 +18,19 @@ SP.css(`
 .s6-lbl{display:flex;align-items:center;gap:10px;height:44px;padding:0 18px;border-radius:22px;background:rgba(10,26,60,.9);border:1px solid rgba(96,165,250,.35);font:500 19px 'SP Roboto';color:#CFE0FF;white-space:nowrap}
 `);
 SP.scenes.s06 = (function () {
-  const S = { D: 8.8 };
+  const S = { D: 8.4 };
   let sup, cus, hub, prod, flow, lbA, lbB, head, pA, pB, dA, dB;
   S.build = function (root) {
     sup = h(`<div class="pn blk s6-c"><div class="tp"><div class="ic">${KIT.ico("truck", 36, "#9CC7FF", 1.8)}</div><div><b>Distribuidora Serra</b><span>Fornecedor · Mercearia e bebidas</span></div></div>
       <div class="ct"><span class="chip sl">${KIT.ico("user", 16)}Rafael · comercial</span><span class="chip sl">${KIT.ico("clock", 16)}Entrega às terças</span></div>
       <h5>Histórico de entradas</h5>
-      <div class="hr nw"><div class="k">${KIT.ico("down", 20, "#4ADE80", 2)}</div><div class="x"><b>Café Torrado 500 g</b>21/10 · 24 un.</div></div>
+      <div class="hr nw"><div class="k">${KIT.ico("down", 20, "#4ADE80", 2)}</div><div class="x"><b>Café Torrado 500 g</b>21/10 · ${DATA.MOVES[DATA.ENTRY_IDX].q} un.</div></div>
       <div class="hr"><div class="k">${KIT.ico("down", 20, "#4ADE80", 2)}</div><div class="x"><b>Água Mineral 1,5 L</b>14/10 · 48 un.</div></div>
       <div class="hr"><div class="k">${KIT.ico("down", 20, "#4ADE80", 2)}</div><div class="x"><b>Café Torrado 500 g</b>07/10 · 36 un.</div></div></div>`);
     cus = h(`<div class="pn blk s6-c"><div class="tp">${KIT.avatar("MS", "#2563EB", 72)}<div><b>Mariana Souza</b><span>Cliente · 12 compras</span></div></div>
       <div class="ct"><span class="chip sl">${KIT.ico("phone", 16)}Contato salvo</span><span class="chip sl">${KIT.ico("tag", 16)}Cliente frequente</span></div>
       <h5>Histórico de compras</h5>
-      <div class="hr nw"><div class="k">${KIT.ico("receipt", 20, "#93C5FD", 2)}</div><div class="x"><b>Venda #1048</b>Hoje · 3 itens</div><div class="v">R$ 70,00</div></div>
+      <div class="hr nw"><div class="k">${KIT.ico("receipt", 20, "#93C5FD", 2)}</div><div class="x"><b>Venda #${DATA.SALE.n}</b>Hoje · 9 itens</div><div class="v">${brl(DATA.SALE.total)}</div></div>
       <div class="hr"><div class="k">${KIT.ico("receipt", 20, "#93C5FD", 2)}</div><div class="x"><b>Venda #1031</b>14/10 · 2 itens</div><div class="v">R$ 42,50</div></div>
       <div class="hr"><div class="k">${KIT.ico("receipt", 20, "#93C5FD", 2)}</div><div class="x"><b>Venda #1012</b>03/10 · 5 itens</div><div class="v">R$ 96,10</div></div></div>`);
     hub = h(`<div class="blk s6-hub"></div>`);
@@ -39,16 +39,16 @@ SP.scenes.s06 = (function () {
       <path class="a" fill="none" stroke="#2f5bb5" stroke-width="2.5" pathLength="1" stroke-dasharray="1 1"/><path class="b" fill="none" stroke="#2f5bb5" stroke-width="2.5" pathLength="1" stroke-dasharray="1 1"/>
       <g filter="url(#s6b)"><circle class="pa" r="9" fill="#60A5FA"/><circle class="pb" r="9" fill="#60A5FA"/></g><circle class="qa" r="5" fill="#E0EDFF"/><circle class="qb" r="5" fill="#E0EDFF"/></svg>`);
     [hub, flow, sup, cus, prod].forEach(e => root.appendChild(e));
-    lbA = h(`<div class="blk s6-lbl">${KIT.ico("down", 18, "#4ADE80", 2)}Entrada · 24 un.</div>`); lbB = h(`<div class="blk s6-lbl">${KIT.ico("cart", 18, "#93C5FD", 2)}Venda #1048</div>`); root.appendChild(lbA); root.appendChild(lbB);
-    head = hl(["Relacionamentos e operações", "no mesmo lugar."], "", { accent: 1 }); head.style.fontSize = pick({ wide: 66, sq: 54, tall: 64 }) + "px"; head.style.textAlign = "center"; root.appendChild(head);
+    lbA = h(`<div class="blk s6-lbl">${KIT.ico("down", 18, "#4ADE80", 2)}Entrada · ${DATA.MOVES[DATA.ENTRY_IDX].q} un.</div>`); lbB = h(`<div class="blk s6-lbl">${KIT.ico("cart", 18, "#93C5FD", 2)}Venda #${DATA.SALE.n}</div>`); root.appendChild(lbA); root.appendChild(lbB);
+    head = hl(["Clientes e fornecedores", "com todo o histórico."], "", { accent: 1 }); head.style.fontSize = pick({ wide: 66, sq: 58, tall: 72 }) + "px"; head.style.textAlign = "center"; root.appendChild(head);
   };
   const LY = () => pick({
-    wide: { sup: [410, 590, .86, 18], cus: [1510, 590, .86, -18], hub: [960, 600, 1], head: [960, 150], vert: 0 },
+    wide: { sup: [400, 610, .96, 16], cus: [1520, 610, .96, -16], hub: [960, 620, 1], head: [960, 150], vert: 0 },
     sq: { sup: [290, 600, .64, 18], cus: [790, 600, .64, -18], hub: [540, 900, .55], head: [540, 140], vert: 0 },
     tall: { sup: [540, 760, .82, 0], cus: [540, 1560, .82, 0], hub: [540, 1160, .7], head: [540, 260], vert: 1 },
   });
   S.render = function (t) {
-    const L = LY(), out = E.in3(P(t, 7.7, 8.5));
+    const L = LY(), out = E.in3(P(t, 7.1, 7.8));
     const ai = E.out4(P(t, .7, 1.8)), bi = E.out4(P(t, .9, 2.0)), hi = E.out4(P(t, .5, 1.5));
     const sway = Math.sin(t * .5) * 2;
     put(sup, { x: L.sup[0] - (1 - ai) * (L.vert ? 0 : 120), y: L.sup[1] - (L.vert ? (1 - ai) * 80 : 0), s: L.sup[2], ry: L.sup[3] + sway, o: ai * (1 - out) });
@@ -76,7 +76,7 @@ SP.scenes.s06 = (function () {
     put(lbA, { x: mA.x + (L.vert ? 150 : 0), y: mA.y - (L.vert ? 0 : 46), s: FN === "wide" ? 1 : .9, o: E.out3(P(t, 2.3, 2.8)) * (1 - out) });
     put(lbB, { x: mB.x + (L.vert ? 150 : 0), y: mB.y - (L.vert ? 0 : 46), s: FN === "wide" ? 1 : .9, o: E.out3(P(t, 2.8, 3.3)) * (1 - out) });
     put(head, { x: L.head[0], y: L.head[1] });
-    hlAt(head, t, .8, 7.6);
+    hlAt(head, t, .8, 7.0);
   };
   return S;
 })();

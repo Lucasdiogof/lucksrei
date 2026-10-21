@@ -2,7 +2,7 @@
 /* Cena 1 — impacto da marca. Linhas de uma operação comercial (loja, prateleiras, balcão) desenhadas em isométrico,
    o monograma SP montado por camadas com profundidade real (cópias em Z), o wordmark revelado por máscara e o título. */
 SP.scenes.s01 = (function () {
-  const S = { D: 7.6 };
+  const S = { D: 8.6 };
   let wire, wireG, glowG, mk, mkFront, mkDepth = [], mkSweep, wm, h1, sub, crown = [], body = [];
   /* segmentos isométricos (unidades de grade) → px */
   function isoPts(k, cx, cy) {
@@ -62,25 +62,28 @@ SP.scenes.s01 = (function () {
     const WMW = pick({ wide: 640, sq: 560, tall: 640 });
     wm = h(`<div class="blk" style="width:${WMW}px;height:${WMW * 110 / 420}px">${KIT.wordmark("", WMW)}</div>`); root.appendChild(wm);
     wm.style.webkitMaskImage = "linear-gradient(90deg,#000 0%,#000 var(--p),transparent calc(var(--p) + 14%))";
-    h1 = hl(["Seu negócio.", "Sob controle."], "", { accent: 1 }); h1.style.fontSize = pick({ wide: 118, sq: 96, tall: 112 }) + "px"; root.appendChild(h1);
-    sub = hl(["Estoque, vendas e gestão em um só sistema."], "sub"); sub.style.fontSize = pick({ wide: 36, sq: 33, tall: 38 }) + "px"; root.appendChild(sub);
+    h1 = hl(FN === "tall" ? ["Estoque, vendas", "e caixa em um", "só sistema."] : ["Estoque, vendas e caixa.", "Tudo em um só lugar."], "", { accent: FN === "tall" ? 2 : 1 }); h1.style.fontSize = pick({ wide: 80, sq: 74, tall: 96 }) + "px"; root.appendChild(h1);
+    sub = hl(["Gestão simples para o seu comércio."], "sub"); sub.style.fontSize = pick({ wide: 36, sq: 36, tall: 44 }) + "px"; root.appendChild(sub);
     h1.style.textAlign = sub.style.textAlign = pick({ wide: "left", sq: "center", tall: "center" });
   };
-  S.render = function (t) {
-    const W = FMT.W, H = FMT.H;
+  // tempos da abertura: no 16:9 a marca tem o palco sozinha; no vertical e no quadrado o título chega já no 2º segundo
+  const K = pick({ wide: { o: 0, end: 8.6 }, sq: { o: -1.2, end: 6.2 }, tall: { o: -1.2, end: 6.2 } });
+  S.render = function (t0) {
+    const W = FMT.W, H = FMT.H, t = t0 >= 1.2 ? t0 - K.o : t0 + (-K.o) * (t0 / 1.2);   // no 1:1 e no 9:16 o 1º segundo corre 2× e o resto vem adiantado
+    const tEnd = K.end - K.o;
     // linhas: desenho progressivo 0.0–2.4, pulso de luz percorrendo, recuo e esmaecimento quando a marca entra
-    const wireA = kf(t, [[0, 1], [1.6, 1], [3.0, .38], [6.4, .3], [7.6, 0]]);
-    const camZ = kf(t, [[0, -120], [7.6, 140]], E.lin), camRot = kf(t, [[0, -2], [7.6, 2]], E.lin);
-    put(wire, { x: W / 2, y: H / 2 + kf(t, [[5.8, 0], [7.6, 60]]), z: camZ, rz: 0, rx: camRot, o: wireA });
+    const wireA = kf(t, [[0, 1], [1.6, 1], [3.0, .38], [tEnd - 1.4, .3], [tEnd, 0]]);
+    const camZ = kf(t, [[0, -120], [8.6, 160]], E.lin), camRot = kf(t, [[0, -2], [8.6, 2]], E.lin);
+    put(wire, { x: W / 2, y: H / 2 + kf(t, [[6.8, 0], [8.6, 60]]), z: camZ, rz: 0, rx: camRot, o: wireA });
     wireG.forEach(({ p, s }) => { const x = E.out3(P(t, s.dl * 1.6, s.dl * 1.6 + .9)); setS(p, "strokeDashoffset", (1 - x).toFixed(3)); });
     glowG.forEach(({ p, s }) => { const x = P(t, s.dl * 1.6 + .2, s.dl * 1.6 + 1.7); setS(p, "strokeDashoffset", (1.18 - x * 2.4).toFixed(3)); setS(p, "opacity", (Math.sin(x * Math.PI) * .9).toFixed(3)); });
 
     // monograma
-    const L = pick({ wide: { mx: W / 2, my: 430, mx2: 540, my2: 440, ms2: .8, wy: 780, wx2: 540, wy2: 720 }, sq: { mx: W / 2, my: 420, mx2: W / 2, my2: 230, ms2: .5, wy: 740, wx2: W / 2, wy2: 400 }, tall: { mx: W / 2, my: 780, mx2: W / 2, my2: 540, ms2: .66, wy: 1140, wx2: W / 2, wy2: 810 } });
+    const L = pick({ wide: { mx: W / 2, my: 430, mx2: 450, my2: 430, ms2: .74, wy: 780, wx2: 450, wy2: 690 }, sq: { mx: W / 2, my: 420, mx2: W / 2, my2: 230, ms2: .5, wy: 740, wx2: W / 2, wy2: 400 }, tall: { mx: W / 2, my: 780, mx2: W / 2, my2: 470, ms2: .62, wy: 1140, wx2: W / 2, wy2: 730 } });
     const ap = E.io5(P(t, 3.6, 4.9));       // marca vai para a posição de assinatura
     const mIn = P(t, .9, 2.6), sway = Math.sin(t * .9) * 5;
     const ry = lerp(-34, 0, E.out4(mIn)) + sway * (1 - ap * .4), rx = lerp(14, 4, E.out4(mIn));
-    const mOut = E.in3(P(t, 6.6, 7.6));
+    const mOut = E.in3(P(t, tEnd - 1.0, tEnd));
     put(mk, { x: lerp(L.mx, L.mx2, ap), y: lerp(L.my, L.my2, ap) - mOut * 30, s: lerp(lerp(.86, 1, E.out3(mIn)), L.ms2, ap) * (1 - mOut * .08), rx, ry, z: lerp(-200, 0, E.out4(mIn)), o: cl(mIn * 3) * (1 - mOut), b: (1 - E.out3(cl(mIn * 2))) * 8 });
     // camadas: corpo revela de baixo para cima, coroa desce em três peças
     const bodyP = E.out4(P(t, 1.0, 2.3));
@@ -93,12 +96,12 @@ SP.scenes.s01 = (function () {
     setV(wm, "--p", (wp * 114 - 14).toFixed(1) + "%");
     put(wm, { x: lerp(L.mx, L.wx2, ap), y: lerp(L.wy, L.wy2, ap) - mOut * 30, s: lerp(1, pick({ wide: .7, sq: .6, tall: .74 }), ap), o: cl(wp * 3) * (1 - mOut) });
     // título
-    const tx = pick({ wide: 1000, sq: W / 2, tall: W / 2 }), ty = pick({ wide: 500, sq: 660, tall: 1180 });
+    const tx = pick({ wide: 860, sq: W / 2, tall: W / 2 }), ty = pick({ wide: 500, sq: 660, tall: 1130 });
     put(h1, { x: tx + (FN === "wide" ? h1._w / 2 || 0 : 0), y: ty, o: 1 });
     if (!h1._w) { h1._w = h1.offsetWidth; }
-    hlAt(h1, t, 4.25, 6.9);
-    put(sub, { x: tx + (FN === "wide" ? (sub._w || sub.offsetWidth) / 2 : 0), y: ty + pick({ wide: 175, sq: 150, tall: 175 }) });
-    hlAt(sub, t, 5.0, 6.95, { st: .03, dy: 60 });
+    hlAt(h1, t, FN === "wide" ? 4.1 : 4.0, tEnd - .7);
+    put(sub, { x: tx + (FN === "wide" ? (sub._w || sub.offsetWidth) / 2 : 0), y: ty + pick({ wide: 150, sq: 150, tall: 250 }) });
+    hlAt(sub, t, FN === "wide" ? 4.8 : 4.6, tEnd - .65, { st: .03, dy: 60 });
   };
   return S;
 })();

@@ -2,10 +2,10 @@
 /* Cena 10 — encerramento. Linhas cobalto convergem para o centro e desenham o contorno do SP (geometria original,
    só traço); o preenchimento original aparece por cima; wordmark, frase e assinatura. Quadro final sustentado. */
 SP.scenes.s10 = (function () {
-  const S = { D: 8.4 };
-  let lines, outl, oPaths = [], mk, wm, tag, sig, LN = [];
+  const S = { D: 8.2 };
+  let lic, lines, outl, oPaths = [], mk, wm, tag, sig, LN = [];
   S.build = function (root) {
-    const W = FMT.W, H = FMT.H, cx = W / 2, cy = pick({ wide: 420, sq: 400, tall: 760 });
+    const W = FMT.W, H = FMT.H, cx = W / 2, cy = pick({ wide: 420, sq: 380, tall: 760 });
     const R = rng(1010); let d = "";
     for (let i = 0; i < 30; i++) {
       const a = i / 30 * Math.PI * 2 + R() * .15, r0 = Math.hypot(W, H) * (.55 + R() * .1), x0 = cx + Math.cos(a) * r0, y0 = cy + Math.sin(a) * r0;
@@ -27,12 +27,13 @@ SP.scenes.s10 = (function () {
     wm.style.webkitMaskImage = "linear-gradient(90deg,#000 0%,#000 var(--p),transparent calc(var(--p) + 14%))";
     tag = hl(["Do estoque à venda.", "Tudo conectado."], "", { accent: 1 }); tag.style.fontSize = pick({ wide: 58, sq: 54, tall: 66 }) + "px"; tag.style.textAlign = "center"; root.appendChild(tag);
     if (FN === "wide") { tag.remove(); tag = hl(["Do estoque à venda. Tudo conectado."], "", {}); tag.style.fontSize = "54px"; tag.style.textAlign = "center"; root.appendChild(tag); }
+    lic = h(`<div class="blk sub" style="font-size:${pick({ wide: 28, sq: 28, tall: 34 })}px;color:#C7D2E4">Licença de uso do software</div>`); root.appendChild(lic);
     sig = h(`<div class="blk sub" style="font-size:${pick({ wide: 24, sq: 24, tall: 28 })}px;letter-spacing:.18em;text-transform:uppercase;color:#8EA3C7">Um produto Lucksrei</div>`); root.appendChild(sig);
     S.cy = cy;
   };
   S.render = function (t) {
     const W = FMT.W, cy = S.cy, cx = W / 2;
-    const fadeEnd = FN === "sq" ? E.io2(P(t, 7.6, 8.4)) : 0;   // o loop do site termina no fundo vazio, igual ao quadro 0
+    const fadeEnd = FN === "sq" ? E.io2(P(t, 7.4, 8.2)) : 0;   // o loop do site termina no fundo vazio, igual ao quadro 0
     // linhas convergindo
     show(lines, true); setS(lines, "transform", "none");
     LN.forEach(p => { const dl = +p.dataset.dl, x = E.io3(P(t, dl, dl + 1.6)); setS(p, "strokeDashoffset", (.22 - x * 1.28).toFixed(3)); setS(p, "opacity", (Math.sin(x * Math.PI) * .9).toFixed(3)); });
@@ -45,8 +46,9 @@ SP.scenes.s10 = (function () {
     const wp = E.io3(P(t, 3.1, 4.1)); setV(wm, "--p", (wp * 114 - 14).toFixed(1) + "%");
     put(wm, { x: cx, y: cy + pick({ wide: 300, sq: 290, tall: 350 }), o: cl(wp * 3) * (1 - fadeEnd) });
     put(tag, { x: cx, y: cy + pick({ wide: 440, sq: 455, tall: 560 }) });
-    hlAt(tag, t, 4.0, FN === "sq" ? 7.6 : undefined, { st: .07 });
-    put(sig, { x: cx, y: pick({ wide: 1010, sq: 1010, tall: 1790 }), o: E.out3(P(t, 5.0, 5.8)) * (1 - fadeEnd) });
+    hlAt(tag, t, 4.0, FN === "sq" ? 7.4 : undefined, { st: .07 });
+    put(lic, { x: cx, y: cy + pick({ wide: 525, sq: 545, tall: 690 }), o: E.out3(P(t, 4.7, 5.4)) * (1 - fadeEnd) });
+    put(sig, { x: cx, y: pick({ wide: 1010, sq: 1010, tall: 1760 }), o: E.out3(P(t, 5.2, 6.0)) * (1 - fadeEnd) });
   };
   return S;
 })();

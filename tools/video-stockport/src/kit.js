@@ -69,11 +69,13 @@ KIT.cuboid = (w, h, d, f = {}) => {
 
 /* ───── produtos (fictícios, demonstrativos) ───── */
 KIT.PRODUCTS = {
-  cafe: { id: "cafe", name: "Café Torrado 500 g", cat: "Mercearia", price: 18.90, qty: 62, min: 20, code: "7891234500017", seed: 11, w: 96, h: 150, d: 62, base: "#2B3F72", accent: "#FBBF24" },
-  agua: { id: "agua", name: "Água Mineral 1,5 L", cat: "Bebidas", price: 3.50, qty: 148, min: 40, code: "7891234500024", seed: 22, w: 150, h: 96, d: 100, base: "#3B82C4", accent: "#E0F2FE" },
-  caderno: { id: "caderno", name: "Caderno 96 folhas", cat: "Papelaria", price: 14.90, qty: 35, min: 12, code: "7891234500031", seed: 33, w: 104, h: 130, d: 22, base: "#F1F5FC", accent: "#2563EB" },
-  sabao: { id: "sabao", name: "Sabão em Pó 1 kg", cat: "Limpeza", price: 12.90, qty: 6, min: 10, code: "7891234500048", seed: 44, w: 104, h: 130, d: 56, base: "#1E6CFF", accent: "#FFFFFF" },
+  cafe: { id: "cafe", name: "Café Torrado 500 g", cat: "Mercearia", code: "7891234500017", seed: 11, w: 96, h: 150, d: 62, base: "#2B3F72", accent: "#FBBF24" },
+  agua: { id: "agua", name: "Água Mineral 1,5 L", cat: "Bebidas", code: "7891234500024", seed: 22, w: 150, h: 96, d: 100, base: "#3B82C4", accent: "#E0F2FE" },
+  caderno: { id: "caderno", name: "Caderno 96 folhas", cat: "Papelaria", code: "7891234500031", seed: 33, w: 104, h: 130, d: 22, base: "#F1F5FC", accent: "#2563EB" },
+  sabao: { id: "sabao", name: "Sabão em Pó 1 kg", cat: "Limpeza", code: "7891234500048", seed: 44, w: 104, h: 130, d: 56, base: "#1E6CFF", accent: "#FFFFFF" },
 };
+/* preço (centavos), categoria, mínimo e saldo vêm da base comum (data.js) */
+for (const id in KIT.PRODUCTS) { const d = DATA.P[id]; Object.assign(KIT.PRODUCTS[id], { name: d.name, cat: d.cat, price: d.price, min: d.min, code: d.code, qty: DATA.stockAfter(id, DATA.ENTRY_IDX) }); }
 /* arte de cada face — vetorial, sem marcas reais */
 KIT.productFaces = (p, o = {}) => {
   const S = KIT.shade, b = p.base, a = p.accent;
