@@ -109,7 +109,7 @@
 { id: "ml-kit", name: "Google ML Kit", exp: [], projects: ["orbijob", "bebometro"], related: ["flutter", "offline-first"] },
 { id: "deep-links", name: "Deep Links", wide: true, exp: [], projects: ["match-queue", "stockport", "tabela-fone"], related: ["flutter", "web-pwa"] },
 { id: "i18n", name: "i18n", label: { en: "Localization (i18n)", "pt-BR": "Idiomas (i18n)", es: "Idiomas (i18n)" }, exp: [], projects: ["aprovaura", "orbijob", "bebometro", "stockport", "busaogyn"], related: ["flutter", "dart"] },
-{ id: "gps", name: "GPS", label: { en: "GPS & Location", "pt-BR": "GPS e Localização", es: "GPS y Ubicación" }, exp: ["cooper-tec", "freelance"], projects: ["cooper-pay", "bebometro", "emater", "vai", "agr-fiscal"], related: ["flutter", "android"] },
+{ id: "gps", name: "GPS", label: { en: "GPS & Location", "pt-BR": "GPS e Localização", es: "GPS y Ubicación" }, exp: ["cooper-tec", "freelance"], projects: ["cooper-pay", "bebometro", "vai", "agr-fiscal"], related: ["flutter", "android"] },
 { id: "google-maps", name: "Google Maps & Places", exp: ["freelance"], projects: ["emater", "vai", "gpol"], related: ["gps", "mapbox", "maplibre"] },
 { id: "mapbox", name: "Mapbox", exp: ["agrosmart"], projects: ["agrosmart", "boosteragro"], related: ["google-maps", "gps"] },
 { id: "maplibre", name: "MapLibre", exp: [], projects: ["busaogyn"], related: ["google-maps", "gps"] },
