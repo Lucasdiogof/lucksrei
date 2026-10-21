@@ -826,7 +826,6 @@
   "store.terms": "Terms of use",
   "store.deletion": "Account and data deletion",
   "store.open_web": "Open the web app",
-  "store.ga.title": "Available on",
   "store.ga.web_small": "Open in your",
   "store.ga.web": "Browser",
   "store.ga.ios_small": "Download on the",
