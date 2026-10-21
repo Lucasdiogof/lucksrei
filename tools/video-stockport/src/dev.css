@@ -1,0 +1,14 @@
+#dev{position:fixed;left:0;right:0;bottom:0;height:64px;background:rgba(5,12,28,.96);border-top:1px solid #1d315f;display:flex;align-items:center;gap:10px;padding:0 14px;font:500 13px "SP Roboto",system-ui;color:#B6C4DD;z-index:50;user-select:none}
+body.rm #dev{display:none}
+#dev button,#dev select,#dev a{background:#12254D;border:1px solid #2a437f;color:#E5EDFB;border-radius:8px;height:34px;padding:0 12px;font:inherit;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+#dev button:hover,#dev a:hover{background:#1b3770}
+#dev button.on{background:#2563EB;border-color:#60A5FA}
+#dev .sl{flex:1;position:relative;height:34px;display:flex;align-items:center}
+#dev input[type=range]{width:100%;accent-color:#2563EB}
+#dev .seg{position:absolute;top:0;height:6px;background:#2563EB;border-radius:3px;opacity:.65;cursor:pointer}
+#dev .seg.cur{background:#60A5FA;opacity:1}
+#dev .tm{font-variant-numeric:tabular-nums;min-width:112px;text-align:right}
+body.insp .blk{outline:1px dashed rgba(251,191,36,.7)!important}
+#guides{position:absolute;inset:0;pointer-events:none;z-index:40;display:none}
+body.insp #guides{display:block}
+#guides i{position:absolute;border:1px solid rgba(74,222,128,.6)}
