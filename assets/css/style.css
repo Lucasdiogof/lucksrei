@@ -1877,3 +1877,75 @@ html[data-theme="light"][data-amb="contact"] .page-hero h1::after{ background: l
   .d-edge{ animation: none !important; } .d-pre{ opacity: 1; transform: none; }
   .d-card .app-logo::after{ display: none; } .d-card *, .d-card{ transition: none !important; }
 }
+
+/* =====================================================================
+   CASE STUDY — card "Disponível em" (Web / App Store / Google Play) no topo de cada case.
+   Só os links reais do apps-data.js. Animações em transform/opacity (+ @property na borda); reduced motion: parado.
+   ===================================================================== */
+@property --ga-a{ syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+.get-app{
+  position: relative; isolation: isolate; display: inline-flex; flex-direction: column; gap: 12px; margin-top: 26px; padding: 14px 14px 14px;
+  border-radius: 18px; background: linear-gradient(160deg, rgba(22,22,26,.92), rgba(8,8,10,.88));
+  box-shadow: 0 24px 60px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,246,223,.05); max-width: 100%;
+}
+.get-app::before{                                          /* borda viva: um arco dourado circula o card */
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; padding: 1px; pointer-events: none;
+  background: conic-gradient(from var(--ga-a), rgba(238,204,109,.15), rgba(238,204,109,.9) 60deg, rgba(255,250,235,.95) 75deg, rgba(238,204,109,.15) 140deg, rgba(255,255,255,.08) 220deg, rgba(238,204,109,.15) 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: ga-spin 7s linear infinite;
+}
+@keyframes ga-spin{ to{ --ga-a: 360deg; } }
+.ga-label{ display: inline-flex; align-items: center; gap: 8px; padding-left: 4px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.ga-dot{ position: relative; width: 7px; height: 7px; border-radius: 50%; background: #58d3a5; }
+.ga-dot::after{ content: ""; position: absolute; inset: 0; border-radius: 50%; background: #58d3a5; animation: ga-ping 2.2s cubic-bezier(0,0,.2,1) infinite; }
+@keyframes ga-ping{ 0%{ transform: scale(1); opacity: .7; } 80%, 100%{ transform: scale(2.8); opacity: 0; } }
+.ga-row{ display: flex; flex-wrap: wrap; gap: 10px; }
+
+.ga-btn{
+  position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 12px; min-height: 56px;
+  padding: 9px 16px 9px 9px; border-radius: 13px; text-decoration: none; color: var(--text);
+  background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.1);
+  transition: transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);
+  animation: ga-in .6s var(--ease) both;
+}
+.ga-btn:nth-child(2){ animation-delay: .12s; } .ga-btn:nth-child(3){ animation-delay: .24s; }
+@keyframes ga-in{ from{ opacity: 0; transform: translateY(10px) scale(.97); } }
+.ga-btn::after{                                            /* reflexo que atravessa o botão */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.28) 48%, transparent 66%);
+  transform: translateX(-130%);
+}
+.ga-btn:hover::after, .ga-btn:focus-visible::after{ transform: translateX(130%); transition: transform .9s var(--ease); }
+.ga-btn:hover, .ga-btn:focus-visible{ transform: translateY(-3px); border-color: rgba(238,204,109,.6); box-shadow: 0 14px 34px rgba(0,0,0,.4), 0 0 26px rgba(219,178,80,.16); }
+.ga-btn:focus-visible{ outline: 2px solid var(--accent); outline-offset: 3px; }
+.ga-icon{ display: grid; place-items: center; flex: none; width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,.07); }
+.ga-icon svg{ width: 20px; height: 20px; }
+.ga-btn:hover .ga-icon, .ga-btn:focus-visible .ga-icon{ animation: ga-hop .55s var(--ease); }
+@keyframes ga-hop{ 35%{ transform: translateY(-5px) rotate(-6deg); } 65%{ transform: translateY(1px) rotate(3deg); } }
+.ga-text{ display: flex; flex-direction: column; line-height: 1.1; }
+.ga-text small{ font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-faint); }
+.ga-text strong{ font-size: 16.5px; font-weight: 650; letter-spacing: -.01em; }
+.ga-arrow{ width: 16px; height: 16px; margin-left: 4px; opacity: .55; transition: transform .25s var(--ease), opacity .25s var(--ease); }
+.ga-btn:hover .ga-arrow, .ga-btn:focus-visible .ga-arrow{ transform: translate(3px, -3px); opacity: 1; }
+
+/* web = ação principal: dourado, com um brilho que passa sozinho de tempos em tempos */
+.ga-web{ background: var(--btn-gold); border-color: rgba(255,240,200,.45); color: #1a1408; }
+.ga-web .ga-icon{ background: rgba(26,20,8,.12); }
+.ga-web .ga-text small{ color: rgba(26,20,8,.62); }
+.ga-web::after{ animation: ga-shine 5.5s var(--ease) 1.4s infinite; background: linear-gradient(105deg, transparent 30%, rgba(255,255,255,.55) 48%, transparent 66%); }
+@keyframes ga-shine{ 0%{ transform: translateX(-130%); } 22%, 100%{ transform: translateX(130%); } }
+.ga-web:hover::after{ animation: none; }
+.ga-ios .ga-icon{ color: #fff; background: rgba(255,255,255,.1); }
+.ga-android .ga-icon{ color: #3ddc84; background: rgba(61,220,132,.12); }
+
+[data-theme="light"] .get-app{ background: linear-gradient(160deg, #fffdf8, #f3eee3); box-shadow: 0 18px 44px rgba(18,26,46,.1), inset 0 1px 0 #fff; }
+[data-theme="light"] .ga-btn:not(.ga-web){ background: #fff; border-color: var(--border); }
+[data-theme="light"] .ga-ios .ga-icon{ color: #111; background: rgba(18,26,46,.06); }
+
+@media (max-width: 560px){ .get-app{ display: flex; } .ga-row{ flex-direction: column; } .ga-btn{ width: 100%; } .ga-arrow{ margin-left: auto; } }
+@media (hover: none){ .ga-btn:hover{ transform: none; } }
+@media (prefers-reduced-motion: reduce){
+  .get-app::before, .ga-dot::after, .ga-btn, .ga-web::after, .ga-btn:hover .ga-icon{ animation: none !important; }
+  .ga-btn, .ga-btn::after, .ga-arrow{ transition: none !important; }
+}

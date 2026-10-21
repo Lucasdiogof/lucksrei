@@ -62,7 +62,7 @@
         logo: '/assets/img/apps/la-pelve.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/la-pelve/id6811234099', webUrl: 'https://lapelve.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'Offline-first', 'Encrypted SQLite', 'WhatsApp API'], caseUrl: '/projects/la-pelve/' },
       { id: 'busaogyn', name: 'BusãoGyn', subtitle: { en: 'Bus arrivals and live tracking in Goiânia', 'pt-BR': 'Chegadas e ônibus ao vivo em Goiânia', es: 'Llegadas y autobuses en vivo en Goiânia' }, group: 'own', sector: 'mobility',
-        logo: '/assets/img/apps/busaogyn.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null, webUrl: 'https://busaogyn.lucksrei.com',
+        logo: '/assets/img/apps/busaogyn.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null, webUrl: 'https://busaogyn.lucksrei.com', caseUrl: '/projects/busaogyn/',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Cloudflare Workers', 'TypeScript', 'MapLibre', 'Real-time'] },
       { id: 'orbijob', name: 'OrbiJob', subtitle: { en: 'Global job search aggregator', 'pt-BR': 'Agregador global de vagas', es: 'Agregador global de empleo' }, group: 'own', sector: 'jobs',
         logo: '/assets/img/apps/orbijob.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null, webUrl: 'https://orbijob.lucksrei.com',
