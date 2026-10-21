@@ -18,6 +18,10 @@ trilha usam uma música original gerada em código (`audio/make-music.mjs`).
 
 Os intermediários de captura (H.264 CRF 12) ficam em `out/mezz/` e não são arquivos de entrega.
 
+No site, o loop está em `assets/video/stockport-loop.mp4`, `stockport-loop.av1.mp4` e `stockport-loop-poster.webp`, exibido no
+topo de `projects/stockport/` (página do sistema dentro de Lucksrei Systems, fora da home) pelo mesmo `<video data-loop-video>`
+dos outros produtos.
+
 ## Montagens
 
 O quadrado e o vertical não são recortes do master: cada cena tem layout próprio por formato (`pick({wide, sq, tall})`),

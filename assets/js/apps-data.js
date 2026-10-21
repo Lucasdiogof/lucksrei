@@ -74,7 +74,7 @@
       /* ---- Lucksrei Systems: sistemas genéricos para pequenos negócios. Novo sistema = mais um registro group 'systems' (+ logo em assets/img/apps/<id>.webp). Não entram na home. ---- */
       { id: 'stockport', name: 'StockPort System', subtitle: { en: 'Inventory, sales, cash register and reporting for small businesses', 'pt-BR': 'Gestão de estoque, vendas, caixa e relatórios para pequenos negócios', es: 'Gestión de inventario, ventas, caja e informes para pequeños negocios' }, group: 'systems', sector: 'retailtech',
         logo: '/assets/img/apps/stockport.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null,
-        downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'PostgreSQL', 'RLS'] },
+        downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'PostgreSQL', 'RLS'], caseUrl: '/projects/stockport/' },
 
       /* ---- profissionais (do mais recente para o mais antigo, pelo fim do período) ---- */
       { id: 'tabela-fone', name: 'Tabela Fone', subtitle: { en: 'Price intelligence for used phone retailers', 'pt-BR': 'Inteligência de preços para lojistas de celulares usados', es: 'Inteligencia de precios para tiendas de celulares usados' }, group: 'professional', sector: 'retailtech',
