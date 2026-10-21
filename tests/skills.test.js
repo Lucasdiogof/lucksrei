@@ -101,12 +101,12 @@ check(/ObjectBox/.test(T.objectdb.en[1]) && /Not to be confused/.test(T.objectdb
 // nenhum texto pode soar como falta de experiência
 check(!/No specific|not attributed|attributed to it|Nenhuma empresa|nenhuma empresa|ninguna empresa|Aquí no se le atribuye|no experience|sem experiência/i.test(JSON.stringify(T)), "texto que transmite falta de experiência");
 // vínculos de projetos conferidos com as páginas de estudo de caso e /apps
-check(["flutter", "dart", "android", "ios", "supabase", "postgresql"].every(function (s) { return has(s, "projects", "fan-hub") || s === "dart"; }), "Goiás App: Flutter, Android, iOS, Supabase, PostgreSQL");
+check(["flutter", "dart", "android", "ios", "supabase", "postgresql"].every(function (s) { return has(s, "projects", "fan-hub"); }), "Goiás App: Flutter, Dart, Android, iOS, Supabase, PostgreSQL");
 check(has("clean-architecture", "projects", "fan-hub"), "Goiás App documenta Clean Architecture");
 check(!has("android", "projects", "match-queue") && has("ios", "projects", "match-queue"), "Match Queue só iOS");
-// Tabela Fone e apps só descritos no apps-data.js: sem vínculo de tecnologia (apps-data não é prova independente)
+// Os chips do catálogo são declarações públicas verificáveis; os repositórios próprios também fornecem evidências independentes.
 check(["tabela-fone","vai","gpol","busaogyn","orbijob","bebometro","stockport"].every(function (p) { return !!D.PROJECTS[p]; }), "novos projetos ausentes da seção de skills");
-check(has("bloc","projects","tabela-fone") && has("rest-api","projects","emater") && ids["rest-api"].exp.length === 0 && ids.firebase.exp.join() === "iza", "BLoC/REST/Firebase só com vínculos comprovados");
+check(has("bloc","projects","tabela-fone") && has("rest-api","projects","emater") && has("firebase","projects","iza"), "BLoC/REST/Firebase com vínculos evidenciados");
 check(D.PROJECTS["fan-hub"].name === "Goiás App" && D.PROJECTS["fan-hub"].href === "/projects/fan-hub/", "FanHub como nome do produto, URL preservada");
 check(/Goiás App/.test(T.supabase.en[2]), "Supabase deve usar o nome atual Goiás App");
 check(ids.hive.projects.length === 0 && has("sembast","projects","agrosmart"), "Hive com vínculo de experiência; Sembast presente nos projetos Agrosmart");
@@ -132,6 +132,12 @@ check(order.every(function (v, i) { return v > 0 && (i === 0 || v > order[i - 1]
 
 // Inventário revisado a partir de /apps/: todas as novas competências devem apontar para projetos reais.
 check(D.ORDER.length === 81, "total de skills esperado: 81");
+// Flutter e Dart são indissociáveis em aplicativos Flutter; lista compartilhada evita regressão.
+check(ids.flutter.projects === ids.dart.projects, "Flutter e Dart devem compartilhar a mesma lista de projetos");
+check(ids.flutter.projects.length === 18, "total de projetos Flutter/Dart (incluindo Cooper Pay) deve ser 18");
+check(["emater","agr-fiscal","stockport","orbijob","bebometro"].every(function (p) { return has("dart","projects",p); }), "Dart precisa refletir projetos recentes e profissionais");
+check(!has("firebase","projects","bebometro") && !has("firebase","projects","stockport") && !has("firebase","projects","aprovaura"), "Não inferir Firebase a partir de Supabase");
+
 const coverage = [["go-router","tabela-fone"],["freezed","tabela-fone"],["getx","iza"],["scoped-model","gpol"],["modular-packages","toro"],["micro-frontends","boosteragro"],["graphql","toro"],["grpc","iza"],["signalr","toro"],["supabase-realtime","match-queue"],["edge-functions","aprovaura"],["offline-first","la-pelve"],["sqlite","la-pelve"],["firebase-auth","vai"],["firestore","gpol"],["firebase-rtdb","vai"],["in-app-purchases","tabela-fone"],["onesignal","toro"],["whatsapp-api","la-pelve"],["zendesk","iza"],["facebook-login","iza"],["ml-kit","orbijob"],["google-maps","emater"],["mapbox","agrosmart"],["maplibre","busaogyn"],["pdf","agr-fiscal"],["webview","orbijob"],["barcode-scanning","stockport"],["biometrics","toro"]];
 coverage.forEach(function (pair) { check(has(pair[0], "projects", pair[1]), "vínculo ausente: " + pair.join(" → ")); });
 ["busaogyn", "orbijob", "bebometro", "stockport"].forEach(function (p) {
