@@ -124,9 +124,9 @@
       es: ["Aprendizaje automático en el dispositivo.","SDK móvil de Google para tareas como reconocimiento de texto y traducción local en dispositivos compatibles.","Traducción local en OrbiJob y OCR de etiquetas y menús en Bebômetro."]
     },
     "google-maps": {
-      en: ["Maps, places and location search.","Combines map visualization, geographic APIs and place discovery for location-aware application features.","Google Maps and Places in EMATER-GO Mobi and Vai, and Google Maps in GPOL."],
-      "pt-BR": ["Mapas, lugares e busca geográfica.","Combina visualização de mapas, APIs geográficas e descoberta de locais em funcionalidades de localização.","Google Maps e Places no EMATER-GO Mobi e Vai, e Google Maps no GPOL."],
-      es: ["Mapas, lugares y búsqueda geográfica.","Combina visualización de mapas, API geográficas y búsqueda de lugares para funciones basadas en ubicación.","Google Maps y Places en EMATER-GO Mobi y Vai, y Google Maps en GPOL."]
+      en: ["Maps, places and location search.","Combines map visualization, geographic APIs and place discovery for location-aware application features.","Google Maps in EMATER-GO Mobi and GPOL, and Maps plus Places in Vai."],
+      "pt-BR": ["Mapas, lugares e busca geográfica.","Combina visualização de mapas, APIs geográficas e descoberta de locais em funcionalidades de localização.","Google Maps no EMATER-GO Mobi e GPOL, e Maps mais Places no Vai."],
+      es: ["Mapas, lugares y búsqueda geográfica.","Combina visualización de mapas, API geográficas y búsqueda de lugares para funciones basadas en ubicación.","Google Maps en EMATER-GO Mobi y GPOL, y Maps más Places en Vai."]
     },
     "mapbox": {
       en: ["Custom maps and geospatial visualization.","Provides map rendering, styles and geospatial interactions for location-rich applications.","Used in the Agrosmart and BoosterAGRO mobile products."],
