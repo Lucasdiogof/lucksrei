@@ -275,7 +275,6 @@
 
   /* ---- fanhub ---- */
   "fanhub.s1.div1": "<a href=\"/\">Lucksrei</a> / <a href=\"/#projetos\">Projects</a> / Goiás App",
-  "fanhub.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/fan-hub/privacy/goias/\">Privacy policy</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/fan-hub/support/\">Support</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/fan-hub/data-deletion/\">Account and data deletion</a>",
   "fanhub.s1.p1": "An app for Goiás fans: matches, club, content, a mini-games Arena and the Fans' Lineup in one place.",
   "fanhub.s2.div1": "App core: Flutter · Clean Architecture · Arena engine · Design system",
   "fanhub.s2.div10": "<strong>Live matches</strong>Live score and push notifications for kickoff, goals, half-time and full time.",
@@ -295,7 +294,6 @@
 
   /* ---- matchqueue ---- */
   "matchqueue.s1.div1": "<a href=\"/\">Lucksrei</a> / <a href=\"/#projetos\">Projects</a> / Match Queue",
-  "matchqueue.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/match-queue/privacy/\">App privacy policy</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/match-queue/data-deletion/\">Account and data deletion</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/match-queue/support/\">Support</a>",
   "matchqueue.s1.p1": "A real-time search queue for EA SPORTS FC teams: one member searches at a time and the next in line takes over automatically. The server decides; the app only asks and follows.",
   "matchqueue.s2.div1": "<strong>Teams &amp; members</strong>Team creation, invites and member management.",
   "matchqueue.s2.div2": "<strong>Search queue</strong>One active search per team, with automatic expiration.",
@@ -314,7 +312,6 @@
 
   /* ---- aprovaura ---- */
   "aprovaura.s1.div1": "<a href=\"/\">Lucksrei</a> / <a href=\"/#projetos\">Projects</a> / Aprovaura",
-  "aprovaura.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/aura/privacy/\">App privacy policy</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/aura/data-deletion/\">Account and data deletion</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/aura/support/\">Support</a>",
   "aprovaura.s1.p1": "A study app for entrance exams and tests, with questions by subject, mock exams, mistake review and essay grading.",
   "aprovaura.s2.div1": "<strong>Question bank</strong>Questions and answers organized by subject.",
   "aprovaura.s2.div10": "<strong>Cross-platform</strong>The same app on Android and iOS.",
@@ -333,7 +330,6 @@
 
   /* ---- lapelve ---- */
   "lapelve.s1.div1": "<a href=\"/\">Lucksrei</a> / <a href=\"/#projetos\">Projects</a> / La Pelve",
-  "lapelve.s1.div2": "<a class=\"btn btn-ghost btn-sm\" href=\"/projects/la-pelve/privacy/\">App privacy policy</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/la-pelve/data-deletion/\">Account and data deletion</a> <a class=\"btn btn-ghost btn-sm\" href=\"/projects/la-pelve/support/\">Support</a>",
   "lapelve.s1.p1": "A clinical management app for pelvic physiotherapists: schedule, patient records, progress notes and payment tracking.",
   "lapelve.s2.div1": "<strong>Schedule</strong>Organization of time slots and appointments.",
   "lapelve.s2.div2": "<strong>Patients</strong>Records and history per patient.",
