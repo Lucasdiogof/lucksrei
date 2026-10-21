@@ -324,9 +324,9 @@
       es: ["JavaScript con tipos.","Superconjunto tipado de JavaScript que compila a JavaScript puro.","Código tipado de servidor y edge en Goiás App, BusãoGyn y OrbiJob, incluidos adaptadores de API y Cloudflare Workers."]
     },
     "web-pwa": {
-      en: ["Flutter apps that also run in the browser.","Flutter's web target compiles the same Dart code to the browser; as a Progressive Web App it can be installed and work like an app.","Flutter Web delivery for Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob, Bebômetro and StockPort."],
-      "pt-BR": ["Apps Flutter que também rodam no navegador.","O alvo web do Flutter compila o mesmo código Dart para o navegador; como Progressive Web App, pode ser instalado e funcionar como um app.","Distribuição Flutter Web para Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob, Bebômetro e StockPort."],
-      es: ["Apps Flutter que también funcionan en el navegador.","El destino web de Flutter compila el mismo código Dart para el navegador; como Progressive Web App se puede instalar y funcionar como una app.","Distribución Flutter Web para Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob, Bebômetro y StockPort."]
+      en: ["Flutter apps that also run in the browser.","Flutter Web runs Dart in the browser. Installable PWA support requires extra app-specific configuration.","Web builds for Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob, Bebômetro and StockPort, at different release stages."],
+      "pt-BR": ["Apps Flutter que também rodam no navegador.","Flutter Web executa Dart no navegador. A instalação como PWA exige configuração específica em cada aplicativo.","Builds Web de Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob, Bebômetro e StockPort, em diferentes fases de publicação."],
+      es: ["Apps Flutter que también funcionan en el navegador.","Flutter Web ejecuta Dart en el navegador. La instalación como PWA exige configuración específica de cada aplicación.","Builds Web de Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob, Bebômetro y StockPort, en distintas etapas de publicación."]
     },
     "deep-links": {
       en: ["Links that open a specific screen of the app.","Android App Links and iOS Universal Links route a URL straight into the right screen, with a web fallback when the app is not installed.","Team invite links in Match Queue, app navigation in Tabela Fone and authentication callbacks in StockPort."],
