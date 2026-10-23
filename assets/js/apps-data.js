@@ -27,7 +27,7 @@
  * Nenhum número de downloads/avaliação foi confirmado até aqui: tudo null.
  *
  * TOTAIS ESPERADOS (conferidos por tests/apps-data.test.js e no console da página):
- *   own 7 + systems 1 + professional 9 + cooper 20 = 37.
+ *   own 7 + systems 2 + professional 9 + cooper 20 = 38.
  */
 (function () {
   "use strict";
@@ -42,7 +42,7 @@
   }
 
   window.LUCKSREI_APPS = {
-    expected: { own: 7, systems: 1, professional: 9, cooper: 20, total: 37 },
+    expected: { own: 7, systems: 2, professional: 9, cooper: 20, total: 38 },
     featured: ['fan-hub', 'toro', 'iza', 'aprovaura', 'cooper-pay'],
     // textos dos grupos: apps.filter.<id>, apps.group.<id>.title|intro (assets/i18n)
     groups: [{ id: 'own' }, { id: 'systems' }, { id: 'professional' }, { id: 'cooper' }],
@@ -75,6 +75,9 @@
       { id: 'stockport', name: 'StockPort System', subtitle: { en: 'Inventory, sales, cash register and reporting for small businesses', 'pt-BR': 'Gestão de estoque, vendas, caixa e relatórios para pequenos negócios', es: 'Gestión de inventario, ventas, caja e informes para pequeños negocios' }, group: 'systems', sector: 'retailtech',
         logo: '/assets/img/apps/stockport.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null,
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'PostgreSQL', 'RLS'], caseUrl: '/projects/stockport/' },
+      { id: 'beard', name: 'Beard System', subtitle: { en: 'Scheduling, clients, commissions and cash for barbershops', 'pt-BR': 'Agenda, clientes, comissões e caixa para barbearias', es: 'Agenda, clientes, comisiones y caja para barberías' }, group: 'systems', sector: 'management',
+        logo: '/assets/img/apps/beard.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null, webUrl: 'https://beard.lucksrei.com',
+        downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'PostgreSQL', 'RLS'] },
 
       /* ---- profissionais (do mais recente para o mais antigo, pelo fim do período) ---- */
       { id: 'tabela-fone', name: 'Tabela Fone', subtitle: { en: 'Price intelligence for used phone retailers', 'pt-BR': 'Inteligência de preços para lojistas de celulares usados', es: 'Inteligencia de precios para tiendas de celulares usados' }, group: 'professional', sector: 'retailtech',

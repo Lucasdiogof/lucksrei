@@ -11,9 +11,9 @@ var failures = [];
 function check(ok, msg) { if (!ok) failures.push(msg); }
 function count(g) { return d.apps.filter(function (a) { return a.group === g; }).length; }
 
-check(d.apps.length === 37, "total deve ser 37, é " + d.apps.length);
+check(d.apps.length === 38, "total deve ser 38, é " + d.apps.length);
 check(count("own") === 7, "own deve ser 7, é " + count("own"));
-check(count("systems") === 1, "systems deve ser 1, é " + count("systems"));
+check(count("systems") === 2, "systems deve ser 2, é " + count("systems"));
 check(count("professional") === 9, "professional deve ser 9, é " + count("professional"));
 check(count("cooper") === 20, "cooper deve ser 20, é " + count("cooper"));
 var ids = {};
@@ -35,11 +35,11 @@ d.apps.forEach(function (a) {
   });
 });
 
-// logos publicadas: 37 WebP, todas referenciadas, nenhuma via /src/
+// logos publicadas: 38 WebP, todas referenciadas, nenhuma via /src/
 var published = fs.readdirSync(path.join(root, "assets/img/apps")).filter(function (n) { return /\.webp$/.test(n); });
-check(published.length === 37, "logos publicadas devem ser 37, são " + published.length);
+check(published.length === 38, "logos publicadas devem ser 38, são " + published.length);
 var referenced = d.apps.filter(function (a) { return a.logo; }).map(function (a) { return path.basename(a.logo); });
-check(referenced.length === 37, "apps com logo devem ser 37, são " + referenced.length);
+check(referenced.length === 38, "apps com logo devem ser 38, são " + referenced.length);
 published.forEach(function (n) { check(referenced.indexOf(n) >= 0, "logo publicada sem app: " + n); });
 d.apps.forEach(function (a) {
   if (a.logo && a.group === "cooper") check(path.basename(a.logo, ".webp") === a.id, "logo/id divergem em " + a.id);
