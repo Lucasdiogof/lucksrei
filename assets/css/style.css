@@ -729,6 +729,50 @@ main > [data-legal] .legal-body a{ overflow-wrap: anywhere; }
 }
 
 
+/* ---------- institutional documents (/support/, /privacy/, /terms/): switch, index, FAQ, contact ---------- */
+.legal-meta{ margin: 0; font-size: 13px; color: var(--text-faint); }
+.legal-switch{ display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 26px; padding: 0; }
+.legal-switch a{
+  padding: 7px 14px; border: 1px solid var(--border); border-radius: 999px;
+  color: var(--text-dim); font-size: 14px; text-decoration: none; transition: border-color .2s var(--ease), color .2s var(--ease);
+}
+.legal-switch a:hover{ border-color: var(--border-strong); color: var(--text); }
+.legal-switch a[aria-current="page"]{ border-color: var(--accent); color: var(--accent-strong); }
+.legal-switch a:focus-visible, .legal-toc a:focus-visible, .legal-faq summary:focus-visible{ outline: 2px solid var(--accent); outline-offset: 3px; }
+.legal-toc{ margin: 0 0 8px; padding: 16px 18px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--panel); }
+.legal-toc-title{ margin: 0 0 8px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--text-faint); }
+.legal-toc ol{ margin: 0; padding: 0; list-style: none; columns: 2; column-gap: 28px; }
+.legal-toc li{ margin: 0; padding: 3px 0; break-inside: avoid; font-size: 14.5px; line-height: 1.45; }
+.legal-toc a{ color: var(--text-dim); text-decoration: none; }
+.legal-toc a:hover{ color: var(--accent-strong); }
+.legal-sec{ scroll-margin-top: 88px; margin-top: 36px; }
+.legal-toc + .legal-sec{ margin-top: 30px; }
+main > [data-legal] .legal-body .legal-sec > h2{ margin-top: 0; }
+.legal-faq{ border-top: 1px solid var(--border); }
+.legal-faq details{ border-bottom: 1px solid var(--border); }
+.legal-faq summary{
+  cursor: pointer; list-style: none; padding: 15px 28px 15px 0; position: relative;
+  color: var(--text); font-size: 15.5px; line-height: 1.5; font-weight: 500;
+}
+.legal-faq summary::-webkit-details-marker{ display: none; }
+.legal-faq summary::after{ content: "+"; position: absolute; right: 4px; top: 12px; color: var(--accent); font-size: 20px; line-height: 1.4; }
+.legal-faq details[open] summary::after{ content: "\2212"; }
+.legal-faq details > p{ margin: 0 0 16px; max-width: 64ch; }
+.legal-contact{
+  display: flex; align-items: center; justify-content: space-between; gap: 16px 24px; flex-wrap: wrap;
+  margin: 40px 0 0; padding: 18px 20px; border: 1px solid var(--border); border-left: 2px solid var(--accent); border-radius: var(--radius-sm); background: var(--panel);
+}
+.legal-contact strong{ display: block; margin-bottom: 4px; color: var(--text); font-size: 15.5px; }
+.legal-contact p{ margin: 0; max-width: 52ch; font-size: 14.5px; }
+.legal-related{ margin-top: 28px; }
+.legal-related .legal-toc-title{ margin-bottom: 10px; }
+@media (max-width: 700px){
+  .legal-toc ol{ columns: 1; }
+  .legal-contact{ padding: 16px; }
+  .legal-contact .btn{ width: 100%; justify-content: center; }
+  .legal-switch a{ padding: 8px 14px; }
+}
+
 /* ---------- metrics footer (home) ---------- */
 .metric .label strong{ display: block; color: var(--text-dim); font-size: 14px; font-weight: 600; margin-bottom: 2px; }
 /* convite para o portfólio completo: um painel inteiro clicável (texto + logos + botão) que puxa para /apps/ */
