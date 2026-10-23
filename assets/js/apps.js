@@ -178,7 +178,8 @@
       root.appendChild(sec);
     });
 
-    if (filtersEl) filtersEl.textContent = "";
+    var bar = null;
+    if (filtersEl) { filtersEl.textContent = ""; bar = el("span", "apps-bar"); bar.setAttribute("aria-hidden", "true"); filtersEl.appendChild(bar); }
     function addFilter(id) {
       var b = el("button", "apps-filter");
       b.type = "button";
@@ -195,6 +196,14 @@
     setFilter(activeFilter, false);
   }
 
+  function moveBar() {
+    var bar = filtersEl && filtersEl.querySelector(".apps-bar"), on = filtersEl && filtersEl.querySelector('.apps-filter[aria-pressed="true"]');
+    if (!bar || !on) return;
+    bar.style.width = on.offsetWidth + "px";
+    bar.style.transform = "translateX(" + on.offsetLeft + "px)";
+    if (on.scrollIntoView) on.scrollIntoView({ block: "nearest", inline: "center" });
+  }
+
   function setFilter(id, push) {
     var ids = ["all"].concat(data.groups.map(function (g) { return g.id; }));
     if (ids.indexOf(id) < 0) id = "all";
@@ -203,6 +212,8 @@
       b.setAttribute("aria-pressed", b.getAttribute("data-filter") === id ? "true" : "false");
     });
     root.querySelectorAll(".apps-group").forEach(function (sec) { sec.hidden = !(id === "all" || id === sec.id); });
+    root.querySelectorAll(".app-card").forEach(function (c, i) { c.style.setProperty("--i", Math.min(i, 12)); });
+    moveBar();
     if (push && window.history && history.replaceState) {
       history.replaceState(null, "", id === "all" ? location.pathname : "#" + id);
     }
@@ -212,6 +223,14 @@
   if (initial) activeFilter = initial;
   validate();
   render();
+  window.addEventListener("resize", moveBar);
+  if (filtersEl) filtersEl.addEventListener("keydown", function (e) {
+    var ids = ["all"].concat(data.groups.map(function (g) { return g.id; })), d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+    if (!d) return;
+    var n = Math.max(0, Math.min(ids.length - 1, ids.indexOf(activeFilter) + d));
+    setFilter(ids[n], true);
+    filtersEl.querySelector('[data-filter="' + ids[n] + '"]').focus();
+  });
   document.addEventListener("lucksrei:locale", render);
   window.addEventListener("hashchange", function () { setFilter((location.hash || "").replace("#", ""), false); });
 })();
