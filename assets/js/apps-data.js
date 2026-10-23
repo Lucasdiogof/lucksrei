@@ -73,7 +73,7 @@
 
       /* ---- Lucksrei Systems: sistemas genéricos para pequenos negócios. Novo sistema = mais um registro group 'systems' (+ logo em assets/img/apps/<id>.webp). Não entram na home. ---- */
       { id: 'stockport', name: 'StockPort System', subtitle: { en: 'Inventory, sales, cash register and reporting for small businesses', 'pt-BR': 'Gestão de estoque, vendas, caixa e relatórios para pequenos negócios', es: 'Gestión de inventario, ventas, caja e informes para pequeños negocios' }, group: 'systems', sector: 'retailtech',
-        logo: '/assets/img/apps/stockport.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null,
+        logo: '/assets/img/apps/stockport.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: 'https://apps.apple.com/br/app/stockport-system/id6825179571',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'PostgreSQL', 'RLS'], caseUrl: '/projects/stockport/' },
       { id: 'beard', name: 'Beard System', subtitle: { en: 'Scheduling, clients, commissions and cash for barbershops', 'pt-BR': 'Agenda, clientes, comissões e caixa para barbearias', es: 'Agenda, clientes, comisiones y caja para barberías' }, group: 'systems', sector: 'management',
         logo: '/assets/img/apps/beard.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null, webUrl: 'https://beard.lucksrei.com',

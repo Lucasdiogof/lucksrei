@@ -1143,7 +1143,7 @@
   "stockport.f8": "<strong>Relatórios e exportações</strong>Faturamento por dia e por forma de pagamento, mais vendidos, lucro estimado e margem; PDF e CSV.",
   "stockport.f9": "<strong>Dados por empresa</strong>Cada empresa só vê os próprios dados, protegidos no servidor.",
   "stockport.f10": "<strong>Seu idioma, seu tema</strong>Português, inglês e espanhol; temas claro e escuro; Android, iOS e Web.",
-  "stockport.disclosure": "O StockPort System está em desenvolvimento e ainda não foi publicado no Google Play nem na App Store. O vídeo usa dados demonstrativos. O sistema não emite nota fiscal (NF-e) e não tem integração bancária nem com marketplaces.",
+  "stockport.disclosure": "O StockPort System está disponível na App Store. O vídeo usa dados demonstrativos. O sistema não emite nota fiscal (NF-e) e não tem integração bancária nem com marketplaces.",
   "stockport.licensing": "Licenciamento",
   "stockport.nav": "<a class=\"btn btn-ghost\" href=\"/apps/#systems\">← Lucksrei Systems</a> <a class=\"btn btn-primary\" href=\"/apps/\">Todos os apps →</a>"
 };
