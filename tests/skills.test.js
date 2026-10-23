@@ -134,7 +134,7 @@ check(order.every(function (v, i) { return v > 0 && (i === 0 || v > order[i - 1]
 check(D.ORDER.length === 81, "total de skills esperado: 81");
 // Flutter e Dart são indissociáveis em aplicativos Flutter; lista compartilhada evita regressão.
 check(ids.flutter.projects === ids.dart.projects, "Flutter e Dart devem compartilhar a mesma lista de projetos");
-check(ids.flutter.projects.length === 18, "total de projetos Flutter/Dart (incluindo Cooper Pay) deve ser 18");
+check(ids.flutter.projects.length === 19, "total de projetos Flutter/Dart (incluindo Cooper Pay) deve ser 19");
 check(["emater","agr-fiscal","stockport","orbijob","bebometro"].every(function (p) { return has("dart","projects",p); }), "Dart precisa refletir projetos recentes e profissionais");
 check(!has("firebase","projects","bebometro") && !has("firebase","projects","stockport") && !has("firebase","projects","aprovaura"), "Não inferir Firebase a partir de Supabase");
 
