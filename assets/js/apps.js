@@ -212,7 +212,7 @@
       b.setAttribute("aria-pressed", b.getAttribute("data-filter") === id ? "true" : "false");
     });
     root.querySelectorAll(".apps-group").forEach(function (sec) { sec.hidden = !(id === "all" || id === sec.id); });
-    root.querySelectorAll(".app-card").forEach(function (c, i) { c.style.setProperty("--i", Math.min(i, 12)); });
+    root.querySelectorAll(".apps-group:not([hidden]) .app-card").forEach(function (c, i) { c.style.setProperty("--i", Math.min(i, 24)); });
     moveBar();
     if (push && window.history && history.replaceState) {
       history.replaceState(null, "", id === "all" ? location.pathname : "#" + id);
