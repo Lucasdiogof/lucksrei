@@ -120,6 +120,7 @@
   "home.hero.hello_2": "I'm a mobile developer specialized in Flutter.",
   "home.hero.hello_2s": "I'm a mobile developer specialized in Flutter.",
   "home.hero.hello_3": "Feel free to explore my portfolio&nbsp;— I'll be right here coding.",
+  "home.hero.replay": "Replay the scene",
   "home.experiencia.kicker": "Career",
   "home.visitors.title": "Where visits come from",
   "home.visitors.lead": "Visits to lucksrei.com by country.",

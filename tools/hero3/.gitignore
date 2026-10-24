@@ -1,0 +1,3 @@
+# saídas de revisão (vídeos, capturas, prévias): regeneráveis, não vão para o repositório
+out/
+__pycache__/

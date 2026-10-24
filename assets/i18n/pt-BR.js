@@ -120,6 +120,7 @@
   "home.hero.hello_2": "Sou desenvolvedor mobile,<br>especializado em Flutter.",
   "home.hero.hello_2s": "Sou desenvolvedor mobile,<br>especializado em Flutter.",
   "home.hero.hello_3": "Pode explorar meu portfólio à vontade&nbsp;— eu vou ficar por aqui programando.",
+  "home.hero.replay": "Rever a cena",
   "home.experiencia.kicker": "Carreira",
   "home.visitors.title": "De onde chegam os acessos",
   "home.visitors.lead": "Visitas ao lucksrei.com por país.",

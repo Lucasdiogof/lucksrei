@@ -320,6 +320,7 @@ a:focus-visible, button:focus-visible{
   opacity: 0; transform: translateY(4px); transition: opacity .35s var(--ease), transform .35s var(--ease); pointer-events: none;
 }
 .hs-hello span + span{ color: #d7b766; }
+.hero-scene.is-v3:not(.is-crop) .hs-hello{ font-size: 10px; padding: 5px 9px 6px; gap: 1px; }   /* v3: cabe acima do quadro da coroa (PT/ES têm 3 linhas) */
 .hs-hello:first-of-type span{ text-wrap: balance; }   /* 1ª fala: linhas equilibradas, sem palavra sozinha na última */
 .hs-hello.is-on{ opacity: 1; transform: none; }
 .hero-scene.is-crop .hs-hello{ font-size: 10px; padding: 5px 8px 6px; }
@@ -335,6 +336,13 @@ a:focus-visible, button:focus-visible{
 .hs-stage::before, .hs-stage::after{ content: ""; position: absolute; width: 20px; height: 20px; z-index: 2; pointer-events: none; }
 .hs-stage::before{ top: 8px; left: 8px; border-top: 1px solid rgba(219,178,80,.55); border-left: 1px solid rgba(219,178,80,.55); border-top-left-radius: 6px; }
 .hs-stage::after{ right: 8px; bottom: 8px; border-right: 1px solid rgba(219,178,80,.55); border-bottom: 1px solid rgba(219,178,80,.55); border-bottom-right-radius: 6px; }
+/* Hero v3: botão discreto “rever a cena” (criado por hero-v3.js, fora do .hs-stage, que é role="img") */
+.hs-replay{ position: absolute; z-index: 3; width: 28px; height: 28px; padding: 0; display: grid; place-items: center; border-radius: 50%;
+  border: 1px solid rgba(219,178,80,.45); background: rgba(11,16,32,.72); color: #e9cf86; cursor: pointer;   /* cores fixas: a cena é sempre escura (tema claro incluído) */
+  opacity: 0; visibility: hidden; transition: opacity .4s ease, visibility 0s linear .4s, border-color .2s ease; }
+.hs-replay.is-on{ opacity: .7; visibility: visible; transition: opacity .4s ease, visibility 0s, border-color .2s ease; }
+.hs-replay.is-on:hover, .hs-replay.is-on:focus-visible{ opacity: 1; border-color: rgba(238,204,109,.9); }
+.hs-replay:focus-visible{ outline: 2px solid #dbb250; outline-offset: 2px; }
 .hero-scene figcaption{
   display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
   margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border);

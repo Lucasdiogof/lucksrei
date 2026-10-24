@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hero v3 — comparação de perfil</title>
+<style>
+  body { margin: 0; padding: 16px; background: #0b0d14; color: #d8dae4; font: 13px/1.4 ui-monospace, Menlo, monospace; }
+  h1 { font-size: 15px; margin: 0 0 4px; }
+  .row { display: flex; gap: 16px; flex-wrap: wrap; margin: 12px 0 20px; }
+  figure { margin: 0; }
+  figcaption { margin: 0 0 6px; color: #e8c766; }
+  canvas { width: 480px; height: 300px; image-rendering: pixelated; display: block; border: 1px solid #262a3a; }
+  nav a { color: #9fb4ff; margin-right: 12px; }
+</style>
+</head>
+<body>
+<h1>Hero v3 — perfil: v2 original × v3 anterior × v3 corrigida (tamanho real, 480×300, mesmo cenário)</h1>
+<nav><a href="?mode=poc"><b>prova de conceito híbrida</b></a><a href="?mode=parado">perfil parado</a><a href="?mode=andar">caminhada</a><a href="?mode=giro">giro na cena</a><a href="?mode=rot360">rotação completa + andar (v3 corrigida)</a></nav>
+<div class="row" id="row"></div>
+<script>
+/* Página de QA (não vai para o site). Desenha cada versão com as MESMAS camadas do quarto atual:
+   v2 = assets/img/hero/sprites.png (produção), v3 anterior = tools/hero3/out/v3a, v3 corrigida = assets/img/hero/v3. */
+(function () {
+  "use strict";
+  var q = new URLSearchParams(location.search), mode = q.get("mode") || "parado";
+  var fixedT = q.has("t") ? parseFloat(q.get("t")) : null;
+  var IMG = {}, J = {}, cv = [], t0 = performance.now();
+  function img(k, src) { return new Promise(function (ok) { var i = new Image(); i.onload = function () { IMG[k] = i; ok(); }; i.src = src; }); }
+  function json(k, src) { return fetch(src).then(function (r) { return r.json(); }).then(function (d) { J[k] = d; }); }
+  function expand(runs) { var o = []; runs.forEach(function (r) { for (var i = 0; i < r[0]; i++) o.push(r); }); return o; }
+
+  function scene(ctx, chair) {
+    ctx.drawImage(IMG.bg, 0, 0); ctx.drawImage(IMG.chair, chair || 0, 0);
+  }
+  function front(ctx, mugHand) {
+    ctx.drawImage(IMG.desk, 0, 0); if (!mugHand) ctx.drawImage(IMG.mug, 0, 0);
+  }
+  function v2cell(name, i) {
+    var D = J.qa.v2, k = D.frames[name][0] + i;
+    return [(k % D.cols) * 72, Math.floor(k / D.cols) * 72];
+  }
+  function drawV2(ctx, name, i, x, y) {
+    var c = v2cell(name, i);
+    scene(ctx, 0);
+    ctx.drawImage(IMG.v2, c[0], c[1], 72, 72, x - 32, y - 68, 72, 72);
+    front(ctx, false);
+    ctx.drawImage(IMG.v2, c[0], c[1] + J.qa.v2.rows * 72, 72, 72, x - 32, y - 68, 72, 72);
+    ctx.drawImage(IMG.monitors, 0, 0);
+  }
+  function drawRec(ctx, atlas, frames, r) {
+    var f = frames[r[1]], x = r[2], y = r[3];
+    scene(ctx, r[4]);
+    if (f.b) ctx.drawImage(atlas, f.b[0], f.b[1], f.b[2], f.b[3], x + f.b[4], y + f.b[5], f.b[2], f.b[3]);
+    front(ctx, r[5]);
+    if (f.o) ctx.drawImage(atlas, f.o[0], f.o[1], f.o[2], f.o[3], x + f.o[4], y + f.o[5], f.o[2], f.o[3]);
+    ctx.drawImage(IMG.monitors, 0, 0);
+  }
+  function at(list, t, loop) { var n = Math.floor(t * 12); return list[loop ? n % list.length : Math.min(n, list.length - 1)]; }
+
+  function render(t) {
+    var A = expand(J.a.intro), B = expand(J.b.intro);
+    if (mode === "parado") {
+      drawV2(cv[0], "stand_r", 0, 66, 140);
+      drawRec(cv[1], IMG.a, J.a.frames, A[49]);
+      drawRec(cv[2], IMG.b, J.b.frames, B[49]);
+    } else if (mode === "andar") {             // v2: 10 q/s, 3 px por quadro; v3: trilha a 12 tiques/s
+      var n = Math.floor(t * 10) % 34, x = Math.min(66, -14 + 3 * n);
+      drawV2(cv[0], x < 66 ? "walk_r" : "stand_r", x < 66 ? n % 8 : 0, x, 140);
+      var k = Math.floor(t * 12) % 56;
+      drawRec(cv[1], IMG.a, J.a.frames, A[Math.min(k, 49)]);
+      drawRec(cv[2], IMG.b, J.b.frames, B[Math.min(k, 49)]);
+    } else if (mode === "giro") {              // v2: perfil → 1 quadro de giro → frente; v3: os giros da intro
+      var s = t % 4.5;
+      if (s < 1.2) drawV2(cv[0], "stand_r", 0, 66, 140);
+      else if (s < 1.45) drawV2(cv[0], "turn_r", 0, 66, 140);
+      else drawV2(cv[0], "front_idle", 0, 66, 140);
+      var seq = [];
+      for (var i = 44; i < 66; i++) seq.push(i);
+      for (i = 0; i < 6; i++) seq.push(65);
+      var kk = seq[Math.floor(s * 12) % seq.length] || 65;
+      drawRec(cv[1], IMG.a, J.a.frames, A[Math.min(kk, A.length - 1)]);
+      drawRec(cv[2], IMG.b, J.b.frames, B[Math.min(kk, B.length - 1)]);
+    } else if (mode === "poc") {              // frente → gira → perfil → anda → volta: v2 | v3 atual | híbrido
+      ["v2", "v3", "hib"].forEach(function (k, i) {
+        var tr = J.poc.tracks[k], r = tr[Math.floor(t * 12) % tr.length], f = r[0], cols = J.poc.cols, c = cv[i];
+        scene(c, 0);
+        c.drawImage(IMG.poc, (f % cols) * 72, Math.floor(f / cols) * 72, 72, 72, r[1] - 32, r[2] - 68, 72, 72);
+        front(c, false);
+        c.drawImage(IMG.monitors, 0, 0);
+      });
+    } else {                                   // rotação completa e caminhada nos dois lados (v3 corrigida)
+      var R = expand(J.qa.rot), Wk = expand(J.qa.walk);
+      drawRec(cv[0], IMG.rot, J.qa.frames, at(R, t, true));
+      drawRec(cv[1], IMG.rot, J.qa.frames, at(Wk, t, true));
+      var r2 = at(R, t, true), fr = J.qa.frames[r2[1]];
+      var c = cv[2]; c.fillStyle = "#343a52"; c.fillRect(0, 0, 240, 150);
+      if (fr.b) c.drawImage(IMG.rot, fr.b[0], fr.b[1], fr.b[2], fr.b[3], 120 + fr.b[4], 140 + fr.b[5], fr.b[2], fr.b[3]);
+    }
+  }
+
+  var labels = mode === "poc" ? ["v2 original (produção)", "v3 atual (rig)", "híbrido (arte da v2 + intermediários)"] : mode === "rot360" ? ["v3 corrigida — rotação completa no quarto", "v3 corrigida — caminhada nos dois lados", "v3 corrigida — rotação sobre fundo neutro"]
+    : ["v2 original (produção)", "v3 anterior", "v3 corrigida"];
+  var row = document.getElementById("row");
+  labels.forEach(function (l) {
+    var f = document.createElement("figure"), c = document.createElement("canvas"), cap = document.createElement("figcaption");
+    cap.textContent = l; c.width = 240; c.height = 150; f.appendChild(cap); f.appendChild(c); row.appendChild(f);
+    var x = c.getContext("2d"); x.imageSmoothingEnabled = false; cv.push(x);
+  });
+  var V3 = "/assets/img/hero/v3/";
+  Promise.all([img("bg", V3 + "bg.png"), img("chair", V3 + "chair.png"), img("desk", V3 + "desk.png"), img("monitors", V3 + "monitors.png"),
+    img("mug", V3 + "mug.png"), img("v2", "/assets/img/hero/sprites.png"), img("a", "../out/v3a/actor.png"), img("b", V3 + "actor.png"),
+    img("rot", "rot.png"), img("poc", "poc.png"), json("poc", "poc.json"), json("a", "../out/v3a/actor.json"), json("b", V3 + "actor.json"), json("qa", "data.json")]).then(function () {
+    window.__render = render;
+    if (fixedT !== null) { render(fixedT); document.body.setAttribute("data-ready", "1"); return; }
+    (function loop() { render((performance.now() - t0) / 1000); requestAnimationFrame(loop); })();
+    document.body.setAttribute("data-ready", "1");
+  });
+})();
+</script>
+</body>
+</html>
