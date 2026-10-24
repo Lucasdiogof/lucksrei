@@ -26,7 +26,7 @@ import v2art  # noqa: E402
 TICK = 12
 WALK_TICKS = [1, 1, 1, 1, 2]           # 10 quadros/s da v2 em 12 tiques/s
 SLOT = tuple(scene3.SLOT)
-OPENING = 3.5                                       # s de quarto vazio antes de ele entrar (Fase E)
+OPENING = 0.6                                       # s de quarto vazio antes de ele entrar (era 3,5: demorava demais)
 PRESENT = (66, 140)
 HIP = (34, 52)                          # quadril sentado da v2 (SEAT_HIP_CELL)
 
@@ -301,11 +301,11 @@ def coffee_window(T):
 def intro(reg):
     T = Track(reg)
     # 0) abertura (Fase E): o quarto vazio à noite, telas em espera, vapor na caneca; ele ainda fora de quadro
-    T.x, T.y = PRESENT[0] - 8 - 3 * 28 - 3 - 30, PRESENT[1]
+    T.x, T.y = PRESENT[0] - 8 - 3 * 23 - 3 - 30, PRESENT[1]
     T.put(("walk", 0), lambda: H.v2_walk(0), int(OPENING * TICK))
     # 1) entra andando (quadros da v2), para com o passo de parada
-    T.x, T.y = PRESENT[0] - 8 - 3 * 28 - 3, PRESENT[1]
-    walk_right(T, range(0, 29))                       # termina no quadro 4 (pé de longe à frente)
+    T.x, T.y = PRESENT[0] - 8 - 3 * 23 - 3, PRESENT[1]   # x = −14: começa logo fora da borda (entrada da v2)
+    walk_right(T, range(5, 29))                       # termina no quadro 4 (pé de longe à frente), como antes
     stop_right(T)                                     # +3 +3 +2 → x = PRESENT
     T.put(("stand",), lambda: H.v2_stand(), 3)
     # 2) vira para o visitante (cabeça adiantada) e fala

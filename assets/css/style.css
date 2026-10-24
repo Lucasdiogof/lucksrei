@@ -320,7 +320,8 @@ a:focus-visible, button:focus-visible{
   opacity: 0; transform: translateY(4px); transition: opacity .35s var(--ease), transform .35s var(--ease); pointer-events: none;
 }
 .hs-hello span + span{ color: #d7b766; }
-.hero-scene.is-v3:not(.is-crop) .hs-hello{ font-size: 10px; padding: 5px 9px 6px; gap: 1px; }   /* v3: cabe acima do quadro da coroa (PT/ES têm 3 linhas) */
+.hero-scene.is-v3:not(.is-crop) .hs-hello{ font-size: 10px; padding: 5px 9px 6px; gap: 1px;   /* v3: falas embaixo, à direita */
+  left: auto; top: auto; right: 6px; bottom: 6px; max-width: 62%; }   /* cobre o cantoneiro dourado do canto */
 .hs-hello:first-of-type span{ text-wrap: balance; }   /* 1ª fala: linhas equilibradas, sem palavra sozinha na última */
 .hs-hello.is-on{ opacity: 1; transform: none; }
 .hero-scene.is-crop .hs-hello{ font-size: 10px; padding: 5px 8px 6px; }

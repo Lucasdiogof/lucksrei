@@ -34,7 +34,7 @@
   var mql = window.matchMedia("(prefers-reduced-motion: reduce)");
   if (mql.matches) { if (poster && poster.getAttribute("data-final")) poster.src = poster.getAttribute("data-final"); return; }
 
-  var W = 240, H = 150, CROP = { x: 40, y: 14, w: 160, h: 136 }, HELLO = SCENE3 ? [62, 1] : [62, 8], HELLO_CROP = [44, 17];   // v3: balão no alto (o quadro da coroa subiu)
+  var W = 240, H = 150, CROP = { x: 40, y: 14, w: 160, h: 136 }, HELLO = [62, 8], HELLO_CROP = [44, 17];   // só o quarto da v2 usa (no v3 as falas ficam embaixo, style.css)
   var D, SC = null, img = {}, canvas, ctx, view = { x: 0, y: 0, w: W, h: H, scale: 2 };
   var intro = [], loop = [], TI = 0, TL = 0;
   var state = { running: false, visible: false, hidden: document.hidden, started: false, loaded: false };
@@ -235,7 +235,7 @@
     stage.insertBefore(canvas, hellos[0] || null);
     draw(clock);
     root.classList.add("is-live");
-    if (SCENE3) root.classList.add("is-v3");                 // balão compacto (style.css): não cobre o quadro nem a estante
+    if (SCENE3) root.classList.add("is-v3");                 // falas compactas embaixo, à direita (style.css)
     makeReplay();
   }
 

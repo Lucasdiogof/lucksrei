@@ -25,7 +25,7 @@ const seek = (p, t) => p.evaluate(t => document.getElementById('hero-scene').__h
     const { ctx, p, errs } = await open(b, vp);
     await p.waitForFunction(() => { const h = document.getElementById('hero-scene').__heroScene; return h && h.seek; });
     const shots = [];
-    for (const t of [1.5, 10, 23, 46.3, 70.6]) {
+    for (const t of [0.3, 6, 20, 42.9, 67.2]) {
       await seek(p, t); await p.waitForTimeout(450);
       const f = `${out}/vp-${vp[0]}-${t}.png`; await p.locator('.hero-scene').screenshot({ path: f }); shots.push(f);
     }
@@ -46,7 +46,7 @@ const seek = (p, t) => p.evaluate(t => document.getElementById('hero-scene').__h
     await p.waitForFunction(() => window.LucksreiI18n && document.getElementById('hero-scene').__heroScene);
     await p.evaluate(l => window.LucksreiI18n.setLocale(l), loc);
     const res = [];
-    for (const t of [10, 17]) {
+    for (const t of [6, 12]) {
       await seek(p, t); await p.waitForTimeout(450);
       res.push(await p.evaluate(() => { const h = document.querySelector('.hs-hello.is-on'), s = document.querySelector('.hs-stage').getBoundingClientRect();
         if (!h) return null; const r = h.getBoundingClientRect(); return { inside: r.left >= s.left && r.right <= s.right && r.top >= s.top && r.bottom <= s.bottom, text: h.innerText.slice(0, 40) }; }));

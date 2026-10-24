@@ -455,6 +455,16 @@ Detalhes:
 Commit dos arquivos da v3 + troca no `index.html`; deploy pelo fluxo de sempre. Reverter = voltar o `<script>` para
 `hero-scene.js` e os dois pôsteres para as cópias `-v2`.
 
+### Ajustes depois de publicar (pedidos do usuário)
+- **Entrada mais rápida:** abertura de 3,5 s → 0,6 s e caminhada começando logo fora da borda (x = −14, a entrada
+  da v2; mesmo ciclo de passos, termina no mesmo pé). Ele aparece aos 0,6 s e fala aos 4,2 s (antes 7,6 s);
+  intro 21,1 s → 17,7 s. Os tempos do loop recuam 3,4 s (ex.: café na janela ≈ 42,9 s, build falhou ≈ 67,2 s).
+- **Falas embaixo:** no desktop a caixa de diálogo fica no canto inferior direito (como já era no celular), com
+  fonte de 10 px e 6 px da borda (cobre o cantoneiro dourado); não cobre o personagem enquanto ele fala, nos três
+  idiomas. `HELLO` volta a valer só para o quarto da v2.
+- QA refeito (`qa_final.cjs` com os tempos novos): viewports, idiomas, movimento reduzido, sem JS, reserva v2 e
+  testes passando. Vídeo: `out/preview/intro-antes-x-depois{,-mob}-2x.mp4`.
+
 ## 6. Runtime v3 (proposta)
 
 `assets/js/hero-cine.js` (IIFE, sem dependências), substitui `hero-scene.js` **só quando validado**; até lá, atrás
