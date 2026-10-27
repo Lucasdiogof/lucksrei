@@ -134,18 +134,17 @@
 { id: "tailwind", name: "Tailwind CSS", exp: [], projects: [], related: ["react", "nextjs"] }
   ];
 
-  // Agrupamento da grade por stack. Toda skill de ORDER aparece em exatamente um grupo (tests/skills.test.js).
+  // Agrupamento da grade por stack, em ordem de importância para vagas Flutter (grupos e skills). Toda skill de ORDER aparece em exatamente um grupo (tests/skills.test.js).
   var GROUPS = [
-    { id: "mobile", name: { en: "Mobile", "pt-BR": "Mobile", es: "Móvil" }, skills: "flutter dart android ios flavors web-pwa webview deep-links".split(" ") },
-    { id: "architecture", name: { en: "Architecture", "pt-BR": "Arquitetura", es: "Arquitectura" }, skills: "clean-architecture solid modular-packages micro-frontends dependency-injection get-it offline-first".split(" ") },
-    { id: "state", name: { en: "State and navigation", "pt-BR": "Estado e navegação", es: "Estado y navegación" }, skills: "bloc provider getx go-router freezed".split(" ") },
-    { id: "web", name: { en: "Web", "pt-BR": "Web", es: "Web" }, skills: "typescript javascript react nextjs tailwind".split(" ") },
-    { id: "quality", name: { en: "Quality", "pt-BR": "Qualidade", es: "Calidad" }, skills: "tdd automated-testing playwright sentry crashlytics".split(" ") },
-    { id: "backend", name: { en: "Backend and APIs", "pt-BR": "Backend e APIs", es: "Backend y APIs" }, skills: "rest-api graphql supabase rls jwt cloudflare-workers cloudflare-pages".split(" ") },
-    { id: "databases", name: { en: "Databases", "pt-BR": "Bancos de dados", es: "Bases de datos" }, skills: "postgresql sql sqlite hive sembast firestore firebase-rtdb".split(" ") },
-    { id: "firebase", name: { en: "Firebase and push", "pt-BR": "Firebase e push", es: "Firebase y push" }, skills: "firebase firebase-auth remote-config firebase-messaging onesignal".split(" ") },
-    { id: "integrations", name: { en: "Integrations", "pt-BR": "Integrações", es: "Integraciones" }, skills: "whatsapp-api zendesk facebook-login gemini ml-kit in-app-purchases biometrics barcode-scanning pdf i18n resend gps google-maps mapbox maplibre".split(" ") },
-    { id: "delivery", name: { en: "Delivery and process", "pt-BR": "Entrega e processo", es: "Entrega y proceso" }, skills: "github-actions codemagic fastlane azure-devops gitlab git github app-store-connect google-play-console scrum".split(" ") }
+    { id: "mobile", name: { en: "Mobile", "pt-BR": "Mobile", es: "Móvil" }, skills: "flutter dart android ios flavors deep-links web-pwa webview".split(" ") },
+    { id: "state", name: { en: "State and navigation", "pt-BR": "Estado e navegação", es: "Estado y navegación" }, skills: "bloc provider go-router freezed getx".split(" ") },
+    { id: "architecture", name: { en: "Architecture", "pt-BR": "Arquitetura", es: "Arquitectura" }, skills: "clean-architecture solid dependency-injection get-it offline-first modular-packages micro-frontends".split(" ") },
+    { id: "quality", name: { en: "Quality", "pt-BR": "Qualidade", es: "Calidad" }, skills: "tdd automated-testing crashlytics sentry playwright".split(" ") },
+    { id: "backend", name: { en: "Backend and cloud", "pt-BR": "Backend e nuvem", es: "Backend y nube" }, skills: "rest-api supabase firebase firebase-auth firebase-messaging remote-config graphql rls jwt onesignal cloudflare-workers cloudflare-pages".split(" ") },
+    { id: "delivery", name: { en: "Delivery and process", "pt-BR": "Entrega e processo", es: "Entrega y proceso" }, skills: "google-play-console app-store-connect github-actions codemagic fastlane git github gitlab azure-devops scrum".split(" ") },
+    { id: "databases", name: { en: "Databases", "pt-BR": "Bancos de dados", es: "Bases de datos" }, skills: "sqlite firestore postgresql sql hive sembast firebase-rtdb".split(" ") },
+    { id: "integrations", name: { en: "Integrations", "pt-BR": "Integrações", es: "Integraciones" }, skills: "in-app-purchases i18n google-maps gps biometrics barcode-scanning ml-kit gemini pdf whatsapp-api resend facebook-login zendesk mapbox maplibre".split(" ") },
+    { id: "web", name: { en: "Web", "pt-BR": "Web", es: "Web" }, skills: "typescript react nextjs tailwind javascript".split(" ") }
   ];
 
   return { EXPERIENCES: EXPERIENCES, PROJECTS: PROJECTS, ORDER: ORDER, GROUPS: GROUPS };
