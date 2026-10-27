@@ -1529,8 +1529,12 @@ html[data-amb="contact"] .page-hero h1::after{
 /* ---------- Technical Skills: grade compacta de logos + modal ---------- */
 .skills-section{ padding-top: 56px; }
 @media (max-width: 700px){ .skills-section{ padding-top: 40px; } }
-.skill-grid{ list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 10px; }
+.skill-grid{ list-style: none; margin: 0; padding: 0; }
 .skill-grid li{ margin: 0; min-width: 0; }
+.skill-group{ display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 18px; padding: 20px 0; border-top: 1px solid var(--border-strong); }
+.skill-group:last-child{ border-bottom: 1px solid var(--border-strong); }
+.skill-group-title{ margin: 0; padding-top: 6px; font-size: 15px; font-weight: 600; color: var(--text); }
+.skill-row{ list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); gap: 10px; }
 .skill{
   width: 100%; height: 100%; min-height: 96px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
   padding: 14px 8px 12px; background: var(--card-bg); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm);
@@ -1545,11 +1549,12 @@ html[data-amb="contact"] .page-hero h1::after{
 .skill:focus-visible{ outline: 2px solid var(--accent); outline-offset: 3px; }
 @media (hover: none){ .skill:hover{ transform: none; box-shadow: none; } }
 @media (max-width: 560px){
-  .skill-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .skill-row{ grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
   .skill{ min-height: 92px; padding: 12px 4px 10px; }
   .skill-name{ font-size: 11px; }
 }
-@media (max-width: 340px){ .skill-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 340px){ .skill-row{ grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px){ .skill-group{ grid-template-columns: 1fr; gap: 10px; padding: 16px 0; } }
 
 html.has-modal{ overflow: hidden; padding-right: var(--sbw, 0); }
 .skill-modal{

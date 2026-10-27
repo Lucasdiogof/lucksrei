@@ -147,5 +147,21 @@
 { id: "oracle", name: "Oracle", text: true, exp: ["memora"], projects: [], related: ["sql", "db2"] }
   ];
 
-  return { EXPERIENCES: EXPERIENCES, PROJECTS: PROJECTS, ORDER: ORDER };
+  // Agrupamento da grade por stack. Toda skill de ORDER aparece em exatamente um grupo (tests/skills.test.js).
+  var GROUPS = [
+    { id: "mobile", name: { en: "Mobile", "pt-BR": "Mobile", es: "Móvil" }, skills: "flutter dart android ios flavors web-pwa webview deep-links".split(" ") },
+    { id: "architecture", name: { en: "Architecture", "pt-BR": "Arquitetura", es: "Arquitectura" }, skills: "clean-architecture solid modular-packages micro-frontends dependency-injection get-it offline-first".split(" ") },
+    { id: "state", name: { en: "State and navigation", "pt-BR": "Estado e navegação", es: "Estado y navegación" }, skills: "bloc provider getx scoped-model go-router freezed".split(" ") },
+    { id: "web", name: { en: "Web", "pt-BR": "Web", es: "Web" }, skills: "typescript javascript react nextjs tailwind".split(" ") },
+    { id: "quality", name: { en: "Quality", "pt-BR": "Qualidade", es: "Calidad" }, skills: "tdd automated-testing playwright sentry crashlytics".split(" ") },
+    { id: "backend", name: { en: "Backend and APIs", "pt-BR": "Backend e APIs", es: "Backend y APIs" }, skills: "rest-api graphql grpc signalr supabase supabase-realtime edge-functions rls jwt cloudflare-workers cloudflare-pages".split(" ") },
+    { id: "java", name: { en: "Java stack", "pt-BR": "Stack Java", es: "Stack Java" }, skills: "java spring zk-framework".split(" ") },
+    { id: "databases", name: { en: "Databases", "pt-BR": "Bancos de dados", es: "Bases de datos" }, skills: "postgresql sql sqlite mysql mongodb oracle db2 objectdb hive sembast firestore firebase-rtdb".split(" ") },
+    { id: "firebase", name: { en: "Firebase and push", "pt-BR": "Firebase e push", es: "Firebase y push" }, skills: "firebase firebase-auth remote-config firebase-messaging onesignal".split(" ") },
+    { id: "integrations", name: { en: "Integrations", "pt-BR": "Integrações", es: "Integraciones" }, skills: "whatsapp-api zendesk facebook-login gemini ml-kit in-app-purchases biometrics barcode-scanning pdf i18n resend".split(" ") },
+    { id: "maps", name: { en: "Maps and location", "pt-BR": "Mapas e localização", es: "Mapas y ubicación" }, skills: "gps google-maps mapbox maplibre".split(" ") },
+    { id: "delivery", name: { en: "Delivery and process", "pt-BR": "Entrega e processo", es: "Entrega y proceso" }, skills: "github-actions codemagic fastlane azure-devops gitlab git github app-store-connect google-play-console scrum".split(" ") }
+  ];
+
+  return { EXPERIENCES: EXPERIENCES, PROJECTS: PROJECTS, ORDER: ORDER, GROUPS: GROUPS };
 });

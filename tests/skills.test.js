@@ -132,6 +132,16 @@ check(order.every(function (v, i) { return v > 0 && (i === 0 || v > order[i - 1]
 
 // Inventário revisado a partir de /apps/: todas as novas competências devem apontar para projetos reais.
 check(D.ORDER.length === 87, "total de skills esperado: 87");
+// Agrupamento por stack: cada skill em exatamente um grupo, com nome nos 3 idiomas.
+(function () {
+  var seen = {};
+  D.GROUPS.forEach(function (g) {
+    LOCALES.forEach(function (l) { check(g.name[l], "grupo sem nome " + l + ": " + g.id); });
+    g.skills.forEach(function (id) { check(!seen[id], "skill em mais de um grupo: " + id); seen[id] = true; });
+  });
+  D.ORDER.forEach(function (s) { check(seen[s.id], "skill sem grupo: " + s.id); });
+  Object.keys(seen).forEach(function (id) { check(D.ORDER.some(function (s) { return s.id === id; }), "grupo cita skill inexistente: " + id); });
+})();
 // Flutter e Dart são indissociáveis em aplicativos Flutter; lista compartilhada evita regressão.
 check(ids.flutter.projects === ids.dart.projects, "Flutter e Dart devem compartilhar a mesma lista de projetos");
 check(ids.flutter.projects.length === 19, "total de projetos Flutter/Dart (incluindo Cooper Pay) deve ser 19");

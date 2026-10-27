@@ -44,17 +44,27 @@
   /* ---------- grade ---------- */
   function renderGrid() {
     var frag = document.createDocumentFragment();
-    DATA.ORDER.forEach(function (s) {
-      var li = el("li");
-      var b = el("button", "skill");
-      b.type = "button";
-      b.setAttribute("data-skill", s.id);
-      b.setAttribute("aria-haspopup", "dialog");
-      b.setAttribute("aria-label", t("skills.open", { name: label(s) }));
-      if (s.text) b.classList.add("is-text");          // sem logo: mesma tipografia da grade, apenas o nome
-      else { var img = logo(s.id, 40); img.loading = "lazy"; b.appendChild(img); }
-      b.appendChild(el("span", "skill-name", label(s)));
-      li.appendChild(b);
+    DATA.GROUPS.forEach(function (g) {
+      var li = el("li", "skill-group");
+      var h = el("h3", "skill-group-title", pick(g.name));
+      h.setAttribute("data-group", g.id);
+      li.appendChild(h);
+      var row = el("ul", "skill-row");
+      g.skills.forEach(function (id) {
+        var s = byId[id];
+        var item = el("li");
+        var b = el("button", "skill");
+        b.type = "button";
+        b.setAttribute("data-skill", s.id);
+        b.setAttribute("aria-haspopup", "dialog");
+        b.setAttribute("aria-label", t("skills.open", { name: label(s) }));
+        if (s.text) b.classList.add("is-text");          // sem logo: mesma tipografia da grade, apenas o nome
+        else { var img = logo(s.id, 40); img.loading = "lazy"; b.appendChild(img); }
+        b.appendChild(el("span", "skill-name", label(s)));
+        item.appendChild(b);
+        row.appendChild(item);
+      });
+      li.appendChild(row);
       frag.appendChild(li);
     });
     grid.textContent = "";
@@ -66,6 +76,10 @@
       var s = byId[b.getAttribute("data-skill")];
       b.setAttribute("aria-label", t("skills.open", { name: label(s) }));
       b.querySelector(".skill-name").textContent = label(s);
+    });
+    DATA.GROUPS.forEach(function (g) {
+      var h = grid.querySelector('[data-group="' + g.id + '"]');
+      if (h) h.textContent = pick(g.name);
     });
   }
 
