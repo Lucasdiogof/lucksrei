@@ -28,11 +28,6 @@
       "pt-BR": ["Estado e navegação para Flutter.","Disponibiliza estado reativo, gestão de dependências e utilitários de navegação no Flutter.","Integra a stack mobile da IZA Seguradora."],
       es: ["Estado y navegación para Flutter.","Proporciona estado reactivo, gestión de dependencias y utilidades de navegación en Flutter.","Forma parte del stack móvil de IZA Seguradora."]
     },
-    "scoped-model": {
-      en: ["Legacy Flutter state management.","Shares observable models across widget subtrees and notifies dependent widgets when values change.","Used in the GPOL project, reflecting an earlier Flutter architecture."],
-      "pt-BR": ["Gerência de estado legada do Flutter.","Compartilha modelos observáveis pela árvore de widgets e notifica os componentes quando os valores mudam.","Utilizado no GPOL, representando uma arquitetura Flutter mais antiga."],
-      es: ["Gestión de estado heredada de Flutter.","Comparte modelos observables en el árbol de widgets y notifica cambios a sus componentes.","Utilizado en GPOL como parte de una arquitectura Flutter anterior."]
-    },
     "modular-packages": {
       en: ["Shared modules with clear boundaries.","Organizes features into reusable packages with explicit dependencies and independent responsibilities.","Used in the modular Flutter architecture at Toro Investimentos."],
       "pt-BR": ["Módulos reutilizáveis e desacoplados.","Organiza funcionalidades em pacotes reutilizáveis, com dependências explícitas e responsabilidades próprias.","Utilizado na arquitetura Flutter modular da Toro Investimentos."],
@@ -253,11 +248,6 @@
       "pt-BR": ["Document store para Dart e Flutter.", "Armazenamento NoSQL persistente para Dart que guarda documentos estilo JSON em arquivo.", "Armazenamento local de documentos e estratégias offline-first na Agrosmart, com sincronização de dados entre o dispositivo e o backend."],
       es: ["Document store para Dart y Flutter.", "Almacenamiento NoSQL persistente para Dart que guarda documentos tipo JSON en un archivo.", "Almacenamiento local de documentos y estrategias offline-first en Agrosmart, con sincronización de datos entre el dispositivo y el backend."]
     },
-    objectdb: {
-      en: ["Object database.", "An object-oriented database management system. Not to be confused with ObjectBox.", "Used in freelance projects, in the EMATER-GO Mobi and AGR Fiscal apps."],
-      "pt-BR": ["Banco de dados orientado a objetos.", "Sistema de banco de dados orientado a objetos. Não confundir com o ObjectBox.", "Usado em projetos freelance, nos apps EMATER-GO Mobi e AGR Fiscal."],
-      es: ["Base de datos orientada a objetos.", "Sistema de gestión de bases de datos orientado a objetos. No confundir con ObjectBox.", "Usado en proyectos freelance, en las apps EMATER-GO Mobi y AGR Fiscal."]
-    },
     codemagic: {
       en: ["CI/CD built for Flutter.", "A hosted CI/CD service focused on mobile and Flutter, handling builds, tests, signing and store delivery.", "CI/CD for the apps of the Cooper Pay ecosystem at Cooper Tec: builds and releases across multiple white-label configurations."],
       "pt-BR": ["CI/CD feito para Flutter.", "Serviço de CI/CD hospedado, focado em mobile e Flutter, que cuida de builds, testes, assinatura e entrega nas lojas.", "CI/CD dos apps do ecossistema Cooper Pay na Cooper Tec: builds e releases em múltiplas configurações white-label."],
@@ -288,30 +278,10 @@
       "pt-BR": ["Hospedagem e colaboração de código.", "Plataforma para hospedar repositórios Git, revisar código e automatizar workflows.", "Onde hospedo e reviso código. Meu perfil público está em github.com/Lucasdiogof."],
       es: ["Alojamiento y colaboración de código.", "Plataforma para alojar repositorios Git, revisar código y automatizar workflows.", "Donde alojo y reviso código. Mi perfil público está en github.com/Lucasdiogof."]
     },
-    java: {
-      en: ["Server-side and web systems.", "A general-purpose, object-oriented language widely used for enterprise and web applications.", "Before mobile, I built Java web systems at Memora Processos Inovadores and at Saneago. That work was Java/Web, not mobile."],
-      "pt-BR": ["Sistemas server-side e web.", "Linguagem de propósito geral e orientada a objetos, muito usada em aplicações corporativas e web.", "Antes do mobile, desenvolvi sistemas web em Java na Memora Processos Inovadores e na Saneago. Essa atuação foi Java/Web, não mobile."],
-      es: ["Sistemas server-side y web.", "Lenguaje de propósito general y orientado a objetos, muy usado en aplicaciones corporativas y web.", "Antes de lo móvil, desarrollé sistemas web en Java en Memora Processos Inovadores y en Saneago. Esa actuación fue Java/Web, no móvil."]
-    },
     sql: {
       en: ["The language of relational data.","The standard language for querying and modifying data in relational databases.","SQL migrations in Match Queue, Goiás App, La Pelve, OrbiJob, Bebômetro and StockPort."],
       "pt-BR": ["A linguagem dos dados relacionais.","Linguagem padrão para consultar e modificar dados em bancos relacionais.","Migrações SQL no Match Queue, Goiás App, La Pelve, OrbiJob, Bebômetro e StockPort."],
       es: ["El lenguaje de los datos relacionales.","Lenguaje estándar para consultar y modificar datos en bases de datos relacionales.","Migraciones SQL en Match Queue, Goiás App, La Pelve, OrbiJob, Bebômetro y StockPort."]
-    },
-    mysql: {
-      en: ["Relational database.", "A widely used open-source relational database management system.", "Relational modeling and SQL queries on MySQL, one of the relational databases I work with alongside PostgreSQL and DB2."],
-      "pt-BR": ["Banco de dados relacional.", "Sistema gerenciador de banco de dados relacional open source amplamente usado.", "Modelagem relacional e consultas SQL em MySQL, um dos bancos relacionais com que trabalho junto com PostgreSQL e DB2."],
-      es: ["Base de datos relacional.", "Sistema gestor de bases de datos relacionales de código abierto muy utilizado.", "Modelado relacional y consultas SQL en MySQL, una de las bases de datos relacionales con las que trabajo junto a PostgreSQL y DB2."]
-    },
-    db2: {
-      en: ["IBM's relational database.", "IBM's relational database management system, common in corporate environments.", "Relational modeling and SQL queries on DB2, one of the relational databases I work with alongside PostgreSQL and MySQL."],
-      "pt-BR": ["Banco de dados relacional da IBM.", "Sistema gerenciador de banco de dados relacional da IBM, comum em ambientes corporativos.", "Modelagem relacional e consultas SQL em DB2, um dos bancos relacionais com que trabalho junto com PostgreSQL e MySQL."],
-      es: ["Base de datos relacional de IBM.", "Sistema gestor de bases de datos relacionales de IBM, común en entornos corporativos.", "Modelado relacional y consultas SQL en DB2, una de las bases de datos relacionales con las que trabajo junto a PostgreSQL y MySQL."]
-    },
-    "zk-framework": {
-      en: ["Java web framework.", "An event-driven Java framework for building web UIs on the server side.", "Used in corporate Java web systems at Memora Processos Inovadores and at Saneago."],
-      "pt-BR": ["Framework web em Java.", "Framework Java orientado a eventos para construir interfaces web no lado do servidor.", "Usado em sistemas corporativos web em Java na Memora Processos Inovadores e na Saneago."],
-      es: ["Framework web en Java.", "Framework Java orientado a eventos para construir interfaces web del lado del servidor.", "Usado en sistemas corporativos web en Java en Memora Processos Inovadores y en Saneago."]
     },
     javascript: {
       en: ["The language of the web.", "The scripting language that runs in every browser, and on servers and edge runtimes.", "Used in web work such as this portfolio, which is plain HTML, CSS and JavaScript served by a Cloudflare Worker."],
@@ -427,21 +397,6 @@
       en: ["Agile delivery in short sprints.", "An agile framework with sprints, planning, daily stand-ups, reviews and retrospectives around a prioritized backlog.", "Day-to-day process of the mobile teams at Cooper Tec and Agrosmart: sprint planning, estimates, reviews and retrospectives."],
       "pt-BR": ["Entrega ágil em sprints curtas.", "Framework ágil com sprints, planejamento, dailies, reviews e retrospectivas em torno de um backlog priorizado.", "Processo do dia a dia dos times mobile na Cooper Tec e na Agrosmart: planejamento de sprint, estimativas, reviews e retrospectivas."],
       es: ["Entrega ágil en sprints cortos.", "Marco ágil con sprints, planificación, dailies, reviews y retrospectivas en torno a un backlog priorizado.", "Proceso diario de los equipos móviles en Cooper Tec y Agrosmart: planificación de sprint, estimaciones, reviews y retrospectivas."]
-    },
-    spring: {
-      en: ["Java framework for enterprise applications.", "An application framework for Java with dependency injection, web MVC, data access and integration modules.", "Enterprise web systems and REST services at Memora, together with ZK, Maven and Tomcat."],
-      "pt-BR": ["Framework Java para aplicações corporativas.", "Framework de aplicações para Java com injeção de dependência, web MVC, acesso a dados e módulos de integração.", "Sistemas web corporativos e serviços REST na Memora, junto com ZK, Maven e Tomcat."],
-      es: ["Framework Java para aplicaciones empresariales.", "Framework de aplicaciones para Java con inyección de dependencias, web MVC, acceso a datos y módulos de integración.", "Sistemas web empresariales y servicios REST en Memora, junto con ZK, Maven y Tomcat."]
-    },
-    oracle: {
-      en: ["Enterprise relational database.", "Oracle Database: a relational database widely used in corporate systems, with SQL and PL/SQL.", "Queries and maintenance of the enterprise systems at Memora, from development and testing to production."],
-      "pt-BR": ["Banco de dados relacional corporativo.", "Oracle Database: banco relacional muito usado em sistemas corporativos, com SQL e PL/SQL.", "Consultas e manutenção dos sistemas corporativos na Memora, do desenvolvimento e testes à produção."],
-      es: ["Base de datos relacional empresarial.", "Oracle Database: base de datos relacional muy usada en sistemas corporativos, con SQL y PL/SQL.", "Consultas y mantenimiento de los sistemas empresariales en Memora, del desarrollo y las pruebas a producción."]
-    },
-    mongodb: {
-      en: ["Document database (NoSQL).", "A NoSQL database that stores JSON-like documents with flexible schemas, indexes and aggregation pipelines.", "Document modeling and queries for app backends: collections designed around how the screens read the data."],
-      "pt-BR": ["Banco de documentos (NoSQL).", "Banco NoSQL que guarda documentos no formato JSON com esquema flexível, índices e pipelines de agregação.", "Modelagem de documentos e consultas para backends de apps: coleções desenhadas a partir de como as telas leem os dados."],
-      es: ["Base de datos de documentos (NoSQL).", "Base de datos NoSQL que guarda documentos en formato JSON con esquema flexible, índices y pipelines de agregación.", "Modelado de documentos y consultas para backends de apps: colecciones diseñadas a partir de cómo las pantallas leen los datos."]
     },
     "get-it": {
       en: ["Service locator for Dart and Flutter.","A simple service locator that registers dependencies once and resolves them anywhere, including singletons, lazy singletons and factories.","Dependency wiring with get_it in seven Flutter apps, including OrbiJob, Bebômetro and StockPort."],

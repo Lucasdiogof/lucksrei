@@ -11,7 +11,7 @@ var D = require(path.join(root, "assets/js/skills-data.js"));
 var T = require(path.join(root, "assets/js/skills-details.js"));
 var LOCALES = ["en", "pt-BR", "es"];
 
-var EXPECTED = ["flutter","dart","android","ios","clean-architecture","bloc","tdd","automated-testing","playwright","dependency-injection","get-it","go-router","freezed","getx","scoped-model","solid","rest-api","graphql","grpc","signalr","supabase","supabase-realtime","edge-functions","offline-first","sqlite","postgresql","firebase","firebase-auth","fastlane","codemagic","github-actions","app-store-connect","google-play-console","in-app-purchases","git","github","rls","modular-packages","cloudflare-workers","cloudflare-pages","crashlytics","remote-config","firebase-messaging","onesignal","resend","firestore","whatsapp-api","zendesk","facebook-login","sentry","firebase-rtdb","gemini","ml-kit","deep-links","i18n","gps","google-maps","mapbox","maplibre","web-pwa","pdf","flavors","webview","barcode-scanning","biometrics","hive","sembast","micro-frontends","jwt","scrum","azure-devops","gitlab","sql","provider","typescript","javascript","react","nextjs","tailwind","java","spring","mongodb","mysql","db2","objectdb","zk-framework","oracle"];
+var EXPECTED = ["flutter","dart","android","ios","clean-architecture","bloc","tdd","automated-testing","playwright","dependency-injection","get-it","go-router","freezed","getx","solid","rest-api","graphql","grpc","signalr","supabase","supabase-realtime","edge-functions","offline-first","sqlite","postgresql","firebase","firebase-auth","fastlane","codemagic","github-actions","app-store-connect","google-play-console","in-app-purchases","git","github","rls","modular-packages","cloudflare-workers","cloudflare-pages","crashlytics","remote-config","firebase-messaging","onesignal","resend","firestore","whatsapp-api","zendesk","facebook-login","sentry","firebase-rtdb","gemini","ml-kit","deep-links","i18n","gps","google-maps","mapbox","maplibre","web-pwa","pdf","flavors","webview","barcode-scanning","biometrics","hive","sembast","micro-frontends","jwt","scrum","azure-devops","gitlab","sql","provider","typescript","javascript","react","nextjs","tailwind"];
 check(JSON.stringify(D.ORDER.map(function (s) { return s.id; })) === JSON.stringify(EXPECTED), "ordem da grade diferente da esperada (por importância)");
 
 // Conceitos e produtos sem logotipo distinto confiável devem usar a apresentação sem imagem.
@@ -56,7 +56,7 @@ D.ORDER.forEach(function (s) {
     var imgOk = s.id === "flavors" ? svg.replace(/<image[^>]*xlink:href="data:image\/png;base64,[A-Za-z0-9+\/=]+"[^>]*\/>/g, "") : svg;
     check(!/<script|<image|href="http|onload=/i.test(imgOk), "svg com conteúdo ativo/externo: " + s.id);
     check(!/<rect[^>]*width="(100%|24|128)"/.test(svg), "svg com retângulo de fundo: " + s.id);
-    check(!/fill="(#fff|#ffffff|white)"/i.test(svg) || ["java", "web-pwa"].indexOf(s.id) >= 0, "fill branco inesperado: " + s.id);
+    check(!/fill="(#fff|#ffffff|white)"/i.test(svg) || ["web-pwa"].indexOf(s.id) >= 0, "fill branco inesperado: " + s.id);
     check(!/(background|style)=[^>]*#fff/i.test(svg), "svg com fundo branco inline: " + s.id);
   }
   if (s.label) LOCALES.forEach(function (l) { check(s.label[l], "label " + l + " ausente: " + s.id); });
@@ -93,11 +93,7 @@ check(ids["azure-devops"].exp.join() === "toro" && has("azure-devops", "projects
 ["hive", "sembast"].forEach(function (s) { check(ids[s].exp.join() === "agrosmart", s + " = Agrosmart"); });
 ["supabase", "postgresql"].forEach(function (s) { ["match-queue", "fan-hub", "la-pelve", "aprovaura"].forEach(function (p) { check(has(s, "projects", p), s + " sem " + p); }); check(ids[s].exp.length === 0, s + " não deve ter empresa"); });
 ["cooper-tec", "agrosmart", "toro"].forEach(function (e) { check(has("clean-architecture", "exp", e), "Clean Architecture sem " + e); });
-check(ids.java.exp.join() === "memora,saneago" && ids["zk-framework"].exp.join() === "memora,saneago", "Java e ZK = Memora e Saneago");
-check(ids.objectdb.exp.join() === "freelance" && has("objectdb", "projects", "emater") && has("objectdb", "projects", "agr-fiscal"), "ObjectDB = Emater-GO Mobi e AGR Fiscal");
-check(/Java\/Web, not mobile/.test(T.java.en[2]) && /Java\/Web, não mobile/.test(T.java["pt-BR"][2]) && /Java\/Web, no móvil/.test(T.java.es[2]), "Java deve dizer que a atuação na Memora foi Java/Web");
 check(/Cooper Pay Corporate/.test(T.flavors.en[2]) && /PJ/.test(T.flavors.en[2]) && /not a white-label/.test(T.flavors.en[2]), "Flavors deve ressalvar o Cooper Pay Corporate");
-check(/ObjectBox/.test(T.objectdb.en[1]) && /Not to be confused/.test(T.objectdb.en[1]), "ObjectDB deve avisar que não é ObjectBox");
 // nenhum texto pode soar como falta de experiência
 check(!/No specific|not attributed|attributed to it|Nenhuma empresa|nenhuma empresa|ninguna empresa|Aquí no se le atribuye|no experience|sem experiência/i.test(JSON.stringify(T)), "texto que transmite falta de experiência");
 // vínculos de projetos conferidos com as páginas de estudo de caso e /apps
@@ -111,7 +107,7 @@ check(D.PROJECTS["fan-hub"].name === "Goiás App" && D.PROJECTS["fan-hub"].href 
 check(/Goiás App/.test(T.supabase.en[2]), "Supabase deve usar o nome atual Goiás App");
 check(ids.hive.projects.length === 0 && has("sembast","projects","agrosmart"), "Hive com vínculo de experiência; Sembast presente nos projetos Agrosmart");
 // skills sem evidência não recebem empresa nem projeto
-["solid", "mysql", "db2", "javascript", "mongodb"].forEach(function (s) { check(ids[s].exp.length === 0 && ids[s].projects.length === 0, s + " sem evidência não pode ter vínculos"); });
+["solid", "javascript"].forEach(function (s) { check(ids[s].exp.length === 0 && ids[s].projects.length === 0, s + " sem evidência não pode ter vínculos"); });
 // nomes de experiência batem com a linha do tempo da home
 var home = read("index.html");
 ["Cooper Tec", "Agrosmart", "Toro Investimentos", "IZA", "Saneago"].forEach(function (n) { check(home.indexOf(">" + n + "<") >= 0 || read("assets/i18n/en.js").indexOf('"' + n + '"') >= 0, "experiência fora da home: " + n); });
@@ -131,7 +127,7 @@ check(order.every(function (v, i) { return v > 0 && (i === 0 || v > order[i - 1]
 
 
 // Inventário revisado a partir de /apps/: todas as novas competências devem apontar para projetos reais.
-check(D.ORDER.length === 87, "total de skills esperado: 87");
+check(D.ORDER.length === 78, "total de skills esperado: 78");
 // Agrupamento por stack: cada skill em exatamente um grupo, com nome nos 3 idiomas.
 (function () {
   var seen = {};
@@ -148,7 +144,7 @@ check(ids.flutter.projects.length === 19, "total de projetos Flutter/Dart (inclu
 check(["emater","agr-fiscal","stockport","orbijob","bebometro"].every(function (p) { return has("dart","projects",p); }), "Dart precisa refletir projetos recentes e profissionais");
 check(!has("firebase","projects","bebometro") && !has("firebase","projects","stockport") && !has("firebase","projects","aprovaura"), "Não inferir Firebase a partir de Supabase");
 
-const coverage = [["go-router","tabela-fone"],["freezed","tabela-fone"],["getx","iza"],["scoped-model","gpol"],["modular-packages","toro"],["micro-frontends","boosteragro"],["graphql","toro"],["grpc","iza"],["signalr","toro"],["supabase-realtime","match-queue"],["edge-functions","aprovaura"],["offline-first","la-pelve"],["sqlite","la-pelve"],["firebase-auth","vai"],["firestore","gpol"],["firebase-rtdb","vai"],["in-app-purchases","tabela-fone"],["onesignal","toro"],["whatsapp-api","la-pelve"],["zendesk","iza"],["facebook-login","iza"],["ml-kit","orbijob"],["google-maps","emater"],["mapbox","agrosmart"],["maplibre","busaogyn"],["pdf","agr-fiscal"],["webview","orbijob"],["barcode-scanning","stockport"],["biometrics","toro"]];
+const coverage = [["go-router","tabela-fone"],["freezed","tabela-fone"],["getx","iza"],["modular-packages","toro"],["micro-frontends","boosteragro"],["graphql","toro"],["grpc","iza"],["signalr","toro"],["supabase-realtime","match-queue"],["edge-functions","aprovaura"],["offline-first","la-pelve"],["sqlite","la-pelve"],["firebase-auth","vai"],["firestore","gpol"],["firebase-rtdb","vai"],["in-app-purchases","tabela-fone"],["onesignal","toro"],["whatsapp-api","la-pelve"],["zendesk","iza"],["facebook-login","iza"],["ml-kit","orbijob"],["google-maps","emater"],["mapbox","agrosmart"],["maplibre","busaogyn"],["pdf","agr-fiscal"],["webview","orbijob"],["barcode-scanning","stockport"],["biometrics","toro"]];
 coverage.forEach(function (pair) { check(has(pair[0], "projects", pair[1]), "vínculo ausente: " + pair.join(" → ")); });
 ["busaogyn", "orbijob", "bebometro", "stockport"].forEach(function (p) {
   check(has("flutter", "projects", p), "Flutter sem projeto recente " + p);

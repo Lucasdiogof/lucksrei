@@ -59,7 +59,7 @@ const publicTag = {
   "Mapbox": ["mapbox"],
   "Sembast": ["sembast"],
   "Firebase Crashlytics": ["crashlytics", "firebase"],
-  "ObjectDB": ["objectdb"],
+  "ObjectDB": [],
   "REST API": ["rest-api"],
   "Offline sync": [], // offline sync is not proof of an Offline-first architecture
   "Google Maps": ["google-maps"],
@@ -72,7 +72,7 @@ const publicTag = {
   "Google Places": ["google-maps"],
   "Pagamento com cartão": [], // no dedicated card-payment technology skill
   "Firestore": ["firestore", "firebase"],
-  "Scoped Model": ["scoped-model"]
+  "Scoped Model": []
 };
 apps.forEach(app => {
   const project = alias[app.id] || app.id;
@@ -129,7 +129,7 @@ check(known["firebase-auth"].projects.every(x => ["vai", "gpol"].includes(x)),
 check(known["supabase-realtime"].projects.every(x => ["match-queue"].includes(x)),
   "Do not infer Supabase Realtime from generic real-time features");
 const summaries = D.ORDER.length;
-check(summaries === 87, "All 87 skills must remain in inventory");
+check(summaries === 78, "All 78 skills must remain in inventory");
 if (errors.length) {
   console.error("FAIL:\n - " + errors.join("\n - "));
   process.exit(1);
