@@ -372,9 +372,11 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
   ["en", "pt-BR", "es"].forEach(function (l) {
     var d = D[l];
     ["title", "description", "ogTitle", "ogDescription"].forEach(function (k) { check(d["seo.privacy." + k], l + ": seo.privacy." + k); });
-    var m = priv.match(new RegExp('<div data-legal="' + l + '"[\\s\\S]*?\\n</div>\\n'));
-    check(m, l + ": privacy sem bloco data-legal");
-    var blk = m ? m[0] : "";
+    // bloco do idioma: do primeiro <div data-legal="l"> até o próximo bloco data-legal (ou o fim)
+    var st = priv.indexOf('<div data-legal="' + l + '"');
+    check(st >= 0, l + ": privacy sem bloco data-legal");
+    var nx = priv.indexOf('<div data-legal="', st + 1);
+    var blk = st >= 0 ? priv.slice(st, nx < 0 ? undefined : nx) : "";
     check(blk.indexOf('href="/visitors/"') > 0, l + ": privacy linka o mapa de visitantes");
     check(blk.indexOf('href="/projects/match-queue/privacy/"') > 0, l + ": privacy linka a política do Match Queue");
     check(/54\.868\.173\/0001-55/.test(blk) && /LUCAS DIOGO FRANCA/.test(blk), l + ": razão social e CNPJ preservados");
