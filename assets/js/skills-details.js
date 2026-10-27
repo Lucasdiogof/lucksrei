@@ -323,6 +323,36 @@
       "pt-BR": ["JavaScript com tipos.","Superconjunto tipado de JavaScript que compila para JavaScript puro.","Código tipado de servidor e edge no Goiás App, BusãoGyn e OrbiJob, incluindo adaptadores de API e Cloudflare Workers."],
       es: ["JavaScript con tipos.","Superconjunto tipado de JavaScript que compila a JavaScript puro.","Código tipado de servidor y edge en Goiás App, BusãoGyn y OrbiJob, incluidos adaptadores de API y Cloudflare Workers."]
     },
+    react: {
+      en: ["The library behind modern web UIs.", "A JavaScript library for building component-based user interfaces, with a declarative model close to Flutter widgets.", "Used in the Samara Rúbia website, built on React 19 with Next.js."],
+      "pt-BR": ["A biblioteca por trás das UIs web modernas.", "Biblioteca JavaScript para construir interfaces baseadas em componentes, com modelo declarativo próximo aos widgets do Flutter.", "Usado no site da Samara Rúbia, feito com React 19 e Next.js."],
+      es: ["La biblioteca detrás de las UIs web modernas.", "Biblioteca JavaScript para construir interfaces basadas en componentes, con un modelo declarativo cercano a los widgets de Flutter.", "Usado en el sitio de Samara Rúbia, hecho con React 19 y Next.js."]
+    },
+    nextjs: {
+      en: ["React framework for fast web sites.", "A React framework with routing, server rendering and static export, producing sites that load fast and rank well.", "Static export for the Samara Rúbia website: three languages, accessibility tests and deploy through a Cloudflare Worker."],
+      "pt-BR": ["Framework React para sites rápidos.", "Framework React com roteamento, renderização no servidor e exportação estática, que gera sites rápidos e bem posicionados.", "Exportação estática no site da Samara Rúbia: três idiomas, testes de acessibilidade e deploy por um Cloudflare Worker."],
+      es: ["Framework de React para sitios rápidos.", "Framework de React con enrutamiento, renderizado en servidor y exportación estática, que genera sitios rápidos y bien posicionados.", "Exportación estática en el sitio de Samara Rúbia: tres idiomas, pruebas de accesibilidad y despliegue mediante un Cloudflare Worker."]
+    },
+    tailwind: {
+      en: ["Utility-first CSS.", "A CSS framework where styles are composed from small utility classes, keeping a design system consistent without custom stylesheets.", "Styling of the Samara Rúbia website with Tailwind CSS 4 and design tokens, in light and dark themes."],
+      "pt-BR": ["CSS orientado a utilitários.", "Framework CSS em que os estilos são compostos por pequenas classes utilitárias, mantendo o design system consistente sem folhas de estilo próprias.", "Estilização do site da Samara Rúbia com Tailwind CSS 4 e design tokens, nos temas claro e escuro."],
+      es: ["CSS orientado a utilidades.", "Framework CSS en el que los estilos se componen con pequeñas clases utilitarias, manteniendo el design system consistente sin hojas de estilo propias.", "Estilos del sitio de Samara Rúbia con Tailwind CSS 4 y design tokens, en temas claro y oscuro."]
+    },
+    playwright: {
+      en: ["End-to-end tests in real browsers.", "A tool that drives Chromium, Firefox and WebKit to test a site as a user would, including accessibility checks with axe.", "Automated tests of the Samara Rúbia website: navigation, languages, menu, links and accessibility on desktop and mobile."],
+      "pt-BR": ["Testes ponta a ponta em navegadores reais.", "Ferramenta que controla Chromium, Firefox e WebKit para testar um site como um usuário faria, incluindo checagens de acessibilidade com axe.", "Testes automatizados do site da Samara Rúbia: navegação, idiomas, menu, links e acessibilidade em desktop e celular."],
+      es: ["Pruebas de extremo a extremo en navegadores reales.", "Herramienta que controla Chromium, Firefox y WebKit para probar un sitio como lo haría un usuario, incluidas comprobaciones de accesibilidad con axe.", "Pruebas automatizadas del sitio de Samara Rúbia: navegación, idiomas, menú, enlaces y accesibilidad en escritorio y móvil."]
+    },
+    resend: {
+      en: ["Transactional email by API.", "An email delivery service with a simple API and SMTP, used for account and invitation messages with a verified sending domain.", "Account activation and invite emails sent by the Edge Functions of StockPort System and Beard System."],
+      "pt-BR": ["E-mail transacional por API.", "Serviço de envio de e-mail com API simples e SMTP, usado em mensagens de conta e convite com domínio de envio verificado.", "E-mails de ativação de conta e convite enviados pelas Edge Functions do StockPort System e do Beard System."],
+      es: ["Correo transaccional por API.", "Servicio de envío de correo con API simple y SMTP, usado en mensajes de cuenta e invitación con dominio de envío verificado.", "Correos de activación de cuenta e invitación enviados por las Edge Functions de StockPort System y Beard System."]
+    },
+    "cloudflare-pages": {
+      en: ["Static web hosting on the Cloudflare edge.", "Cloudflare hosting for static sites and web builds, deployed from the command line or CI and served from the edge.", "Web build and activation and invite pages of StockPort System, deployed with Wrangler."],
+      "pt-BR": ["Hospedagem web estática na borda da Cloudflare.", "Hospedagem da Cloudflare para sites estáticos e builds web, publicada pela linha de comando ou CI e servida da borda.", "Build web e páginas de ativação e convite do StockPort System, publicados com o Wrangler."],
+      es: ["Alojamiento web estático en el borde de Cloudflare.", "Alojamiento de Cloudflare para sitios estáticos y builds web, publicado por línea de comandos o CI y servido desde el borde.", "Build web y páginas de activación e invitación de StockPort System, publicados con Wrangler."]
+    },
     "web-pwa": {
       en: ["Flutter apps that also run in the browser.","Flutter Web runs Dart in the browser. Installable PWA support requires extra app-specific configuration.","Web builds for Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob, Bebômetro and StockPort, at different release stages."],
       "pt-BR": ["Apps Flutter que também rodam no navegador.","Flutter Web executa Dart no navegador. A instalação como PWA exige configuração específica em cada aplicativo.","Builds Web de Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob, Bebômetro e StockPort, em diferentes fases de publicação."],

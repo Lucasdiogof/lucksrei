@@ -129,7 +129,7 @@ check(known["firebase-auth"].projects.every(x => ["vai", "gpol"].includes(x)),
 check(known["supabase-realtime"].projects.every(x => ["match-queue"].includes(x)),
   "Do not infer Supabase Realtime from generic real-time features");
 const summaries = D.ORDER.length;
-check(summaries === 81, "All 81 skills must remain in inventory");
+check(summaries === 87, "All 87 skills must remain in inventory");
 if (errors.length) {
   console.error("FAIL:\n - " + errors.join("\n - "));
   process.exit(1);
