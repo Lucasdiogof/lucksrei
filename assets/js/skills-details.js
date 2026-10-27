@@ -43,26 +43,6 @@
       "pt-BR": ["Consultas e mutações tipadas em APIs.","Clientes selecionam os campos necessários por meio de esquemas, consultas, mutações e assinaturas.","Utilizado na comunicação de dados da Toro Investimentos."],
       es: ["Consultas y mutaciones tipadas en API.","Los clientes seleccionan campos mediante esquemas, consultas, mutaciones y suscripciones.","Utilizado para comunicación de datos en Toro Investimentos."]
     },
-    "grpc": {
-      en: ["Efficient typed remote procedures.","Uses Protocol Buffers and HTTP/2 to connect services through generated strongly typed client interfaces.","Used among the integrations of IZA Seguradora."],
-      "pt-BR": ["Chamadas remotas eficientes e tipadas.","Usa Protocol Buffers e HTTP/2 para conectar serviços por interfaces de cliente fortemente tipadas.","Utilizado nas integrações da IZA Seguradora."],
-      es: ["Procedimientos remotos eficientes y tipados.","Usa Protocol Buffers y HTTP/2 para conectar servicios mediante interfaces de cliente tipadas.","Utilizado en las integraciones de IZA Seguradora."]
-    },
-    "signalr": {
-      en: ["Live server-to-client communication.","A real-time messaging library that supports persistent connections and automatic transport negotiation.","Used for live updates in Toro Investimentos."],
-      "pt-BR": ["Comunicação ao vivo entre cliente e servidor.","Biblioteca de mensagens em tempo real com conexões persistentes e negociação automática de transporte.","Utilizada para atualizações em tempo real na Toro Investimentos."],
-      es: ["Comunicación en vivo entre cliente y servidor.","Biblioteca de mensajería en tiempo real con conexiones persistentes y selección automática de transporte.","Utilizada para actualizaciones en vivo en Toro Investimentos."]
-    },
-    "supabase-realtime": {
-      en: ["Realtime synchronization powered by Supabase.","Broadcast, presence and Postgres change feeds keep distributed clients synchronized as events happen.","Used for matchmaking state and team updates in Match Queue."],
-      "pt-BR": ["Sincronização em tempo real via Supabase.","Broadcast, presença e eventos do Postgres sincronizam clientes distribuídos conforme as alterações ocorrem.","Utilizado para estados de matchmaking e atualizações de times no Match Queue."],
-      es: ["Sincronización en tiempo real con Supabase.","Broadcast, presencia y cambios de Postgres sincronizan clientes mientras ocurren los eventos.","Utilizado para matchmaking y equipos en Match Queue."]
-    },
-    "edge-functions": {
-      en: ["Serverless functions close to data workflows.","Deploys isolated TypeScript or JavaScript endpoints for authenticated backend tasks and external integrations.","Serverless function sources in Match Queue, Goiás App, La Pelve, Aprovaura, OrbiJob, Bebômetro and StockPort."],
-      "pt-BR": ["Funções serverless para regras de backend.","Executa endpoints TypeScript ou JavaScript para operações autenticadas e integrações externas.","Código de funções serverless no Match Queue, Goiás App, La Pelve, Aprovaura, OrbiJob, Bebômetro e StockPort."],
-      es: ["Funciones serverless para lógica de backend.","Ejecuta endpoints TypeScript o JavaScript para operaciones autenticadas e integraciones externas.","Código de funciones serverless en Match Queue, Goiás App, La Pelve, Aprovaura, OrbiJob, Bebômetro y StockPort."]
-    },
     "offline-first": {
       en: ["Useful flows even without connectivity.","Designs local reads, queued changes and recovery after reconnecting instead of treating network loss as a blank screen.","Applied to offline workflows in La Pelve and the Agrosmart ecosystem."],
       "pt-BR": ["Fluxos úteis mesmo sem conexão.","Projeta leituras locais, operações pendentes e recuperação após reconexão, sem tornar o app inútil offline.","Aplicado a fluxos offline do La Pelve e do ecossistema Agrosmart."],

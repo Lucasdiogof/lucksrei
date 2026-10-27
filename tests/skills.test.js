@@ -11,7 +11,7 @@ var D = require(path.join(root, "assets/js/skills-data.js"));
 var T = require(path.join(root, "assets/js/skills-details.js"));
 var LOCALES = ["en", "pt-BR", "es"];
 
-var EXPECTED = ["flutter","dart","android","ios","clean-architecture","bloc","tdd","automated-testing","playwright","dependency-injection","get-it","go-router","freezed","getx","solid","rest-api","graphql","grpc","signalr","supabase","supabase-realtime","edge-functions","offline-first","sqlite","postgresql","firebase","firebase-auth","fastlane","codemagic","github-actions","app-store-connect","google-play-console","in-app-purchases","git","github","rls","modular-packages","cloudflare-workers","cloudflare-pages","crashlytics","remote-config","firebase-messaging","onesignal","resend","firestore","whatsapp-api","zendesk","facebook-login","sentry","firebase-rtdb","gemini","ml-kit","deep-links","i18n","gps","google-maps","mapbox","maplibre","web-pwa","pdf","flavors","webview","barcode-scanning","biometrics","hive","sembast","micro-frontends","jwt","scrum","azure-devops","gitlab","sql","provider","typescript","javascript","react","nextjs","tailwind"];
+var EXPECTED = ["flutter","dart","android","ios","clean-architecture","bloc","tdd","automated-testing","playwright","dependency-injection","get-it","go-router","freezed","getx","solid","rest-api","graphql","supabase","offline-first","sqlite","postgresql","firebase","firebase-auth","fastlane","codemagic","github-actions","app-store-connect","google-play-console","in-app-purchases","git","github","rls","modular-packages","cloudflare-workers","cloudflare-pages","crashlytics","remote-config","firebase-messaging","onesignal","resend","firestore","whatsapp-api","zendesk","facebook-login","sentry","firebase-rtdb","gemini","ml-kit","deep-links","i18n","gps","google-maps","mapbox","maplibre","web-pwa","pdf","flavors","webview","barcode-scanning","biometrics","hive","sembast","micro-frontends","jwt","scrum","azure-devops","gitlab","sql","provider","typescript","javascript","react","nextjs","tailwind"];
 check(JSON.stringify(D.ORDER.map(function (s) { return s.id; })) === JSON.stringify(EXPECTED), "ordem da grade diferente da esperada (por importância)");
 
 // Conceitos e produtos sem logotipo distinto confiável devem usar a apresentação sem imagem.
@@ -36,7 +36,7 @@ var STYLE = read("assets/css/style.css");
 check(!/\.skill\.is-text\s*\{[^}]*border/.test(STYLE), "cards só-texto não devem ter borda especial");
 check(!/\.skill\.is-text:hover\s+\.skill-name/.test(STYLE), "cards só-texto sem destaque dourado exclusivo");
 check(!/\.skill\.is-text\s+\.skill-name\s*\{/.test(STYLE), "cards só-texto devem herdar integralmente a tipografia de .skill-name");
-check(/\.skill-name\s*\{[^}]*font-family:\s*var\(--font-mono\);[^}]*font-size:\s*11\.5px/.test(STYLE), "tipografia base igual à de Supabase Edge Functions");
+check(/\.skill-name\s*\{[^}]*font-family:\s*var\(--font-mono\);[^}]*font-size:\s*11\.5px/.test(STYLE), "tipografia base igual à dos demais cards");
 check(D.ORDER.find(function (s) { return s.id === "get-it"; }).name === "GetIt", "nome visual do get_it deve ser GetIt");
 var ids = {};
 D.ORDER.forEach(function (s) {
@@ -127,7 +127,7 @@ check(order.every(function (v, i) { return v > 0 && (i === 0 || v > order[i - 1]
 
 
 // Inventário revisado a partir de /apps/: todas as novas competências devem apontar para projetos reais.
-check(D.ORDER.length === 78, "total de skills esperado: 78");
+check(D.ORDER.length === 74, "total de skills esperado: 74");
 // Agrupamento por stack: cada skill em exatamente um grupo, com nome nos 3 idiomas.
 (function () {
   var seen = {};
@@ -144,7 +144,7 @@ check(ids.flutter.projects.length === 19, "total de projetos Flutter/Dart (inclu
 check(["emater","agr-fiscal","stockport","orbijob","bebometro"].every(function (p) { return has("dart","projects",p); }), "Dart precisa refletir projetos recentes e profissionais");
 check(!has("firebase","projects","bebometro") && !has("firebase","projects","stockport") && !has("firebase","projects","aprovaura"), "Não inferir Firebase a partir de Supabase");
 
-const coverage = [["go-router","tabela-fone"],["freezed","tabela-fone"],["getx","iza"],["modular-packages","toro"],["micro-frontends","boosteragro"],["graphql","toro"],["grpc","iza"],["signalr","toro"],["supabase-realtime","match-queue"],["edge-functions","aprovaura"],["offline-first","la-pelve"],["sqlite","la-pelve"],["firebase-auth","vai"],["firestore","gpol"],["firebase-rtdb","vai"],["in-app-purchases","tabela-fone"],["onesignal","toro"],["whatsapp-api","la-pelve"],["zendesk","iza"],["facebook-login","iza"],["ml-kit","orbijob"],["google-maps","emater"],["mapbox","agrosmart"],["maplibre","busaogyn"],["pdf","agr-fiscal"],["webview","orbijob"],["barcode-scanning","stockport"],["biometrics","toro"]];
+const coverage = [["go-router","tabela-fone"],["freezed","tabela-fone"],["getx","iza"],["modular-packages","toro"],["micro-frontends","boosteragro"],["graphql","toro"],["offline-first","la-pelve"],["sqlite","la-pelve"],["firebase-auth","vai"],["firestore","gpol"],["firebase-rtdb","vai"],["in-app-purchases","tabela-fone"],["onesignal","toro"],["whatsapp-api","la-pelve"],["zendesk","iza"],["facebook-login","iza"],["ml-kit","orbijob"],["google-maps","emater"],["mapbox","agrosmart"],["maplibre","busaogyn"],["pdf","agr-fiscal"],["webview","orbijob"],["barcode-scanning","stockport"],["biometrics","toro"]];
 coverage.forEach(function (pair) { check(has(pair[0], "projects", pair[1]), "vínculo ausente: " + pair.join(" → ")); });
 ["busaogyn", "orbijob", "bebometro", "stockport"].forEach(function (p) {
   check(has("flutter", "projects", p), "Flutter sem projeto recente " + p);

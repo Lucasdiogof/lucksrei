@@ -19,13 +19,13 @@ const alias = { "emater-go-mobi": "emater" };
 const publicTag = {
   "Flutter": ["flutter", "dart"],
   "Supabase": ["supabase", "postgresql"],
-  "Supabase Realtime": ["supabase-realtime", "supabase", "postgresql"],
+  "Supabase Realtime": ["supabase", "postgresql"],
   "RLS": ["rls", "postgresql"],
   "Firebase": ["firebase"],
   "Cloudflare Workers": ["cloudflare-workers"],
   "TypeScript": ["typescript"],
   "Gemini": ["gemini"],
-  "Edge Functions": ["edge-functions"],
+  "Edge Functions": ["supabase"],
   "Offline cache": [], // caching does not by itself prove Offline-first
   "Offline-first": ["offline-first"],
   "Encrypted SQLite": ["sqlite"],
@@ -42,13 +42,13 @@ const publicTag = {
   "In-App Purchase": ["in-app-purchases"],
   "Deep links": ["deep-links"],
   "GraphQL": ["graphql"],
-  "SignalR": ["signalr"],
+  "SignalR": [],
   "Modular packages": ["modular-packages"],
   "Biometria": ["biometrics"],
   "Sentry": ["sentry"],
   "OneSignal": ["onesignal"],
   "GetX": ["getx"],
-  "gRPC": ["grpc"],
+  "gRPC": [],
   "Firebase Cloud Messaging": ["firebase-messaging", "firebase"],
   "Cloud Messaging": ["firebase-messaging", "firebase"],
   "Remote Config": ["remote-config", "firebase"],
@@ -111,7 +111,6 @@ Object.entries(sourceProjects).forEach(([project, evidence]) => {
     check(known[skill] && known[skill].projects.includes(project),
       "Source " + evidence.repo + "/" + evidence.yaml + " has " + pkg + " but " + skill + " lacks " + project);
   }));
-  if (evidence.functions) check(known["edge-functions"].projects.includes(project), project + ": function source missing in skills");
   if (evidence.actions) check(known["github-actions"].projects.includes(project), project + ": workflows missing in skills");
   check(known["flutter"].projects.includes(project) && known["dart"].projects.includes(project),
     "Flutter/Dart parity missing: " + project);
@@ -126,10 +125,8 @@ catalogFlutter.forEach(p => check(known.flutter.projects.includes(p), "App Flutt
 check(known.flutter.projects.includes("cooper-pay"), "Cooper Pay Flutter experience missing");
 check(known["firebase-auth"].projects.every(x => ["vai", "gpol"].includes(x)),
   "Do not infer Firebase Authentication from Firebase Messaging");
-check(known["supabase-realtime"].projects.every(x => ["match-queue"].includes(x)),
-  "Do not infer Supabase Realtime from generic real-time features");
 const summaries = D.ORDER.length;
-check(summaries === 78, "All 78 skills must remain in inventory");
+check(summaries === 74, "All 74 skills must remain in inventory");
 if (errors.length) {
   console.error("FAIL:\n - " + errors.join("\n - "));
   process.exit(1);
