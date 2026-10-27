@@ -68,7 +68,7 @@
         logo: '/assets/img/apps/orbijob.webp', platforms: ['android', 'ios', 'web'], androidUrl: 'https://play.google.com/store/apps/details?id=com.lucksrei.orbijob', iosUrl: null, webUrl: 'https://orbijob.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, period: '2026-10/present', technologies: ['Flutter', 'Supabase', 'GitHub Actions', 'ML Kit', 'Firebase'], caseUrl: '/projects/orbijob/' },
       { id: 'bebometro', name: 'Bebômetro', subtitle: { en: 'Track nights out, drinks, expenses and split the bill with friends', 'pt-BR': 'Registre seus rolês, bebidas, gastos e divida a conta com a galera', es: 'Registra tus salidas, bebidas y gastos, y divide la cuenta con amigos' }, group: 'own', sector: 'lifestyle',
-        logo: '/assets/img/apps/bebometro.webp', platforms: ['android', 'ios', 'web'], androidUrl: 'https://play.google.com/store/apps/details?id=com.lucksrei.bebometro', iosUrl: null, webUrl: 'https://bebometro.lucksrei.com',
+        logo: '/assets/img/apps/bebometro.webp', platforms: ['android', 'ios', 'web'], androidUrl: 'https://play.google.com/store/apps/details?id=com.lucksrei.bebometro', iosUrl: 'https://apps.apple.com/br/app/bebometro/id6822493482', webUrl: 'https://bebometro.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, period: '2026-10/present', technologies: ['Flutter', 'Supabase', 'Cloudflare Workers'], caseUrl: '/projects/bebometro/' },
 
       /* ---- Lucksrei Systems: sistemas genéricos para pequenos negócios. Novo sistema = mais um registro group 'systems' (+ logo em assets/img/apps/<id>.webp). Não entram na home. ---- */
