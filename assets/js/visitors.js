@@ -76,7 +76,7 @@
   var BASE = null; // viewBox original {x, y, w, h}
   var vb = null;   // viewBox atual
   var MAX_ZOOM = 40;
-  var EAGER_ADM = 12; // divisas carregadas de saída para os N países com mais visitas; os demais, ao aproximar
+  var EAGER_ADM = 60; // divisas carregadas de saída para os N países com mais visitas (SVGs pequenos); os demais, ao aproximar
   var reduceMotion = window.matchMedia ? window.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
   var tip = $("v-tip");
 
