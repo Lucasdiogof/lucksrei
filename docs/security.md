@@ -199,7 +199,7 @@ No plano gratuito ele oferece pouca margem para exceções e trata como bot o tr
 ### workers.dev e URLs de preview
 Existem: o check do GitHub (Workers Builds) e o comentário do PR #5 mostraram `*.workers.dev` e *Preview URLs* ativos para este Worker. Riscos: uma cópia pública do site e da API sem as regras do domínio, **sem o Cache API** (o limite por cache do contato não funciona em `workers.dev`), compartilhando D1 e o secret do Resend. O que sustenta desligar: nada no repositório referencia `workers.dev` (apps, App Links e SEO usam `lucksrei.com`).
 
-Não alterei a configuração porque não consigo confirmar o domínio personalizado. **Antes de desligar, confirme:** Worker `lucksrei-site` → *Settings → Domains & Routes* mostra `lucksrei.com` como **Custom Domain**. Então desligue ali *workers.dev* e *Preview URLs*. Para que o próximo build não reative, fixe no `wrangler.jsonc`:
+**Aplicado (28/10/2026):** o `wrangler.jsonc` fixa `workers_dev: false` e `preview_urls: false`; `lucksrei.com` respondia pelo Worker (cabeçalhos do `_headers` e da API) antes da mudança. Confira em Worker `lucksrei-site` → *Settings → Domains & Routes* que `lucksrei.com` aparece como **Custom Domain** e que *workers.dev* e *Preview URLs* estão desligados (o deploy automático agora os mantém desligados). A configuração aplicada no `wrangler.jsonc`:
 
 ```jsonc
 "workers_dev": false,
