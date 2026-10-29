@@ -61,7 +61,8 @@ async function open(browser, fmt) {
   const page = await ctx.newPage();
   page.on('pageerror', e => { errors.push(e.message); console.error('PAGEERR', e.message); });
   page.on('console', m => { if (m.type() === 'error') { errors.push(m.text()); console.error('CONSOLE', m.text()); } });
-  await page.goto(`${base}?render&fmt=${fmt}`); await page.waitForFunction('window.READY===true', null, { timeout: 60000 });
+  // VIDEO_LANG=pt-BR|en|es escolhe o idioma (dicionário em tools/video-i18n); sem ele, pt-BR
+  await page.goto(`${base}?render&fmt=${fmt}${process.env.VIDEO_LANG ? '&lang=' + process.env.VIDEO_LANG : ''}`); await page.waitForFunction('window.READY===true', null, { timeout: 60000 });
   return page;
 }
 const settle = (p, t) => p.evaluate(t => { window.render(t); return new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); }, t);

@@ -218,25 +218,25 @@ window.VIDEO_I18N = {
  },
  "h4": {
   "pt-BR": "Bafômetro",
-  "en": "Blow Meter",
-  "es": "Soplómetro"
+  "en": "Bafômetro",
+  "es": "Bafômetro"
  },
  "tag1": {
   "pt-BR": "Chope, cachaça",
   "en": "Draft beer, cachaça,",
-  "es": "Cerveza de barril, cachaça",
+  "es": "Cerveza de barril,",
   "fit": {
-   "en": 0.85,
-   "es": 0.68
+   "en": 0.9,
+   "es": 0.92
   }
  },
  "tag2": {
   "pt-BR": "e resenha.",
   "en": "and good times.",
-  "es": "y buenos momentos.",
+  "es": "cachaça y buenos\nmomentos.",
   "fit": {
-   "en": 0.85,
-   "es": 0.68
+   "en": 0.9,
+   "es": 0.92
   }
  }
 };

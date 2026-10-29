@@ -39,21 +39,21 @@ SP.scenes.s02 = (function () {
   let floor, prods = [], list, rows = [], lab, beam, digits, found, det, link, head, cats;
   S.build = function (root) {
     floor = h(`<div class="blk p3" style="width:1600px;height:1600px"><div class="s2-floor"></div></div>`); root.appendChild(floor);
-    list = h(`<div class="pn blk s2-list"><div class="hd"><h3>Produtos</h3><span class="chip">${KIT.ico("plus", 18)}Novo produto</span></div>
-      <div class="s2-search">${KIT.ico("search", 22)}Buscar produto ou ler código de barras</div>
-      <div class="s2-cats"><span class="chip">Todos</span><span class="chip sl">Mercearia</span><span class="chip sl">Bebidas</span><span class="chip sl">Papelaria</span><span class="chip sl">Limpeza</span></div>
-      ${IDS.map(id => { const p = PR[id]; return `<div class="s2-row"><div class="hi" style="opacity:0"></div><div class="slot"></div><div class="nm"><b>${p.name}</b><span>${p.cat} · ${p.code.slice(0, 3)} ${p.code.slice(3)}</span></div><div class="pr"><b>${brl(p.price)}</b><span class="${p.qty < p.min ? "lo" : ""}">${p.qty < p.min ? "Estoque baixo · " : ""}${p.qty} un.</span></div></div>`; }).join("")}</div>`);
+    list = h(`<div class="pn blk s2-list"><div class="hd"><h3>${DATA.tx("p.title")}</h3><span class="chip">${KIT.ico("plus", 18)}${DATA.tx("p.new")}</span></div>
+      <div class="s2-search">${KIT.ico("search", 22)}${DATA.tx("p.search")}</div>
+      <div class="s2-cats"><span class="chip">${DATA.tx("p.all")}</span>${["cafe", "agua", "caderno", "sabao"].map(k => `<span class="chip sl">${PR[k].cat}</span>`).join("")}</div>
+      ${IDS.map(id => { const p = PR[id]; return `<div class="s2-row"><div class="hi" style="opacity:0"></div><div class="slot"></div><div class="nm"><b>${p.name}</b><span>${p.cat} · ${p.code.slice(0, 3)} ${p.code.slice(3)}</span></div><div class="pr"><b>${brl(p.price)}</b><span class="${p.qty < p.min ? "lo" : ""}">${p.qty < p.min ? DATA.tx("p.low") + " · " : ""}${p.qty} ${DATA.tx("p.unit")}</span></div></div>`; }).join("")}</div>`);
     root.appendChild(list); rows = $$(".s2-row", list); cats = $$(".s2-cats .chip", list);
     IDS.forEach((id, i) => {
       const p = PR[id], c = KIT.product(id); const a = anchor(c, -p.w / 2, -p.h); root.appendChild(a); prods.push(a);
     });
-    lab = h(`<div class="pn lt blk s2-lab"><div class="t">CAFÉ TORRADO 500 G · MERCEARIA</div><div class="bc">${KIT.barcode(520, 170, PR.cafe.seed, "#0F172A")}<div class="s2-beam"></div></div><div class="dg">7 891234 500017</div></div>`);
+    lab = h(`<div class="pn lt blk s2-lab"><div class="t">${(PR.cafe.name + " · " + PR.cafe.cat).toUpperCase()}</div><div class="bc">${KIT.barcode(520, 170, PR.cafe.seed, "#0F172A")}<div class="s2-beam"></div></div><div class="dg">7 891234 500017</div></div>`);
     root.appendChild(lab); beam = $(".s2-beam", lab); digits = $(".dg", lab);
-    found = h(`<div class="blk s2-found"><div class="ok">${KIT.ico("check", 24, "#fff", 2.6)}</div>Produto encontrado</div>`); root.appendChild(found);
-    det = h(`<div class="pn blk s2-det"><div style="display:flex;align-items:center;gap:14px"><span class="chip">Mercearia</span><span style="font:700 30px 'SP Roboto';letter-spacing:-.01em">Café Torrado 500 g</span></div>
-      <div class="g"><div><span>Preço de venda</span><b>${brl(PR.cafe.price)}</b></div><div><span>Em estoque</span><b>${PR.cafe.qty} un.</b></div><div><span>Estoque mínimo</span><b>${PR.cafe.min} un.</b></div><div><span>Código</span><b style="font-size:24px">7891234500017</b></div></div></div>`); root.appendChild(det);
+    found = h(`<div class="blk s2-found"><div class="ok">${KIT.ico("check", 24, "#fff", 2.6)}</div>${DATA.tx("p.found")}</div>`); root.appendChild(found);
+    det = h(`<div class="pn blk s2-det"><div style="display:flex;align-items:center;gap:14px"><span class="chip">${PR.cafe.cat}</span><span style="font:700 30px 'SP Roboto';letter-spacing:-.01em">${PR.cafe.name}</span></div>
+      <div class="g"><div><span>${DATA.tx("p.price")}</span><b>${brl(PR.cafe.price)}</b></div><div><span>${DATA.tx("p.stock")}</span><b>${PR.cafe.qty} ${DATA.tx("p.unit")}</b></div><div><span>${DATA.tx("p.min")}</span><b>${PR.cafe.min} ${DATA.tx("p.unit")}</b></div><div><span>${DATA.tx("p.code")}</span><b style="font-size:24px">7891234500017</b></div></div></div>`); root.appendChild(det);
     link = h(`<svg class="blk" width="${FMT.W}" height="${FMT.H}" viewBox="0 0 ${FMT.W} ${FMT.H}"><path fill="none" stroke="#60A5FA" stroke-width="2.5" stroke-dasharray="1 1" pathLength="1" stroke-linecap="round"/><circle r="7" fill="#9CC7FF"/></svg>`); root.appendChild(link);
-    head = hl(["Cadastre e organize", "seus produtos."], "", { accent: 1 }); head.style.fontSize = pick({ wide: 80, sq: 72, tall: 88 }) + "px"; head.style.textAlign = pick({ wide: "left", sq: "center", tall: "center" }); root.appendChild(head);
+    head = hl(DATA.txl("h.prod"), "", { accent: 1 }); head.style.fontSize = pick({ wide: 80, sq: 72, tall: 88 }) + "px"; head.style.textAlign = pick({ wide: "left", sq: "center", tall: "center" }); root.appendChild(head);
   };
   // layout por formato
   const LY = () => pick({

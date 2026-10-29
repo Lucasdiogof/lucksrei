@@ -45,7 +45,7 @@ Permanece igual: GOIÁS APP (marca/lockup); Goiás · Avaí · Independiente (cl
 | rank.monthly | 20,5–22 | Mensal | Monthly | Mensual | app |  |
 | rank.all | 20,5–22 | Geral | All-time | General | app | arenaRankingAllTime |
 
-## Aprovaura (original: en) — 89 textos
+## Aprovaura (original: en) — 90 textos
 
 Permanece igual: Aprovaura (wordmark/logo); Aurudo (mascote); AURA (selo do HUD); +50 Aura; C1…C5; ENEM; 3! = 3 × 2 × 1 = 6 e demais números
 
@@ -77,7 +77,7 @@ Permanece igual: Aprovaura (wordmark/logo); Aurudo (mascote); AURA (selo do HUD)
 | fb.no | 17,75–18,5 | Não foi dessa vez | Not this time | No esta vez | proposta |  |
 | fb.answer | 17,75–18,5 | Resposta correta: {x} | Correct answer: {x} | Respuesta correcta: {x} | app | mock_exam_strings |
 | eb.review | 18,75–22 | Revisar erros | Review mistakes | Revisar errores | app |  |
-| h.review | 19–21,85 | Aprenda com ⏎ cada erro. | Learn from ⏎ every mistake. | Aprende de ⏎ cada error. | proposta |  |
+| h.review | 19–21,85 | Aprenda com ⏎ cada erro. | Learn from every ⏎ mistake. | Aprende de ⏎ cada error. | proposta |  |
 | rv.count | 19,25–21,75 | {n} erros | {n} mistakes | {n} errores | proposta | singular: 1 erro / 1 mistake / 1 error |
 | rv.count1 | 21–21,75 | 1 erro | 1 mistake | 1 error | proposta |  |
 | rv.hist.q | 19,25–22,25 | O Código de Hamurábi, um dos primeiros conjuntos de leis escritas da história, foi elaborado na: | The Code of Hammurabi, one of the first sets of written laws in history, was drawn up in: | El Código de Hammurabi, uno de los primeros conjuntos de leyes escritas de la historia, fue elaborado en: | app | questions_seed_historia_geral.sql / i18n_questions_historia.sql |
@@ -133,13 +133,14 @@ Permanece igual: Aprovaura (wordmark/logo); Aurudo (mascote); AURA (selo do HUD)
 | news.sci.d | 42–42,75 | 2026 · 5 min de leitura | 2026 · 5 min read | 2026 · 5 min de lectura | app~ |  |
 | eb.profile | 43–44,75 | Perfil | Profile | Perfil | app |  |
 | h.profile | 42,9–44,85 | Acompanhe ⏎ seu progresso. | Track your ⏎ progress. | Sigue ⏎ tu progreso. | proposta |  |
+| pf.q | 43,25–44,75 | 1.248 | 1,248 | 1.248 | proposta | número localizado (separador de milhar) |
 | pf.streak | 43,25–44,75 | dias seguidos | day streak | días seguidos | app |  |
 | pf.acc | 43,25–44,75 | aproveitamento | accuracy | aciertos | app | mock_exam_strings |
 | pf.level | 43,75–45 | Nível {n} | Level {n} | Nivel {n} | proposta |  |
 | pf.total | 43,75–45 | {n} Aura no total | {n} Aura in total | {n} Aura en total | proposta |  |
 | pf.next | 43,75–45 | / 100 Aura para o nível {n} | / 100 Aura to level {n} | / 100 Aura para el nivel {n} | proposta |  |
 | pf.sample | 44–44,75 | Perfil de exemplo | Sample profile | Perfil de ejemplo | proposta | aviso (dados demonstrativos) |
-| h.end | 46,75–50 | Cada resposta ⏎ constrói sua Aura. | Every answer ⏎ builds your Aura. | Cada respuesta ⏎ construye tu Aura. | proposta | slogan final; "Aura" permanece |
+| h.end | 46,75–50 | Cada resposta constrói sua Aura. | Every answer builds your Aura. | Cada respuesta construye tu Aura. | proposta | slogan final; "Aura" permanece |
 
 ## La Pelve (original: pt-BR) — 40 textos
 
@@ -192,7 +193,7 @@ Permanece igual: La Pelve (logo); Samara Rúbia · Camila Pires · Deusimar Ribe
 
 **Regra de formato:** datas em dd/MM/yyyy no vídeo atual (ex.: 27/10/2026); en: "Oct 27, 2026" (tabela e conversa) e, nos balões, "{dia}/{mês}" → "Oct 30"; es: mantém dd/MM/yyyy; horas 08:00 → en "8:00 AM"
 
-## Match Queue (original: en) — 78 textos
+## Match Queue (original: en) — 85 textos
 
 Permanece igual: MATCH QUEUE (wordmark/logo); Team Falcons (nome e escudo); Vejrgang · Msdossary · Lucksrei · AbuMakkah (jogadores); Cartas FUTBIN: imagens originais mantidas (nomes, PAC SHO PAS DRI DEF PHY, bandeiras); Raphinha · Bellingham · Karchaoui · Valencia · Martínez · Bacha · Koundé · de Jong · Lacroix...; FC Barcelona · Chelsea · Real Madrid · LALIGA EA SPORTS; Champions · Rivals · PC · PlayStation · Icon; matchqueue · /join/K7QD2; L1 R1 △ ○ ✕ □; 88 ST 460K 146K 114K 14–1 7–2–1; posições (ST LW RM LM CAM RW) e "Div 2"
 
@@ -210,6 +211,7 @@ Permanece igual: MATCH QUEUE (wordmark/logo); Team Falcons (nome e escudo); Vejr
 | q.opp | 6–16,25 | Adversário | Opponent | Rival | app~ | app: Gols do adversário / Goles del rival |
 | q.found | 7,5–8,5 | Partida encontrada | Match found | Partido encontrado | app |  |
 | q.foundCaps | 7,75–8,5 | PARTIDA ENCONTRADA | MATCH FOUND | PARTIDO ENCONTRADO | app | selo grande em maiúsculas (pôster); mais longo que o original |
+| q.foundShort | 7,5–8,5 | Encontrada | Match found | Encontrado | proposta | selo pequeno da fila e do histórico; no pt/es o texto completo não cabe (o banner grande usa o completo) |
 | q.timeup | 10,25 | Tempo esgotado | Time's up | Se acabó el tiempo | app |  |
 | q.turn | 10,75–11 | Sua vez de buscar! | Your turn to search! | ¡Tu turno de buscar! | app |  |
 | q.now | 11–11,5 | Match Queue · agora | Match Queue · now | Match Queue · ahora | proposta | notificação simulada |
@@ -240,7 +242,7 @@ Permanece igual: MATCH QUEUE (wordmark/logo); Team Falcons (nome e escudo); Vejr
 | m.favs | 24,5–25 | Favoritos | Favorites | Favoritos | app |  |
 | eb.sq | 26,25–33 | Monte sua escalação | Manage your squad | Gestiona tu plantilla | proposta | app usa "escalação/plantilla" |
 | h.sq | 26–33 | Monte a escalação. | Build the lineup. | Arma la alineación. | app~ | Build lineup = Montar escalação / Armar alineación |
-| sq.chem | 27,75–32 | Química da escalação | Team chemistry | Química de la alineación | app~ | app: "Squad chemistry" |
+| sq.chem | 27,75–32 | Química do time | Team chemistry | Química del equipo | app~ | app: Química da escalação / de la alineación; forma curta porque o rótulo divide a linha com "Overall" |
 | sq.overall | 31–33 | Overall | Overall | Media | app | squadOverallLabel |
 | sq.value | 31,75–33 | Valor da escalação | Squad value | Valor de la plantilla | proposta |  |
 | sq.mgr | 30,5–33 | Técnico | Manager | Entrenador | app | squadManagerTitle (técnico da escalação) |
@@ -253,14 +255,17 @@ Permanece igual: MATCH QUEUE (wordmark/logo); Team Falcons (nome e escudo); Vejr
 | sk.sho | 33,5–38 | Finalização | Shooting | Definición | app |  |
 | sk.def | 33,5–38 | Defesa | Defending | Defensa | app |  |
 | sk.stepover | 33,5 | Pedalada direita | Stepover right | Pedalada derecha | app~ | forma curta; o app usa Pedalada (Stepover) direita/derecha (divergência intencional, só por espaço) |
-| sk.spin | 33,5 | Girar direito | Spin right stick | Girar stick derecho | app |  |
 | sk.ballroll | 34,5 | Roleta direita | Ball roll cut right | Ruleta derecha | app |  |
 | sk.rainbow | 35,75 | Arco-íris simples | Simple rainbow flick | Arcoíris simple | app |  |
-| sk.flick | 35,75 | Flick direito | Flick right stick | Flick stick derecho | app |  |
 | sk.elastico | 36,5 | Elástico | Elastico | Elástico | app |  |
 | sk.lowshot | 37,5 | Chute de efeito rasteiro | Low finesse shot | Tiro con efecto raso | app |  |
-| sk.then | 37,5 | , depois | , then | , luego | proposta | fragmento da instrução de controle |
-| sk.again | 37,5 | de novo | again | otra vez | proposta |  |
+| sk.c.stepover | 33,5 | Girar direito ↑→ | Spin right stick ↑→ | Girar stick derecho ↑→ | app | instrução de controle (app: controlsDribblingSkill) |
+| sk.c.ballroll | 34,5 | Girar direito ↓ até ← | Spin right stick ↓ to ← | Girar stick derecho ↓ hasta ← | app |  |
+| sk.c.rainbow | 35,75 | Flick direito ↓↑↑ | Flick right stick ↓↑↑ | Flick stick derecho ↓↑↑ | app |  |
+| sk.c.elastico | 36,5 | Direito → girar ↓← | Right stick → spin ↓← | Stick derecho → girar ↓← | app~ | adaptado do vocabulário do app |
+| sk.c.lowshot | 37,5 | R1 + ◯, depois ◯ de novo | R1 + ◯, then ◯ again | R1 + ◯, luego ◯ otra vez | proposta |  |
+| sq.num1 | 31,75–33 | 873.700 | 873,700 | 873.700 | proposta | valor do elenco no console; separador de milhar localizado |
+| sq.num2 | 31,75–33 | 863.350 | 863,350 | 863.350 | proposta | valor do elenco no PC; separador de milhar localizado |
 | eb.rv | 39–43,5 | Tudo em torno da partida | Everything around the match | Todo alrededor del partido | proposta |  |
 | h.rv | 38,75–43,5 | Acompanhe cada partida. ⏎ Veja seu progresso. | Track every match. ⏎ Follow your progress. | Sigue cada partido. ⏎ Mira tu progreso. | proposta |  |
 | rv.hist | 39–39,5 | Histórico de buscas | Search history | Historial de búsquedas | proposta |  |
@@ -275,6 +280,9 @@ Permanece igual: MATCH QUEUE (wordmark/logo); Team Falcons (nome e escudo); Vejr
 | rv.last5 | 40,25–43 | Últimas 5 | Last 5 | Últimos 5 | proposta |  |
 | rv.form | 41,75 | Forma | Form | Forma | proposta |  |
 | rv.div2 | 41,5–43 | Divisão 2 | Division 2 | División 2 | app | rivalsDivisionDiv2 |
+| rv.fW | 40,25–43 | V | W | G | app | forma recente: vitória (app: V/W/G) |
+| rv.fD | 40,25–43 | E | D | E | app~ | empate |
+| rv.fL | 40,25–43 | D | L | P | app | derrota (app: D/L/P) |
 | rv.profile | 42,75–43,5 | Perfil público | Public profile | Perfil público | app |  |
 
 ## Bebômetro (original: pt-BR) — 45 textos
@@ -325,9 +333,9 @@ Permanece igual: Bebômetro (marca/logo); João · Gleidson · Rodrigo (apelidos
 | q.never | 23–26,25 | Eu nunca cantei no chuveiro como se fosse um show. | Never have I ever sung in the shower like it was a concert. | Yo nunca he cantado en la ducha como si fuera un show. | proposta | carta de jogo; texto longo |
 | q.most | 24–26,25 | Quem é mais provável de pedir comida mesmo depois de ter jantado? | Who is most likely to order food even after dinner? | ¿Quién es más probable que pida comida incluso después de cenar? | proposta |  |
 | q.truth | 25–26,25 | Qual foi a maior mentira inofensiva que você já contou? | What's the biggest harmless lie you've ever told? | ¿Cuál es la mentira inofensiva más grande que has dicho? | proposta |  |
-| h4 | 26,25–28 | Bafômetro | Blow Meter | Soplómetro | proposta | DIVERGE do app (bafoTitle = Bafômetro nos 3 idiomas). O recurso é uma brincadeira: mede o volume do sopro no microfone, sem álcool (app: Simulação, brincar). Breathalyzer sugeriria medição real; por isso nome neutro. Decisão do dono. |
-| tag1 | 31,25–35,25 | Chope, cachaça | Draft beer, cachaça, | Cerveza de barril, cachaça | proposta | slogan final, linha 1 (aprovado: Draft beer, cachaça, and good times / Cerveza de barril, cachaça y buenos momentos); cachaça permanece |
-| tag2 | 31,5–35,25 | e resenha. | and good times. | y buenos momentos. | proposta | slogan final, linha 2 (em destaque); aprovado pelo dono |
+| h4 | 26,25–28 | Bafômetro | Bafômetro | Bafômetro | app | nome do recurso mantido nos 3 idiomas, como no app (bafoTitle). O recurso é uma simulação (mede o sopro no microfone, não álcool); nenhum texto do filme sugere medição real. |
+| tag1 | 31,25–35,25 | Chope, cachaça | Draft beer, cachaça, | Cerveza de barril, | proposta | slogan aprovado: Draft beer, cachaça, and good times / Cerveza de barril, cachaça y buenos momentos. Recomposição: no es a linha 1 fica só "Cerveza de barril," e o resto desce, em vez de reduzir a fonte a 68%. |
+| tag2 | 31,5–35,25 | e resenha. | and good times. | cachaça y buenos ⏎ momentos. | proposta | slogan final, linhas em destaque; no es ocupa 2 linhas (o código desloca o bloco) |
 
 ## OrbiJob (original: pt-BR) — 43 textos
 
@@ -410,13 +418,13 @@ Permanece igual: Busão|Gyn (marca); 003 · 004 (linhas); T MARANATA · T PAULO 
 | capE | 34,5–36,25 | Favoritos e recentes ficam só no seu aparelho. | Favorites and recents stay only on your device. | Los favoritos y recientes se quedan solo en tu dispositivo. | app~ | o app usa "dispositivo/device" |
 | tag.region | 40,75–42 | Goiânia e Região Metropolitana | Goiânia and its Metropolitan Region | Goiânia y su Región Metropolitana | proposta | dado local do Brasil permanece; só a frase é traduzida |
 
-## StockPort (original: pt-BR) — 94 textos
+## StockPort (original: pt-BR) — 98 textos
 
 Permanece igual: StockPort System (logo); códigos de barras e SKUs; Distribuidora Serra · Mariana Souza · Mercado Bom Dia; R$ (BRL) e números; código de barras 7 891234 500017; Pix
 
 | id | s | pt-BR | en | es | fonte | nota |
 |---|---|---|---|---|---|---|
-| h.open | 3–6 | Estoque, vendas e caixa. ⏎ Tudo em um só lugar. | Inventory, sales and cash register. ⏎ Everything in one place. | Inventario, ventas y caja. ⏎ Todo en un solo lugar. | proposta |  |
+| h.open | 3–6 | Estoque, vendas e caixa. ⏎ Tudo em um só lugar. | Inventory, sales and cash. ⏎ Everything in one place. | Inventario, ventas y caja. ⏎ Todo en un solo lugar. | proposta |  |
 | sub.open | 3,5–6 | Gestão simples para o seu comércio. | Simple management for your business. | Gestión simple para tu negocio. | proposta |  |
 | h.prod | 6,25–8,25 | Cadastre e organize ⏎ seus produtos. | Register and organize ⏎ your products. | Registra y organiza ⏎ tus productos. | proposta |  |
 | prod.coffee | 8,75–27,25 | Café Torrado 500 g | Roasted Coffee 500 g | Café tostado 500 g | proposta | nome genérico de produto demonstrativo (aprovado traduzir) |
@@ -430,10 +438,10 @@ Permanece igual: StockPort System (logo); códigos de barras e SKUs; Distribuido
 | cat.drinks | 8,75–12 | Bebidas | Beverages | Bebidas | proposta |  |
 | cat.stationery | 8,75–12 | Papelaria | Stationery | Papelería | proposta |  |
 | cat.cleaning | 9–12 | Limpeza | Cleaning | Limpieza | proposta |  |
-| box.coffee | 6–12 | CAFÉ TORRADO | ROASTED COFFEE | CAFÉ TOSTADO | proposta | rótulo impresso na caixa 3D |
-| box.water | 6–12 | ÁGUA MINERAL 1,5 L | MINERAL WATER 1.5 L | AGUA MINERAL 1,5 L | proposta | rótulo na caixa 3D |
+| box.coffee | 6–12 | CAFÉ ⏎ TORRADO | COFFEE ⏎ ROASTED | CAFÉ ⏎ TOSTADO | proposta | rótulo impresso na caixa 3D (substantivo grande, adjetivo pequeno) |
+| box.water | 6–12 | ÁGUA ⏎ MINERAL 1,5 L | WATER ⏎ MINERAL 1.5 L | AGUA ⏎ MINERAL 1,5 L | proposta | rótulo na caixa 3D |
 | box.notebook | 6–12 | CADERNO | NOTEBOOK | CUADERNO | proposta | rótulo na caixa 3D |
-| box.soap | 6–12 | SABÃO EM PÓ 1 KG | LAUNDRY POWDER 1 KG | DETERGENTE EN POLVO 1 KG | proposta | rótulo na caixa 3D; es bem mais longo |
+| box.soap | 6–12 | SABÃO ⏎ EM PÓ · 1 KG | LAUNDRY ⏎ POWDER · 1 KG | DETERGENTE ⏎ EN POLVO · 1 KG | proposta | rótulo na caixa 3D; en e es têm a 1ª linha bem maior |
 | p.title | 8,25–12 | Produtos | Products | Productos | proposta |  |
 | p.new | 8,25–12 | Novo produto | New product | Nuevo producto | proposta |  |
 | p.search | 8,25–27,25 | Buscar produto ou ler código de barras | Search product or scan barcode | Buscar producto o leer código de barras | proposta |  |
@@ -479,7 +487,7 @@ Permanece igual: StockPort System (logo); códigos de barras e SKUs; Distribuido
 | c.doneLine | 25,5–27 | Venda #{n} · {itens} itens · {valor} | Sale #{n} · {itens} items · {valor} | Venta #{n} · {itens} artículos · {valor} | proposta |  |
 | c.stockUpd | 25,5–27 | Estoque atualizado · {produto} {a} → {b} un. | Stock updated · {produto} {a} → {b} pcs | Inventario actualizado · {produto} {a} → {b} uds. | proposta |  |
 | c.pdf | 25,5–27 | Recibo em PDF | PDF receipt | Recibo en PDF | proposta |  |
-| c.split | 25,5–27 | {a} + {b} | {a} + {b} | {a} + {b} | proposta | "Pix + Dinheiro" → Pix + Cash / Pix + Efectivo |
+| c.item1 | 22–23,5 | 1 item | 1 item | 1 artículo | proposta | singular do contador do carrinho |
 | h.res | 27,4–36,5 | Entenda seus resultados. | Understand your results. | Entiende tus resultados. | proposta |  |
 | r.rev | 28–34,75 | Faturamento hoje | Revenue today | Facturación de hoy | proposta |  |
 | r.profit | 28–34,75 | Lucro hoje · estimado | Profit today · estimated | Ganancia de hoy · estimada | proposta |  |
@@ -498,7 +506,11 @@ Permanece igual: StockPort System (logo); códigos de barras e SKUs; Distribuido
 | r.stockVal | 32–34,75 | Valor do estoque | Stock value | Valor del inventario | proposta |  |
 | r.avgCost | 32–34,75 | ao custo médio | at average cost | a costo promedio | proposta |  |
 | rp.title | 35,25–36,5 | Relatório de vendas | Sales report | Informe de ventas | proposta | PDF simulado |
-| rp.period | 35,25–36,5 | {de} a {ate} · gerado em {dia} às {hora} | {de} to {ate} · generated on {dia} at {hora} | {de} a {ate} · generado el {dia} a las {hora} | proposta | formato de data/hora localizado |
+| rp.period | 35,25–36,5 | {de} a {ate} · gerado em {dia} às {hora} | {de} to {ate} · generated on {dia} at {hora} | {de} al {ate} · generado el {dia} a las {hora} | proposta | cabeçalho do relatório; datas e hora localizadas pelas linhas seguintes |
+| rp.from | 35,25–36,5 | 01/10/2026 | Oct 1, 2026 | 01/10/2026 | proposta | data demonstrativa; formato localizado |
+| rp.to | 35,25–36,5 | 21/10/2026 | Oct 21, 2026 | 21/10/2026 | proposta |  |
+| rp.day | 35,25–36,5 | 21/10 | Oct 21 | 21/10 | proposta |  |
+| rp.hour | 35,25–36,5 | 18:40 | 6:40 PM | 18:40 | proposta | hora localizada |
 | rp.salesH | 35,25–36,5 | Vendas | Sales | Ventas | proposta |  |
 | rp.revH | 35,25–36,5 | Faturamento | Revenue | Facturación | proposta |  |
 | rp.profH | 35,25–36,5 | Lucro est. | Est. profit | Ganancia est. | proposta |  |

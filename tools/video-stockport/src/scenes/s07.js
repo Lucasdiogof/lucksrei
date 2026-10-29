@@ -48,44 +48,44 @@ SP.scenes.s07 = (function () {
   S.build = function (root) {
     board = h(`<div class="blk p3 s7-board"></div>`); root.appendChild(board);
     const card = (k, html, cls = "") => { const [x, y, w, hh] = C[k]; const e = h(`<div class="s7-c ${cls}" style="width:${w}px;height:${hh}px">${html}</div>`); e._x = x; e._y = y; board.appendChild(e); cards[k] = e; return e; };
-    card("vendas", `<h6>${KIT.ico("receipt", 18, "#64748B")}Vendas hoje</h6><div class="v">${TD.sales}</div><div class="n">ticket médio <b style="color:#0F172A">${brl(TD.ticket)}</b></div>`);
-    card("fat", `<h6>${KIT.ico("trend", 18, "#64748B")}Faturamento hoje</h6><div class="v">${brl(TD.revenue)}</div><div class="n">${KIT.ico("receipt", 15, "#64748B")}${TD.sales} vendas registradas</div>`);
-    card("lucro", `<h6>${KIT.ico("bars", 18, "#64748B")}Lucro hoje · estimado</h6><div class="v">${brl(TD.profit)}</div><div class="n">${KIT.ico("lock", 15, "#64748B")}perfis com acesso a custos</div>`);
-    card("baixo", `<h6>${KIT.ico("alert", 18, "#B45309")}Estoque baixo</h6><div class="v">${DATA.LOW.length}</div><div class="n">produtos abaixo do mínimo</div>`, "am");
+    card("vendas", `<h6>${KIT.ico("receipt", 18, "#64748B")}${DATA.tx("r.sales")}</h6><div class="v">${TD.sales}</div><div class="n">${DATA.tx("r.ticket")} <b style="color:#0F172A">${brl(TD.ticket)}</b></div>`);
+    card("fat", `<h6>${KIT.ico("trend", 18, "#64748B")}${DATA.tx("r.rev")}</h6><div class="v">${brl(TD.revenue)}</div><div class="n">${KIT.ico("receipt", 15, "#64748B")}${DATA.tx("r.salesN", { n: TD.sales })}</div>`);
+    card("lucro", `<h6>${KIT.ico("bars", 18, "#64748B")}${DATA.tx("r.profit")}</h6><div class="v">${brl(TD.profit)}</div><div class="n">${KIT.ico("lock", 15, "#64748B")}${DATA.tx("r.cost")}</div>`);
+    card("baixo", `<h6>${KIT.ico("alert", 18, "#B45309")}${DATA.tx("p.low")}</h6><div class="v">${DATA.LOW.length}</div><div class="n">${DATA.tx("r.below")}</div>`, "am");
     const bw = 44, gap = (900 - DAYS.length * bw) / (DAYS.length - 1), mx = 140000;
     const pts = DAYS.map((v, i) => [10 + i * (bw + gap) + bw / 2, 270 - v / mx * 250]);
-    card("chart", `<h5>Faturamento por dia</h5><div class="sbt">Últimos 14 dias</div><svg width="930" height="290" viewBox="0 0 930 290" style="margin-top:18px">
+    card("chart", `<h5>${DATA.tx("r.perDay")}</h5><div class="sbt">${DATA.tx("r.14d")}</div><svg width="930" height="290" viewBox="0 0 930 290" style="margin-top:18px">
       ${[0, 1, 2, 3].map(i => `<line x1="0" x2="930" y1="${20 + i * 83}" y2="${20 + i * 83}" stroke="#EEF2F7" stroke-width="1.5"/>`).join("")}
       ${DAYS.map((v, i) => `<rect class="br" x="${10 + i * (bw + gap)}" y="${270 - v / mx * 250}" width="${bw}" height="${v / mx * 250}" rx="8" fill="${i === DAYS.length - 1 ? "#2563EB" : "#BFDBFE"}"/>`).join("")}
       <path class="ln" d="${pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + (p[1] - 18).toFixed(1)).join("")}" fill="none" stroke="#0A3D91" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1"/>
       <line x1="0" x2="930" y1="271" y2="271" stroke="#CBD5E1" stroke-width="2"/></svg>`);
     const COL = { Pix: "#2563EB", Dinheiro: "#60A5FA", "Débito": "#0A3D91", "Crédito": "#93C5FD" }, PAY = Object.keys(TD.pct).map(k => [k, TD.pct[k], COL[k]]);
     let acc = 0;
-    card("pay", `<h5>Por forma de pagamento</h5><div class="sbt">Hoje</div><div style="display:flex;align-items:center;gap:34px;margin-top:26px">
+    card("pay", `<h5>${DATA.tx("r.byPay")}</h5><div class="sbt">${DATA.tx("s.today")}</div><div style="display:flex;align-items:center;gap:34px;margin-top:26px">
       <svg width="240" height="240" viewBox="0 0 240 240" style="transform:rotate(-90deg)">${PAY.map(p => { const s = `<circle class="dn" cx="120" cy="120" r="92" fill="none" stroke="${p[2]}" stroke-width="40" pathLength="100" stroke-dasharray="0 100" data-a="${acc}" data-v="${p[1]}"/>`; acc += p[1]; return s; }).join("")}</svg>
-      <div>${PAY.map(p => `<div style="display:flex;align-items:center;gap:12px;height:46px;font:400 19px 'SP Roboto';color:#334155"><i style="width:14px;height:14px;border-radius:4px;background:${p[2]}"></i><span style="width:110px">${p[0]}</span><b style="font-weight:500;color:#0F172A">${p[1]}%</b></div>`).join("")}</div></div>`);
-    card("repor", `<h5>Produtos para repor</h5><div style="margin-top:10px">
-      ${DATA.LOW.map(l => `<div class="s7-li">${KIT.ico("alert", 20, "#B45309")}<span class="x"><b>${l.name}</b></span>${l.q} / mín. ${l.min}</div>`).join("")}</div>`);
-    card("top", `<h5>Produtos mais vendidos</h5><div style="margin-top:10px">
-      <div class="s7-li"><span class="x"><b>Café Torrado 500 g</b></span><div class="bar"><i style="width:100%"></i></div></div>
-      <div class="s7-li"><span class="x"><b>Água Mineral 1,5 L</b></span><div class="bar"><i style="width:82%"></i></div></div>
-      <div class="s7-li"><span class="x"><b>Caderno 96 folhas</b></span><div class="bar"><i style="width:54%"></i></div></div></div>`);
-    card("gaveta", `<div style="display:flex;gap:30px"><div style="flex:1"><h6>${KIT.ico("cash", 18, "#64748B")}Gaveta do caixa</h6><div class="v" style="font-size:44px">${brl(DATA.CASH.expected)}</div><div class="n"><span class="chip gr" style="height:28px;font-size:14px;background:#DCFCE7;color:#15803D;border-color:#BBF7D0"><i></i>Caixa fechado</span></div></div>
-      <div style="flex:1;border-left:1px solid #EEF2F7;padding-left:28px"><h6>${KIT.ico("package", 18, "#64748B")}Valor do estoque</h6><div class="v" style="font-size:44px">${brl(1842000)}</div><div class="n">ao custo médio</div></div></div>`);
+      <div>${PAY.map(p => `<div style="display:flex;align-items:center;gap:12px;height:46px;font:400 19px 'SP Roboto';color:#334155"><i style="width:14px;height:14px;border-radius:4px;background:${p[2]}"></i><span style="width:110px">${DATA.payLabel(p[0])}</span><b style="font-weight:500;color:#0F172A">${p[1]}%</b></div>`).join("")}</div></div>`);
+    card("repor", `<h5>${DATA.tx("r.restock")}</h5><div style="margin-top:10px">
+      ${DATA.LOW.map(l => `<div class="s7-li">${KIT.ico("alert", 20, "#B45309")}<span class="x"><b>${l.name}</b></span>${l.q} / ${DATA.tx("s.minShort")} ${l.min}</div>`).join("")}</div>`);
+    card("top", `<h5>${DATA.tx("r.top")}</h5><div style="margin-top:10px">
+      <div class="s7-li"><span class="x"><b>${DATA.P.cafe.name}</b></span><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="s7-li"><span class="x"><b>${DATA.P.agua.name}</b></span><div class="bar"><i style="width:82%"></i></div></div>
+      <div class="s7-li"><span class="x"><b>${DATA.P.caderno.name}</b></span><div class="bar"><i style="width:54%"></i></div></div></div>`);
+    card("gaveta", `<div style="display:flex;gap:30px"><div style="flex:1"><h6>${KIT.ico("cash", 18, "#64748B")}${DATA.tx("r.drawer")}</h6><div class="v" style="font-size:44px">${brl(DATA.CASH.expected)}</div><div class="n"><span class="chip gr" style="height:28px;font-size:14px;background:#DCFCE7;color:#15803D;border-color:#BBF7D0"><i></i>${DATA.tx("r.closed")}</span></div></div>
+      <div style="flex:1;border-left:1px solid #EEF2F7;padding-left:28px"><h6>${KIT.ico("package", 18, "#64748B")}${DATA.tx("r.stockVal")}</h6><div class="v" style="font-size:44px">${brl(1842000)}</div><div class="n">${DATA.tx("r.avgCost")}</div></div></div>`);
     Object.values(cards).forEach(e => { e.style.transform = `translate3d(${e._x}px,${e._y}px,0)`; });
     bars = $$(".br", board); line = $(".ln", board); donut = $$(".dn", board);
     kpiV = { vendas: $(".v", cards.vendas), fat: $(".v", cards.fat), lucro: $(".v", cards.lucro), baixo: $(".v", cards.baixo) };
     // relatório PDF
     const mini = KIT.sparkline(536, 140, MO.days, "#2563EB", true, 3);
     pdf = h(`<div class="blk s7-pdf"><div class="hd"><!-- variante clara original da marca (fundo branco) -->${KIT.markLight(40)}<b>StockPort System</b><span>Mercado Bom Dia</span></div><div class="rule"></div>
-      <h2>Relatório de vendas</h2><div class="per">01/10/2026 a 21/10/2026 · gerado em 21/10 às 18:40</div>
-      <div class="k"><div><span>Vendas</span><b>${MO.sales}</b></div><div><span>Faturamento</span><b>${brl(MO.revenue)}</b></div><div><span>Lucro est.</span><b>${brl(MO.profit)}</b></div><div><span>Margem</span><b>${MO.margin}%</b></div></div>
-      <div class="ch"><div style="font:500 13px 'SP Roboto';color:#64748B;margin-bottom:6px">FATURAMENTO POR DIA</div>${mini}</div>
-      <table><tr><th>Produto</th><th>Qtd.</th><th>Total</th></tr>${MO.top.map(r => `<tr><td>${DATA.P[r.p].name}</td><td>${r.q}</td><td>${brl(r.total)}</td></tr>`).join("")}</table>
-      <div class="ft"><span>StockPort System</span><span>página 1 de 2</span></div></div>`);
+      <h2>${DATA.tx("rp.title")}</h2><div class="per">${DATA.tx("rp.period", { de: DATA.tx("rp.from"), ate: DATA.tx("rp.to"), dia: DATA.tx("rp.day"), hora: DATA.tx("rp.hour") })}</div>
+      <div class="k"><div><span>${DATA.tx("rp.salesH")}</span><b>${MO.sales}</b></div><div><span>${DATA.tx("rp.revH")}</span><b>${brl(MO.revenue)}</b></div><div><span>${DATA.tx("rp.profH")}</span><b>${brl(MO.profit)}</b></div><div><span>${DATA.tx("rp.marginH")}</span><b>${MO.margin}%</b></div></div>
+      <div class="ch"><div style="font:500 13px 'SP Roboto';color:#64748B;margin-bottom:6px">${DATA.tx("rp.perDay")}</div>${mini}</div>
+      <table><tr><th>${DATA.tx("rp.colProd")}</th><th>${DATA.tx("rp.colQty")}</th><th>${DATA.tx("c.total")}</th></tr>${MO.top.map(r => `<tr><td>${DATA.P[r.p].name}</td><td>${r.q}</td><td>${brl(r.total)}</td></tr>`).join("")}</table>
+      <div class="ft"><span>StockPort System</span><span>${DATA.tx("rp.page", { n: 1, m: 2 })}</span></div></div>`);
     root.appendChild(pdf); rule = $(".rule", pdf);
     pdfParts = [$(".hd", pdf), rule, $("h2", pdf), $(".per", pdf), $(".k", pdf), $(".ch", pdf), $("table", pdf), $(".ft", pdf)];
-    head = hl(FN === "wide" ? ["Entenda", "seus resultados."] : ["Entenda seus resultados."], "", { accent: FN === "wide" ? 1 : -1 }); head.style.fontSize = pick({ wide: 96, sq: 62, tall: 76 }) + "px"; head.style.textAlign = pick({ wide: "left", sq: "center", tall: "center" }); root.appendChild(head);
+    head = hl(FN === "wide" ? ["Entenda", "seus resultados."] : [DATA.tx("h.res")], "", { accent: FN === "wide" ? 1 : -1 }); head.style.fontSize = pick({ wide: 96, sq: 62, tall: 76 }) + "px"; head.style.textAlign = pick({ wide: "left", sq: "center", tall: "center" }); root.appendChild(head);
   };
   // câmera = ponto de foco no board (px do board) + escala. 16:9: do faturamento ao painel inteiro.
   // 9:16 e 1:1: percorre os detalhes (faturamento → gráfico → formas de pagamento) antes de recuar.

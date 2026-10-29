@@ -14,5 +14,5 @@ const out = {};
 for (const s of d.strings) out[s.id] = { 'pt-BR': s['pt-BR'], en: s.en, es: s.es, ...(s.fit ? { fit: s.fit } : {}) };
 const body = '// GERADO por tools/video-i18n/emit.mjs a partir de tools/video-i18n/' + video + '.json — não edite à mão.\n' +
   'window.VIDEO_I18N = ' + JSON.stringify(out, null, 1) + ';\n';
-fs.writeFileSync(path.join(repo, dir, 'i18n.js'), body);
+fs.writeFileSync(path.resolve(repo, dir, 'i18n.js'), body);
 console.log('i18n.js:', Object.keys(out).length, 'textos →', path.join(dir, 'i18n.js'));

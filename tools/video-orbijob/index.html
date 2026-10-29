@@ -58,7 +58,15 @@ body.render #ui{display:none}
 </div>
 <div id="ui"><button id="pp">Pausar</button><input id="sc" type="range" min="0" max="43" step="0.01" value="0"><span id="tc"></span><span>espaço: pausa · ←/→: ±1 s</span></div>
 
+<script src="i18n.js"></script>
 <script>
+// idioma do filme: ?lang=pt-BR|en|es (padrão pt-BR = filme publicado)
+const LANG = new URLSearchParams(location.search).get("lang") || "pt-BR";
+document.documentElement.lang = LANG;
+const TX = (id, v) => { let t = VIDEO_I18N[id][LANG]; for (const k in (v || {})) t = t.split("{" + k + "}").join(v[k]); return t; };
+const TXL = id => TX(id).split("\n");
+// fator de tamanho por idioma (campo "fit" do dicionário): evita corte quando a tradução é mais larga
+const FIT = id => (VIDEO_I18N[id].fit || {})[LANG] || 1;
 "use strict";
 /* ───────────── utilidades ───────────── */
 const W = 1920, H = 1080, DURATION = 43;
@@ -109,8 +117,9 @@ const cam$ = $("cam"), els = {};
 function el(id, cls, html, style, disp) { const e = document.createElement("div"); e.className = "o " + (cls || ""); if (html) e.innerHTML = html; if (style) e.style.cssText = style; if (disp) e._d = disp; e.id = id; cam$.appendChild(e); els[id] = e; return e; }
 
 /* ───────────── dados (só o que o OrbiJob de fato faz) ───────────── */
-const WORDS = [["PT", "Programador de software"], ["EN", "Software developer"], ["ES", "Desarrollador de software"], ["DE", "Softwareentwickler"], ["SV", "Programvaruutvecklare"], ["NL", "Software ontwikkelaar"], ["FR", "Développeur de logiciels"]];
-const STAGES = ["Interessado", "Inscrito", "Triagem", "Entrevista", "Proposta", "Contratado"];
+const WORDS_ALL = [["PT", "Programador de software"], ["EN", "Software developer"], ["ES", "Desarrollador de software"], ["DE", "Softwareentwickler"], ["SV", "Programvaruutvecklare"], ["NL", "Software ontwikkelaar"], ["FR", "Développeur de logiciels"]];
+const WORDS = TX("wd.order").split(",").map(c => WORDS_ALL.find(w => w[0] === c.toUpperCase()));
+const STAGES = ["st.interested", "st.applied", "st.screening", "st.interview", "st.offer", "st.hired"].map(k => TX(k));
 // fontes reais do app; [nome, lat, lon, dx, dy, rótulo?]
 const PINS = [
   ["Nova York", 40.7, -74, -26, -22, 1], ["América Latina", -33.4, -70.6, -28, 6, 1],
@@ -127,31 +136,32 @@ function logoSvg(id) {
   <g mask="url(#${id}m)" class="wm">${WM}</g></svg>`;
 }
 el("logo1", "", logoSvg("L1")); el("logo2", "", logoSvg("L2"));
-el("lab1", "mono", "Busca global de vagas");
-el("hB", "k", ""); two(els.hB, "Vagas do", "mundo inteiro.");
-el("hC", "k", ""); two(els.hC, "Sua profissão,", "em sete idiomas.");
-el("hD", "k", ""); two(els.hD, "Recomendação", "com motivo.");
-el("hE", "k", ""); two(els.hE, "Alertas das", "suas buscas.");
-el("hF", "k", ""); two(els.hF, "Sua candidatura,", "etapa por etapa.");
+el("lab1", "mono", TX("lab1"));
+el("hB", "k", ""); two(els.hB, ...TXL("hB"));
+el("hC", "k", ""); two(els.hC, ...TXL("hC"));
+el("hD", "k", ""); two(els.hD, ...TXL("hD"));
+el("hE", "k", ""); two(els.hE, ...TXL("hE"));
+el("hF", "k", ""); two(els.hF, ...TXL("hF"));
 ["hB", "hC", "hD", "hE", "hF"].forEach(k => { els[k].style.fontSize = "100px"; });
-["Presencial", "Híbrido", "Remoto"].forEach((n, i) => el("wm" + i, "chip", n));
-el("srcNote", "mono dim", "Fontes públicas · atribuição em cada vaga", "font-size:18px");
-for (let i = 0; i < PINS.length; i++) el("pl" + i, "pl", PINS[i][0]);
+[TX("wm.onsite"), TX("wm.hybrid"), TX("wm.remote")].forEach((n, i) => el("wm" + i, "chip", n));
+el("srcNote", "mono dim", TX("srcNote"), "font-size:18px");
+const PINL = { "Nova York": "pl.ny", "América Latina": "pl.latam", "Inglaterra": "pl.uk", "Espanha": "pl.es", "Alemanha": "pl.de", "Suécia": "pl.se", "Taiwan": "pl.tw", "Nova Zelândia": "pl.nz" };
+for (let i = 0; i < PINS.length; i++) el("pl" + i, "pl", PINL[PINS[i][0]] ? TX(PINL[PINS[i][0]]) : PINS[i][0]);
 WORDS.forEach((w, i) => { el("wd" + i, "k", ""); mk(els["wd" + i], w[1]); });
-el("capC", "txt", "Digite em um idioma. Encontre em todos.");
-el("escoNote", "mono dim", "ESCO © União Europeia · CC BY 4.0", "font-size:15px");
+el("capC", "txt", TX("capC"));
+el("escoNote", "mono dim", TX("escoNote"), "font-size:15px");
 el("gNum", "k", "87"); els.gNum.style.fontSize = "190px";
-el("gLab", "mono", "Compatibilidade"); el("gOf", "mono dim", "de 100", "font-size:20px");
-el("gConf", "txt sm", "Confiança alta", "font-size:22px");
-["Mesma profissão em outro idioma: Programador de software", "Remota, aberta a candidatos de qualquer lugar", "Escrita em português, um idioma do seu perfil"].forEach((t, i) => el("rs" + i, "reason", "<i></i><span>" + t + "</span>"));
-["A cada hora", "Diário", "Semanal"].forEach((n, i) => el("al" + i, "chip", n, "font-size:22px;padding:12px 24px"));
-el("capE", "txt", "Só vagas abertas e verificadas recentemente.");
+el("gLab", "mono", TX("gLab")); el("gOf", "mono dim", TX("gOf"), "font-size:20px");
+el("gConf", "txt sm", TX("gConf"), "font-size:22px");
+[TX("why1", { profissao: "Programador de software" }), TX("why2"), TX("why3")].forEach((t, i) => el("rs" + i, "reason", "<i></i><span>" + t + "</span>"));
+[TX("al.hour"), TX("al.day"), TX("al.week")].forEach((n, i) => el("al" + i, "chip", n, "font-size:22px;padding:12px 24px"));
+el("capE", "txt", TX("capE"));
 STAGES.forEach((n, i) => el("st" + i, "stage", n));
-el("remind", "note", "Entrevista nas próximas 24 horas"); el("stK", "mono", "Etapa", "font-size:20px"); STAGES.forEach((n, i) => { el("cw" + i, "k", n); els["cw" + i].style.fontSize = "56px"; });
-el("capF", "txt", "Você decide a etapa."); el("capF2", "txt sm", "O OrbiJob nunca contata o empregador.");
-const TOK = ["87", "Remoto", "Programador de software", "FR", "Entrevista", "Semanal", "Híbrido", "Contratado"];
+el("remind", "note", TX("remind")); el("stK", "mono", TX("stK"), "font-size:20px"); STAGES.forEach((n, i) => { el("cw" + i, "k", n); els["cw" + i].style.fontSize = "56px"; });
+el("capF", "txt", TX("capF")); el("capF2", "txt sm", TX("capF2"));
+const TOK = ["87", TX("wm.remote"), "Programador de software", "FR", TX("st.interview"), TX("al.week"), TX("wm.hybrid"), TX("st.hired")];
 TOK.forEach((n, i) => el("tk" + i, "tok", n, i === 2 ? "font-size:28px" : ""));
-el("tag1", "k", ""); mk(els.tag1, "Oportunidades no mundo inteiro."); el("tag2", "k v", ""); mk(els.tag2, "Sua carreira organizada.");
+el("tag1", "k", ""); mk(els.tag1, TX("tag1")); el("tag2", "k v", ""); mk(els.tag2, TX("tag2"));
 els.tag1.style.fontSize = els.tag2.style.fontSize = "64px";
 
 /* ───────────── canvas ───────────── */

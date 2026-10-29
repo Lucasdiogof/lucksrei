@@ -4,11 +4,14 @@
    (−2 → 84), a venda entra no caixa (parte em dinheiro) e no faturamento do dia. Validado por test/validate.mjs.
    Funciona no navegador (window.DATA) e no Node (module.exports). */
 (function (root) {
+  /* texto por idioma: dicionário em ../video-i18n (window.VIDEO_I18N); sem ele (Node, validate.mjs) vale o texto em português */
+  const tx = (id, vars, pt) => { let t = root.VIDEO_I18N && root.VIDEO_LANG ? root.VIDEO_I18N[id][root.VIDEO_LANG] : (pt !== undefined ? pt : id); for (const k in (vars || {})) t = t.split("{" + k + "}").join(vars[k]); return t; };
+  const txl = (id, pt) => tx(id, null, pt).split("\n");
   const P = {
-    cafe: { id: "cafe", name: "Café Torrado 500 g", cat: "Mercearia", price: 1890, stock0: 64, min: 20, code: "7891234500017" },
-    agua: { id: "agua", name: "Água Mineral 1,5 L", cat: "Bebidas", price: 350, stock0: 149, min: 40, code: "7891234500024" },
-    caderno: { id: "caderno", name: "Caderno 96 folhas", cat: "Papelaria", price: 1490, stock0: 23, min: 12, code: "7891234500031" },
-    sabao: { id: "sabao", name: "Sabão em Pó 1 kg", cat: "Limpeza", price: 1290, stock0: 7, min: 10, code: "7891234500048" },
+    cafe: { id: "cafe", name: tx("prod.coffee", null, "Café Torrado 500 g"), cat: tx("cat.grocery", null, "Mercearia"), price: 1890, stock0: 64, min: 20, code: "7891234500017" },
+    agua: { id: "agua", name: tx("prod.water", null, "Água Mineral 1,5 L"), cat: tx("cat.drinks", null, "Bebidas"), price: 350, stock0: 149, min: 40, code: "7891234500024" },
+    caderno: { id: "caderno", name: tx("prod.notebook", null, "Caderno 96 folhas"), cat: tx("cat.stationery", null, "Papelaria"), price: 1490, stock0: 23, min: 12, code: "7891234500031" },
+    sabao: { id: "sabao", name: tx("prod.soap", null, "Sabão em Pó 1 kg"), cat: tx("cat.cleaning", null, "Limpeza"), price: 1290, stock0: 7, min: 10, code: "7891234500048" },
   };
   /* movimentações do dia, em ordem cronológica (saldo calculado, nunca digitado) */
   const MOVES = [
@@ -58,7 +61,7 @@
   MONTH.profit = Math.round(MONTH.revenue * 321 / 1000);
   MONTH.margin = Math.round(MONTH.profit * 100 / MONTH.revenue);
   MONTH.top = [{ p: "cafe", q: 186 }, { p: "agua", q: 402 }, { p: "caderno", q: 74 }].map(r => ({ ...r, total: r.q * P[r.p].price }));
-  const LOW = [{ name: "Sabão em Pó 1 kg", q: null, min: 10 }, { name: "Biscoito Água e Sal", q: 4, min: 12 }, { name: "Detergente 500 ml", q: 7, min: 15 }];
+  const LOW = [{ name: tx("prod.soap", null, "Sabão em Pó 1 kg"), q: null, min: 10 }, { name: tx("prod.crackers", null, "Biscoito Água e Sal"), q: 4, min: 12 }, { name: tx("prod.dish", null, "Detergente 500 ml"), q: 7, min: 15 }];
   LOW[0].q = stockAfter("sabao", MOVES.length);
 
   /* formatação em centavos inteiros: "R$ 1.284,60" */
@@ -67,6 +70,9 @@
     const s = String(r).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "," + String(d).padStart(2, "0");
     return (neg ? "− " : sign ? "+ " : "") + "R$ " + s;
   }
-  const D = { P, MOVES, ENTRY_IDX, SALE_IDX, stockAfter, SALE, CASH, TODAY, DAYS14, MONTH, LOW, brl };
+  /* nota da movimentação e forma de pagamento: só exibição (a lógica continua usando as chaves em português) */
+  const note = n => /^Venda #/.test(n) ? tx("s.sale", { n: n.slice(7) }, n) : n === "Ajuste · avaria" ? tx("s.adj", null, n) : n;
+  const payLabel = k => ({ Dinheiro: tx("c.cash", null, "Dinheiro"), "Débito": tx("c.debit", null, "Débito"), "Crédito": tx("c.credit", null, "Crédito") })[k] || k;
+  const D = { tx, txl, note, payLabel, P, MOVES, ENTRY_IDX, SALE_IDX, stockAfter, SALE, CASH, TODAY, DAYS14, MONTH, LOW, brl };
   if (typeof module !== "undefined") module.exports = D; else root.DATA = D;
 })(typeof window !== "undefined" ? window : globalThis);

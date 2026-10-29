@@ -10,6 +10,8 @@
 <body>
 <div id="vp"><div id="stage"><canvas id="bg"></canvas><div id="cam"></div></div></div>
 <div id="dev"></div>
+<script src="i18n.js"></script>
+<script>window.VIDEO_LANG = new URLSearchParams(location.search).get("lang") || "pt-BR"; document.documentElement.lang = window.VIDEO_LANG;</script>
 <script src="src/data.js"></script>
 <script src="src/engine.js"></script>
 <script src="src/kit.js"></script>

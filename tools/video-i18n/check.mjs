@@ -64,7 +64,7 @@ for (const f of fs.readdirSync(here).filter(x => x.endsWith('.json')).sort()) {
     if (LANGS.some(l => typeof s[l] !== 'string')) continue;
     for (const l of LANGS) {
       if (ph(s[l]) !== ph(s[origin])) err(v, `${s.id}: placeholders de ${l} diferem do original`);
-      if (s[l].split('\n').length !== s[origin].split('\n').length) err(v, `${s.id}: número de linhas de ${l} difere do original`);
+      if (!(d.reflow || []).includes(s.id) && s[l].split('\n').length !== s[origin].split('\n').length) err(v, `${s.id}: número de linhas de ${l} difere do original`);
     }
     for (const p of d.protected || []) {
       if (!s[origin].includes(p)) continue;

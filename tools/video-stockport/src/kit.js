@@ -78,6 +78,7 @@ KIT.PRODUCTS = {
 for (const id in KIT.PRODUCTS) { const d = DATA.P[id]; Object.assign(KIT.PRODUCTS[id], { name: d.name, cat: d.cat, price: d.price, min: d.min, code: d.code, qty: DATA.stockAfter(id, DATA.ENTRY_IDX) }); }
 /* arte de cada face — vetorial, sem marcas reais */
 KIT.productFaces = (p, o = {}) => {
+  const KFIT = id => (((window.VIDEO_I18N || {})[id] || {}).fit || {})[window.VIDEO_LANG] || 1;   // fator de tamanho por idioma
   const S = KIT.shade, b = p.base, a = p.accent;
   const lbl = (t, sz, col, ls = ".08em", w = 700) => `<div style="font:${w} ${sz}px/1 'SP Roboto';letter-spacing:${ls};color:${col};white-space:nowrap">${t}</div>`;
   const center = (inner, bg, extra = "") => `<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;${bg ? "background:" + bg + ";" : ""}${extra}">${inner}</div>`;
@@ -85,17 +86,17 @@ KIT.productFaces = (p, o = {}) => {
   let front, right, top, left;
   if (p.id === "cafe") {
     front = `background:linear-gradient(180deg,${S(b, .08)},${S(b, -.25)})`;
-    var fh = center(lbl("CAFÉ", 30, "#fff", ".1em") + `<div style="width:56px;height:3px;background:${a};border-radius:2px"></div>` + lbl("TORRADO", 13, a, ".26em", 500) + `<div style="margin-top:10px">${KIT.ico("package", 28, a, 1.4)}</div>`, shineF);
+    var fh = center(lbl(DATA.txl("box.coffee")[0], 30 * KFIT("box.coffee"), "#fff", ".1em") + `<div style="width:56px;height:3px;background:${a};border-radius:2px"></div>` + lbl(DATA.txl("box.coffee")[1], 13, a, ".26em", 500) + `<div style="margin-top:10px">${KIT.ico("package", 28, a, 1.4)}</div>`, shineF);
   } else if (p.id === "agua") {
     front = `background:linear-gradient(180deg,${S(b, .12)},${S(b, -.15)})`;
-    var fh = center(`<svg width="86" height="38" viewBox="0 0 86 38" fill="none" stroke="${a}" stroke-width="3" stroke-linecap="round"><path d="M4 12c10-8 14 8 24 0s14 8 24 0 14 8 24 0"/><path d="M4 28c10-8 14 8 24 0s14 8 24 0 14 8 24 0" opacity=".6"/></svg>` + lbl("ÁGUA", 22, "#fff", ".16em") + lbl("MINERAL 1,5 L", 11, a, ".18em", 500), shineF);
+    var fh = center(`<svg width="86" height="38" viewBox="0 0 86 38" fill="none" stroke="${a}" stroke-width="3" stroke-linecap="round"><path d="M4 12c10-8 14 8 24 0s14 8 24 0 14 8 24 0"/><path d="M4 28c10-8 14 8 24 0s14 8 24 0 14 8 24 0" opacity=".6"/></svg>` + lbl(DATA.txl("box.water")[0], 22, "#fff", ".16em") + lbl(DATA.txl("box.water")[1], 11, a, ".18em", 500), shineF);
   } else if (p.id === "caderno") {
     front = `background:linear-gradient(180deg,#FFFFFF,${S(b, -.06)})`;
-    var fh = center(`<div style="width:78%;height:46%;border-radius:6px;background:${a};display:flex;align-items:center;justify-content:center">${lbl("96", 34, "#fff", ".02em")}</div>` + lbl("CADERNO", 15, "#0F2A66", ".2em"), "") +
+    var fh = center(`<div style="width:78%;height:46%;border-radius:6px;background:${a};display:flex;align-items:center;justify-content:center">${lbl("96", 34, "#fff", ".02em")}</div>` + lbl(DATA.tx("box.notebook"), 15, "#0F2A66", ".2em"), "") +
       `<div style="position:absolute;left:8px;top:8px;bottom:8px;width:6px;display:flex;flex-direction:column;justify-content:space-between">${"<i style='display:block;height:6px;border-radius:3px;background:#94A3B8'></i>".repeat(9)}</div>`;
   } else {
     front = `background:linear-gradient(180deg,${S(b, .1)},${S(b, -.22)})`;
-    var fh = center(`<div style="width:70%;height:34%;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center">${lbl("SABÃO", 17, "#0A3D91", ".1em")}</div>` + lbl("EM PÓ · 1 KG", 11, "#fff", ".2em", 500) + KIT.ico("layers", 22, "#fff", 1.5), shineF);
+    var fh = center(`<div style="width:70%;height:34%;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center">${lbl(DATA.txl("box.soap")[0], 17 * KFIT("box.soap"), "#0A3D91", ".1em")}</div>` + lbl(DATA.txl("box.soap")[1], 11, "#fff", KFIT("box.soap") < 1 ? ".05em" : ".2em", 500) + KIT.ico("layers", 22, "#fff", 1.5), shineF);
   }
   const bgOf = s => s.replace("background:", "");
   return {

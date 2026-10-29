@@ -62,8 +62,8 @@ SP.scenes.s01 = (function () {
     const WMW = pick({ wide: 640, sq: 560, tall: 640 });
     wm = h(`<div class="blk" style="width:${WMW}px;height:${WMW * 110 / 420}px">${KIT.wordmark("", WMW)}</div>`); root.appendChild(wm);
     wm.style.webkitMaskImage = "linear-gradient(90deg,#000 0%,#000 var(--p),transparent calc(var(--p) + 14%))";
-    h1 = hl(FN === "tall" ? ["Estoque, vendas", "e caixa em um", "só sistema."] : ["Estoque, vendas e caixa.", "Tudo em um só lugar."], "", { accent: FN === "tall" ? 2 : 1 }); h1.style.fontSize = pick({ wide: 80, sq: 74, tall: 96 }) + "px"; root.appendChild(h1);
-    sub = hl(["Gestão simples para o seu comércio."], "sub"); sub.style.fontSize = pick({ wide: 36, sq: 36, tall: 44 }) + "px"; root.appendChild(sub);
+    h1 = hl(FN === "tall" ? ["Estoque, vendas", "e caixa em um", "só sistema."] : DATA.txl("h.open"), "", { accent: FN === "tall" ? 2 : 1 }); h1.style.fontSize = pick({ wide: 80, sq: 74, tall: 96 }) + "px"; root.appendChild(h1);
+    sub = hl([DATA.tx("sub.open")], "sub"); sub.style.fontSize = pick({ wide: 36, sq: 36, tall: 44 }) + "px"; root.appendChild(sub);
     h1.style.textAlign = sub.style.textAlign = pick({ wide: "left", sq: "center", tall: "center" });
   };
   // tempos da abertura: no 16:9 a marca tem o palco sozinha; no vertical e no quadrado o título chega já no 2º segundo

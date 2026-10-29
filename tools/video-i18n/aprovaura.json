@@ -271,7 +271,7 @@
    "id": "h.review",
    "t": "19–21,85",
    "pt-BR": "Aprenda com\ncada erro.",
-   "en": "Learn from\nevery mistake.",
+   "en": "Learn from every\nmistake.",
    "es": "Aprende de\ncada error.",
    "from": "proposta",
    "note": ""
@@ -772,6 +772,15 @@
    "note": ""
   },
   {
+   "id": "pf.q",
+   "t": "43,25–44,75",
+   "pt-BR": "1.248",
+   "en": "1,248",
+   "es": "1.248",
+   "from": "proposta",
+   "note": "número localizado (separador de milhar)"
+  },
+  {
    "id": "pf.streak",
    "t": "43,25–44,75",
    "pt-BR": "dias seguidos",
@@ -828,9 +837,9 @@
   {
    "id": "h.end",
    "t": "46,75–50",
-   "pt-BR": "Cada resposta\nconstrói sua Aura.",
-   "en": "Every answer\nbuilds your Aura.",
-   "es": "Cada respuesta\nconstruye tu Aura.",
+   "pt-BR": "Cada resposta constrói sua Aura.",
+   "en": "Every answer builds your Aura.",
+   "es": "Cada respuesta construye tu Aura.",
    "from": "proposta",
    "note": "slogan final; \"Aura\" permanece"
   }

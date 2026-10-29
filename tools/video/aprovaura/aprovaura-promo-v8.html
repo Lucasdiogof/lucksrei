@@ -56,7 +56,16 @@ body{font-family:'Inter',system-ui,sans-serif;color:#F8FAFC;-webkit-font-smoothi
 <link rel="stylesheet" href="assets/fonts/fonts.css"></head>
 <body>
 <div id="stage"></div>
+<script src="i18n.js"></script>
 <script>
+// idioma do filme: ?lang=pt-BR|en|es (padrão en = filme publicado, que é o original em inglês)
+const LANG = new URLSearchParams(location.search).get("lang") || "en";
+document.documentElement.lang = LANG;
+const TX = (id, v) => { let t = VIDEO_I18N[id][LANG]; for (const k in (v || {})) t = t.split("{" + k + "}").join(v[k]); return t; };
+const TXL = id => TX(id).split("\n");
+const TXW = id => TXL(id).map(l => l.split(" "));        // linhas de título animado: lista de palavras por linha
+const TXE = id => { const w = TX(id).split(" "); const g = w.pop(); return [w, g]; };   // slogan final: última palavra em gradiente
+const FIT = id => (VIDEO_I18N[id].fit || {})[LANG] || 1;
 "use strict";
 // ================================================================ utils
 const TAU=Math.PI*2;
@@ -108,10 +117,10 @@ const setText=(e,s)=>{if(e._t!==s){e.textContent=s;e._t=s;}};
 // ================================================================ brand (real tokens)
 // lib/core/theme/app_colors.dart (dark) and lib/features/subjects/domain/entities/subject.dart
 const S={
-  math:{n:'Mathematics',c:'#E8A23D',i:'math'}, geo:{n:'Geography',c:'#7C6FE0',i:'geo'},
-  hist:{n:'History',c:'#4CAF83',i:'hist'}, port:{n:'Portuguese',c:'#E0708A',i:'port'},
-  bio:{n:'Biology',c:'#2DBE91',i:'bio'}, phys:{n:'Physics',c:'#4C7CD1',i:'phys'},
-  chem:{n:'Chemistry',c:'#9C6FE0',i:'chem'}
+  math:{n:TX('sub.math'),c:'#E8A23D',i:'math'}, geo:{n:TX('sub.geo'),c:'#7C6FE0',i:'geo'},
+  hist:{n:TX('sub.his'),c:'#4CAF83',i:'hist'}, port:{n:TX('sub.por'),c:'#E0708A',i:'port'},
+  bio:{n:TX('sub.bio'),c:'#2DBE91',i:'bio'}, phys:{n:TX('sub.phy'),c:'#4C7CD1',i:'phys'},
+  chem:{n:TX('sub.che'),c:'#9C6FE0',i:'chem'}
 };
 const SUBJ7=['math','geo','hist','port','bio','phys','chem'];
 const ICON={
@@ -154,9 +163,9 @@ const hud=el(`<div class="a" style="width:46px;height:46px;z-index:20"><svg widt
 const hudArc=hud.querySelector('#hudArc'),hudStar=hud.querySelector('#hudStar');
 hudStar.querySelector('svg').style.display='block';   // 22×22 box centred on the ring: the star pivots on its own centre
 const hudLbl=el(`<div class="a" style="font-size:11.5px;font-weight:750;letter-spacing:.22em;color:#A5B4C8;z-index:20">AURA</div>`);
-const EYEBROWS=[[3.55,8.75,"Today's goal"],[8.85,17.95,'Quick practice'],[18.6,21.75,'Review mistakes'],[21.85,22.62,'Favorites'],[22.7,29.95,'Mock exam'],[30.05,34.45,'Mock exam result'],[34.55,40.8,'Essay'],[40.9,42.85,'Current affairs'],[42.95,44.95,'Profile']];
+const EYEBROWS=[[3.55,8.75,TX('eb.goal')],[8.85,17.95,TX('eb.quick')],[18.6,21.75,TX('eb.review')],[21.85,22.62,TX('eb.fav')],[22.7,29.95,TX('eb.mock')],[30.05,34.45,TX('eb.result')],[34.55,40.8,TX('eb.essay')],[40.9,42.85,TX('eb.news')],[42.95,44.95,TX('eb.profile')]];
 const eyebrows=EYEBROWS.map(([a,b,s])=>({a,b,e:el(`<div class="a eyebrow" style="z-index:20"><i></i>${s}</div>`)}));
-const HEADLINES=[[3.7,8.6,['Build','the'],['habit.']],[18.85,21.85,['Learn','from','every'],['mistake.']],[22.75,26.1,['Simulate','the'],['real','test.']],[42.9,44.85,['Track','your'],['progress.']]];
+const HEADLINES=[[3.7,8.6,...TXW('h.goal')],[18.85,21.85,...TXW('h.review')],[22.75,26.1,...TXW('h.mock')],[42.9,44.85,...TXW('h.profile')]];
 const heads=HEADLINES.map(([a,b,w1,w2])=>{const e=el(`<div class="a headline" style="z-index:20">${w1.map(w=>`<span class="w"><span>${w}</span></span>`).join(' ')} ${w2.map(w=>`<span class="w"><span class="grad">${w}</span></span>`).join(' ')}</div>`);return {a,b,e,ws:[...e.querySelectorAll('.w>span')]};});
 
 // ================================================================ AURA: comets + energy
@@ -186,7 +195,7 @@ const frags=SUBJ7.map(k=>W(`<div class="a" style="width:14px;height:14px"><div s
 const flash=W(`<div class="a" style="width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(243,232,255,.6) 0%,rgba(168,85,247,.25) 30%,rgba(34,211,238,0) 62%)"></div>`);
 const mark=W(`<img class="a" src="assets/aprovaura_mark.png" style="width:220px;height:171px">`);
 const word=W(`<img class="a" src="assets/aprovaura_wordmark_dark.png" style="width:316px;height:68px">`);
-const tagline=W(`<div class="a headline" style="font-size:26px;font-weight:680;letter-spacing:-.02em;color:#E8EDF5">${['Every','answer','builds','your'].map(w=>`<span class="w"><span>${w}</span></span>`).join(' ')} <span class="w"><span class="grad">Aura.</span></span></div>`);
+const tagline=W(`<div class="a headline" style="font-size:26px;font-weight:680;letter-spacing:-.02em;color:#E8EDF5">${TXE('h.end')[0].map(w=>`<span class="w"><span>${w}</span></span>`).join(' ')} <span class="w"><span class="grad">${TXE('h.end')[1]}</span></span></div>`);
 const flyStar=W(`<div class="a" style="filter:drop-shadow(0 0 10px rgba(168,85,247,.95)) drop-shadow(0 0 24px rgba(34,211,238,.5));z-index:30">${starSVG(26)}</div>`);
 // Aurudo rigs (real cut-out kits + pivots from the app)
 function rigWave(){ // lib/shared/widgets/aura/aurudo_wave_animation.dart
@@ -291,14 +300,14 @@ const ring=W(`<div class="a" style="width:310px;height:310px"><svg width="310" h
  <circle id="rArc" cx="155" cy="155" r="132" fill="none" stroke="url(#rg)" stroke-width="15" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="1" transform="rotate(-90 155 155)"/></svg>
  <div id="rIn" style="position:absolute;left:0;top:0;width:310px;height:310px">
   <div class="disp num" style="position:absolute;left:0;right:0;top:92px;text-align:center;font-weight:750;letter-spacing:-.045em;line-height:1"><span id="gNum" style="display:inline-block;font-size:104px">0</span><span style="font-size:32px;color:#64748B;font-weight:650;letter-spacing:-.02em"> / 10</span></div>
-  <div id="gSub" style="position:absolute;left:0;right:0;top:206px;text-align:center;font-size:16px;color:#94A3B8">questions today</div>
-  <div id="gDone" style="position:absolute;left:0;right:0;top:203px;text-align:center;font-size:19px;font-weight:750;opacity:0"><span class="grad">Goal reached!</span></div>
+  <div id="gSub" style="position:absolute;left:0;right:0;top:206px;text-align:center;font-size:16px;color:#94A3B8">${TX('goal.sub')}</div>
+  <div id="gDone" style="position:absolute;left:0;right:0;top:203px;text-align:center;font-size:19px;font-weight:750;opacity:0"><span class="grad">${TX('goal.done')}</span></div>
  </div></div>`);
 const rTrack=ring.querySelector('#rTrack'),rArc=ring.querySelector('#rArc'),rGlow=ring.querySelector('#rGlow'),rIn=ring.querySelector('#rIn'),gNum=ring.querySelector('#gNum'),gSub=ring.querySelector('#gSub'),gDone=ring.querySelector('#gDone');
 const CHIPC=['math','geo','hist','port','bio','phys','chem','math','geo','hist'];
 const gchips=CHIPC.map(k=>W(`<div class="a" style="width:32px;height:32px;border-radius:50%;background:${S[k].c};display:flex;align-items:center;justify-content:center;box-shadow:0 0 20px ${hexA(S[k].c,.65)}">${ic('check','#fff',17,3)}</div>`));
 const shock=W(`<div class="a" style="width:296px;height:296px;border-radius:50%;border:2px solid rgba(196,181,253,.9);box-shadow:0 0 26px rgba(168,85,247,.6)"></div>`);
-const streak=W(`<div class="a pill" style="height:58px;padding:0 22px 0 18px;border-radius:29px;gap:13px;font-size:19px"><span id="flm" style="display:flex">${FLAME(28)}</span><span style="display:flex;align-items:center;gap:0;line-height:24px"><b class="num" style="font-weight:780;display:block;height:24px;overflow:hidden;line-height:24px"><span id="stN" style="display:block">6<br>7</span></b>-day streak</span><span style="display:flex;gap:8px;margin-left:8px">${[0,1,2,3,4,5,6].map(()=>`<i class="sd" style="width:11px;height:11px;border-radius:50%;background:#2A364C;display:block"></i>`).join('')}</span></div>`);
+const streak=W(`<div class="a pill" style="height:58px;padding:0 22px 0 18px;border-radius:29px;gap:13px;font-size:19px"><span id="flm" style="display:flex">${FLAME(28)}</span><span style="display:flex;align-items:center;gap:0;line-height:24px"><b class="num" style="font-weight:780;display:block;height:24px;overflow:hidden;line-height:24px"><span id="stN" style="display:block">6<br>7</span></b>${TX('streak',{n:''})}</span><span style="display:flex;gap:8px;margin-left:8px">${[0,1,2,3,4,5,6].map(()=>`<i class="sd" style="width:11px;height:11px;border-radius:50%;background:#2A364C;display:block"></i>`).join('')}</span></div>`);
 const sDots=[...streak.querySelectorAll('.sd')],flm=streak.querySelector('#flm'),stN=streak.querySelector('#stN');
 
 // ================================================================ QUICK PRACTICE (orbit → deck)
@@ -306,9 +315,9 @@ const pills=SUBJ7.map(k=>W(`<div class="a pilltile"><div class="ico" style="back
 
 const DEAL=[0,1,2,3,4,5,6,2,1,0];   // one per subject per round; round 2 ends on Mathematics (the first question)
 const minis=DEAL.map(i=>W(`<div class="a mini"><i style="background:${S[SUBJ7[i]].c}"></i><u>${ic(S[SUBJ7[i]].i,S[SUBJ7[i]].c,20,2.2)}</u><b></b><b style="width:56px"></b><b style="width:64px"></b><b style="width:40px"></b></div>`));
-const deckLbl=W(`<div class="a" style="text-align:center;white-space:nowrap"><span class="disp num" id="dkN" style="font-size:46px;font-weight:780;letter-spacing:-.04em">0</span><span class="lbl" style="font-size:18px;margin-left:9px">questions</span></div>`);
+const deckLbl=W(`<div class="a" style="text-align:center;white-space:nowrap"><span class="disp num" id="dkN" style="font-size:46px;font-weight:780;letter-spacing:-.04em">0</span><span class="lbl" style="font-size:18px;margin-left:9px">${TX('unit.q')}</span></div>`);
 const dkN=deckLbl.querySelector('#dkN');
-const startBtn=W(`<div class="a btn" style="width:172px">Start ${ic('phys','#fff',17,2.2)}</div>`);
+const startBtn=W(`<div class="a btn" style="width:172px">${TX('btn.start')} ${ic('phys','#fff',17,2.2)}</div>`);
 
 // ================================================================ QUESTION CARD
 const QC={cx:360,cy:404,w:624,h:548};
@@ -316,8 +325,8 @@ const qcard=W(`<div class="a card" style="overflow:hidden"></div>`);
 const qin=el(`<div style="position:absolute;left:0;top:0;width:624px;height:548px;opacity:0"></div>`,qcard);
 const qtop=el(`<div style="position:absolute;left:0;top:0;right:0;height:6px;background:#E8A23D"></div>`,qcard);
 const qdim=el(`<div style="position:absolute;inset:0;background:#0B0F1A;opacity:0;pointer-events:none;z-index:5"></div>`,qcard);
-const qh1=el(`<div class="lbl" style="position:absolute;left:28px;top:26px;font-weight:650">Question 1 of 10</div>`,qin);
-const qh2=el(`<div class="lbl" style="position:absolute;left:28px;top:26px;font-weight:650;opacity:0">Question 2 of 10</div>`,qin);
+const qh1=el(`<div class="lbl" style="position:absolute;left:28px;top:26px;font-weight:650">${TX('q.n',{n:1,m:10})}</div>`,qin);
+const qh2=el(`<div class="lbl" style="position:absolute;left:28px;top:26px;font-weight:650;opacity:0">${TX('q.n',{n:2,m:10})}</div>`,qin);
 el(`<div style="position:absolute;left:566px;top:20px">${ic('bookmark','#64748B',26,1.8)}</div>`,qin);
 el(`<div style="position:absolute;left:28px;top:58px;width:568px;height:7px;border-radius:4px;background:#212C41"><div id="qbar" style="width:0;height:7px;border-radius:4px;background:linear-gradient(90deg,#7C3AED,#A855F7,#22D3EE)"></div><div id="qbar2" style="position:absolute;left:0;top:0;width:0;height:7px;border-radius:4px;background:#475569"></div></div>`,qin);
 const qbar=qin.querySelector('#qbar'),qbar2=qin.querySelector('#qbar2');
@@ -325,16 +334,16 @@ function qLayer(subj,prompt,opts){
   const lay=el(`<div style="position:absolute;left:0;top:0;width:624px;height:548px"></div>`,qin);
   const s=S[subj];
   const chips=el(`<div style="position:absolute;left:28px;top:84px;display:flex;gap:8px"><span class="chip" style="background:${hexA(s.c,.16)};color:${mix(s.c,'#FFFFFF',.22)}">${ic(s.i,mix(s.c,'#FFFFFF',.22),15,2.2)}${s.n}</span></div>`,lay);
-  const pr=el(`<div style="position:absolute;left:28px;top:128px;width:568px;font-size:25px;font-weight:680;letter-spacing:-.018em;line-height:1.3;color:#F8FAFC">${prompt.split(' ').map(w=>`<span class="pw" style="display:inline-block">${w}</span>`).join(' ')}</div>`,lay);
+  const pr=el(`<div style="position:absolute;left:28px;top:128px;width:568px;font-size:${prompt.length > 85 && LANG !== 'en' ? 21 : 25}px;font-weight:680;letter-spacing:-.018em;line-height:1.3;color:#F8FAFC">${prompt.split(' ').map(w=>`<span class="pw" style="display:inline-block">${w}</span>`).join(' ')}</div>`,lay);
   const os=opts.map((o,j)=>el(`<div class="opt" style="top:${212+j*64}px"><div class="ob">${'ABCD'[j]}</div><div class="ot">${o}</div><div class="ov ovG"></div><div class="ov ovG2"></div><div class="ov ovR"></div><div class="obb obG">${ic('check','#fff',17,3)}</div><div class="obb obR">${ic('x','#fff',15,3)}</div></div>`,lay));
   return {lay,chips,words:[...pr.querySelectorAll('.pw')],opts:os.map(o=>({e:o,g:o.querySelector('.ovG'),g2:o.querySelector('.ovG2'),r:o.querySelector('.ovR'),bg:o.querySelector('.obG'),br:o.querySelector('.obR')}))};
 }
 // Real questions and answers from the Aprovaura bank (supabase/i18n_questions_*.sql + fix_gabarito_distribuicao.sql)
-const q1=qLayer('math','In how many different ways can we arrange 3 distinct objects in a row?',['9','12','3','6']);           // correct: D
-const q2=qLayer('bio','The process by which ribosomes “read” messenger RNA to produce a protein is called:',['Translation','Replication','Fermentation','Transcription']); // correct: A
-const fb1=el(`<div style="position:absolute;left:28px;top:476px;width:568px;height:52px;border-radius:15px;background:rgba(34,197,94,.11);display:flex;align-items:center;gap:12px;padding:0 16px;opacity:0"><span style="width:26px;height:26px;border-radius:50%;background:#22C55E;display:flex;align-items:center;justify-content:center">${ic('check','#fff',15,3)}</span><b style="color:#4ADE80;font-size:18px">Correct!</b><span style="color:#A5B4C8;font-size:16px">3! = 3 × 2 × 1 = 6</span></div>`,qin);
-const fb2=el(`<div style="position:absolute;left:28px;top:476px;width:568px;height:52px;border-radius:15px;background:rgba(239,68,68,.11);display:flex;align-items:center;gap:12px;padding:0 16px;opacity:0"><span style="width:26px;height:26px;border-radius:50%;background:#EF4444;display:flex;align-items:center;justify-content:center">${ic('x','#fff',13,3)}</span><b style="color:#F87171;font-size:18px">Not this time</b><span style="color:#A5B4C8;font-size:16px">Correct answer: Translation</span></div>`,qin);
-const tray=W(`<div class="a pill"><span style="width:9px;height:9px;border-radius:50%;background:#EF4444;box-shadow:0 0 12px rgba(239,68,68,.9)"></span>Review mistakes<span class="badge num" style="background:rgba(239,68,68,.17);color:#FCA5A5"><span id="trN">+1</span></span></div>`);
+const q1=qLayer('math',TX('q1.prompt'),['9','12','3','6']);           // correct: D
+const q2=qLayer('bio',TX('q2.prompt'),[TX('q2.o1'),TX('q2.o2'),TX('q2.o3'),TX('q2.o4')]); // correct: A
+const fb1=el(`<div style="position:absolute;left:28px;top:476px;width:568px;height:52px;border-radius:15px;background:rgba(34,197,94,.11);display:flex;align-items:center;gap:12px;padding:0 16px;opacity:0"><span style="width:26px;height:26px;border-radius:50%;background:#22C55E;display:flex;align-items:center;justify-content:center">${ic('check','#fff',15,3)}</span><b style="color:#4ADE80;font-size:18px">${TX('fb.ok')}</b><span style="color:#A5B4C8;font-size:16px">3! = 3 × 2 × 1 = 6</span></div>`,qin);
+const fb2=el(`<div style="position:absolute;left:28px;top:476px;width:568px;height:52px;border-radius:15px;background:rgba(239,68,68,.11);display:flex;align-items:center;gap:12px;padding:0 16px;opacity:0"><span style="width:26px;height:26px;border-radius:50%;background:#EF4444;display:flex;align-items:center;justify-content:center">${ic('x','#fff',13,3)}</span><b style="color:#F87171;font-size:18px">${TX('fb.no')}</b><span style="color:#A5B4C8;font-size:16px">${TX('fb.answer',{x:TX('q2.o1')})}</span></div>`,qin);
+const tray=W(`<div class="a pill"><span style="width:9px;height:9px;border-radius:50%;background:#EF4444;box-shadow:0 0 12px rgba(239,68,68,.9)"></span>${TX('eb.review')}<span class="badge num" style="background:rgba(239,68,68,.17);color:#FCA5A5"><span id="trN">+1</span></span></div>`);
 const trN=tray.querySelector('#trN');
 
 // ================================================================ REVIEW / FAVORITES
@@ -346,25 +355,25 @@ function revCard(subj,prompt,answer,bm){
     <div class="xb" style="position:absolute;left:500px;top:22px;width:34px;height:34px;border-radius:50%;background:rgba(239,68,68,.17);display:flex;align-items:center;justify-content:center">${ic('x','#F87171',15,3)}</div>
     <div class="cb" style="position:absolute;left:500px;top:22px;width:34px;height:34px;border-radius:50%;background:#22C55E;display:flex;align-items:center;justify-content:center;opacity:0;box-shadow:0 0 20px rgba(34,197,94,.7)">${ic('check','#fff',17,3)}</div>
     ${bm?`<div class="bm" style="position:absolute;left:452px;top:22px;width:32px;height:32px"><div class="bo" style="position:absolute;left:0;top:0">${ic('bookmark','#94A3B8',32,1.8)}</div><div class="bf" style="position:absolute;left:0;top:0;opacity:0;filter:drop-shadow(0 0 10px rgba(168,85,247,.9))">${ic('bookmark','#A855F7',32,1.8,'#A855F7')}</div></div>`:''}
-    <div style="position:absolute;left:26px;top:72px;width:470px;font-size:20px;font-weight:650;line-height:1.35;color:#F1F5F9">${prompt}</div>
-    <div class="ya" style="position:absolute;left:26px;top:150px;font-size:15px;color:#94A3B8">Your answer: <span style="color:#F87171;font-weight:650;text-decoration:line-through">${answer}</span></div>
+    <div style="position:absolute;left:26px;top:72px;width:470px;font-size:${LANG !== 'en' && prompt.length > 85 ? 18 : 20}px;font-weight:650;line-height:1.35;color:#F1F5F9">${prompt}</div>
+    <div class="ya" style="position:absolute;left:26px;top:150px;font-size:15px;color:#94A3B8">${TX('rv.your')} <span style="color:#F87171;font-weight:650;text-decoration:line-through">${answer}</span></div>
    </div>
    <div class="sweep" style="position:absolute;top:0;left:-200px;width:160px;height:100%;background:linear-gradient(90deg,transparent,rgba(196,181,253,.18),rgba(34,211,238,.12),transparent);transform:skewX(-18deg);opacity:0"></div></div>`);
   return {e:c,rc:c.querySelector('.rc'),xb:c.querySelector('.xb'),cb:c.querySelector('.cb'),ya:c.querySelector('.ya'),bo:c.querySelector('.bo'),bf:c.querySelector('.bf'),bm:c.querySelector('.bm'),sweep:c.querySelector('.sweep')};
 }
-const rHist=revCard('hist','The Code of Hammurabi, one of the first sets of written laws in history, was drawn up in:','Ancient Rome',true);
-const rBio=revCard('bio','The process by which ribosomes “read” messenger RNA to produce a protein is called:','Transcription',false);
-const rOpts=['Translation','Replication','Fermentation','Transcription'].map((o,j)=>el(`<div style="position:absolute;left:26px;top:${140+j*54}px;width:508px;height:46px;border-radius:12px;border:1.5px solid #2A3650;background:#172135;display:flex;align-items:center;gap:13px;padding:0 12px;opacity:0"><span style="width:28px;height:28px;border-radius:50%;border:1.5px solid #41516B;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#CBD5E1">${'ABCD'[j]}</span><span style="font-size:18px;font-weight:550;color:#EEF2F7">${o}</span><div class="ok" style="position:absolute;left:-1.5px;top:-1.5px;right:-1.5px;bottom:-1.5px;border-radius:12px;border:2px solid #22C55E;background:rgba(34,197,94,.13);opacity:0"></div><div class="okb" style="position:absolute;left:10.5px;top:7.5px;width:28px;height:28px;border-radius:50%;background:#22C55E;display:flex;align-items:center;justify-content:center;opacity:0">${ic('check','#fff',15,3)}</div><div class="xr" style="position:absolute;right:14px;top:11px;font-size:14px;color:#F87171;font-weight:650;opacity:${j===3?1:0}">your last answer</div></div>`,rBio.rc));
-const revHdr=W(`<div class="a pill"><span style="width:9px;height:9px;border-radius:50%;background:#EF4444;box-shadow:0 0 12px rgba(239,68,68,.9)"></span>Review mistakes<span class="badge num" style="background:rgba(239,68,68,.17);color:#FCA5A5"><span id="rvN">2 mistakes</span></span></div>`);
+const rHist=revCard('hist',TX('rv.hist.q'),TX('rv.hist.a'),true);
+const rBio=revCard('bio',TX('q2.prompt'),TX('q2.o4'),false);
+const rOpts=[TX('q2.o1'),TX('q2.o2'),TX('q2.o3'),TX('q2.o4')].map((o,j)=>el(`<div style="position:absolute;left:26px;top:${140+j*54}px;width:508px;height:46px;border-radius:12px;border:1.5px solid #2A3650;background:#172135;display:flex;align-items:center;gap:13px;padding:0 12px;opacity:0"><span style="width:28px;height:28px;border-radius:50%;border:1.5px solid #41516B;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#CBD5E1">${'ABCD'[j]}</span><span style="font-size:18px;font-weight:550;color:#EEF2F7">${o}</span><div class="ok" style="position:absolute;left:-1.5px;top:-1.5px;right:-1.5px;bottom:-1.5px;border-radius:12px;border:2px solid #22C55E;background:rgba(34,197,94,.13);opacity:0"></div><div class="okb" style="position:absolute;left:10.5px;top:7.5px;width:28px;height:28px;border-radius:50%;background:#22C55E;display:flex;align-items:center;justify-content:center;opacity:0">${ic('check','#fff',15,3)}</div><div class="xr" style="position:absolute;right:14px;top:11px;font-size:14px;color:#F87171;font-weight:650;opacity:${j===3?1:0}">${TX('rv.last')}</div></div>`,rBio.rc));
+const revHdr=W(`<div class="a pill"><span style="width:9px;height:9px;border-radius:50%;background:#EF4444;box-shadow:0 0 12px rgba(239,68,68,.9)"></span>${TX('eb.review')}<span class="badge num" style="background:rgba(239,68,68,.17);color:#FCA5A5"><span id="rvN">${TX('rv.count',{n:2})}</span></span></div>`);
 const rvN=revHdr.querySelector('#rvN');
-const favChip=W(`<div class="a pill" style="height:52px;border-radius:26px;padding:0 10px 0 18px">${ic('bookmark','#A78BFA',19,2,'#A78BFA')}<span>Favorites</span><span style="color:#64748B;margin:0 2px">·</span><span style="display:flex;align-items:center;gap:7px;color:#86EFAC">${ic('hist','#4CAF83',17,2)}History</span><span class="badge num" style="background:rgba(167,139,250,.16);color:#DDD6FE"><span id="fvN">3</span></span></div>`);
+const favChip=W(`<div class="a pill" style="height:52px;border-radius:26px;padding:0 10px 0 18px">${ic('bookmark','#A78BFA',19,2,'#A78BFA')}<span>${TX('eb.fav')}</span><span style="color:#64748B;margin:0 2px">·</span><span style="display:flex;align-items:center;gap:7px;color:#86EFAC">${ic('hist','#4CAF83',17,2)}${TX('sub.his')}</span><span class="badge num" style="background:rgba(167,139,250,.16);color:#DDD6FE"><span id="fvN">3</span></span></div>`);
 const fvN=favChip.querySelector('#fvN');
 const favDot=W(`<div class="a" style="filter:drop-shadow(0 0 10px rgba(168,85,247,.95))">${ic('bookmark','#C4B5FD',22,2,'#A855F7')}</div>`);
 
 // ================================================================ MOCK EXAM
 const ROWK=['math','hist','phys','port','bio'];
 // difficulties offered by the setup: facil / medio / dificil / misto (supabase/mock_exams.sql)
-const DIFF={math:[2,'Medium'],hist:[0,'Mixed'],phys:[3,'Hard'],port:[1,'Easy'],bio:[0,'Mixed']};
+const DIFF={math:[2,TX('dif.medium')],hist:[0,TX('dif.mixed')],phys:[3,TX('dif.hard')],port:[1,TX('dif.easy')],bio:[0,TX('dif.mixed')]};
 const MROWY=[172,234,296,358,420];
 const rows=ROWK.map(k=>{
   const s=S[k],d=DIFF[k];
@@ -372,12 +381,12 @@ const rows=ROWK.map(k=>{
   const c=el(`<div style="position:absolute;left:0;top:0;width:624px;height:56px;display:flex;align-items:center;gap:13px;padding:0 12px 0 13px"><div style="width:34px;height:34px;border-radius:10px;background:${hexA(s.c,.17)};display:flex;align-items:center;justify-content:center">${ic(s.i,s.c,19,2)}</div><span style="flex:1;font-size:18px;font-weight:650">${s.n}</span><span class="chip" style="height:30px;background:#1B2539;color:#D5DEEA;letter-spacing:.02em;text-transform:none;font-weight:650;font-size:14px">${d[0]?`<span class="dots">${[0,1,2].map(i=>`<b class="${i<d[0]?'on':''}"></b>`).join('')}</span>`:`<span class="dots"><b class="on" style="background:#4ADE80"></b><b class="on" style="background:#FBBF24"></b><b class="on" style="background:#F87171"></b></span>`}${d[1]}</span><div style="display:flex;align-items:center;gap:6px;margin-left:8px"><span style="width:30px;height:30px;border-radius:50%;background:#1B2539;display:flex;align-items:center;justify-content:center">${ic('minus','#64748B',15,2.4)}</span><b class="mc num disp" style="width:34px;text-align:center;font-size:21px">0</b><span class="mp" style="width:30px;height:30px;border-radius:50%;background:#2A2150;display:flex;align-items:center;justify-content:center">${ic('plus','#C4B5FD',15,2.4)}</span></div></div>`,r);
   return {e:r,c,mc:c.querySelector('.mc'),mp:c.querySelector('.mp')};
 });
-const mTotal=W(`<div class="a" style="width:624px;height:46px;border-top:1px solid #26324A;display:flex;align-items:flex-end;justify-content:space-between;padding-bottom:2px"><span class="lbl" style="font-size:17px">Total</span><span style="font-size:18px;color:#CBD5E1;display:flex;align-items:baseline;gap:8px"><b class="num disp" id="mtQ" style="color:#F8FAFC;font-size:28px;display:inline-block">0</b> questions · 5 subjects</span></div>`);
+const mTotal=W(`<div class="a" style="width:624px;height:46px;border-top:1px solid #26324A;display:flex;align-items:flex-end;justify-content:space-between;padding-bottom:2px"><span class="lbl" style="font-size:17px">${TX('mk.total')}</span><span style="font-size:18px;color:#CBD5E1;display:flex;align-items:baseline;gap:8px"><b class="num disp" id="mtQ" style="color:#F8FAFC;font-size:28px;display:inline-block">0</b> ${TX('mk.sum')}</span></div>`);
 const mtQ=mTotal.querySelector('#mtQ');
-const mNote=W(`<div class="a lbl" style="display:flex;align-items:center;gap:9px;font-size:15px">${ic('lock','#A78BFA',16,2)}<b style="color:#D5DEEA;font-weight:650">Exam mode</b> · Your result is only shown when you finish.</div>`);
-const mStart=W(`<div class="a btn" style="width:250px">Start mock exam</div>`);
-const mHand=W(`<div class="a btn" style="width:262px">Hand in mock exam</div>`);
-const mQ=W(`<div class="a" style="text-align:center;white-space:nowrap"><div class="lbl" style="font-size:14px;letter-spacing:.16em;text-transform:uppercase;font-weight:650">Question</div><div class="disp num" style="font-weight:780;letter-spacing:-.045em;line-height:1;margin-top:6px"><span id="mqN" style="font-size:70px">1</span><span style="font-size:28px;color:#64748B"> / 50</span></div></div>`);
+const mNote=W(`<div class="a lbl" style="display:flex;align-items:center;gap:9px;font-size:15px">${ic('lock','#A78BFA',16,2)}<b style="color:#D5DEEA;font-weight:650">${TX('mk.mode')}</b> · ${TX('mk.note')}</div>`);
+const mStart=W(`<div class="a btn" style="width:250px">${TX('mk.start')}</div>`);
+const mHand=W(`<div class="a btn" style="width:262px">${TX('mq.hand')}</div>`);
+const mQ=W(`<div class="a" style="text-align:center;white-space:nowrap"><div class="lbl" style="font-size:14px;letter-spacing:.16em;text-transform:uppercase;font-weight:650">${TX('mq.q')}</div><div class="disp num" style="font-weight:780;letter-spacing:-.045em;line-height:1;margin-top:6px"><span id="mqN" style="font-size:70px">1</span><span style="font-size:28px;color:#64748B"> / 50</span></div></div>`);
 const mqN=mQ.querySelector('#mqN');
 const mBar=W(`<div class="a" style="width:472px;height:7px;border-radius:4px;background:#1E2738"><div id="mbF" style="height:7px;border-radius:4px;width:0;background:linear-gradient(90deg,#7C3AED,#A855F7,#22D3EE)"></div></div>`);
 const mbF=mBar.querySelector('#mbF');
@@ -388,32 +397,32 @@ const GX=j=>144+j*48, GY=r=>344+r*48;
 // result
 const resBig=W(`<div class="a disp num" style="font-size:100px;font-weight:780;letter-spacing:-.055em;line-height:1"><span class="grad" id="rbN">0%</span></div>`);
 const rbN=resBig.querySelector('#rbN');
-const resSub=W(`<div class="a" style="font-size:21px;color:#CBD5E1;white-space:nowrap;font-weight:600"><b class="num disp" id="rsN" style="color:#4ADE80;font-size:24px">0</b> / 50 correct</div>`);
-const gLbl=W(`<div class="a disp" style="font-size:19px;font-weight:750;color:#4ADE80;white-space:nowrap;display:flex;align-items:center;gap:8px"><i style="width:10px;height:10px;border-radius:3px;background:#22C55E;display:block"></i>41 correct</div>`);
-const rLbl=W(`<div class="a disp" style="font-size:19px;font-weight:750;color:#F87171;white-space:nowrap;display:flex;align-items:center;gap:8px"><i style="width:10px;height:10px;border-radius:3px;background:#EF4444;display:block"></i>9 wrong</div>`);
+const resSub=W(`<div class="a" style="font-size:21px;color:#CBD5E1;white-space:nowrap;font-weight:600"><b class="num disp" id="rsN" style="color:#4ADE80;font-size:24px">0</b> ${TX('rs.of')}</div>`);
+const gLbl=W(`<div class="a disp" style="font-size:19px;font-weight:750;color:#4ADE80;white-space:nowrap;display:flex;align-items:center;gap:8px"><i style="width:10px;height:10px;border-radius:3px;background:#22C55E;display:block"></i>${TX('rs.correct',{n:41})}</div>`);
+const rLbl=W(`<div class="a disp" style="font-size:19px;font-weight:750;color:#F87171;white-space:nowrap;display:flex;align-items:center;gap:8px"><i style="width:10px;height:10px;border-radius:3px;background:#EF4444;display:block"></i>${TX('rs.wrong',{n:9})}</div>`);
 const rsN=resSub.querySelector('#rsN');
 const CORR=[9,8,7,9,8];
 const BARY=r=>318+r*58;
 const blabels=ROWK.map((k,r)=>W(`<div class="a" style="width:624px;height:22px"><div style="position:absolute;left:0;top:0;font-size:16px;font-weight:650;display:flex;align-items:center;gap:9px;white-space:nowrap"><i style="width:9px;height:9px;border-radius:50%;background:${S[k].c};display:block;box-shadow:0 0 8px ${hexA(S[k].c,.7)}"></i>${S[k].n}</div><div class="disp num" style="position:absolute;right:0;top:0;font-size:17px;font-weight:700;white-space:nowrap"><span style="color:#94A3B8;font-weight:600">${CORR[r]}/10</span>&nbsp;&nbsp;${CORR[r]*10}%</div></div>`));
 const btracks=ROWK.map(()=>W(`<div class="a" style="width:624px;height:12px;border-radius:6px;background:#1C2536"></div>`));
 const bfills=ROWK.map((k,r)=>W(`<div class="a" style="height:12px;border-radius:6px;width:${CORR[r]*62.4}px;background:linear-gradient(90deg,${mix(S[k].c,'#22C55E',.6)},#22C55E);box-shadow:0 0 14px rgba(34,197,94,.35)"></div>`));
-const revChip=W(`<div class="a pill"><span style="width:9px;height:9px;border-radius:50%;background:#EF4444;box-shadow:0 0 12px rgba(239,68,68,.9)"></span>Review mistakes<span class="badge num" style="background:rgba(239,68,68,.17);color:#FCA5A5"><span id="rcN">0</span></span></div>`);
+const revChip=W(`<div class="a pill"><span style="width:9px;height:9px;border-radius:50%;background:#EF4444;box-shadow:0 0 12px rgba(239,68,68,.9)"></span>${TX('eb.review')}<span class="badge num" style="background:rgba(239,68,68,.17);color:#FCA5A5"><span id="rcN">0</span></span></div>`);
 const rcN=revChip.querySelector('#rcN');
 
 // ================================================================ ESSAY
 const SH={cx:360,cy:404,w:624,h:548,top:130};
 const sheet=W(`<div class="a card" style="overflow:hidden"></div>`);
 const sIn=el(`<div style="position:absolute;left:0;top:0;width:624px;height:548px"></div>`,sheet);
-const eChip=el(`<span class="chip" style="position:absolute;left:28px;top:26px;background:rgba(167,139,250,.15);color:#DDD6FE">Practice theme</span>`,sIn);
-const eTitle=el(`<div style="position:absolute;left:28px;top:68px;font-size:23px;font-weight:700;letter-spacing:-.018em;white-space:nowrap">The limits of privacy in the age of data</div>`,sIn);
+const eChip=el(`<span class="chip" style="position:absolute;left:28px;top:26px;background:rgba(167,139,250,.15);color:#DDD6FE">${TX('es.theme')}</span>`,sIn);
+const eTitle=el(`<div style="position:absolute;left:28px;top:68px;font-size:23px;font-weight:700;letter-spacing:-.018em;white-space:nowrap">${TX('es.title')}</div>`,sIn);
 const resIn=el(`<div style="position:absolute;left:0;top:0;width:624px;height:548px;opacity:0"></div>`,sheet);
-const docIn=el(`<div style="position:absolute;left:0;top:0;width:300px;height:400px;opacity:0"><div style="position:absolute;left:24px;top:24px;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#7C3AED">Practice theme</div><div style="position:absolute;left:24px;top:42px;width:252px;font-size:14px;font-weight:750;line-height:1.25;color:#111827">The limits of privacy in the age of data</div>${[0,1,2,3,4,5,6,7,8,9,10].map(i=>`<div style="position:absolute;left:24px;top:${92+i*24}px;width:${[252,240,250,226,248,236,250,210,244,232,160][i]}px;height:6px;border-radius:3px;background:${i<3?'#94A3B8':'#CBD5E1'}"></div>`).join('')}</div>`,sheet);
-const eScoreLbl=el(`<div class="lbl" style="position:absolute;left:28px;top:30px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13.5px">Estimated score</div>`,resIn);
+const docIn=el(`<div style="position:absolute;left:0;top:0;width:300px;height:400px;opacity:0"><div style="position:absolute;left:24px;top:24px;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#7C3AED">${TX('es.theme')}</div><div style="position:absolute;left:24px;top:42px;width:252px;font-size:14px;font-weight:750;line-height:1.25;color:#111827">${TX('es.title')}</div>${[0,1,2,3,4,5,6,7,8,9,10].map(i=>`<div style="position:absolute;left:24px;top:${92+i*24}px;width:${[252,240,250,226,248,236,250,210,244,232,160][i]}px;height:6px;border-radius:3px;background:${i<3?'#94A3B8':'#CBD5E1'}"></div>`).join('')}</div>`,sheet);
+const eScoreLbl=el(`<div class="lbl" style="position:absolute;left:28px;top:30px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:13.5px">${TX('es.score')}</div>`,resIn);
 const eScore=el(`<div class="disp num" style="position:absolute;left:26px;top:52px;font-weight:780;letter-spacing:-.045em;line-height:1;white-space:nowrap"><span id="esN" style="font-size:64px">0</span><span style="font-size:24px;color:#64748B;font-weight:650;letter-spacing:-.01em;margin-left:10px">/ 1000</span></div>`,resIn);
 const esN=eScore.querySelector('#esN');
-const eNote=el(`<div style="position:absolute;left:28px;top:126px;font-size:14px;color:#8392A8;opacity:0">A practice estimate, produced by AI. Not an official ENEM score.</div>`,resIn);
+const eNote=el(`<div style="position:absolute;left:28px;top:126px;font-size:14px;color:#8392A8;opacity:0">${TX('es.disc')}</div>`,resIn);
 const eAura=W(`<div class="a" style="display:flex;align-items:center;gap:7px;height:38px;padding:0 16px 0 12px;border-radius:19px;background:linear-gradient(90deg,rgba(124,58,237,.38),rgba(34,211,238,.24));border:1px solid rgba(196,181,253,.55);font-size:16px;font-weight:750;white-space:nowrap">${starSVG(18)}+50 Aura</div>`);
-const ETXT=['In an age when every click becomes data,','privacy is no longer a given. Apps record','location, habits and preferences, often','without clear consent. Protecting this','information requires more than passwords.'];
+const ETXT=[TX('es.l1'),TX('es.l2'),TX('es.l3'),TX('es.l4'),TX('es.l5')];
 const ETOT=ETXT.reduce((a,s)=>a+s.length,0);
 const LY=i=>SH.top+166+i*50;              // stage y of ruled line i
 const textBox=el(`<div style="position:absolute;left:0;top:116px;width:624px;height:288px;overflow:hidden;-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 16px,#000 268px,transparent 288px)"></div>`,sIn);
@@ -422,25 +431,25 @@ const eText=ETXT.map((s,i)=>el(`<div class="tline" style="top:${(LY(i)-SH.top-11
 const eSk=[];for(let i=0;i<9;i++){const w=[540,500,560,470,530,380,555,510,440][i];eSk.push(el(`<div class="sk" style="top:${(LY(5+i)-SH.top-116)-22}px;width:${w}px"></div>`,textScroll));}
 const caret=el(`<div style="position:absolute;width:2px;height:24px;background:#C4B5FD;border-radius:1px;opacity:0"></div>`,textScroll);
 const rules=[];for(let i=0;i<5;i++)rules.push(W(`<div class="rule a"></div>`));
-const eFoot=el(`<div style="position:absolute;left:28px;top:495px;display:flex;gap:14px;align-items:center;font-size:17px;color:#94A3B8;white-space:nowrap"><span><b class="num" id="ewN" style="color:#EEF2F7">0</b> words</span><span id="eSaved" style="color:#64748B;opacity:0">· Saved</span></div>`,sIn);
+const eFoot=el(`<div style="position:absolute;left:28px;top:495px;display:flex;gap:14px;align-items:center;font-size:17px;color:#94A3B8;white-space:nowrap"><span><b class="num" id="ewN" style="color:#EEF2F7">0</b>${TX('es.words',{n:''})}</span><span id="eSaved" style="color:#64748B;opacity:0">· ${TX('es.saved')}</span></div>`,sIn);
 const ewN=eFoot.querySelector('#ewN'),eSaved=eFoot.querySelector('#eSaved');
-const eBtn=el(`<div style="position:absolute;left:376px;top:487px;width:220px;height:46px;border-radius:23px;font-size:16px;font-weight:680;white-space:nowrap"><div class="eb0" style="position:absolute;inset:0;border-radius:23px;background:#1E2738;color:#64748B;display:flex;align-items:center;justify-content:center">Send for marking</div><div class="eb1" style="position:absolute;inset:0;border-radius:23px;background:#7C3AED;color:#fff;display:flex;align-items:center;justify-content:center;opacity:0;box-shadow:0 10px 26px -10px rgba(124,58,237,.95)">Send for marking</div><div class="eb2" style="position:absolute;inset:0;border-radius:23px;background:#1E2738;color:#DDD6FE;display:flex;align-items:center;justify-content:center;gap:9px;opacity:0"><span class="spin" style="display:flex;gap:4px"><i style="width:6px;height:6px;border-radius:50%;background:#A78BFA;display:block"></i><i style="width:6px;height:6px;border-radius:50%;background:#A78BFA;display:block"></i><i style="width:6px;height:6px;border-radius:50%;background:#A78BFA;display:block"></i></span>Marking</div></div>`,sIn);
+const eBtn=el(`<div style="position:absolute;left:376px;top:487px;width:220px;height:46px;border-radius:23px;font-size:16px;font-weight:680;white-space:nowrap"><div class="eb0" style="position:absolute;inset:0;border-radius:23px;background:#1E2738;color:#64748B;display:flex;align-items:center;justify-content:center">${TX('es.send')}</div><div class="eb1" style="position:absolute;inset:0;border-radius:23px;background:#7C3AED;color:#fff;display:flex;align-items:center;justify-content:center;opacity:0;box-shadow:0 10px 26px -10px rgba(124,58,237,.95)">${TX('es.send')}</div><div class="eb2" style="position:absolute;inset:0;border-radius:23px;background:#1E2738;color:#DDD6FE;display:flex;align-items:center;justify-content:center;gap:9px;opacity:0"><span class="spin" style="display:flex;gap:4px"><i style="width:6px;height:6px;border-radius:50%;background:#A78BFA;display:block"></i><i style="width:6px;height:6px;border-radius:50%;background:#A78BFA;display:block"></i><i style="width:6px;height:6px;border-radius:50%;background:#A78BFA;display:block"></i></span>${TX('es.marking')}</div></div>`,sIn);
 const eb0=eBtn.querySelector('.eb0'),eb1=eBtn.querySelector('.eb1'),eb2=eBtn.querySelector('.eb2'),spinDots=[...eBtn.querySelectorAll('.spin i')];
 const scan=el(`<div style="position:absolute;left:0;right:0;height:110px;opacity:0;background:linear-gradient(180deg,rgba(34,211,238,0) 0%,rgba(168,85,247,.10) 55%,rgba(196,181,253,.5) 97%,rgba(255,255,255,.95) 100%)"></div>`,sheet);
 // ENEM competencies c1..c5, 0–200 each, total = sum (lib/features/essay/domain/entities/essay_evaluation.dart)
-const COMP=[['C1','Standard written language',160],['C2','Understanding the prompt',180],['C3','Organizing information',160],['C4','Argumentation devices',160],['C5','Intervention proposal',140]];
+const COMP=[['C1',TX('c1'),160],['C2',TX('c2'),180],['C3',TX('c3'),160],['C4',TX('c4'),160],['C5',TX('c5'),140]];
 const CUM=COMP.reduce((a,c)=>{a.push((a.length?a[a.length-1]:0)+c[2]);return a;},[]);
 const CBY=i=>SH.top+190+i*64;            // stage y of competency bar i
-const comp=COMP.map(([k,n,v],i)=>el(`<div style="position:absolute;left:28px;top:${CBY(i)-SH.top-32}px;width:568px;height:24px;opacity:0;display:flex;align-items:center;gap:12px;font-size:17.5px;white-space:nowrap"><b style="color:#C4B5FD;width:30px">${k}</b><span style="flex:1;color:#E8EDF5">${n}</span><b class="cv num disp" style="font-size:20px">0</b></div>`,resIn));
+const comp=COMP.map(([k,n,v],i)=>el(`<div style="position:absolute;left:28px;top:${CBY(i)-SH.top-32}px;width:568px;height:24px;opacity:0;display:flex;align-items:center;gap:12px;font-size:17.5px;white-space:nowrap"><b style="color:#C4B5FD;width:30px">${k}</b><span style="flex:1;color:#E8EDF5;font-size:${Math.min(17.5, 17.5 * 455 / (n.length * .53 * 17.5)).toFixed(1)}px">${n}</span><b class="cv num disp" style="font-size:20px">0</b></div>`,resIn));
 const compTrack=COMP.map((c,i)=>el(`<div style="position:absolute;left:28px;top:${CBY(i)-SH.top-4}px;width:568px;height:8px;border-radius:4px;background:#1C2536;opacity:0"></div>`,resIn));
 const compFill=COMP.map((c,i)=>el(`<div style="position:absolute;left:28px;top:${CBY(i)-SH.top-4}px;width:0;height:8px;border-radius:4px;background:linear-gradient(90deg,#7C3AED,#A855F7,#22D3EE);box-shadow:0 0 12px rgba(168,85,247,.45)"></div>`,resIn));
-const markPill=W(`<div class="a pill" style="gap:10px;padding:0 20px"><span class="spin2" style="display:flex;gap:5px"><i style="width:7px;height:7px;border-radius:50%;background:#A78BFA;display:block"></i><i style="width:7px;height:7px;border-radius:50%;background:#A78BFA;display:block"></i><i style="width:7px;height:7px;border-radius:50%;background:#A78BFA;display:block"></i></span>Marking</div>`);
+const markPill=W(`<div class="a pill" style="gap:10px;padding:0 20px"><span class="spin2" style="display:flex;gap:5px"><i style="width:7px;height:7px;border-radius:50%;background:#A78BFA;display:block"></i><i style="width:7px;height:7px;border-radius:50%;background:#A78BFA;display:block"></i><i style="width:7px;height:7px;border-radius:50%;background:#A78BFA;display:block"></i></span>${TX('es.marking')}</div>`);
 const spin2=[...markPill.querySelectorAll('.spin2 i')];
 const DOC={cx:360,cy:384,w:300,h:400};
 
 // ================================================================ CURRENT AFFAIRS → PROFILE
 // Real dossiers (supabase/dossiers_seed_2026_08.sql + i18n_atualidades_translations.sql): area, EN title, read_minutes, reference period
-const AREAS=[['Economy','#E8A23D','Selic falls to 14% as inflation expectations drop','Aug 5, 2026 · 5 min read'],['Environment','#2DBE91','After COP30, the world prepares for COP31 in Turkey','Nov 9–20, 2026 · 5 min read'],['Science & Technology','#4C7CD1','Artificial intelligence in 2026: from novelty to maturity','2026 · 5 min read']];
+const AREAS=[[TX('news.eco'),'#E8A23D',TX('news.eco.t'),TX('news.eco.d')],[TX('news.env'),'#2DBE91',TX('news.env.t'),TX('news.env.d')],[TX('news.sci'),'#4C7CD1',TX('news.sci.t'),TX('news.sci.d')]];
 const AR_Y=[222,374,526];
 const arows=AREAS.map(([n,c,title,meta])=>{
   const e=W(`<div class="a card" style="overflow:hidden;border-radius:22px"></div>`);
@@ -448,15 +457,15 @@ const arows=AREAS.map(([n,c,title,meta])=>{
   return {e,dc,c};
 });
 const TILE=[[148,262,200,150],[360,262,200,150],[572,262,200,150]];
-const STATS=[['12','day streak',true],['1,248','questions',false],['78%','accuracy',false]];
+const STATS=[['12',TX('pf.streak'),true],[TX('pf.q'),TX('unit.q'),false],['78%',TX('pf.acc'),false]];
 const stats=STATS.map(([v,l,f],i)=>el(`<div style="position:absolute;left:0;top:0;width:200px;height:150px;opacity:0"><div style="position:absolute;left:22px;top:26px;height:52px;overflow:hidden"><div class="disp num sv" style="font-size:48px;font-weight:780;letter-spacing:-.045em;line-height:52px">${v}</div></div><div class="lbl" style="position:absolute;left:22px;top:94px;font-size:17px;color:#A5B4C8">${l}</div>${f?`<div style="position:absolute;right:20px;top:24px">${FLAME(28)}</div>`:''}</div>`,arows[i].e));
-const level=W(`<div class="a card" style="width:624px;height:156px;overflow:hidden"><div style="position:absolute;left:26px;top:26px;font-size:25px;font-weight:780;letter-spacing:-.02em;display:flex;align-items:center;gap:11px">${starSVG(24)}Level 9</div><div class="lbl" style="position:absolute;left:26px;top:66px;font-size:17px">840 Aura in total</div><div class="lbl" style="position:absolute;right:26px;top:67px;font-size:16px"><b class="num" style="color:#EEF2F7">40</b> / 100 Aura to level 10</div><div style="position:absolute;left:26px;top:110px;width:572px;height:11px;border-radius:6px;background:#1C2536"><div id="lvF" style="width:0;height:11px;border-radius:6px;background:linear-gradient(90deg,#7C3AED,#A855F7,#22D3EE);box-shadow:0 0 14px rgba(168,85,247,.7)"></div></div></div>`);
+const level=W(`<div class="a card" style="width:624px;height:156px;overflow:hidden"><div style="position:absolute;left:26px;top:26px;font-size:25px;font-weight:780;letter-spacing:-.02em;display:flex;align-items:center;gap:11px">${starSVG(24)}${TX('pf.level',{n:9})}</div><div class="lbl" style="position:absolute;left:26px;top:66px;font-size:17px">${TX('pf.total',{n:840})}</div><div class="lbl" style="position:absolute;right:26px;top:67px;font-size:16px"><b class="num" style="color:#EEF2F7">40</b> ${TX('pf.next',{n:10})}</div><div style="position:absolute;left:26px;top:110px;width:572px;height:11px;border-radius:6px;background:#1C2536"><div id="lvF" style="width:0;height:11px;border-radius:6px;background:linear-gradient(90deg,#7C3AED,#A855F7,#22D3EE);box-shadow:0 0 14px rgba(168,85,247,.7)"></div></div></div>`);
 const lvF=level.querySelector('#lvF');
 // profile values are delivered by what produced them: flame (goal), a question (practice), a green bar (result)
 const tokens=[W(`<div class="a">${FLAME(34)}</div>`),W(`<div class="a mini"><i style="background:#E8A23D"></i><u>${ic('math','#E8A23D',20,2.2)}</u><b></b><b style="width:56px"></b><b style="width:64px"></b></div>`),W(`<div class="a" style="width:120px;height:12px;border-radius:6px;background:linear-gradient(90deg,#16A34A,#22C55E);box-shadow:0 0 14px rgba(34,197,94,.6)"></div>`)];
 const TOK_ARR=[43.32,43.45,43.58],TOK_COL=['#E8763D','#A855F7','#22C55E'];
 const TOK_PATH=[u=>bez([360,640],[120,520],[148,262],u),u=>bez([620,560],[640,330],[360,262],u),u=>bez([200,700],[520,600],[572,262],u)];
-const sample=W(`<div class="a lbl" style="font-size:13.5px;letter-spacing:.2em;text-transform:uppercase;color:#64748B">Sample profile</div>`);
+const sample=W(`<div class="a lbl" style="font-size:13.5px;letter-spacing:.2em;text-transform:uppercase;color:#64748B">${TX('pf.sample')}</div>`);
 
 // ================================================================ cursor + fx
 const cursor=W(`<div class="a cursor" style="z-index:40"></div>`);
@@ -799,7 +808,7 @@ function sReview(t){
   // the slot climbs and becomes the review header
   const up=E.ioc(P(t,18.85,19.35));
   if(t>18.85){T(tray,{x:360,y:lerp(98,150,up),o:1-P(t,19.25,19.4),z:30});}
-  setText(rvN,t<20.95?'2 mistakes':'1 mistake');
+  setText(rvN,t<20.95?TX('rv.count',{n:2}):TX('rv.count1'));
   T(revHdr,{x:360,y:150,s:1+.1*bump(P(t,20.9,21.25)),o:Math.min(P(t,19.22,19.38),1-P(t,21.75,22.0)),z:30});
   const CY=404;
   // stack rises out of the slot: the missed question comes back on top

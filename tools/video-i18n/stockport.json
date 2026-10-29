@@ -26,7 +26,7 @@
    "id": "h.open",
    "t": "3–6",
    "pt-BR": "Estoque, vendas e caixa.\nTudo em um só lugar.",
-   "en": "Inventory, sales and cash register.\nEverything in one place.",
+   "en": "Inventory, sales and cash.\nEverything in one place.",
    "es": "Inventario, ventas y caja.\nTodo en un solo lugar.",
    "from": "proposta",
    "note": ""
@@ -151,18 +151,21 @@
   {
    "id": "box.coffee",
    "t": "6–12",
-   "pt-BR": "CAFÉ TORRADO",
-   "en": "ROASTED COFFEE",
-   "es": "CAFÉ TOSTADO",
+   "pt-BR": "CAFÉ\nTORRADO",
+   "en": "COFFEE\nROASTED",
+   "es": "CAFÉ\nTOSTADO",
    "from": "proposta",
-   "note": "rótulo impresso na caixa 3D"
+   "note": "rótulo impresso na caixa 3D (substantivo grande, adjetivo pequeno)",
+   "fit": {
+    "en": 0.72
+   }
   },
   {
    "id": "box.water",
    "t": "6–12",
-   "pt-BR": "ÁGUA MINERAL 1,5 L",
-   "en": "MINERAL WATER 1.5 L",
-   "es": "AGUA MINERAL 1,5 L",
+   "pt-BR": "ÁGUA\nMINERAL 1,5 L",
+   "en": "WATER\nMINERAL 1.5 L",
+   "es": "AGUA\nMINERAL 1,5 L",
    "from": "proposta",
    "note": "rótulo na caixa 3D"
   },
@@ -178,11 +181,15 @@
   {
    "id": "box.soap",
    "t": "6–12",
-   "pt-BR": "SABÃO EM PÓ 1 KG",
-   "en": "LAUNDRY POWDER 1 KG",
-   "es": "DETERGENTE EN POLVO 1 KG",
+   "pt-BR": "SABÃO\nEM PÓ · 1 KG",
+   "en": "LAUNDRY\nPOWDER · 1 KG",
+   "es": "DETERGENTE\nEN POLVO · 1 KG",
    "from": "proposta",
-   "note": "rótulo na caixa 3D; es bem mais longo"
+   "note": "rótulo na caixa 3D; en e es têm a 1ª linha bem maior",
+   "fit": {
+    "en": 0.72,
+    "es": 0.56
+   }
   },
   {
    "id": "p.title",
@@ -590,13 +597,13 @@
    "note": ""
   },
   {
-   "id": "c.split",
-   "t": "25,5–27",
-   "pt-BR": "{a} + {b}",
-   "en": "{a} + {b}",
-   "es": "{a} + {b}",
+   "id": "c.item1",
+   "t": "22–23,5",
+   "pt-BR": "1 item",
+   "en": "1 item",
+   "es": "1 artículo",
    "from": "proposta",
-   "note": "\"Pix + Dinheiro\" → Pix + Cash / Pix + Efectivo"
+   "note": "singular do contador do carrinho"
   },
   {
    "id": "h.res",
@@ -765,9 +772,45 @@
    "t": "35,25–36,5",
    "pt-BR": "{de} a {ate} · gerado em {dia} às {hora}",
    "en": "{de} to {ate} · generated on {dia} at {hora}",
-   "es": "{de} a {ate} · generado el {dia} a las {hora}",
+   "es": "{de} al {ate} · generado el {dia} a las {hora}",
    "from": "proposta",
-   "note": "formato de data/hora localizado"
+   "note": "cabeçalho do relatório; datas e hora localizadas pelas linhas seguintes"
+  },
+  {
+   "id": "rp.from",
+   "t": "35,25–36,5",
+   "pt-BR": "01/10/2026",
+   "en": "Oct 1, 2026",
+   "es": "01/10/2026",
+   "from": "proposta",
+   "note": "data demonstrativa; formato localizado"
+  },
+  {
+   "id": "rp.to",
+   "t": "35,25–36,5",
+   "pt-BR": "21/10/2026",
+   "en": "Oct 21, 2026",
+   "es": "21/10/2026",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "rp.day",
+   "t": "35,25–36,5",
+   "pt-BR": "21/10",
+   "en": "Oct 21",
+   "es": "21/10",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "rp.hour",
+   "t": "35,25–36,5",
+   "pt-BR": "18:40",
+   "en": "6:40 PM",
+   "es": "18:40",
+   "from": "proposta",
+   "note": "hora localizada"
   },
   {
    "id": "rp.salesH",

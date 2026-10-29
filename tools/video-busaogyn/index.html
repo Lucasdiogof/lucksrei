@@ -369,13 +369,14 @@ function sceneC(t) {
   const out = E.in3(P(t, 19.0, 19.7));
   T(els.hC, { x: 0, y: -380, a: 1 }); kin(els.hC, t, 13.1, { out: { t0: 18.9 } });
   for (let i = 0; i < 3; i++) {
-    const t0 = 13.8 + i * 1.5, u = spr(t - t0, 10, .6), x = (i - 1) * 580, y = -20;
-    T(els["q" + i], { x, y, s: lerp(.4, 1.85, cl(u)), a: (t >= t0 ? 1 : 0) * (1 - out), b: (1 - cl(u)) * 6 });
-    T(els["ql" + i], { x, y: y + 125, a: E.out3(P(t, t0 + .25, t0 + .7)) * (1 - out) });
+    // chips em coluna central: na disposição horizontal original (x = ±580) os dois das pontas saíam do recorte 1:1 do loop
+    const t0 = 13.8 + i * 1.5, u = spr(t - t0, 10, .6), x = 0, y = -150 + i * 215;
+    T(els["q" + i], { x, y, s: lerp(.4, 1.6, cl(u)), a: (t >= t0 ? 1 : 0) * (1 - out), b: (1 - cl(u)) * 6 });
+    T(els["ql" + i], { x, y: y + 100, a: E.out3(P(t, t0 + .25, t0 + .7)) * (1 - out) });
   }
   // pulso do chip "ao vivo"
   const pulse = 1 + .06 * Math.sin(t * 6); if (t > 14.3) els.q0.style.boxShadow = `0 0 ${20 + 14 * Math.sin(t * 6)}px rgba(61,217,160,.45)`;
-  T(els.capC, { x: 0, y: 300, a: E.out3(P(t, 17.4, 18.1)) * (1 - out) });
+  T(els.capC, { x: 0, y: 465, a: E.out3(P(t, 17.4, 18.1)) * (1 - out) });
 }
 function sceneD(t) {
   const on = t > 19.2 && t < 33.4;

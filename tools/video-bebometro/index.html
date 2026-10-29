@@ -293,7 +293,10 @@ two(els.h3, ...TXL("h3"), 1);
 two(els.cap1, ...TXL("cap1"), 1);
 mk(els.h4, TX("h4")); els.h4.classList.add("amb"); els.h4.style.fontSize = "150px"; two(els.h5, ...TXL("h5"), 1);
 document.querySelectorAll('.bill').forEach(e => e._d = 'flex'); mk(els.cnt, "×4"); mk(els.total, "R$ 0,00");
-mk(els.tag1, TX("tag1")); mk(els.tag2, TX("tag2"));
+// slogan: tag2 pode ter várias linhas (es); cada linha vira uma div com as letras animadas
+mk(els.tag1, TX("tag1"));
+const TAG2 = TXL("tag2");
+if (TAG2.length > 1) { els.tag2.innerHTML = ""; els.tag2._cs = []; TAG2.forEach(l => { const d = document.createElement("div"); els.tag2.appendChild(d); mk(d, l); els.tag2._cs.push(...d._cs); }); } else mk(els.tag2, TAG2[0]);
 els.tag1.style.fontSize = 112 * FIT("tag1") + "px"; els.tag2.style.fontSize = 112 * FIT("tag2") + "px";
 els.h1.style.fontSize = 180 * FIT("h1") + "px"; els.h5.style.fontSize = 160 * FIT("h5") + "px";
 // cartas
@@ -681,8 +684,9 @@ function sceneE(t) {
   for (let i = 0; i < 8; i++) { const q = tokPos(i, t); T(els["tk" + i], { x: q.x, y: q.y, s: q.s * (i < 4 ? .75 : 1), rz: q.rz * .1 + (i % 2 ? 10 : -10), a: on ? q.a : 0 }); }
   const w = wmDraw(els.wm2, t, 31.45, 0, 30);
   els.wm2.querySelector(".sheen").style.backgroundPosition = lerp(120, -20, E.io2(P(t, 32.2, 33.0))).toFixed(1) + "% 0";
-  T(els.tag1, { x: 0, y: 212, a: t > 31.7 ? 1 : 0 }); kin(els.tag1, t, 31.75, { st: .035, d: .55, dy: 100 });
-  T(els.tag2, { x: 0, y: 332, a: t > 32.05 ? 1 : 0 }); kin(els.tag2, t, 32.1, { st: .035, d: .55, dy: 100 });
+  const TG = TAG2.length - 1, LH = 120 * FIT("tag2"), Y1 = 212 + TG * 14;
+  T(els.tag1, { x: 0, y: Y1, a: t > 31.7 ? 1 : 0 }); kin(els.tag1, t, 31.75, { st: .035, d: .55, dy: 100 });
+  T(els.tag2, { x: 0, y: Y1 + LH * (1 + TG * .5), a: t > 32.05 ? 1 : 0 }); kin(els.tag2, t, 32.1, { st: .035, d: .55, dy: 100 });
 }
 
 /* ───────────────────────── laterais 16:9 ───────────────────────── */

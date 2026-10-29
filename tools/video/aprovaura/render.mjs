@@ -16,7 +16,8 @@ const frames = path.join(here, 'frames'); fs.rmSync(frames, { recursive: true, f
 fs.mkdirSync(path.dirname(out), { recursive: true });
 const N = Math.round((to - from) * FPS);
 const browser = await chromium.launch({ args: ['--font-render-hinting=none', '--disable-lcd-text'] });
-const pageUrl = url.pathToFileURL(path.join(here, process.env.FILE || 'aprovaura-promo-v8.html')).href;
+// VIDEO_LANG=pt-BR|en|es escolhe o idioma (dicionário em tools/video-i18n); sem ele, en (o filme publicado)
+const pageUrl = url.pathToFileURL(path.join(here, process.env.FILE || 'aprovaura-promo-v8.html')).href + (process.env.VIDEO_LANG ? '?lang=' + process.env.VIDEO_LANG : '');
 const DUR = +(process.env.DUR || 50);
 const t0 = Date.now();
 await Promise.all(Array.from({ length: WORKERS }, async (_, w) => {

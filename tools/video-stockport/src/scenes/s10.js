@@ -25,10 +25,10 @@ SP.scenes.s10 = (function () {
     const WMW = pick({ wide: 600, sq: 560, tall: 680 });
     wm = h(`<div class="blk" style="width:${WMW}px;height:${WMW * 110 / 420}px">${KIT.wordmark("", WMW)}</div>`); root.appendChild(wm);
     wm.style.webkitMaskImage = "linear-gradient(90deg,#000 0%,#000 var(--p),transparent calc(var(--p) + 14%))";
-    tag = hl(["Do estoque à venda.", "Tudo conectado."], "", { accent: 1 }); tag.style.fontSize = pick({ wide: 58, sq: 54, tall: 66 }) + "px"; tag.style.textAlign = "center"; root.appendChild(tag);
+    tag = hl(DATA.txl("h.end"), "", { accent: 1 }); tag.style.fontSize = pick({ wide: 58, sq: 54, tall: 66 }) + "px"; tag.style.textAlign = "center"; root.appendChild(tag);
     if (FN === "wide") { tag.remove(); tag = hl(["Do estoque à venda. Tudo conectado."], "", {}); tag.style.fontSize = "54px"; tag.style.textAlign = "center"; root.appendChild(tag); }
-    lic = h(`<div class="blk sub" style="font-size:${pick({ wide: 28, sq: 28, tall: 34 })}px;color:#C7D2E4">Licença de uso do software</div>`); root.appendChild(lic);
-    sig = h(`<div class="blk sub" style="font-size:${pick({ wide: 24, sq: 24, tall: 28 })}px;letter-spacing:.18em;text-transform:uppercase;color:#8EA3C7">Um produto Lucksrei</div>`); root.appendChild(sig);
+    lic = h(`<div class="blk sub" style="font-size:${pick({ wide: 28, sq: 28, tall: 34 })}px;color:#C7D2E4">${DATA.tx("lic")}</div>`); root.appendChild(lic);
+    sig = h(`<div class="blk sub" style="font-size:${pick({ wide: 24, sq: 24, tall: 28 })}px;letter-spacing:.18em;text-transform:uppercase;color:#8EA3C7">${DATA.tx("sig")}</div>`); root.appendChild(sig);
     S.cy = cy;
   };
   S.render = function (t) {

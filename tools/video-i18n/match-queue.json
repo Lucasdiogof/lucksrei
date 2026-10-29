@@ -151,6 +151,15 @@
    "note": "selo grande em maiúsculas (pôster); mais longo que o original"
   },
   {
+   "id": "q.foundShort",
+   "t": "7,5–8,5",
+   "pt-BR": "Encontrada",
+   "en": "Match found",
+   "es": "Encontrado",
+   "from": "proposta",
+   "note": "selo pequeno da fila e do histórico; no pt/es o texto completo não cabe (o banner grande usa o completo)"
+  },
+  {
    "id": "q.timeup",
    "t": "10,25",
    "pt-BR": "Tempo esgotado",
@@ -423,11 +432,11 @@
   {
    "id": "sq.chem",
    "t": "27,75–32",
-   "pt-BR": "Química da escalação",
+   "pt-BR": "Química do time",
    "en": "Team chemistry",
-   "es": "Química de la alineación",
+   "es": "Química del equipo",
    "from": "app~",
-   "note": "app: \"Squad chemistry\""
+   "note": "app: Química da escalação / de la alineación; forma curta porque o rótulo divide a linha com \"Overall\""
   },
   {
    "id": "sq.overall",
@@ -538,15 +547,6 @@
    "note": "forma curta; o app usa Pedalada (Stepover) direita/derecha (divergência intencional, só por espaço)"
   },
   {
-   "id": "sk.spin",
-   "t": "33,5",
-   "pt-BR": "Girar direito",
-   "en": "Spin right stick",
-   "es": "Girar stick derecho",
-   "from": "app",
-   "note": ""
-  },
-  {
    "id": "sk.ballroll",
    "t": "34,5",
    "pt-BR": "Roleta direita",
@@ -561,15 +561,6 @@
    "pt-BR": "Arco-íris simples",
    "en": "Simple rainbow flick",
    "es": "Arcoíris simple",
-   "from": "app",
-   "note": ""
-  },
-  {
-   "id": "sk.flick",
-   "t": "35,75",
-   "pt-BR": "Flick direito",
-   "en": "Flick right stick",
-   "es": "Flick stick derecho",
    "from": "app",
    "note": ""
   },
@@ -592,22 +583,67 @@
    "note": ""
   },
   {
-   "id": "sk.then",
-   "t": "37,5",
-   "pt-BR": ", depois",
-   "en": ", then",
-   "es": ", luego",
-   "from": "proposta",
-   "note": "fragmento da instrução de controle"
+   "id": "sk.c.stepover",
+   "t": "33,5",
+   "pt-BR": "Girar direito ↑→",
+   "en": "Spin right stick ↑→",
+   "es": "Girar stick derecho ↑→",
+   "from": "app",
+   "note": "instrução de controle (app: controlsDribblingSkill)"
   },
   {
-   "id": "sk.again",
+   "id": "sk.c.ballroll",
+   "t": "34,5",
+   "pt-BR": "Girar direito ↓ até ←",
+   "en": "Spin right stick ↓ to ←",
+   "es": "Girar stick derecho ↓ hasta ←",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "sk.c.rainbow",
+   "t": "35,75",
+   "pt-BR": "Flick direito ↓↑↑",
+   "en": "Flick right stick ↓↑↑",
+   "es": "Flick stick derecho ↓↑↑",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "sk.c.elastico",
+   "t": "36,5",
+   "pt-BR": "Direito → girar ↓←",
+   "en": "Right stick → spin ↓←",
+   "es": "Stick derecho → girar ↓←",
+   "from": "app~",
+   "note": "adaptado do vocabulário do app"
+  },
+  {
+   "id": "sk.c.lowshot",
    "t": "37,5",
-   "pt-BR": "de novo",
-   "en": "again",
-   "es": "otra vez",
+   "pt-BR": "R1 + ◯, depois ◯ de novo",
+   "en": "R1 + ◯, then ◯ again",
+   "es": "R1 + ◯, luego ◯ otra vez",
    "from": "proposta",
    "note": ""
+  },
+  {
+   "id": "sq.num1",
+   "t": "31,75–33",
+   "pt-BR": "873.700",
+   "en": "873,700",
+   "es": "873.700",
+   "from": "proposta",
+   "note": "valor do elenco no console; separador de milhar localizado"
+  },
+  {
+   "id": "sq.num2",
+   "t": "31,75–33",
+   "pt-BR": "863.350",
+   "en": "863,350",
+   "es": "863.350",
+   "from": "proposta",
+   "note": "valor do elenco no PC; separador de milhar localizado"
   },
   {
    "id": "eb.rv",
@@ -734,6 +770,33 @@
    "es": "División 2",
    "from": "app",
    "note": "rivalsDivisionDiv2"
+  },
+  {
+   "id": "rv.fW",
+   "t": "40,25–43",
+   "pt-BR": "V",
+   "en": "W",
+   "es": "G",
+   "from": "app",
+   "note": "forma recente: vitória (app: V/W/G)"
+  },
+  {
+   "id": "rv.fD",
+   "t": "40,25–43",
+   "pt-BR": "E",
+   "en": "D",
+   "es": "E",
+   "from": "app~",
+   "note": "empate"
+  },
+  {
+   "id": "rv.fL",
+   "t": "40,25–43",
+   "pt-BR": "D",
+   "en": "L",
+   "es": "P",
+   "from": "app",
+   "note": "derrota (app: D/L/P)"
   },
   {
    "id": "rv.profile",

@@ -57,19 +57,19 @@ SP.scenes.s04 = (function () {
   let colL, colR, pos, tiles = [], lines = [], tok = [], cust, sum, subN, dsRow, totN, pay, prs = [], methods, btn, ok, okRing, head, srch, cnt, paidN, remN;
   const CART = [{ id: "cafe", q: 2, t0: 1.7 }, { id: "agua", q: 6, t0: 2.9 }, { id: "caderno", q: 1, t0: 4.0 }];
   S.build = function (root) {
-    pos = h(`<div class="pn blk s4-pos"><div class="s4-l"><div class="s4-top"><h3>Nova venda</h3><span class="chip gr"><i></i>Caixa aberto</span></div>
-      <div class="s4-search">${KIT.ico("scan", 24, "#60A5FA")}<span class="q"></span><span class="cur"></span><span class="ph">Buscar produto ou ler código de barras</span></div>
+    pos = h(`<div class="pn blk s4-pos"><div class="s4-l"><div class="s4-top"><h3>${DATA.tx("c.new")}</h3><span class="chip gr"><i></i>${DATA.tx("c.open")}</span></div>
+      <div class="s4-search">${KIT.ico("scan", 24, "#60A5FA")}<span class="q"></span><span class="cur"></span><span class="ph">${DATA.tx("p.search")}</span></div>
       <div class="s4-grid">${["cafe", "agua", "caderno", "sabao"].map(id => `<div class="s4-tile" data-id="${id}"><div class="pr"></div><div class="th"></div><b>${PR[id].name}</b><span>${brl(PR[id].price)}</span></div>`).join("")}</div>
-      <div class="s4-pay"><h3>Pagamento</h3><div class="rc">Receber <b>${brl(DATA.SALE.total)}</b></div>
-        <div class="s4-meth">${[["cash", "Dinheiro"], ["pix", "Pix"], ["card", "Débito"], ["card", "Crédito"], ["wallet", "Outro"]].map(m => `<div>${KIT.ico(m[0], 26)}${m[1]}</div>`).join("")}</div>
+      <div class="s4-pay"><h3>${DATA.tx("c.pay")}</h3><div class="rc">${DATA.tx("c.charge")} <b>${brl(DATA.SALE.total)}</b></div>
+        <div class="s4-meth">${[["cash", DATA.tx("c.cash")], ["pix", "Pix"], ["card", DATA.tx("c.debit")], ["card", DATA.tx("c.credit")], ["wallet", DATA.tx("c.other")]].map(m => `<div>${KIT.ico(m[0], 26)}${m[1]}</div>`).join("")}</div>
         <div class="s4-pr">${KIT.ico("pix", 24, "#60A5FA")}Pix<span class="a">${brl(DATA.SALE.pay[0].v)}</span></div>
-        <div class="s4-pr">${KIT.ico("cash", 24, "#60A5FA")}Dinheiro<span class="a">${brl(DATA.SALE.pay[1].v)}</span></div>
-        <div class="s4-pst"><span>Pago <b class="pd">R$ 0,00</b></span><span>Falta <b class="rm">${brl(DATA.SALE.total)}</b></span><span>Troco <b>R$ 0,00</b></span></div>
-        <div class="s4-btn">${KIT.ico("check", 26, "#fff", 2.4)}Confirmar venda</div></div></div>
-      <div class="s4-r"><div class="s4-top"><h3>Carrinho</h3><span class="chip sl cnt">0 itens</span></div>
-        <div class="s4-cust">${KIT.ico("user", 24)}Sem cliente (toque para escolher)<div class="on">${KIT.avatar("MS", "#2563EB", 40)}<div>Mariana Souza<br><span>Cliente · 12 compras</span></div></div></div>
-        <div class="s4-lines">${CART.map(c => `<div class="s4-ln"><div class="nm"><b>${PR[c.id].name}</b><span>${brl(PR[c.id].price)} / un.</span></div><div class="s4-step"><i>${KIT.ico("minus", 18)}</i><b>1</b><i>${KIT.ico("plus", 18)}</i></div><div class="tt">R$ 0,00</div></div>`).join("")}</div>
-        <div class="s4-sum"><div><span>Subtotal</span><b class="sb">R$ 0,00</b></div><div class="ds"><span>Desconto</span><b>${brl(-DATA.SALE.discount)}</b></div><div class="tot"><span>Total</span><b class="to">R$ 0,00</b></div></div></div></div>`);
+        <div class="s4-pr">${KIT.ico("cash", 24, "#60A5FA")}${DATA.tx("c.cash")}<span class="a">${brl(DATA.SALE.pay[1].v)}</span></div>
+        <div class="s4-pst"><span>${DATA.tx("c.paid")} <b class="pd">R$ 0,00</b></span><span>${DATA.tx("c.short")} <b class="rm">${brl(DATA.SALE.total)}</b></span><span>${DATA.tx("c.change")} <b>R$ 0,00</b></span></div>
+        <div class="s4-btn">${KIT.ico("check", 26, "#fff", 2.4)}${DATA.tx("c.confirm")}</div></div></div>
+      <div class="s4-r"><div class="s4-top"><h3>${DATA.tx("c.cart")}</h3><span class="chip sl cnt">${DATA.tx("c.items", { n: 0 })}</span></div>
+        <div class="s4-cust">${KIT.ico("user", 24)}${DATA.tx("c.nocust")}<div class="on">${KIT.avatar("MS", "#2563EB", 40)}<div>Mariana Souza<br><span>${DATA.tx("c.cust", { n: 12 })}</span></div></div></div>
+        <div class="s4-lines">${CART.map(c => `<div class="s4-ln"><div class="nm"><b>${PR[c.id].name}</b><span>${brl(PR[c.id].price)} ${DATA.tx("c.per")}</span></div><div class="s4-step"><i>${KIT.ico("minus", 18)}</i><b>1</b><i>${KIT.ico("plus", 18)}</i></div><div class="tt">R$ 0,00</div></div>`).join("")}</div>
+        <div class="s4-sum"><div><span>${DATA.tx("c.subtotal")}</span><b class="sb">R$ 0,00</b></div><div class="ds"><span>${DATA.tx("c.discount")}</span><b>${brl(-DATA.SALE.discount)}</b></div><div class="tot"><span>${DATA.tx("c.total")}</span><b class="to">R$ 0,00</b></div></div></div></div>`);
     root.appendChild(pos);
     colL = $(".s4-l", pos); colR = $(".s4-r", pos); tiles = $$(".s4-tile", pos); tiles.forEach(t => $(".th", t).appendChild(KIT.productThumb(t.dataset.id, 140)));
     lines = $$(".s4-ln", pos); cust = $(".s4-cust .on", pos); subN = $(".sb", pos); dsRow = $(".ds", pos); totN = $(".to", pos);
@@ -77,9 +77,9 @@ SP.scenes.s04 = (function () {
     paidN = $(".pd", pos); remN = $(".rm", pos);
     CART.forEach(c => { const e = h(`<div class="blk"></div>`); e.style.width = e.style.height = "110px"; e.appendChild(KIT.productThumb(c.id, 110)); root.appendChild(e); tok.push(e); });
     ok = h(`<div class="pn blk s4-ok"><svg width="150" height="150" viewBox="0 0 150 150"><circle cx="75" cy="75" r="66" fill="rgba(22,163,74,.16)" stroke="#4ADE80" stroke-width="5" pathLength="1" stroke-dasharray="1 1" class="rg"/><path d="M46 77l20 20 40-42" fill="none" stroke="#4ADE80" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1 1" class="ck"/></svg>
-      <h4>Venda registrada.</h4><p>Venda #${DATA.SALE.n} · 9 itens · ${brl(DATA.SALE.total)}</p><p class="st">${KIT.ico("package", 20, "#9CC7FF")} Estoque atualizado · Café ${DATA.stockAfter("cafe", DATA.SALE_IDX)} → ${DATA.stockAfter("cafe", DATA.SALE_IDX + 1)} un.</p><div class="cs"><span class="chip">${KIT.ico("receipt", 18)}Recibo em PDF</span><span class="chip sl">Pix + Dinheiro</span></div></div>`);
+      <h4>${DATA.tx("c.done")}</h4><p>${DATA.tx("c.doneLine", { n: DATA.SALE.n, itens: 9, valor: brl(DATA.SALE.total) })}</p><p class="st">${KIT.ico("package", 20, "#9CC7FF")} ${DATA.tx("c.stockUpd", { produto: DATA.tx("prod.coffeeShort"), a: DATA.stockAfter("cafe", DATA.SALE_IDX), b: DATA.stockAfter("cafe", DATA.SALE_IDX + 1) })}</p><div class="cs"><span class="chip">${KIT.ico("receipt", 18)}${DATA.tx("c.pdf")}</span><span class="chip sl">Pix + ${DATA.tx("c.cash")}</span></div></div>`);
     root.appendChild(ok); okRing = [$(".rg", ok), $(".ck", ok)];
-    head = hl(["Registre vendas", "com mais agilidade."], "", { accent: 1 }); head.style.fontSize = pick({ wide: 64, sq: 58, tall: 80 }) + "px"; head.style.textAlign = pick({ wide: "left", sq: "center", tall: "center" }); root.appendChild(head);
+    head = hl(DATA.txl("h.pos"), "", { accent: 1 }); head.style.fontSize = pick({ wide: 64, sq: 58, tall: 80 }) + "px"; head.style.textAlign = pick({ wide: "left", sq: "center", tall: "center" }); root.appendChild(head);
   };
   // câmera sobre o painel: no 16:9 o painel inteiro; no 1:1 e no 9:16 a câmera se aproxima da coluna que importa
   // (produtos → carrinho → pagamento) para os textos ficarem legíveis no celular. Colunas: esquerda −320, direita +300.
@@ -120,7 +120,7 @@ SP.scenes.s04 = (function () {
       setT($(".s4-step b", lines[i]), String(q || 1)); setT($(".tt", lines[i]), brl(PR[c.id].price * (q || 1)));
       if (la > .5) { items += q; sub += PR[c.id].price * q; }
     });
-    setT(cnt, items === 1 ? "1 item" : items + " itens"); setT(subN, brl(sub));
+    setT(cnt, items === 1 ? DATA.tx("c.item1") : DATA.tx("c.items", { n: items })); setT(subN, brl(sub));
     // desconto aplicado de uma vez: o total só mostra valores exatos (subtotal, depois subtotal − desconto)
     const dOn = t >= 5.3, dsa = E.out3(P(t, 5.3, 5.6)); setS(dsRow, "opacity", (.25 + .75 * dsa).toFixed(3));
     setT(totN, brl(sub - (dOn ? DATA.SALE.discount : 0)));

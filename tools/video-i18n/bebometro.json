@@ -9,8 +9,7 @@
   "Bebômetro",
   "João",
   "Gleidson",
-  "Rodrigo",
-  "cachaça"
+  "Rodrigo"
  ],
  "keep": [
   "Bebômetro (marca/logo)",
@@ -19,6 +18,9 @@
   "400 ml · 600 ml · 200 ml",
   "÷ 3",
   "01/03 · 02/03 · 03/03"
+ ],
+ "reflow": [
+  "tag2"
  ],
  "strings": [
   {
@@ -409,22 +411,22 @@
    "id": "h4",
    "t": "26,25–28",
    "pt-BR": "Bafômetro",
-   "en": "Blow Meter",
-   "es": "Soplómetro",
-   "from": "proposta",
-   "note": "DIVERGE do app (bafoTitle = Bafômetro nos 3 idiomas). O recurso é uma brincadeira: mede o volume do sopro no microfone, sem álcool (app: Simulação, brincar). Breathalyzer sugeriria medição real; por isso nome neutro. Decisão do dono."
+   "en": "Bafômetro",
+   "es": "Bafômetro",
+   "from": "app",
+   "note": "nome do recurso mantido nos 3 idiomas, como no app (bafoTitle). O recurso é uma simulação (mede o sopro no microfone, não álcool); nenhum texto do filme sugere medição real."
   },
   {
    "id": "tag1",
    "t": "31,25–35,25",
    "pt-BR": "Chope, cachaça",
    "en": "Draft beer, cachaça,",
-   "es": "Cerveza de barril, cachaça",
+   "es": "Cerveza de barril,",
    "from": "proposta",
-   "note": "slogan final, linha 1 (aprovado: Draft beer, cachaça, and good times / Cerveza de barril, cachaça y buenos momentos); cachaça permanece",
+   "note": "slogan aprovado: Draft beer, cachaça, and good times / Cerveza de barril, cachaça y buenos momentos. Recomposição: no es a linha 1 fica só \"Cerveza de barril,\" e o resto desce, em vez de reduzir a fonte a 68%.",
    "fit": {
-    "en": 0.85,
-    "es": 0.68
+    "en": 0.9,
+    "es": 0.92
    }
   },
   {
@@ -432,12 +434,12 @@
    "t": "31,5–35,25",
    "pt-BR": "e resenha.",
    "en": "and good times.",
-   "es": "y buenos momentos.",
+   "es": "cachaça y buenos\nmomentos.",
    "from": "proposta",
-   "note": "slogan final, linha 2 (em destaque); aprovado pelo dono",
+   "note": "slogan final, linhas em destaque; no es ocupa 2 linhas (o código desloca o bloco)",
    "fit": {
-    "en": 0.85,
-    "es": 0.68
+    "en": 0.9,
+    "es": 0.92
    }
   }
  ]
