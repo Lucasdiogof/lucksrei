@@ -74,7 +74,7 @@
    "t": "3–11,75",
    "pt-BR": "O próximo da fila\nassume.",
    "en": "Next in line\ntakes over.",
-   "es": "El siguiente en la fila\ntoma el relevo.",
+   "es": "El siguiente\ntoma el turno.",
    "from": "proposta",
    "note": ""
   },
@@ -531,11 +531,11 @@
   {
    "id": "sk.stepover",
    "t": "33,5",
-   "pt-BR": "Pedalada (Stepover) direita",
+   "pt-BR": "Pedalada direita",
    "en": "Stepover right",
-   "es": "Pedalada (Stepover) derecha",
-   "from": "app",
-   "note": ""
+   "es": "Pedalada derecha",
+   "from": "app~",
+   "note": "forma curta; o app usa Pedalada (Stepover) direita/derecha (divergência intencional, só por espaço)"
   },
   {
    "id": "sk.spin",

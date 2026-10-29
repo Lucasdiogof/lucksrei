@@ -15,8 +15,7 @@
  ],
  "keep": [
   "StockPort System (logo)",
-  "catálogo demonstrativo brasileiro: Café Torrado 500 g, Água Mineral 1,5 L, Caderno 96 folhas, Sabão em Pó 1 kg, Biscoito Água e Sal, Detergente 500 ml",
-  "categorias do catálogo: Mercearia, Bebidas, Papelaria, Limpeza (decisão pendente, ver nota)",
+  "códigos de barras e SKUs",
   "Distribuidora Serra · Mariana Souza · Mercado Bom Dia",
   "R$ (BRL) e números",
   "código de barras 7 891234 500017",
@@ -49,6 +48,141 @@
    "es": "Registra y organiza\ntus productos.",
    "from": "proposta",
    "note": ""
+  },
+  {
+   "id": "prod.coffee",
+   "t": "8,75–27,25",
+   "pt-BR": "Café Torrado 500 g",
+   "en": "Roasted Coffee 500 g",
+   "es": "Café tostado 500 g",
+   "from": "proposta",
+   "note": "nome genérico de produto demonstrativo (aprovado traduzir)"
+  },
+  {
+   "id": "prod.water",
+   "t": "8,75–27,25",
+   "pt-BR": "Água Mineral 1,5 L",
+   "en": "Mineral Water 1.5 L",
+   "es": "Agua mineral 1,5 L",
+   "from": "proposta",
+   "note": "separador decimal localizado"
+  },
+  {
+   "id": "prod.notebook",
+   "t": "8,75–27,25",
+   "pt-BR": "Caderno 96 folhas",
+   "en": "Notebook 96 sheets",
+   "es": "Cuaderno 96 hojas",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "prod.soap",
+   "t": "8,75–27,25",
+   "pt-BR": "Sabão em Pó 1 kg",
+   "en": "Laundry Powder 1 kg",
+   "es": "Detergente en polvo 1 kg",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "prod.crackers",
+   "t": "29,25–34,75",
+   "pt-BR": "Biscoito Água e Sal",
+   "en": "Water Crackers",
+   "es": "Galletas de agua y sal",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "prod.dish",
+   "t": "29,25–34,75",
+   "pt-BR": "Detergente 500 ml",
+   "en": "Dish Soap 500 ml",
+   "es": "Lavavajillas 500 ml",
+   "from": "proposta",
+   "note": "detergente no Brasil = detergente de louça"
+  },
+  {
+   "id": "prod.coffeeShort",
+   "t": "25,5–27",
+   "pt-BR": "Café",
+   "en": "Coffee",
+   "es": "Café",
+   "from": "proposta",
+   "note": "nome curto no resumo da venda"
+  },
+  {
+   "id": "cat.grocery",
+   "t": "8,75–12",
+   "pt-BR": "Mercearia",
+   "en": "Grocery",
+   "es": "Abarrotes",
+   "from": "proposta",
+   "note": "categoria demonstrativa (aprovado traduzir)"
+  },
+  {
+   "id": "cat.drinks",
+   "t": "8,75–12",
+   "pt-BR": "Bebidas",
+   "en": "Beverages",
+   "es": "Bebidas",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "cat.stationery",
+   "t": "8,75–12",
+   "pt-BR": "Papelaria",
+   "en": "Stationery",
+   "es": "Papelería",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "cat.cleaning",
+   "t": "9–12",
+   "pt-BR": "Limpeza",
+   "en": "Cleaning",
+   "es": "Limpieza",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "box.coffee",
+   "t": "6–12",
+   "pt-BR": "CAFÉ TORRADO",
+   "en": "ROASTED COFFEE",
+   "es": "CAFÉ TOSTADO",
+   "from": "proposta",
+   "note": "rótulo impresso na caixa 3D"
+  },
+  {
+   "id": "box.water",
+   "t": "6–12",
+   "pt-BR": "ÁGUA MINERAL 1,5 L",
+   "en": "MINERAL WATER 1.5 L",
+   "es": "AGUA MINERAL 1,5 L",
+   "from": "proposta",
+   "note": "rótulo na caixa 3D"
+  },
+  {
+   "id": "box.notebook",
+   "t": "6–12",
+   "pt-BR": "CADERNO",
+   "en": "NOTEBOOK",
+   "es": "CUADERNO",
+   "from": "proposta",
+   "note": "rótulo na caixa 3D"
+  },
+  {
+   "id": "box.soap",
+   "t": "6–12",
+   "pt-BR": "SABÃO EM PÓ 1 KG",
+   "en": "LAUNDRY POWDER 1 KG",
+   "es": "DETERGENTE EN POLVO 1 KG",
+   "from": "proposta",
+   "note": "rótulo na caixa 3D; es bem mais longo"
   },
   {
    "id": "p.title",

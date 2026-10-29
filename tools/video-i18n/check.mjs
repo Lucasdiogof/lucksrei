@@ -5,6 +5,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
+import { execFileSync } from 'node:child_process';
 
 const here = path.dirname(url.fileURLToPath(import.meta.url));
 const repo = path.resolve(here, '..', '..');
@@ -13,7 +14,19 @@ let errors = 0, warns = 0;
 const err = (v, m) => { errors++; console.log(`ERRO  ${v}: ${m}`); };
 const warn = (v, m) => { warns++; console.log(`aviso ${v}: ${m}`); };
 
+// O texto original é conferido contra a fonte PUBLICADA (origin/main, ou $VIDEO_BASE_REF): depois que o filme passa a ler o
+// dicionário, os literais deixam de existir no index.html atual, mas o texto de referência continua sendo o do vídeo no ar.
+function baseSource(p) {
+  if (p.startsWith('../')) return null;
+  try {
+    const ref = process.env.VIDEO_BASE_REF || 'origin/main';
+    const files = execFileSync('git', ['ls-tree', '-r', '--name-only', ref, '--', p], { cwd: repo, encoding: 'utf8' }).split('\n').filter(Boolean);
+    return files.map(f => execFileSync('git', ['show', `${ref}:${f}`], { cwd: repo, encoding: 'utf8', maxBuffer: 64 << 20 })).join('\n') || null;
+  } catch { return null; }
+}
 function readSource(p) {
+  const base = baseSource(p);
+  if (base) return base;
   // fontes fora do repositório (../x): FILMS_DIR aponta para a pasta que contém fan-hub-launch-film e la-pelve-launch-film
   const abs = p.startsWith('../') && process.env.FILMS_DIR ? path.resolve(process.env.FILMS_DIR, p.slice(3)) : path.resolve(repo, p);
   if (!fs.existsSync(abs)) return null;

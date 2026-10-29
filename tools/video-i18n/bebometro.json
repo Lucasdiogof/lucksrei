@@ -7,7 +7,6 @@
  ],
  "protected": [
   "Bebômetro",
-  "Bafômetro",
   "João",
   "Gleidson",
   "Rodrigo",
@@ -38,7 +37,10 @@
    "en": "The night out\nbegins.",
    "es": "Empezó\nla salida.",
    "from": "proposta",
-   "note": "título grande, 2 linhas, 2ª em destaque"
+   "note": "título grande, 2 linhas, 2ª em destaque",
+   "fit": {
+    "en": 0.85
+   }
   },
   {
    "id": "pill",
@@ -63,9 +65,12 @@
    "t": "10–14",
    "pt-BR": "Do chope ao\ncoquetel.",
    "en": "From draft beer\nto cocktails.",
-   "es": "De la cerveza de barril\nal cóctel.",
+   "es": "Del barril\nal cóctel.",
    "from": "proposta",
-   "note": "es é mais longo (reduzir fonte ou reformular)"
+   "note": "es reformulado por layout: \"barril\" = chope (cerveza de barril); a forma literal não cabe no recorte",
+   "fit": {
+    "en": 0.8
+   }
   },
   {
    "id": "v.beer",
@@ -257,6 +262,42 @@
    "note": ""
   },
   {
+   "id": "chipLab",
+   "t": "fora do recorte do loop",
+   "pt-BR": "Mesa ilustrada · 6 cenários",
+   "en": "Illustrated table · 6 settings",
+   "es": "Mesa ilustrada · 6 escenarios",
+   "from": "app~",
+   "note": "só no master 16:9 (tableIllustrated); fora do recorte 1:1 do loop"
+  },
+  {
+   "id": "h3",
+   "t": "fora do recorte do loop",
+   "pt-BR": "O celular\nvira copo.",
+   "en": "Your phone\nbecomes a glass.",
+   "es": "Tu teléfono\nse vuelve vaso.",
+   "from": "proposta",
+   "note": "título da cena do copo inclinável (19,8–23,2 s); só no master 16:9"
+  },
+  {
+   "id": "glassSub",
+   "t": "fora do recorte do loop",
+   "pt-BR": "Brincadeira visual. Nada é registrado.",
+   "en": "A visual toy. Nothing is recorded.",
+   "es": "Un juego visual. No se registra nada.",
+   "from": "proposta",
+   "note": "só no master 16:9; reforça que é brincadeira"
+  },
+  {
+   "id": "stamp",
+   "t": "fora do recorte do loop",
+   "pt-BR": "De mentirinha",
+   "en": "Just pretend",
+   "es": "De mentira",
+   "from": "proposta",
+   "note": "carimbo do medidor (simulação, não mede álcool); oculto no loop"
+  },
+  {
    "id": "ghost",
    "t": "22,75–26,25",
    "pt-BR": "RESENHA",
@@ -368,28 +409,36 @@
    "id": "h4",
    "t": "26,25–28",
    "pt-BR": "Bafômetro",
-   "en": "Bafômetro",
-   "es": "Bafômetro",
-   "from": "app",
-   "note": "o app mantém o nome nos 3 idiomas (bafoTitle)"
+   "en": "Blow Meter",
+   "es": "Soplómetro",
+   "from": "proposta",
+   "note": "DIVERGE do app (bafoTitle = Bafômetro nos 3 idiomas). O recurso é uma brincadeira: mede o volume do sopro no microfone, sem álcool (app: Simulação, brincar). Breathalyzer sugeriria medição real; por isso nome neutro. Decisão do dono."
   },
   {
    "id": "tag1",
    "t": "31,25–35,25",
    "pt-BR": "Chope, cachaça",
-   "en": "Draft beer, cachaça",
+   "en": "Draft beer, cachaça,",
    "es": "Cerveza de barril, cachaça",
    "from": "proposta",
-   "note": "slogan final, linha 1; \"cachaça\" é nome de bebida e permanece"
+   "note": "slogan final, linha 1 (aprovado: Draft beer, cachaça, and good times / Cerveza de barril, cachaça y buenos momentos); cachaça permanece",
+   "fit": {
+    "en": 0.85,
+    "es": 0.68
+   }
   },
   {
    "id": "tag2",
    "t": "31,5–35,25",
    "pt-BR": "e resenha.",
-   "en": "and good company.",
-   "es": "y buena compañía.",
+   "en": "and good times.",
+   "es": "y buenos momentos.",
    "from": "proposta",
-   "note": "slogan final, linha 2 (em destaque); \"resenha\" = papo/convívio, sem equivalente exato"
+   "note": "slogan final, linha 2 (em destaque); aprovado pelo dono",
+   "fit": {
+    "en": 0.85,
+    "es": 0.68
+   }
   }
  ]
 }

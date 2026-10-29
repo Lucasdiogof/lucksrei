@@ -13,3 +13,6 @@ Um `<video>.json` por vídeo, com todos os textos visíveis em **pt-BR**, **en**
 - `node tools/video-i18n/check.mjs`: confere campos, placeholders, número de linhas, nomes protegidos e se o texto original
   ainda existe na fonte do vídeo. Goiás e La Pelve ficam fora deste repositório: `FILMS_DIR=<pasta com fan-hub-launch-film e la-pelve-launch-film>`.
   A conferência é tolerante (ignora maiúsculas e aceita palavras soltas); o aviso de "mais longo" aponta risco de layout.
+
+- `AJUSTES.md`: ajustes da última revisão, investigação do Bafômetro, divergências com os apps, avisos de layout e pendências.
+- `emit.mjs <video> <pasta-do-filme>`: gera `i18n.js` do filme (usado pelos pilotos BusãoGyn e Bebômetro; `?lang=pt-BR|en|es`).

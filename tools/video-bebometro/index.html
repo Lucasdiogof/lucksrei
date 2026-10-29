@@ -89,22 +89,22 @@ body.render #ui{display:none}
       <div class="f front"><img src="assets/logo_cap.png" alt=""><div class="sheen" id="capSheen"></div></div>
     </div>
     <div class="o wm" id="wm1"><div class="in" style="position:absolute;inset:0"><img src="assets/logo_wordmark.png" alt="Bebômetro"><div class="sheen"></div></div></div>
-    <div class="o lab" id="sub" style="font-size:26px">Seu rolê, registrado.</div>
+    <div class="o lab" id="sub" style="font-size:26px" data-tx="sub">Seu rolê, registrado.</div>
 
     <!-- ===== B: a resenha começa ===== -->
     <div class="o k" id="h1" style="font-size:180px"></div>
     <div class="o" id="plank"></div>
     <div class="o mug" id="mug0"></div><div class="o mug" id="mug1"></div><div class="o mug" id="mug2"></div><div class="o mug" id="mug3"></div>
     <div class="o k amb" id="cnt" style="font-size:78px"></div>
-    <div class="o lab dim" id="cntLab" style="font-size:20px">Chope 400 ml</div>
-    <div class="o" id="pill"><img src="assets/logo_cap.png" alt=""><div class="t">Mais uma</div></div>
-    <div class="o lab" id="chipLab">Mesa ilustrada · 6 cenários</div>
+    <div class="o lab dim" id="cntLab" style="font-size:20px" data-tx="cntLab">Chope 400 ml</div>
+    <div class="o" id="pill"><img src="assets/logo_cap.png" alt=""><div class="t" data-tx="pill">Mais uma</div></div>
+    <div class="o lab" id="chipLab" data-tx="chipLab">Mesa ilustrada · 6 cenários</div>
     <div class="o k" id="h5" style="font-size:160px"></div>
     <div class="o vs" id="vs0"></div><div class="o vs" id="vs1"></div><div class="o vs" id="vs2"></div><div class="o vs" id="vs3"></div><div class="o vs" id="vs4"></div><div class="o vs" id="vs5"></div>
-    <div class="o lab dim vlab" id="vl0">Cerveja</div><div class="o lab dim vlab" id="vl1">Chope</div><div class="o lab dim vlab" id="vl2">Sem álcool</div><div class="o lab dim vlab" id="vl3">Destilados</div><div class="o lab dim vlab" id="vl4">Prontos</div><div class="o lab dim vlab" id="vl5">Coquetéis</div>
-    <div class="o mono" id="vNote" style="font-size:25px;font-family:'BB Inter';font-weight:500;letter-spacing:.02em;color:rgba(255,243,214,.8)">Catálogo completo e os seus próprios drinks</div>
-    <div class="o chip" id="ch0">Bar</div><div class="o chip" id="ch1">Churrasco</div><div class="o chip" id="ch2">Praia</div>
-    <div class="o chip" id="ch3">Balada</div><div class="o chip" id="ch4">Casa</div><div class="o chip" id="ch5">Restaurante</div>
+    <div class="o lab dim vlab" id="vl0" data-tx="v.beer">Cerveja</div><div class="o lab dim vlab" id="vl1" data-tx="v.draft">Chope</div><div class="o lab dim vlab" id="vl2" data-tx="v.zero">Sem álcool</div><div class="o lab dim vlab" id="vl3" data-tx="v.spirit">Destilados</div><div class="o lab dim vlab" id="vl4" data-tx="v.rtd">Prontos</div><div class="o lab dim vlab" id="vl5" data-tx="v.cocktail">Coquetéis</div>
+    <div class="o mono" id="vNote" style="font-size:25px;font-family:'BB Inter';font-weight:500;letter-spacing:.02em;color:rgba(255,243,214,.8)" data-tx="vNote">Catálogo completo e os seus próprios drinks</div>
+    <div class="o chip" id="ch0" data-tx="ch.bar">Bar</div><div class="o chip" id="ch1" data-tx="ch.bbq">Churrasco</div><div class="o chip" id="ch2" data-tx="ch.beach">Praia</div>
+    <div class="o chip" id="ch3" data-tx="ch.club">Balada</div><div class="o chip" id="ch4" data-tx="ch.home">Casa</div><div class="o chip" id="ch5" data-tx="ch.rest">Restaurante</div>
 
     <!-- ===== C: organização ===== -->
     <svg id="goo" viewBox="0 0 1920 1080">
@@ -120,35 +120,35 @@ body.render #ui{display:none}
     <div class="o k" id="cap1" style="font-size:150px"></div>
     <div class="o k" id="ml0" style="font-size:78px;color:var(--ink)"></div><div class="o k" id="ml1" style="font-size:78px;color:var(--ink)"></div><div class="o k" id="ml2" style="font-size:78px;color:var(--ink)"></div>
     <div class="o mono" id="nm0" style="font-size:32px;font-weight:700;color:var(--foam)">João</div><div class="o mono" id="nm1" style="font-size:32px;font-weight:700;color:var(--foam)">Gleidson</div><div class="o mono" id="nm2" style="font-size:32px;font-weight:700;color:var(--foam)">Rodrigo</div>
-    <div class="o lab" id="foot1" style="font-size:19px">Porções iguais ou personalizadas</div>
-    <div class="o lab" id="billLab">Comanda</div>
+    <div class="o lab" id="foot1" style="font-size:19px" data-tx="foot1">Porções iguais ou personalizadas</div>
+    <div class="o lab" id="billLab" data-tx="billLab">Comanda</div>
     <div class="o k" id="total" style="font-size:230px"></div>
-    <div class="o bill" id="bc0"><span>12 × Chope 400 ml</span><b>R$ 180,00</b></div>
-    <div class="o bill" id="bc1"><span>Porção</span><b>R$ 55,00</b></div>
-    <div class="o bill" id="bc2"><span>Serviço 10%</span><b>R$ 23,50</b></div>
+    <div class="o bill" id="bc0"><span data-tx="bc0">12 × Chope 400 ml</span><b>R$ 180,00</b></div>
+    <div class="o bill" id="bc1"><span data-tx="bc1">Porção</span><b>R$ 55,00</b></div>
+    <div class="o bill" id="bc2"><span data-tx="bc2">Serviço 10%</span><b>R$ 23,50</b></div>
     <div class="o k" id="ta0" style="font-size:54px;color:var(--gold)">R$ 86,17</div><div class="o k" id="ta1" style="font-size:54px;color:var(--gold)">R$ 86,17</div><div class="o k" id="ta2" style="font-size:54px;color:var(--gold)">R$ 86,16</div>
     <div class="o k" id="div3" style="font-size:96px;color:rgba(255,243,214,.9)">÷ 3</div>
     <div class="o mono" id="sum" style="font-size:26px">86,17 + 86,17 + 86,16 = 258,50</div>
-    <div class="o lab dim" id="foot2" style="font-size:16px">Valores ilustrativos</div>
-    <div class="o lab" id="pago0" style="font-size:17px">pago</div><div class="o lab" id="pago1" style="font-size:17px">pago</div><div class="o lab" id="pago2" style="font-size:17px">pago</div>
+    <div class="o lab dim" id="foot2" style="font-size:16px" data-tx="foot2">Valores ilustrativos</div>
+    <div class="o lab" id="pago0" style="font-size:17px" data-tx="pago">pago</div><div class="o lab" id="pago1" style="font-size:17px" data-tx="pago">pago</div><div class="o lab" id="pago2" style="font-size:17px" data-tx="pago">pago</div>
 
     <!-- ===== D: diversão ===== -->
     <div class="o k" id="h3" style="font-size:150px"></div>
     <div class="o" id="glass" style="width:300px;height:470px"></div>
-    <div class="o mono" id="glassSub" style="font-size:26px;font-family:'BB Inter';font-weight:500;letter-spacing:.02em;color:rgba(255,243,214,.78)">Brincadeira visual. Nada é registrado.</div>
-    <div class="o ghost" id="ghost">RESENHA</div>
+    <div class="o mono" id="glassSub" style="font-size:26px;font-family:'BB Inter';font-weight:500;letter-spacing:.02em;color:rgba(255,243,214,.78)" data-tx="glassSub">Brincadeira visual. Nada é registrado.</div>
+    <div class="o ghost" id="ghost" data-tx="ghost">RESENHA</div>
     <div class="o card" id="cd0"></div><div class="o card" id="cd1"></div><div class="o card" id="cd2"></div>
-    <div class="o lab" id="gameLab" style="font-size:22px">3 jogos offline · sem placar, sem punição</div>
+    <div class="o lab" id="gameLab" style="font-size:22px" data-tx="gameLab">3 jogos offline · sem placar, sem punição</div>
     <div class="o k" id="h4" style="font-size:118px"></div>
     <svg class="o" id="dial" width="800" height="470" viewBox="0 0 800 470" style="overflow:visible"></svg>
-    <div class="o k amb" id="stamp" hidden style="font-size:96px;border:7px solid #F2A81D;border-radius:18px;padding:14px 30px 8px;background:rgba(10,7,3,.78);-webkit-background-clip:border-box;background-clip:border-box;color:#FFC83A;-webkit-text-fill-color:#FFC83A">De mentirinha</div>
+    <div class="o k amb" id="stamp" hidden style="font-size:96px;border:7px solid #F2A81D;border-radius:18px;padding:14px 30px 8px;background:rgba(10,7,3,.78);-webkit-background-clip:border-box;background-clip:border-box;color:#FFC83A;-webkit-text-fill-color:#FFC83A" data-tx="stamp">De mentirinha</div>
 
     <!-- ===== E: encerramento ===== -->
     <div class="o tok" id="tk0"></div><div class="o tok" id="tk1"></div><div class="o tok" id="tk2"></div><div class="o tok" id="tk3"></div>
-    <div class="o tok" id="tk4"><div class="tokpill">Mais uma</div></div>
+    <div class="o tok" id="tk4"><div class="tokpill" data-tx="pill">Mais uma</div></div>
     <div class="o tok" id="tk5"><div class="tokchip">R$ 86,17</div></div>
     <div class="o tok" id="tk6"><div class="tokchip">200 ml</div></div>
-    <div class="o tok" id="tk7"><div class="tokcard">Eu<br>nunca</div></div>
+    <div class="o tok" id="tk7"><div class="tokcard" data-tx="g.never" data-br="1">Eu<br>nunca</div></div>
     <div class="o wm" id="wm2" style="width:780px;height:166px"><div class="in" style="position:absolute;inset:0"><img src="assets/logo_wordmark.png" alt=""><div class="sheen"></div></div></div>
     <div class="o k" id="tag1" style="font-size:112px"></div>
     <div class="o k amb" id="tag2" style="font-size:112px"></div>
@@ -183,7 +183,16 @@ body.render #ui{display:none}
 
 <div id="ui"><button id="pp">Pausar</button><input id="sc" type="range" min="0" max="38.6" step="0.01" value="0"><span id="tc">0.00 / 38.60</span><span>espaço: pausa · ←/→: ±1 s</span></div>
 
+<script src="i18n.js"></script>
 <script>
+// idioma do filme: ?lang=pt-BR|en|es (padrão pt-BR = filme publicado)
+const LANG = new URLSearchParams(location.search).get("lang") || "pt-BR";
+document.documentElement.lang = LANG;
+const TX = (id, v) => { let t = VIDEO_I18N[id][LANG]; for (const k in (v || {})) t = t.split("{" + k + "}").join(v[k]); return t; };
+const TXL = id => TX(id).split("\n");
+// fator de tamanho por idioma (campo "fit" do dicionário): evita corte quando a tradução é mais larga
+const FIT = id => (VIDEO_I18N[id].fit || {})[LANG] || 1;
+document.querySelectorAll("[data-tx]").forEach(e => { const t = TX(e.dataset.tx); if (e.dataset.br) e.innerHTML = t.replace(" ", "<br>"); else e.textContent = t; });
 "use strict";
 /* ───────────────────────── utilidades ───────────────────────── */
 const W = 1920, H = 1080, D = 2.6, A0 = 9.5, CUT0 = 19.9, CUT1 = 23.2, DURATION = 36 + D - (CUT1 - CUT0);
@@ -276,20 +285,22 @@ els.tk0.innerHTML = SVG.mug; els.tk1.innerHTML = SVG.bottle; els.tk2.innerHTML =
   for (let i = 0; i < N; i++) { const e = document.createElement("img"); e.src = "assets/logo_cap.png"; e.className = "e"; e.alt = ""; e.style.transform = `translateZ(${(-(i - (N - 1) / 2) * 2).toFixed(1)}px)`; cap.insertBefore(e, front); }
   cap.querySelector(".front").style.transform = "translateZ(17px)";
   cap.querySelector(".back").style.transform = "rotateY(180deg) translateZ(17px)"; }
-mk(els.h1, "Começou o rolê."); els.h1.innerHTML = ""; // montado abaixo em 2 linhas
+mk(els.h1, TX("h1").replace("\n", " ")); els.h1.innerHTML = ""; // montado abaixo em 2 linhas
 { const h = els.h1; const l1 = document.createElement("div"), l2 = document.createElement("div"); h.appendChild(l1); h.appendChild(l2);
-  mk(l1, "Começou"); mk(l2, "o rolê."); h._cs = [...l1._cs, ...l2._cs]; l2.className = "amb"; }
+  mk(l1, TXL("h1")[0]); mk(l2, TXL("h1")[1]); h._cs = [...l1._cs, ...l2._cs]; l2.className = "amb"; }
 function two(el, a, b, cls) { el.innerHTML = ""; const l1 = document.createElement("div"), l2 = document.createElement("div"); el.appendChild(l1); el.appendChild(l2); mk(l1, a); mk(l2, b); el._cs = [...l1._cs, ...l2._cs]; if (cls) l2.classList.add("amb"); }
-two(els.h3, "O celular", "vira copo.", 1);
-two(els.cap1, "Garrafa", "dividida", 1);
-mk(els.h4, "Bafômetro"); els.h4.classList.add("amb"); els.h4.style.fontSize = "150px"; two(els.h5, "Do chope ao", "coquetel.", 1);
+two(els.h3, ...TXL("h3"), 1);
+two(els.cap1, ...TXL("cap1"), 1);
+mk(els.h4, TX("h4")); els.h4.classList.add("amb"); els.h4.style.fontSize = "150px"; two(els.h5, ...TXL("h5"), 1);
 document.querySelectorAll('.bill').forEach(e => e._d = 'flex'); mk(els.cnt, "×4"); mk(els.total, "R$ 0,00");
-mk(els.tag1, "Chope, cachaça"); mk(els.tag2, "e resenha.");
+mk(els.tag1, TX("tag1")); mk(els.tag2, TX("tag2"));
+els.tag1.style.fontSize = 112 * FIT("tag1") + "px"; els.tag2.style.fontSize = 112 * FIT("tag2") + "px";
+els.h1.style.fontSize = 180 * FIT("h1") + "px"; els.h5.style.fontSize = 160 * FIT("h5") + "px";
 // cartas
 const CARDS = [
-  { tag: "Resenha", game: "Eu nunca", q: "Eu nunca cantei no chuveiro como se fosse um show.", chips: ["Leve"], sm: false },
-  { tag: "Resenha", game: "Quem é mais provável", q: "Quem é mais provável de pedir comida mesmo depois de ter jantado?", chips: ["Leve"], sm: true },
-  { tag: "Resenha", game: "Verdade ou desafio", q: "Qual foi a maior mentira inofensiva que você já contou?", chips: ["Verdade", "Desafio"], sm: true }
+  { tag: TX("tg"), game: TX("g.never"), q: TX("q.never"), chips: [TX("g.light")], sm: false },
+  { tag: TX("tg"), game: TX("g.most"), q: TX("q.most"), chips: [TX("g.light")], sm: true },
+  { tag: TX("tg"), game: TX("g.truth"), q: TX("q.truth"), chips: [TX("g.kTruth"), TX("g.kDare")], sm: true }
 ];
 CARDS.forEach((c, i) => {
   els["cd" + i].innerHTML = `<div class="fc"><div class="tg"><span>${c.tag}</span><span>0${i + 1}/03</span></div><div class="tt ${c.sm ? "sm" : ""}">${c.game}</div><div class="q">${c.q}</div><div class="ft">${c.chips.map((x, j) => `<i class="${j === 0 ? "on" : ""}">${x}</i>`).join("")}</div></div><div class="bk"><img src="assets/logo_cap.png" alt=""></div>`;

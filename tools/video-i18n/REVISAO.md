@@ -11,7 +11,7 @@ Permanece igual: GOIÁS APP (marca/lockup); Goiás · Avaí · Independiente (cl
 
 | id | s | pt-BR | en | es | fonte | nota |
 |---|---|---|---|---|---|---|
-| slogan | 0–3 | O MAIOR DO CENTRO-OESTE | THE BIGGEST IN BRAZIL'S CENTER-WEST | EL MAYOR DEL CENTRO-OESTE DE BRASIL | proposta | slogan; "Centro-Oeste" é região do Brasil |
+| slogan | 0–3 | O MAIOR DO CENTRO-OESTE | THE CENTER-WEST'S BIGGEST | EL MAYOR DEL CENTRO-OESTE | proposta | slogan (maiúsculas pequenas); Centro-Oeste é região do Brasil; versões curtas por layout |
 | m.date | 3,5–15,25 | Domingo, 20 set 2026 · 16h00 · Estádio Hailé Pinheiro | Sunday, Sep 20, 2026 · 4:00 PM · Estádio Hailé Pinheiro | Domingo, 20 sep 2026 · 16:00 · Estádio Hailé Pinheiro | proposta | formato de data/hora localizado; nome do estádio permanece |
 | live | 4,5–16,75 | AO VIVO | LIVE | EN VIVO | app | matchStatusLive |
 | lineup | 7,5–15,25 | ESCALAÇÃO | LINEUP | ALINEACIÓN | proposta |  |
@@ -116,11 +116,11 @@ Permanece igual: Aprovaura (wordmark/logo); Aurudo (mascote); AURA (selo do HUD)
 | es.marking | 37,25–38 | Corrigindo | Marking | Corrigiendo | app |  |
 | es.score | 38,25–40,75 | Nota estimada | Estimated score | Nota estimada | app |  |
 | es.disc | 38,75–40,75 | Estimativa de treino, feita por IA. Não é a nota oficial do ENEM. | A practice estimate, produced by AI. Not an official ENEM score. | Estimación de práctica, generada por IA. No es la nota oficial del ENEM. | app | mantém o contexto brasileiro (ENEM) em todos os idiomas |
-| c1 | 38,75–40,75 | Norma padrão da língua escrita | Standard written language | Norma estándar de la lengua escrita | app~ | ENEM competência 1 (nome oficial resumido; app: essay_strings.competencyTitle) |
-| c2 | 38,75–40,75 | Compreensão da proposta | Understanding the prompt | Comprensión de la propuesta | app~ | competência 2 |
-| c3 | 39–40,75 | Organização das informações | Organizing information | Organización de la información | app~ | competência 3 |
-| c4 | 39,25–40,75 | Mecanismos de argumentação | Argumentation devices | Mecanismos de argumentación | app~ | competência 4 |
-| c5 | 39,5–40,75 | Proposta de intervenção | Intervention proposal | Propuesta de intervención | app~ | competência 5 (nome oficial ENEM: "proposta de intervenção") |
+| c1 | 38,75–40,75 | Domínio da norma padrão da língua escrita | Command of the standard written language | Dominio de la norma estándar de la lengua escrita | app | ENEM competência 1: NOME OFICIAL COMPLETO (essay_strings.competencyTitle). O vídeo original usava rótulos resumidos; o en muda para o oficial. Linha longa: exige ajuste de layout. |
+| c2 | 38,75–40,75 | Compreender a proposta e aplicar conceitos das várias áreas | Understanding the prompt and applying concepts from different fields | Comprender la propuesta y aplicar conceptos de varias áreas | app | competência 2, nome oficial completo; exige quebra de linha ou fonte menor |
+| c3 | 39–40,75 | Selecionar, relacionar, organizar e interpretar informações | Selecting, relating, organizing and interpreting information | Seleccionar, relacionar, organizar e interpretar información | app | competência 3, nome oficial completo |
+| c4 | 39,25–40,75 | Conhecimento dos mecanismos linguísticos de argumentação | Knowledge of the linguistic devices of argumentation | Conocimiento de los mecanismos lingüísticos de argumentación | app | competência 4, nome oficial completo |
+| c5 | 39,5–40,75 | Proposta de intervenção que respeite os direitos humanos | A proposal for intervention that respects human rights | Propuesta de intervención que respete los derechos humanos | app | competência 5, nome oficial completo |
 | eb.news | 41–42 | Atualidades | Current affairs | Actualidad | app | atualidades_strings |
 | news.eco | 41,25–42 | Economia | Economy | Economía | app |  |
 | news.eco.t | 41,25–42 | Selic recua para 14% em meio à queda da expectativa de inflação | Selic falls to 14% as inflation expectations drop | La Selic baja al 14% en medio de la caída de la expectativa de inflación | app | dossiers_seed_2026_08.sql / i18n_atualidades_translations.sql; "Selic" e "Copom" não mudam |
@@ -161,7 +161,7 @@ Permanece igual: La Pelve (logo); Samara Rúbia · Camila Pires · Deusimar Ribe
 | su.btn | 3 | Cadastrar | Sign up | Registrarse | app |  |
 | pf.role | 4,25–5 | Fisioterapeuta | Physiotherapist | Fisioterapeuta | app |  |
 | ag.eb | 6,5–18,25 | AGENDA · HOJE | SCHEDULE · TODAY | AGENDA · HOY | app~ | agenda_strings: Agenda (en: Schedule) / Hoje (Today) |
-| ag.scheduled | 7,25–16,5 | Agendado | Scheduled | Agendado | proposta | status; es "Programado" é alternativa |
+| ag.scheduled | 7,25–16,5 | Agendado | Scheduled | Programado | app | appointment_status.dart: o termo oficial em es é Programado (Agendado não é o oficial) |
 | ag.confirmed | 16,75–18,25 | Confirmado | Confirmed | Confirmado | proposta |  |
 | wa.online | 10,5–15,5 | online | online | en línea | proposta | UI do WhatsApp simulada |
 | wa.m1 | 11,5–15,5 | Olá, Camila! ⏎ Seu atendimento foi agendado ⏎ para {data}, às {hora}. | Hi, Camila! ⏎ Your appointment has been scheduled ⏎ for {data} at {hora}. | ¡Hola, Camila! ⏎ Tu cita fue agendada ⏎ para el {data} a las {hora}. | proposta | balão do WhatsApp; nome da paciente permanece |
@@ -201,7 +201,7 @@ Permanece igual: MATCH QUEUE (wordmark/logo); Team Falcons (nome e escudo); Vejr
 | tag | 2,5–3 e 43,5–47 | Um de cada vez na fila. | One at a time in the queue. | Uno a la vez en la fila. | app | appTagline oficial |
 | eb.mm | 3,25–11,75 | Matchmaking em tempo real | Real-time matchmaking | Matchmaking en tiempo real | app~ | o app mantém "Matchmaking" |
 | h1 | 3–8,75 | Um busca. ⏎ Os outros entram na fila. | One searches. ⏎ The rest line up. | Uno busca. ⏎ Los demás hacen fila. | proposta |  |
-| h2 | 3–11,75 | O próximo da fila ⏎ assume. | Next in line ⏎ takes over. | El siguiente en la fila ⏎ toma el relevo. | proposta |  |
+| h2 | 3–11,75 | O próximo da fila ⏎ assume. | Next in line ⏎ takes over. | El siguiente ⏎ toma el turno. | proposta |  |
 | q.search | 3,5–11 | Buscando partida | Searching for a match | Buscando partida | app |  |
 | q.pos | 3,75–6 | Posição {n} na fila | Position {n} in the queue | Posición {n} en la cola | app |  |
 | q.join | 4–18 | Entrar na fila | Join the queue | Entrar en la cola | app |  |
@@ -252,7 +252,7 @@ Permanece igual: MATCH QUEUE (wordmark/logo); Team Falcons (nome e escudo); Vejr
 | sk.pas | 33,25–38 | Passes | Passing | Pases | app |  |
 | sk.sho | 33,5–38 | Finalização | Shooting | Definición | app |  |
 | sk.def | 33,5–38 | Defesa | Defending | Defensa | app |  |
-| sk.stepover | 33,5 | Pedalada (Stepover) direita | Stepover right | Pedalada (Stepover) derecha | app |  |
+| sk.stepover | 33,5 | Pedalada direita | Stepover right | Pedalada derecha | app~ | forma curta; o app usa Pedalada (Stepover) direita/derecha (divergência intencional, só por espaço) |
 | sk.spin | 33,5 | Girar direito | Spin right stick | Girar stick derecho | app |  |
 | sk.ballroll | 34,5 | Roleta direita | Ball roll cut right | Ruleta derecha | app |  |
 | sk.rainbow | 35,75 | Arco-íris simples | Simple rainbow flick | Arcoíris simple | app |  |
@@ -277,7 +277,7 @@ Permanece igual: MATCH QUEUE (wordmark/logo); Team Falcons (nome e escudo); Vejr
 | rv.div2 | 41,5–43 | Divisão 2 | Division 2 | División 2 | app | rivalsDivisionDiv2 |
 | rv.profile | 42,75–43,5 | Perfil público | Public profile | Perfil público | app |  |
 
-## Bebômetro (original: pt-BR) — 41 textos
+## Bebômetro (original: pt-BR) — 45 textos
 
 Permanece igual: Bebômetro (marca/logo); João · Gleidson · Rodrigo (apelidos ilustrativos); R$ 235,00 · 180,00 · 55,00 · 23,50 · 86,17 · 86,16 · 258,50 (valores BRL); 400 ml · 600 ml · 200 ml; ÷ 3; 01/03 · 02/03 · 03/03
 
@@ -287,7 +287,7 @@ Permanece igual: Bebômetro (marca/logo); João · Gleidson · Rodrigo (apelidos
 | h1 | 6–9,75 | Começou ⏎ o rolê. | The night out ⏎ begins. | Empezó ⏎ la salida. | proposta | título grande, 2 linhas, 2ª em destaque |
 | pill | 6,25–9,25 | Mais uma | One more | Otra más | app | repeatButton: botão que repete o último pedido |
 | cntLab | 7,5–9,25 | Chope 400 ml | Draft beer 400 ml | Cerveza de barril 400 ml | app~ | app: categoryDraft; texto mais longo, risco de layout |
-| h5 | 10–14 | Do chope ao ⏎ coquetel. | From draft beer ⏎ to cocktails. | De la cerveza de barril ⏎ al cóctel. | proposta | es é mais longo (reduzir fonte ou reformular) |
+| h5 | 10–14 | Do chope ao ⏎ coquetel. | From draft beer ⏎ to cocktails. | Del barril ⏎ al cóctel. | proposta | es reformulado por layout: "barril" = chope (cerveza de barril); a forma literal não cabe no recorte |
 | v.beer | 10–14 | Cerveja | Beer | Cerveza | app |  |
 | v.draft | 10,25–14 | Chope | Draft | Barril | app~ | rótulo curto de categoryDraft |
 | v.zero | 10,5–14 | Sem álcool | Non-alcoholic | Sin alcohol | app |  |
@@ -309,6 +309,10 @@ Permanece igual: Bebômetro (marca/logo); João · Gleidson · Rodrigo (apelidos
 | bc1 | 19–19,75 | Porção | Snack platter | Ración | proposta | "porção" = prato de petisco, não parcela da conta; revisar |
 | bc2 | 19,5–20,25 | Serviço 10% | Service 10% | Servicio 10% | app | tabServiceLine |
 | pago | 21,25–21,75 | pago | paid | pagado | proposta |  |
+| chipLab | fora do recorte do loop | Mesa ilustrada · 6 cenários | Illustrated table · 6 settings | Mesa ilustrada · 6 escenarios | app~ | só no master 16:9 (tableIllustrated); fora do recorte 1:1 do loop |
+| h3 | fora do recorte do loop | O celular ⏎ vira copo. | Your phone ⏎ becomes a glass. | Tu teléfono ⏎ se vuelve vaso. | proposta | título da cena do copo inclinável (19,8–23,2 s); só no master 16:9 |
+| glassSub | fora do recorte do loop | Brincadeira visual. Nada é registrado. | A visual toy. Nothing is recorded. | Un juego visual. No se registra nada. | proposta | só no master 16:9; reforça que é brincadeira |
+| stamp | fora do recorte do loop | De mentirinha | Just pretend | De mentira | proposta | carimbo do medidor (simulação, não mede álcool); oculto no loop |
 | ghost | 22,75–26,25 | RESENHA | GAMES | JUEGOS | app | "Resenha" é a aba de jogos (navGames) |
 | tg | 23–26,25 | Resenha | Games | Juegos | app | navGames |
 | gameLab | 23,75–26,25 | 3 jogos offline · sem placar, sem punição | 3 offline games · no scoreboard, no penalties | 3 juegos sin conexión · sin marcador, sin castigos | proposta |  |
@@ -321,9 +325,9 @@ Permanece igual: Bebômetro (marca/logo); João · Gleidson · Rodrigo (apelidos
 | q.never | 23–26,25 | Eu nunca cantei no chuveiro como se fosse um show. | Never have I ever sung in the shower like it was a concert. | Yo nunca he cantado en la ducha como si fuera un show. | proposta | carta de jogo; texto longo |
 | q.most | 24–26,25 | Quem é mais provável de pedir comida mesmo depois de ter jantado? | Who is most likely to order food even after dinner? | ¿Quién es más probable que pida comida incluso después de cenar? | proposta |  |
 | q.truth | 25–26,25 | Qual foi a maior mentira inofensiva que você já contou? | What's the biggest harmless lie you've ever told? | ¿Cuál es la mentira inofensiva más grande que has dicho? | proposta |  |
-| h4 | 26,25–28 | Bafômetro | Bafômetro | Bafômetro | app | o app mantém o nome nos 3 idiomas (bafoTitle) |
-| tag1 | 31,25–35,25 | Chope, cachaça | Draft beer, cachaça | Cerveza de barril, cachaça | proposta | slogan final, linha 1; "cachaça" é nome de bebida e permanece |
-| tag2 | 31,5–35,25 | e resenha. | and good company. | y buena compañía. | proposta | slogan final, linha 2 (em destaque); "resenha" = papo/convívio, sem equivalente exato |
+| h4 | 26,25–28 | Bafômetro | Blow Meter | Soplómetro | proposta | DIVERGE do app (bafoTitle = Bafômetro nos 3 idiomas). O recurso é uma brincadeira: mede o volume do sopro no microfone, sem álcool (app: Simulação, brincar). Breathalyzer sugeriria medição real; por isso nome neutro. Decisão do dono. |
+| tag1 | 31,25–35,25 | Chope, cachaça | Draft beer, cachaça, | Cerveza de barril, cachaça | proposta | slogan final, linha 1 (aprovado: Draft beer, cachaça, and good times / Cerveza de barril, cachaça y buenos momentos); cachaça permanece |
+| tag2 | 31,5–35,25 | e resenha. | and good times. | y buenos momentos. | proposta | slogan final, linha 2 (em destaque); aprovado pelo dono |
 
 ## OrbiJob (original: pt-BR) — 43 textos
 
@@ -406,15 +410,30 @@ Permanece igual: Busão|Gyn (marca); 003 · 004 (linhas); T MARANATA · T PAULO 
 | capE | 34,5–36,25 | Favoritos e recentes ficam só no seu aparelho. | Favorites and recents stay only on your device. | Los favoritos y recientes se quedan solo en tu dispositivo. | app~ | o app usa "dispositivo/device" |
 | tag.region | 40,75–42 | Goiânia e Região Metropolitana | Goiânia and its Metropolitan Region | Goiânia y su Región Metropolitana | proposta | dado local do Brasil permanece; só a frase é traduzida |
 
-## StockPort (original: pt-BR) — 79 textos
+## StockPort (original: pt-BR) — 94 textos
 
-Permanece igual: StockPort System (logo); catálogo demonstrativo brasileiro: Café Torrado 500 g, Água Mineral 1,5 L, Caderno 96 folhas, Sabão em Pó 1 kg, Biscoito Água e Sal, Detergente 500 ml; categorias do catálogo: Mercearia, Bebidas, Papelaria, Limpeza (decisão pendente, ver nota); Distribuidora Serra · Mariana Souza · Mercado Bom Dia; R$ (BRL) e números; código de barras 7 891234 500017; Pix
+Permanece igual: StockPort System (logo); códigos de barras e SKUs; Distribuidora Serra · Mariana Souza · Mercado Bom Dia; R$ (BRL) e números; código de barras 7 891234 500017; Pix
 
 | id | s | pt-BR | en | es | fonte | nota |
 |---|---|---|---|---|---|---|
 | h.open | 3–6 | Estoque, vendas e caixa. ⏎ Tudo em um só lugar. | Inventory, sales and cash register. ⏎ Everything in one place. | Inventario, ventas y caja. ⏎ Todo en un solo lugar. | proposta |  |
 | sub.open | 3,5–6 | Gestão simples para o seu comércio. | Simple management for your business. | Gestión simple para tu negocio. | proposta |  |
 | h.prod | 6,25–8,25 | Cadastre e organize ⏎ seus produtos. | Register and organize ⏎ your products. | Registra y organiza ⏎ tus productos. | proposta |  |
+| prod.coffee | 8,75–27,25 | Café Torrado 500 g | Roasted Coffee 500 g | Café tostado 500 g | proposta | nome genérico de produto demonstrativo (aprovado traduzir) |
+| prod.water | 8,75–27,25 | Água Mineral 1,5 L | Mineral Water 1.5 L | Agua mineral 1,5 L | proposta | separador decimal localizado |
+| prod.notebook | 8,75–27,25 | Caderno 96 folhas | Notebook 96 sheets | Cuaderno 96 hojas | proposta |  |
+| prod.soap | 8,75–27,25 | Sabão em Pó 1 kg | Laundry Powder 1 kg | Detergente en polvo 1 kg | proposta |  |
+| prod.crackers | 29,25–34,75 | Biscoito Água e Sal | Water Crackers | Galletas de agua y sal | proposta |  |
+| prod.dish | 29,25–34,75 | Detergente 500 ml | Dish Soap 500 ml | Lavavajillas 500 ml | proposta | detergente no Brasil = detergente de louça |
+| prod.coffeeShort | 25,5–27 | Café | Coffee | Café | proposta | nome curto no resumo da venda |
+| cat.grocery | 8,75–12 | Mercearia | Grocery | Abarrotes | proposta | categoria demonstrativa (aprovado traduzir) |
+| cat.drinks | 8,75–12 | Bebidas | Beverages | Bebidas | proposta |  |
+| cat.stationery | 8,75–12 | Papelaria | Stationery | Papelería | proposta |  |
+| cat.cleaning | 9–12 | Limpeza | Cleaning | Limpieza | proposta |  |
+| box.coffee | 6–12 | CAFÉ TORRADO | ROASTED COFFEE | CAFÉ TOSTADO | proposta | rótulo impresso na caixa 3D |
+| box.water | 6–12 | ÁGUA MINERAL 1,5 L | MINERAL WATER 1.5 L | AGUA MINERAL 1,5 L | proposta | rótulo na caixa 3D |
+| box.notebook | 6–12 | CADERNO | NOTEBOOK | CUADERNO | proposta | rótulo na caixa 3D |
+| box.soap | 6–12 | SABÃO EM PÓ 1 KG | LAUNDRY POWDER 1 KG | DETERGENTE EN POLVO 1 KG | proposta | rótulo na caixa 3D; es bem mais longo |
 | p.title | 8,25–12 | Produtos | Products | Productos | proposta |  |
 | p.new | 8,25–12 | Novo produto | New product | Nuevo producto | proposta |  |
 | p.search | 8,25–27,25 | Buscar produto ou ler código de barras | Search product or scan barcode | Buscar producto o leer código de barras | proposta |  |

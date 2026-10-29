@@ -41,10 +41,10 @@
    "id": "slogan",
    "t": "0–3",
    "pt-BR": "O MAIOR DO CENTRO-OESTE",
-   "en": "THE BIGGEST IN BRAZIL'S CENTER-WEST",
-   "es": "EL MAYOR DEL CENTRO-OESTE DE BRASIL",
+   "en": "THE CENTER-WEST'S BIGGEST",
+   "es": "EL MAYOR DEL CENTRO-OESTE",
    "from": "proposta",
-   "note": "slogan; \"Centro-Oeste\" é região do Brasil"
+   "note": "slogan (maiúsculas pequenas); Centro-Oeste é região do Brasil; versões curtas por layout"
   },
   {
    "id": "m.date",

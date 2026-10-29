@@ -24,7 +24,9 @@ const server = http.createServer((req, res) => {
   fs.createReadStream(f).pipe(res);
 }).listen(0, '127.0.0.1');
 await new Promise(r => server.once('listening', r));
-const base = `http://127.0.0.1:${server.address().port}/index.html?render`;
+// VIDEO_LANG=pt-BR|en|es escolhe o idioma do filme (dicionário em tools/video-i18n); sem ele, pt-BR
+const LANG = process.env.VIDEO_LANG, SUF = LANG ? '.' + LANG : '';
+const base = `http://127.0.0.1:${server.address().port}/index.html?render${LANG ? '&lang=' + LANG : ''}`;
 
 async function open(browser) {
   const ctx = await browser.newContext({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
@@ -42,9 +44,9 @@ if (mode === 'encode') {
   // 60 fps → média de 2 quadros → 30 fps (motion blur leve)
   const blur = `tmix=frames=2,select='not(mod(n\\,2))',setpts=N/(30*TB)`;
   const run = (args) => { const r = spawnSync(FFMPEG, args, { stdio: 'inherit' }); if (r.status) process.exit(r.status); };
-  run([...inp, '-vf', `${blur},format=yuv420p`, '-r', '30', '-c:v', 'libx264', '-profile:v', 'high', '-preset', 'slow', '-crf', '17', '-movflags', '+faststart', '-an', path.join(out, 'busaogyn-1080p.mp4')]);
-  run([...inp, '-vf', `${blur},crop=1080:1080:420:0,scale=720:720:flags=lanczos,format=yuv420p`, '-r', '30', '-c:v', 'libx264', '-profile:v', 'high', '-preset', 'veryslow', '-crf', '27', '-movflags', '+faststart', '-an', path.join(out, 'busaogyn-loop.mp4')]);
-  run([...inp, '-vf', `${blur},crop=1080:1080:420:0,scale=720:720:flags=lanczos,format=yuv420p`, '-r', '30', '-c:v', 'libsvtav1', '-preset', '4', '-crf', '42', '-g', '300', '-svtav1-params', 'tune=0', '-movflags', '+faststart', '-an', path.join(out, 'busaogyn-loop.av1.mp4')]);
+  if (!process.env.LOOP_ONLY) run([...inp, '-vf', `${blur},format=yuv420p`, '-r', '30', '-c:v', 'libx264', '-profile:v', 'high', '-preset', 'slow', '-crf', '17', '-movflags', '+faststart', '-an', path.join(out, `busaogyn-1080p${SUF}.mp4`)]);
+  run([...inp, '-vf', `${blur},crop=1080:1080:420:0,scale=720:720:flags=lanczos,format=yuv420p`, '-r', '30', '-c:v', 'libx264', '-profile:v', 'high', '-preset', 'veryslow', '-crf', '27', '-movflags', '+faststart', '-an', path.join(out, `busaogyn-loop${SUF}.mp4`)]);
+  if (!process.env.LOOP_ONLY) run([...inp, '-vf', `${blur},crop=1080:1080:420:0,scale=720:720:flags=lanczos,format=yuv420p`, '-r', '30', '-c:v', 'libsvtav1', '-preset', '4', '-crf', '42', '-g', '300', '-svtav1-params', 'tune=0', '-movflags', '+faststart', '-an', path.join(out, `busaogyn-loop${SUF}.av1.mp4`)]);
   server.close(); process.exit(0);
 }
 

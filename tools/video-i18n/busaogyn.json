@@ -29,7 +29,10 @@
    "en": "Where's\nthe bus?",
    "es": "¿Dónde está\nel bus?",
    "from": "proposta",
-   "note": "gíria \"busão\"; 2ª linha em destaque. O app usa \"autobús\" em es; aqui \"bus\" pelo tom coloquial."
+   "note": "gíria \"busão\"; 2ª linha em destaque. O app usa \"autobús\" em es; aqui \"bus\" pelo tom coloquial.",
+   "fit": {
+    "es": 0.75
+   }
   },
   {
    "id": "tag.one",

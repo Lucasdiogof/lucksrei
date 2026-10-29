@@ -80,7 +80,15 @@ body.render #ui{display:none}
 </div>
 <div id="ui"><button id="pp">Pausar</button><input id="sc" type="range" min="0" max="42" step="0.01" value="0"><span id="tc"></span><span>espaço: pausa · ←/→: ±1 s</span></div>
 
+<script src="i18n.js"></script>
 <script>
+// idioma do filme: ?lang=pt-BR|en|es (padrão pt-BR = filme publicado)
+const LANG = new URLSearchParams(location.search).get("lang") || "pt-BR";
+document.documentElement.lang = LANG;
+const TX = (id, v) => { let t = VIDEO_I18N[id][LANG]; for (const k in (v || {})) t = t.split("{" + k + "}").join(v[k]); return t; };
+const TXL = id => TX(id).split("\n");
+// fator de tamanho por idioma (campo "fit" do dicionário): evita corte quando a tradução é mais larga
+const FIT = id => (VIDEO_I18N[id].fit || {})[LANG] || 1;
 "use strict";
 const W = 1920, H = 1080, DURATION = 42;
 const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
@@ -128,27 +136,27 @@ function el(id, cls, html, style, disp) { const e = document.createElement("div"
 /* ───── DOM ───── */
 el("logo", "", '<img src="assets/logo.png" alt="">');
 el("wm", "", "<b>Busão</b><span>Gyn</span>");
-el("h1", "k", ""); two(els.h1, "Cadê", "o busão?"); els.h1.style.fontSize = "190px";
-el("tag0", "txt sm", "Saiba onde seu ônibus está.", "font-size:34px");
-el("hB", "k", ""); two(els.hB, "Digite o código", "do ponto."); els.hB.style.fontSize = "100px";
+el("h1", "k", ""); two(els.h1, ...TXL("h1")); els.h1.style.fontSize = 190 * FIT("h1") + "px";
+el("tag0", "txt sm", TX("tag.one"), "font-size:34px");
+el("hB", "k", ""); two(els.hB, ...TXL("hB")); els.hB.style.fontSize = "100px";
 el("pill", "", '<svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#A9A89C" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg><div class="code"><span id="codeTxt"></span><u></u></div><div class="go"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1A1300" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg></div>', "", "flex");
-el("plab", "mono dim", "Código na placa do ponto", "font-size:20px");
+el("plab", "mono dim", TX("plab"), "font-size:20px");
 const ROUTES = [["003", "T MARANATA", 12], ["003", "T PAULO GARCIA", 3], ["004", "CENTRO", 4]];
-ROUTES.forEach((r, i) => el("rc" + i, "rc", `<div class="badge sm">${r[0]}</div><div class="dest">${r[1]}</div><div class="chip rt"><i></i>Tempo real</div><div class="min"><span class="mv">${r[2]}</span><i>min</i></div>`, "", "flex"));
-el("hC", "k", ""); two(els.hC, "Cada chegada", "diz de onde vem."); els.hC.style.fontSize = "96px";
-el("q0", "chip rt", "<i></i>Tempo real"); el("q1", "chip sc", "<i></i>Programado"); el("q2", "chip un", "<i></i>Não confirmado");
-["Posição do GPS da fonte", "Horário de tabela", "Sem confirmação"].forEach((t, i) => el("ql" + i, "txt sm", t, "font-size:30px"));
-el("capC", "txt", "Dado antigo nunca aparece como ao vivo.");
-el("hD", "k", ""); two(els.hD, "Acompanhe", "no mapa."); els.hD.style.fontSize = "100px";
-el("hud", "", '<i></i>Ao vivo <span id="hudAge">há 4 s</span>', "", "flex");
-el("ctx", "", '<div class="badge">003</div><div><b>Ônibus 50501</b><em>Indo para T Paulo Garcia</em></div>', "", "flex");
-el("eta", "", '<span id="etaN">6</span><i>min até o ponto 30402</i>', "", "flex");
-el("hE", "k", ""); two(els.hE, "Seus pontos,", "guardados."); els.hE.style.fontSize = "100px";
-el("fav", "fav", '<svg id="favStar" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#FFC53D" stroke-width="2" stroke-linejoin="round"><path id="starP" d="M12 2.8l2.9 6 6.5.9-4.7 4.6 1.1 6.5L12 17.7l-5.8 3.1 1.1-6.5L2.6 9.7l6.5-.9z"/></svg><div>Ponto 30402<small>16 linhas</small></div>', "", "flex");
-el("capE", "txt", "Favoritos e recentes ficam só no seu aparelho.");
-el("tag1", "k", ""); mk(els.tag1, "Saiba onde"); el("tag2", "k am", ""); mk(els.tag2, "seu ônibus está.");
+ROUTES.forEach((r, i) => el("rc" + i, "rc", `<div class="badge sm">${r[0]}</div><div class="dest">${r[1]}</div><div class="chip rt"><i></i>${TX("chip.rt")}</div><div class="min"><span class="mv">${r[2]}</span><i>min</i></div>`, "", "flex"));
+el("hC", "k", ""); two(els.hC, ...TXL("hC")); els.hC.style.fontSize = "96px";
+el("q0", "chip rt", "<i></i>" + TX("chip.rt")); el("q1", "chip sc", "<i></i>" + TX("chip.sc")); el("q2", "chip un", "<i></i>" + TX("chip.un"));
+[TX("ql0"), TX("ql1"), TX("ql2")].forEach((t, i) => el("ql" + i, "txt sm", t, "font-size:30px"));
+el("capC", "txt", TX("capC"));
+el("hD", "k", ""); two(els.hD, ...TXL("hD")); els.hD.style.fontSize = "100px";
+el("hud", "", '<i></i>' + TX("hud.live") + ' <span id="hudAge">' + TX("hud.age", { n: 4 }) + '</span>', "", "flex");
+el("ctx", "", '<div class="badge">003</div><div><b>' + TX("ctx.bus", { n: "50501" }) + '</b><em>' + TX("ctx.head", { destino: "T Paulo Garcia" }) + '</em></div>', "", "flex");
+el("eta", "", '<span id="etaN">6</span><i>' + TX("eta", { codigo: "30402" }) + '</i>', "", "flex");
+el("hE", "k", ""); two(els.hE, ...TXL("hE")); els.hE.style.fontSize = "100px";
+el("fav", "fav", '<svg id="favStar" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#FFC53D" stroke-width="2" stroke-linejoin="round"><path id="starP" d="M12 2.8l2.9 6 6.5.9-4.7 4.6 1.1 6.5L12 17.7l-5.8 3.1 1.1-6.5L2.6 9.7l6.5-.9z"/></svg><div>' + TX("fav.stop", { codigo: "30402" }) + '<small>' + TX("fav.lines", { n: 16 }) + '</small></div>', "", "flex");
+el("capE", "txt", TX("capE"));
+el("tag1", "k", ""); mk(els.tag1, TXL("tag.two")[0]); el("tag2", "k am", ""); mk(els.tag2, TXL("tag.two")[1]);
 els.tag1.style.fontSize = els.tag2.style.fontSize = "92px";
-el("tag3", "txt sm", "Goiânia e Região Metropolitana", "font-size:30px");
+el("tag3", "txt sm", TX("tag.region"), "font-size:30px");
 
 /* ───── mapa (ruas) ───── */
 const mapc = $("map").getContext("2d"), mc = $("main").getContext("2d"), fx = $("fx").getContext("2d");
@@ -374,7 +382,7 @@ function sceneD(t) {
   if (!on) { ["hD", "hud", "ctx", "eta"].forEach(k => T(els[k], { a: 0 })); return; }
   const out = E.in3(P(t, 31.8, 32.6));
   T(els.hD, { x: 0, y: -400, a: 1 }); kin(els.hD, t, 19.5, { out: { t0: 21.5 } });
-  const age = Math.floor(((t - 20.6) % 4) / 4 * 15); $("hudAge").textContent = "há " + Math.max(1, age) + " s";
+  const age = Math.floor(((t - 20.6) % 4) / 4 * 15); $("hudAge").textContent = TX("hud.age", { n: Math.max(1, age) });
   T(els.hud, { x: -170, y: -460, a: E.out3(P(t, 21.4, 22.0)) * (1 - out) });
   T(els.ctx, { x: 0, y: -330, a: E.out3(P(t, 21.6, 22.3)) * (1 - out), s: .94 + .06 * E.out3(P(t, 21.6, 22.3)) });
   const mins = Math.max(1, 6 - Math.floor(P(t, 22, 31) * 5.5)); $("etaN").textContent = mins;

@@ -25,6 +25,13 @@
   "ENEM",
   "3! = 3 × 2 × 1 = 6 e demais números"
  ],
+ "unchecked": [
+  "c1",
+  "c2",
+  "c3",
+  "c4",
+  "c5"
+ ],
  "strings": [
   {
    "id": "eb.goal",
@@ -614,47 +621,47 @@
   {
    "id": "c1",
    "t": "38,75–40,75",
-   "pt-BR": "Norma padrão da língua escrita",
-   "en": "Standard written language",
-   "es": "Norma estándar de la lengua escrita",
-   "from": "app~",
-   "note": "ENEM competência 1 (nome oficial resumido; app: essay_strings.competencyTitle)"
+   "pt-BR": "Domínio da norma padrão da língua escrita",
+   "en": "Command of the standard written language",
+   "es": "Dominio de la norma estándar de la lengua escrita",
+   "from": "app",
+   "note": "ENEM competência 1: NOME OFICIAL COMPLETO (essay_strings.competencyTitle). O vídeo original usava rótulos resumidos; o en muda para o oficial. Linha longa: exige ajuste de layout."
   },
   {
    "id": "c2",
    "t": "38,75–40,75",
-   "pt-BR": "Compreensão da proposta",
-   "en": "Understanding the prompt",
-   "es": "Comprensión de la propuesta",
-   "from": "app~",
-   "note": "competência 2"
+   "pt-BR": "Compreender a proposta e aplicar conceitos das várias áreas",
+   "en": "Understanding the prompt and applying concepts from different fields",
+   "es": "Comprender la propuesta y aplicar conceptos de varias áreas",
+   "from": "app",
+   "note": "competência 2, nome oficial completo; exige quebra de linha ou fonte menor"
   },
   {
    "id": "c3",
    "t": "39–40,75",
-   "pt-BR": "Organização das informações",
-   "en": "Organizing information",
-   "es": "Organización de la información",
-   "from": "app~",
-   "note": "competência 3"
+   "pt-BR": "Selecionar, relacionar, organizar e interpretar informações",
+   "en": "Selecting, relating, organizing and interpreting information",
+   "es": "Seleccionar, relacionar, organizar e interpretar información",
+   "from": "app",
+   "note": "competência 3, nome oficial completo"
   },
   {
    "id": "c4",
    "t": "39,25–40,75",
-   "pt-BR": "Mecanismos de argumentação",
-   "en": "Argumentation devices",
-   "es": "Mecanismos de argumentación",
-   "from": "app~",
-   "note": "competência 4"
+   "pt-BR": "Conhecimento dos mecanismos linguísticos de argumentação",
+   "en": "Knowledge of the linguistic devices of argumentation",
+   "es": "Conocimiento de los mecanismos lingüísticos de argumentación",
+   "from": "app",
+   "note": "competência 4, nome oficial completo"
   },
   {
    "id": "c5",
    "t": "39,5–40,75",
-   "pt-BR": "Proposta de intervenção",
-   "en": "Intervention proposal",
-   "es": "Propuesta de intervención",
-   "from": "app~",
-   "note": "competência 5 (nome oficial ENEM: \"proposta de intervenção\")"
+   "pt-BR": "Proposta de intervenção que respeite os direitos humanos",
+   "en": "A proposal for intervention that respects human rights",
+   "es": "Propuesta de intervención que respete los derechos humanos",
+   "from": "app",
+   "note": "competência 5, nome oficial completo"
   },
   {
    "id": "eb.news",

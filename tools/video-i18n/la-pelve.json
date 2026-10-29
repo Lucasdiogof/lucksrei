@@ -142,9 +142,9 @@
    "t": "7,25–16,5",
    "pt-BR": "Agendado",
    "en": "Scheduled",
-   "es": "Agendado",
-   "from": "proposta",
-   "note": "status; es \"Programado\" é alternativa"
+   "es": "Programado",
+   "from": "app",
+   "note": "appointment_status.dart: o termo oficial em es é Programado (Agendado não é o oficial)"
   },
   {
    "id": "ag.confirmed",
