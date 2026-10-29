@@ -38,14 +38,14 @@
     {
      "l": "es",
      "file": "es",
-     "t": 10.25,
+     "t": 10.22,
      "players": 1,
      "paused": false
     },
     {
      "l": "pt-BR",
      "file": "pt-BR",
-     "t": 14.65,
+     "t": 14.52,
      "players": 1,
      "paused": false
     }
@@ -58,27 +58,27 @@
     {
      "to": "en",
      "driftMs": 0,
-     "tookMs": 1843,
+     "tookMs": 1844,
      "attempts": 1,
-     "jumpMs": 19
+     "jumpMs": 24
     },
     {
      "to": "es",
      "driftMs": 0,
-     "tookMs": 1811,
+     "tookMs": 1786,
      "attempts": 1,
-     "jumpMs": 32
+     "jumpMs": 35
     },
     {
      "to": "pt-BR",
      "driftMs": 0,
-     "tookMs": 1878,
+     "tookMs": 1757,
      "attempts": 1,
-     "jumpMs": 1
+     "jumpMs": 33
     }
    ],
    "name": "troca-em-reproducao",
-   "sec": 17.2
+   "sec": 17.1
   },
   {
    "ok": true,
@@ -90,7 +90,7 @@
      "ok": true
     }
    ],
-   "maxStallMs": 50,
+   "maxStallMs": 51,
    "srcChanges": 1,
    "restarts": 0,
    "maxPlayers": 2,
@@ -99,12 +99,12 @@
   },
   {
    "ok": true,
-   "frames": 82,
+   "frames": 84,
    "minStdDev": 13.8,
-   "maxLumaJump": 3.2,
+   "maxLumaJump": 2.6,
    "swaps": 1,
    "name": "sem-quadro-vazio-durante-a-troca",
-   "sec": 13.1
+   "sec": 13.2
   },
   {
    "ok": true,
@@ -113,37 +113,37 @@
      "phase": "fim",
      "to": "en",
      "file": "en",
-     "t": 0.55
+     "t": 0.25
     },
     {
      "phase": "recomeco",
      "to": "es",
      "file": "es",
-     "t": 2.15
+     "t": 2.08
     }
    ],
    "continuity": [
     {
      "to": "en",
      "driftMs": 0,
-     "tookMs": 2736,
+     "tookMs": 2449,
      "attempts": 1,
-     "jumpMs": -20
+     "jumpMs": 0
     },
     {
      "to": "es",
      "driftMs": 0,
-     "tookMs": 2107,
+     "tookMs": 1998,
      "attempts": 1,
-     "jumpMs": -17
+     "jumpMs": 3
     }
    ],
-   "maxStallMs": 36,
+   "maxStallMs": 50,
    "srcChanges": 2,
    "restarts": 0,
    "maxPlayers": 2,
    "name": "troca-perto-do-fim-e-do-loop",
-   "sec": 57.9
+   "sec": 57.7
   },
   {
    "ok": true,
@@ -152,8 +152,8 @@
     "poster": "/assets/video/goias-app-loop-poster.en.webp",
     "n": 7
    },
-   "resumedAt": 3.29,
-   "wasAt": 3.02,
+   "resumedAt": 3.31,
+   "wasAt": 3.04,
    "name": "troca-fora-da-tela",
    "sec": 7.4
   },
@@ -180,9 +180,9 @@
     {
      "to": "en",
      "driftMs": 0,
-     "tookMs": 2046,
+     "tookMs": 2078,
      "attempts": 1,
-     "jumpMs": -3
+     "jumpMs": -17
     }
    ],
    "name": "conexao-lenta",
@@ -194,7 +194,7 @@
    "firstFail": "error",
    "afterRetry": "es",
    "maxStallMs": 19,
-   "srcChanges": 0,
+   "srcChanges": 1,
    "restarts": 0,
    "maxPlayers": 2,
    "name": "falha-no-download",
@@ -206,7 +206,7 @@
    "posterBefore": "/assets/video/goias-app-loop-poster.pt-BR.webp",
    "posterAfter": "/assets/video/goias-app-loop-poster.es.webp",
    "name": "movimento-reduzido",
-   "sec": 2.4
+   "sec": 2.5
   },
   {
    "ok": true,

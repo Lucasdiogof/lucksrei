@@ -68,6 +68,12 @@
     var s = { v: v, name: v.getAttribute("data-loop-video"), locale: null, want: currentLocale(), visible: false,
       gen: 0, prep: null, retries: 0, resume: 0, baseStyle: v.getAttribute("style") || "", timer: 0 };
     v.__slot = s;
+    // canPlayType promete AV1 e o decodificador falha (visto no WebKit do Playwright): volta para H.264, retomando do mesmo ponto
+    v.addEventListener("error", function () {
+      if (!env.av1 || s.v !== v || s.prep || !v.getAttribute("src") || !v.error || (v.error.code !== 3 && v.error.code !== 4)) return;
+      env.av1 = false; s.resume = v.currentTime || 0; v.removeAttribute("src"); v.load(); s.locale = null;
+      if (s.visible && !root.document.hidden && env.motion) play(s);
+    });
     v.setAttribute("poster", urls(s.name, s.want, false).poster);
     slots.push(s);
     return s;
@@ -183,6 +189,7 @@
 
     function buffered() {
       var b = nv.buffered, t = nv.currentTime;
+      if (!b.length && nv.readyState >= 4) return BUFFER_AHEAD;   // WebKit não informa `buffered` em MP4 progressivo; HAVE_ENOUGH_DATA basta
       for (var i = 0; i < b.length; i++) if (t >= b.start(i) - 0.05 && t <= b.end(i)) return Math.min(b.end(i) - t, nv.duration);
       return 0;
     }
@@ -247,6 +254,12 @@
     if (!vids.length) return;
     Array.prototype.forEach.call(vids, attach);
     root.document.addEventListener("lucksrei:locale", onLocale);
+    // WebKit (build Windows do Playwright) deixa o loop parado em 0; o vídeo que deveria tocar e foi pausado pelo navegador volta a tocar
+    root.document.addEventListener("pause", function (e) {
+      var v = e.target, s = v && v.__slot;
+      if (!s || s.v !== v || !s.visible || root.document.hidden || !env.motion || !v.getAttribute("src") || v.ended || v.currentTime > 0.2) return;
+      root.setTimeout(function () { if (v.paused && s.v === v && s.visible) { var p = v.play(); if (p && p.catch) p.catch(function () { /* autoplay bloqueado */ }); } }, 0);
+    }, true);
     var mql = root.matchMedia ? root.matchMedia("(prefers-reduced-motion: reduce)") : { matches: false };
     var conn = root.navigator.connection;
     env.motion = !mql.matches;

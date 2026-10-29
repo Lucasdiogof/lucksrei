@@ -10,10 +10,12 @@ import url from 'node:url';
 const here = path.dirname(url.fileURLToPath(import.meta.url));
 const repo = path.resolve(here, '..', '..', '..');
 const require = createRequire((process.env.PW_DIR || repo) + '/');
-const { chromium } = require('playwright');
+const { chromium, firefox, webkit } = require('playwright');
 const args = process.argv.slice(2);
 const useChrome = args.includes('--chrome');
 const h264Only = args.includes('--h264');   // esconde o AV1 do canPlayType: exercita o caminho H.264 (Safari antigo, Firefox sem AV1 etc.)
+const noRvfc = args.includes("--no-rvfc");   // simula navegadores sem requestVideoFrameCallback (o caminho de rAF)
+const kind = args.includes('--firefox') ? 'firefox' : args.includes('--webkit') ? 'webkit' : 'chromium';   // motor: Chromium (padrão), Firefox ou WebKit do Playwright
 const only = args.includes('--only') ? args[args.indexOf('--only') + 1] : null;
 const MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.mp4': 'video/mp4', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.json': 'application/json', '.woff2': 'font/woff2', '.ico': 'image/x-icon', '.txt': 'text/plain', '.xml': 'application/xml' };
 let throttleBps = 0, hits = [];
@@ -40,14 +42,16 @@ const server = http.createServer((req, res) => {
 await new Promise(r => server.once('listening', r));
 const base = `http://127.0.0.1:${server.address().port}`;
 
-const browser = await chromium.launch({ ...(useChrome ? { channel: 'chrome' } : {}), args: ['--autoplay-policy=no-user-gesture-required'] });
-const engine = (useChrome ? 'chrome' : 'chromium') + (h264Only ? '-h264' : '-av1');
+const BT = { chromium, firefox, webkit }[kind];
+const browser = await BT.launch(kind === 'chromium' ? { ...(useChrome ? { channel: 'chrome' } : {}), args: ['--autoplay-policy=no-user-gesture-required'] } : kind === 'firefox' ? { firefoxUserPrefs: { 'media.autoplay.default': 0, 'media.autoplay.blocking_policy': 0 } } : {});
+const engine = (kind !== 'chromium' ? kind : useChrome ? 'chrome' : 'chromium') + (h264Only ? '-h264' : '-av1') + (noRvfc ? '-norvfc' : '');
 const results = [];
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 async function open(locale, pagePath, opts = {}) {
   const ctx = await browser.newContext({ viewport: opts.viewport || { width: 1280, height: 900 }, reducedMotion: opts.reduced ? 'reduce' : 'no-preference', ...(opts.ctx || {}) });
   if (h264Only) await ctx.addInitScript(() => { const o = HTMLVideoElement.prototype.canPlayType; HTMLVideoElement.prototype.canPlayType = function (t) { return /av01/.test(t) ? '' : o.call(this, t); }; });
+  if (noRvfc) await ctx.addInitScript(() => { delete HTMLVideoElement.prototype.requestVideoFrameCallback; });
   await ctx.addInitScript(l => { try { localStorage.setItem('lucksrei.locale', l); } catch (e) {} }, locale);
   const page = await ctx.newPage();
   page.on('pageerror', e => console.error('[pageerror]', e.message));
@@ -135,7 +139,7 @@ await scenario('troca-em-reproducao', async () => {
   }
   const an = await analyze(page), cont = await continuity(page);
   await ctx.close();
-  return { ok: res.every(r => r.file === r.l && r.players === 1 && !r.paused) && an.restarts === 0 && cont.every(c => Math.abs(c.jumpMs ?? 0) <= 70), res, ...an, continuity: cont };
+  return { ok: res.every(r => r.file === r.l && r.players === 1 && !r.paused) && an.restarts === 0 && an.maxStallMs < 400 && cont.every(c => Math.abs(c.jumpMs ?? 0) <= 70), res, ...an, continuity: cont };
 });
 
 await scenario('trocas-rapidas', async () => {
@@ -161,7 +165,7 @@ await scenario('sem-quadro-vazio-durante-a-troca', async () => {
     const buf = await page.screenshot({ clip: box, type: 'png' });
     frames.push(await page.evaluate(async b64 => {
       const bmp = await createImageBitmap(await (await fetch('data:image/png;base64,' + b64)).blob());
-      const c = new OffscreenCanvas(96, 96), g = c.getContext('2d'); g.drawImage(bmp, 0, 0, 96, 96);
+      const c = typeof OffscreenCanvas === 'function' ? new OffscreenCanvas(96, 96) : Object.assign(document.createElement('canvas'), { width: 96, height: 96 }), g = c.getContext('2d'); g.drawImage(bmp, 0, 0, 96, 96);
       const d = g.getImageData(0, 0, 96, 96).data; let s = 0, q = 0; const n = d.length / 4;
       for (let i = 0; i < d.length; i += 4) { const y = .299 * d[i] + .587 * d[i + 1] + .114 * d[i + 2]; s += y; q += y * y; }
       const m = s / n; return { m, sd: Math.sqrt(Math.max(0, q / n - m * m)) };
@@ -236,6 +240,8 @@ await scenario('falha-no-download', async () => {
   await playingAt(page, 2);
   await page.route(/loop\.es(\.av1)?\.mp4/, r => r.abort());
   await click(page, 'es');
+  // o Playwright WebKit não intercepta pedidos de mídia: sem falha injetada, o teste só confirma que a troca normal conclui
+  if (kind === 'webkit') { await waitSwap(page, 1, 30000); const st0 = await state(page); await ctx.close(); return { ok: srcLocale(st0.src) === 'es' && !st0.paused, skipped: 'webkit não intercepta mídia (route/abort): falha injetada não testável aqui' }; }
   await page.waitForFunction(() => window.__swaps.some(s => !s.ok), null, { timeout: 15000 });
   const st = await state(page), sw = await page.evaluate(() => window.__swaps), an = await analyze(page);
   await page.unroute(/loop\.es(\.av1)?\.mp4/);

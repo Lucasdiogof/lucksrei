@@ -1,0 +1,235 @@
+{
+ "engine": "webkit-av1",
+ "version": "27.2",
+ "results": [
+  {
+   "ok": true,
+   "pt-BR": {
+    "codec": "h264",
+    "file": "pt-BR",
+    "poster": "pt-BR",
+    "mp4Requests": "pt-BR"
+   },
+   "en": {
+    "codec": "h264",
+    "file": "en",
+    "poster": "en",
+    "mp4Requests": "en"
+   },
+   "es": {
+    "codec": "h264",
+    "file": "es",
+    "poster": "es",
+    "mp4Requests": "es"
+   },
+   "name": "abre-em-cada-idioma",
+   "sec": 2.6
+  },
+  {
+   "ok": true,
+   "res": [
+    {
+     "l": "en",
+     "file": "en",
+     "t": 6.25,
+     "players": 1,
+     "paused": false
+    },
+    {
+     "l": "es",
+     "file": "es",
+     "t": 10.99,
+     "players": 1,
+     "paused": false
+    },
+    {
+     "l": "pt-BR",
+     "file": "pt-BR",
+     "t": 15.52,
+     "players": 1,
+     "paused": false
+    }
+   ],
+   "maxStallMs": 136,
+   "srcChanges": 5,
+   "restarts": 0,
+   "maxPlayers": 2,
+   "continuity": [
+    {
+     "to": "en",
+     "driftMs": 6,
+     "tookMs": 2140,
+     "attempts": 1,
+     "jumpMs": 6
+    },
+    {
+     "to": "es",
+     "driftMs": 8,
+     "tookMs": 2113,
+     "attempts": 1,
+     "jumpMs": 8
+    },
+    {
+     "to": "pt-BR",
+     "driftMs": 8,
+     "tookMs": 1930,
+     "attempts": 1,
+     "jumpMs": 8
+    }
+   ],
+   "name": "troca-em-reproducao",
+   "sec": 18.8
+  },
+  {
+   "ok": true,
+   "final": "en",
+   "players": 1,
+   "swaps": [
+    {
+     "to": "en",
+     "ok": true
+    }
+   ],
+   "maxStallMs": 170,
+   "srcChanges": 3,
+   "restarts": 0,
+   "maxPlayers": 2,
+   "name": "trocas-rapidas",
+   "sec": 8.7
+  },
+  {
+   "ok": true,
+   "frames": 47,
+   "minStdDev": 12.3,
+   "maxLumaJump": 3.9,
+   "swaps": 1,
+   "name": "sem-quadro-vazio-durante-a-troca",
+   "sec": 14.1
+  },
+  {
+   "ok": true,
+   "out": [
+    {
+     "phase": "fim",
+     "to": "en",
+     "file": "en",
+     "t": 0.07
+    },
+    {
+     "phase": "recomeco",
+     "to": "es",
+     "file": "es",
+     "t": 2.4
+    }
+   ],
+   "continuity": [
+    {
+     "to": "en",
+     "driftMs": 2,
+     "tookMs": 2275,
+     "attempts": 1,
+     "jumpMs": -19
+    },
+    {
+     "to": "es",
+     "driftMs": 1,
+     "tookMs": 2218,
+     "attempts": 1,
+     "jumpMs": -2
+    }
+   ],
+   "maxStallMs": 220,
+   "srcChanges": 4,
+   "restarts": 0,
+   "maxPlayers": 2,
+   "name": "troca-perto-do-fim-e-do-loop",
+   "sec": 58.9
+  },
+  {
+   "ok": true,
+   "offscreen": {
+    "src": null,
+    "poster": "/assets/video/goias-app-loop-poster.en.webp",
+    "n": 7
+   },
+   "resumedAt": 3.08,
+   "wasAt": 3.04,
+   "name": "troca-fora-da-tela",
+   "sec": 6.6
+  },
+  {
+   "ok": true,
+   "pausedWhileHidden": true,
+   "whileHidden": {
+    "n": 1,
+    "src": null
+   },
+   "after": "es",
+   "name": "aba-oculta",
+   "sec": 6.2
+  },
+  {
+   "ok": false,
+   "stillOldAfter1_5s": "pt-BR",
+   "final": "en",
+   "maxStallMs": 801,
+   "srcChanges": 2,
+   "restarts": 0,
+   "maxPlayers": 2,
+   "continuity": [
+    {
+     "to": "en",
+     "driftMs": 8,
+     "tookMs": 3154,
+     "attempts": 2,
+     "note": "amostra da troca não encontrada"
+    }
+   ],
+   "name": "conexao-lenta",
+   "sec": 7.5
+  },
+  {
+   "ok": true,
+   "skipped": "webkit não intercepta mídia (route/abort): falha injetada não testável aqui",
+   "name": "falha-no-download",
+   "sec": 4.8
+  },
+  {
+   "ok": true,
+   "mp4Requests": 0,
+   "posterBefore": "/assets/video/goias-app-loop-poster.pt-BR.webp",
+   "posterAfter": "/assets/video/goias-app-loop-poster.es.webp",
+   "name": "movimento-reduzido",
+   "sec": 2.6
+  },
+  {
+   "ok": false,
+   "desktop": {
+    "carregadosAoAbrir": 0,
+    "depoisDeRolarTudo": 8,
+    "locales": "es",
+    "videosNaHome": 7
+   },
+   "mobile": {
+    "carregadosAoAbrir": 0,
+    "depoisDeRolarTudo": 8,
+    "locales": "es",
+    "videosNaHome": 7
+   },
+   "name": "home-so-baixa-o-visivel",
+   "sec": 26.6
+  },
+  {
+   "ok": true,
+   "final": "es",
+   "swaps": [
+    {
+     "to": "es",
+     "ok": true
+    }
+   ],
+   "name": "ultimo-idioma-prevalece-em-rede-lenta",
+   "sec": 12.4
+  }
+ ]
+}

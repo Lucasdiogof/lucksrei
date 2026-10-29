@@ -1,0 +1,61 @@
+{
+ "engine": "webkit-h264",
+ "version": "27.2",
+ "results": [
+  {
+   "ok": true,
+   "res": [
+    {
+     "l": "en",
+     "file": "en",
+     "t": 6.25,
+     "players": 1,
+     "paused": false
+    },
+    {
+     "l": "es",
+     "file": "es",
+     "t": 10.93,
+     "players": 1,
+     "paused": false
+    },
+    {
+     "l": "pt-BR",
+     "file": "pt-BR",
+     "t": 15.41,
+     "players": 1,
+     "paused": false
+    }
+   ],
+   "maxStallMs": 132,
+   "srcChanges": 4,
+   "restarts": 0,
+   "maxPlayers": 2,
+   "continuity": [
+    {
+     "to": "en",
+     "driftMs": 10,
+     "tookMs": 2109,
+     "attempts": 2,
+     "jumpMs": 10
+    },
+    {
+     "to": "es",
+     "driftMs": 12,
+     "tookMs": 2053,
+     "attempts": 1,
+     "jumpMs": 11
+    },
+    {
+     "to": "pt-BR",
+     "driftMs": 11,
+     "tookMs": 1892,
+     "attempts": 2,
+     "jumpMs": 11
+    }
+   ],
+   "name": "troca-em-reproducao",
+   "sec": 18.5
+  }
+ ]
+}

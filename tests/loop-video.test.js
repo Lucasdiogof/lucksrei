@@ -46,6 +46,9 @@ pages.forEach(function (p) {
     check(!/\sdata-src|\ssrc=|\sposter=/.test(t), p + ": src/poster fixo no HTML (deve vir do idioma): " + t);
     check(/\bmuted\b/.test(t) && /\bloop\b/.test(t) && /playsinline/.test(t) && /preload="none"/.test(t), p + ": faltam muted/loop/playsinline/preload=none");
   });
+  // sem JavaScript não há player: o pôster em inglês (idioma do texto estático) vem de um <noscript><img>, que não baixa nada com JS ligado
+  var ns = h.match(/<\/video><noscript><img [^>]*src="\/assets\/video\/([a-z-]+)-loop-poster\.en\.webp"[^>]*><\/noscript>/g) || [];
+  check(ns.length === tags.length, p + ": cada vídeo precisa do <noscript> com pôster (" + ns.length + "/" + tags.length + ")");
   check((h.match(/assets\/js\/loop-video\.js/g) || []).length === 1, p + ": loop-video.js deve entrar uma vez");
 });
 check(NAMES.every(function (n) { return seen[n]; }), "algum vídeo não aparece em nenhuma página");

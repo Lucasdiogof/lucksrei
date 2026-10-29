@@ -1,0 +1,241 @@
+{
+ "engine": "chrome-h264",
+ "version": "156.0.8078.74",
+ "results": [
+  {
+   "ok": true,
+   "pt-BR": {
+    "codec": "h264",
+    "file": "pt-BR",
+    "poster": "pt-BR",
+    "mp4Requests": "pt-BR"
+   },
+   "en": {
+    "codec": "h264",
+    "file": "en",
+    "poster": "en",
+    "mp4Requests": "en"
+   },
+   "es": {
+    "codec": "h264",
+    "file": "es",
+    "poster": "es",
+    "mp4Requests": "es"
+   },
+   "name": "abre-em-cada-idioma",
+   "sec": 0.9
+  },
+  {
+   "ok": true,
+   "res": [
+    {
+     "l": "en",
+     "file": "en",
+     "t": 5.7,
+     "players": 1,
+     "paused": false
+    },
+    {
+     "l": "es",
+     "file": "es",
+     "t": 9.88,
+     "players": 1,
+     "paused": false
+    },
+    {
+     "l": "pt-BR",
+     "file": "pt-BR",
+     "t": 14.07,
+     "players": 1,
+     "paused": false
+    }
+   ],
+   "maxStallMs": 14,
+   "srcChanges": 3,
+   "restarts": 0,
+   "maxPlayers": 2,
+   "continuity": [
+    {
+     "to": "en",
+     "driftMs": 22,
+     "tookMs": 1659,
+     "attempts": 1,
+     "jumpMs": 21
+    },
+    {
+     "to": "es",
+     "driftMs": 22,
+     "tookMs": 1645,
+     "attempts": 1,
+     "jumpMs": 21
+    },
+    {
+     "to": "pt-BR",
+     "driftMs": 22,
+     "tookMs": 1654,
+     "attempts": 1,
+     "jumpMs": 21
+    }
+   ],
+   "name": "troca-em-reproducao",
+   "sec": 16.7
+  },
+  {
+   "ok": true,
+   "final": "en",
+   "players": 1,
+   "swaps": [
+    {
+     "to": "en",
+     "ok": true
+    }
+   ],
+   "maxStallMs": 15,
+   "srcChanges": 1,
+   "restarts": 0,
+   "maxPlayers": 2,
+   "name": "trocas-rapidas",
+   "sec": 7.7
+  },
+  {
+   "ok": true,
+   "frames": 136,
+   "minStdDev": 12.2,
+   "maxLumaJump": 1.7,
+   "swaps": 1,
+   "name": "sem-quadro-vazio-durante-a-troca",
+   "sec": 13.2
+  },
+  {
+   "ok": true,
+   "out": [
+    {
+     "phase": "fim",
+     "to": "en",
+     "file": "en",
+     "t": 0.04
+    },
+    {
+     "phase": "recomeco",
+     "to": "es",
+     "file": "es",
+     "t": 1.75
+    }
+   ],
+   "continuity": [
+    {
+     "to": "en",
+     "driftMs": 21,
+     "tookMs": 2189,
+     "attempts": 1,
+     "jumpMs": 24
+    },
+    {
+     "to": "es",
+     "driftMs": 22,
+     "tookMs": 1642,
+     "attempts": 1,
+     "jumpMs": 21
+    }
+   ],
+   "maxStallMs": 13,
+   "srcChanges": 2,
+   "restarts": 0,
+   "maxPlayers": 2,
+   "name": "troca-perto-do-fim-e-do-loop",
+   "sec": 57.4
+  },
+  {
+   "ok": true,
+   "offscreen": {
+    "src": null,
+    "poster": "/assets/video/goias-app-loop-poster.en.webp",
+    "n": 7
+   },
+   "resumedAt": 3.23,
+   "wasAt": 3.01,
+   "name": "troca-fora-da-tela",
+   "sec": 7.4
+  },
+  {
+   "ok": true,
+   "pausedWhileHidden": true,
+   "whileHidden": {
+    "n": 1,
+    "src": null
+   },
+   "after": "es",
+   "name": "aba-oculta",
+   "sec": 5.2
+  },
+  {
+   "ok": true,
+   "stillOldAfter1_5s": "pt-BR",
+   "final": "en",
+   "maxStallMs": 14,
+   "srcChanges": 0,
+   "restarts": 0,
+   "maxPlayers": 2,
+   "continuity": [
+    {
+     "to": "en",
+     "driftMs": 22,
+     "tookMs": 2781,
+     "attempts": 1,
+     "note": "amostra da troca não encontrada"
+    }
+   ],
+   "name": "conexao-lenta",
+   "sec": 5
+  },
+  {
+   "ok": true,
+   "keptOld": "pt-BR",
+   "firstFail": "error",
+   "afterRetry": "es",
+   "maxStallMs": 12,
+   "srcChanges": 0,
+   "restarts": 0,
+   "maxPlayers": 2,
+   "name": "falha-no-download",
+   "sec": 11.9
+  },
+  {
+   "ok": true,
+   "mp4Requests": 0,
+   "posterBefore": "/assets/video/goias-app-loop-poster.pt-BR.webp",
+   "posterAfter": "/assets/video/goias-app-loop-poster.es.webp",
+   "name": "movimento-reduzido",
+   "sec": 2.5
+  },
+  {
+   "ok": true,
+   "desktop": {
+    "carregadosAoAbrir": 0,
+    "depoisDeRolarTudo": 7,
+    "locales": "es",
+    "videosNaHome": 7
+   },
+   "mobile": {
+    "carregadosAoAbrir": 0,
+    "depoisDeRolarTudo": 7,
+    "locales": "es",
+    "videosNaHome": 7
+   },
+   "name": "home-so-baixa-o-visivel",
+   "sec": 25.8
+  },
+  {
+   "ok": true,
+   "final": "es",
+   "swaps": [
+    {
+     "to": "es",
+     "ok": true
+    }
+   ],
+   "name": "ultimo-idioma-prevalece-em-rede-lenta",
+   "sec": 9
+  }
+ ]
+}

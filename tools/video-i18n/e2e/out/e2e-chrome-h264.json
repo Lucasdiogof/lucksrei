@@ -31,54 +31,54 @@
     {
      "l": "en",
      "file": "en",
-     "t": 5.75,
+     "t": 5.73,
      "players": 1,
      "paused": false
     },
     {
      "l": "es",
      "file": "es",
-     "t": 10.04,
+     "t": 10.1,
      "players": 1,
      "paused": false
     },
     {
      "l": "pt-BR",
      "file": "pt-BR",
-     "t": 14.27,
+     "t": 14.4,
      "players": 1,
      "paused": false
     }
    ],
-   "maxStallMs": 17,
-   "srcChanges": 3,
+   "maxStallMs": 14,
+   "srcChanges": 4,
    "restarts": 0,
    "maxPlayers": 2,
    "continuity": [
     {
      "to": "en",
-     "driftMs": 2,
-     "tookMs": 1728,
+     "driftMs": 16,
+     "tookMs": 1705,
      "attempts": 1,
-     "jumpMs": 10
+     "jumpMs": 17
     },
     {
      "to": "es",
-     "driftMs": 16,
-     "tookMs": 1749,
+     "driftMs": 17,
+     "tookMs": 1824,
      "attempts": 1,
-     "jumpMs": 13
+     "jumpMs": 18
     },
     {
      "to": "pt-BR",
-     "driftMs": 18,
-     "tookMs": 1705,
+     "driftMs": 17,
+     "tookMs": 1763,
      "attempts": 1,
-     "jumpMs": 18
+     "jumpMs": 20
     }
    ],
    "name": "troca-em-reproducao",
-   "sec": 16.9
+   "sec": 17
   },
   {
    "ok": true,
@@ -90,16 +90,16 @@
      "ok": true
     }
    ],
-   "maxStallMs": 14,
+   "maxStallMs": 13,
    "srcChanges": 1,
    "restarts": 0,
    "maxPlayers": 2,
    "name": "trocas-rapidas",
-   "sec": 7.9
+   "sec": 7.8
   },
   {
    "ok": true,
-   "frames": 133,
+   "frames": 138,
    "minStdDev": 12.3,
    "maxLumaJump": 1.7,
    "swaps": 1,
@@ -113,7 +113,7 @@
      "phase": "fim",
      "to": "en",
      "file": "en",
-     "t": 0.23
+     "t": 0.69
     },
     {
      "phase": "recomeco",
@@ -125,20 +125,20 @@
    "continuity": [
     {
      "to": "en",
-     "driftMs": 21,
-     "tookMs": 2399,
+     "driftMs": 8,
+     "tookMs": 2872,
      "attempts": 1,
-     "jumpMs": 23
+     "jumpMs": -18
     },
     {
      "to": "es",
-     "driftMs": 17,
-     "tookMs": 1753,
+     "driftMs": 16,
+     "tookMs": 1742,
      "attempts": 1,
-     "jumpMs": 12
+     "jumpMs": 20
     }
    ],
-   "maxStallMs": 26,
+   "maxStallMs": 17,
    "srcChanges": 2,
    "restarts": 0,
    "maxPlayers": 2,
@@ -152,8 +152,8 @@
     "poster": "/assets/video/goias-app-loop-poster.en.webp",
     "n": 7
    },
-   "resumedAt": 3.23,
-   "wasAt": 3,
+   "resumedAt": 3.24,
+   "wasAt": 3.01,
    "name": "troca-fora-da-tela",
    "sec": 7.4
   },
@@ -166,13 +166,13 @@
    },
    "after": "es",
    "name": "aba-oculta",
-   "sec": 5.2
+   "sec": 5.3
   },
   {
    "ok": true,
    "stillOldAfter1_5s": "pt-BR",
    "final": "en",
-   "maxStallMs": 28,
+   "maxStallMs": 15,
    "srcChanges": 1,
    "restarts": 0,
    "maxPlayers": 2,
@@ -180,9 +180,9 @@
     {
      "to": "en",
      "driftMs": 17,
-     "tookMs": 3093,
+     "tookMs": 3148,
      "attempts": 1,
-     "jumpMs": -37
+     "jumpMs": -24
     }
    ],
    "name": "conexao-lenta",
@@ -193,12 +193,12 @@
    "keptOld": "pt-BR",
    "firstFail": "error",
    "afterRetry": "es",
-   "maxStallMs": 25,
+   "maxStallMs": 13,
    "srcChanges": 0,
    "restarts": 0,
    "maxPlayers": 2,
    "name": "falha-no-download",
-   "sec": 12.2
+   "sec": 12.1
   },
   {
    "ok": true,
@@ -223,7 +223,7 @@
     "videosNaHome": 7
    },
    "name": "home-so-baixa-o-visivel",
-   "sec": 25.8
+   "sec": 25.9
   },
   {
    "ok": true,
@@ -235,7 +235,7 @@
     }
    ],
    "name": "ultimo-idioma-prevalece-em-rede-lenta",
-   "sec": 9.1
+   "sec": 9.3
   }
  ]
 }

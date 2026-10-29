@@ -56,10 +56,10 @@ Pôsteres: mesmo instante do pôster publicado de cada filme (achado por compara
 - **Desvio temporal medido** (tempo do 1º quadro do novo − (último quadro do antigo + tempo decorrido), em 6 trocas por motor, incluindo o fim e o reinício do loop): **−37 a +32 ms**, isto é, ≤ 1 quadro (33 ms; a amostragem tem resolução de ~16 ms). Desvio interno no instante da troca ≤ 21 ms; nenhuma troca precisou de mais de 1 seek. Maior intervalo sem avanço do vídeo visível durante as trocas: 10–50 ms (nenhum congelamento). Reinícios em 0: nenhum. A preparação levou 1,7–3,1 s, com o vídeo antigo tocando normalmente.
 
 ## D. Limites, diferenças entre navegadores e riscos
-- **Não verificado**: Safari/iOS e Firefox (só Chrome/Chromium estão instalados; baixar WebKit/Firefox do Playwright exige um download que não fiz sem autorização). O código não depende de recursos exclusivos do Chrome: sem `requestVideoFrameCallback` (Firefox antigo) cai para `rAF` + `currentTime`, com precisão menor (a tolerância de 1 quadro continua); Safari ≥ 15.4 tem rVFC. Pontos de atenção no Safari/iOS: número limitado de decoders simultâneos (na troca há 2 por vídeo, em 1 vídeo por vez); modo de pouca energia bloqueia o autoplay (fica o pôster, como antes); `canPlayType` de AV1 só devolve "probably" com decoder de hardware. Recomendado teste manual em iPhone/Safari antes de publicar.
+- (Superado pela seção G) Firefox e WebKit foram instalados e testados na continuação; ver G. O código não depende de recursos exclusivos do Chrome: sem `requestVideoFrameCallback` (Firefox antigo) cai para `rAF` + `currentTime`, com precisão menor (a tolerância de 1 quadro continua); Safari ≥ 15.4 tem rVFC. Pontos de atenção no Safari/iOS: número limitado de decoders simultâneos (na troca há 2 por vídeo, em 1 vídeo por vez); modo de pouca energia bloqueia o autoplay (fica o pôster, como antes); `canPlayType` de AV1 só devolve "probably" com decoder de hardware. Recomendado teste manual em iPhone/Safari antes de publicar.
 - Que a troca seja imperceptível depende de rede e CPU: com rede muito lenta ela demora (o idioma antigo continua); em CPU fraca a preparação concorre com a reprodução por ~2 s. Trocar de idioma custa 1 arquivo novo (0,5–2,1 MB) por vídeo visível.
 - Hospedagem: 62 MB de binários novos no repositório (H.264 36 MB, AV1 26 MB). Os `.mp4` não têm cache longo em `_headers`; a troca usa Range requests, vale conferir o cache da Cloudflare.
-- Sem JavaScript não há vídeo nem pôster (antes o pôster vinha no HTML). Aceitável: os vídeos são decorativos (`aria-hidden`).
+- (Corrigido na seção G) Sem JavaScript agora o card mostra o pôster em inglês via `<noscript>`.
 
 ## E. Arquivos modificados / criados
 Modificados: `assets/js/loop-video.js` (reescrito), `index.html`, `projects/{aura,bebometro,busaogyn,fan-hub,la-pelve,match-queue,orbijob,stockport}/index.html` (somente a tag `<video>`).
@@ -70,3 +70,32 @@ Novos: 72 arquivos em `assets/video/`, `tests/loop-video.test.js`, `tools/video-
 2. Mesclar `video/etapa0-fontes` em `main` (já contém o `origin/main` de 29/10) e publicar pelo Workers Build (commit vazio "Trigger Workers build" se não disparar); conferir com `?v=`.
 3. Pós-deploy: abrir a home e as 8 páginas em pt/en/es; no Network, conferir 1 MP4 por vídeo visível; trocar de idioma olhando o console (`lucksrei:video-swap`).
 4. **Rollback**: `git revert` do commit do player/HTML; os originais e o `loop-video.js` antigo continuam no histórico e em `assets/video/`.
+
+## G. Continuação (revalidação, Firefox, WebKit, sem JavaScript, cache) — nada publicado
+**Estado recuperado**: branch `video/etapa0-fontes`, commits `bf41b48`, `11f2901`, `f1dcaa7` conferidos; 72 arquivos (`verify-finals.py`: 0 problemas), 13 testes do site passando. Goiás (`9a4d08b`) e La Pelve (`9aac228`) seguem só em Git local, sem remoto.
+
+**Navegadores (Playwright 1.64, `tools/video-i18n/e2e/switch.mjs`, 12 cenários; JSON em `e2e/out/`)**
+| Motor | Resultado |
+|---|---|
+| Chrome 156, H.264 | 12/12 |
+| Chromium 156, AV1 | 12/12 |
+| Chrome 156, H.264, **sem** `requestVideoFrameCallback` (`--no-rvfc`, caminho de rAF) | 12/12 |
+| WebKit 27.2 (build Windows do Playwright), H.264 (`--webkit --h264`) | 12/12 (em `falha-no-download` o WebKit não intercepta mídia: o teste só confirma a troca normal) |
+| WebKit 27.2, padrão | 10/12: este build anuncia AV1 (`canPlayType`) mas **não decodifica** ("Media failed to decode"); o fallback para H.264 funciona, e os 2 cenários que contam stall/requisições (`conexao-lenta` 801 ms, `home-so-baixa-o-visivel` 8 em vez de 7) acusam o arquivo AV1 baixado antes |
+| **Firefox 155** | **não testado**: instalado, mas o Windows nega a execução de `firefox.exe` ("Permission denied" / `spawn UNKNOWN`); não contornei a proteção |
+
+**Problemas reais achados no WebKit e corrigidos em `loop-video.js`**
+1. `buffered` vem vazio em MP4 progressivo: a troca nunca era revelada. Agora `readyState >= 4` sem faixas conta como buffer suficiente.
+2. AV1 anunciado e não decodificado deixava o card parado: erro 3/4 no vídeo visível volta para H.264 retomando do mesmo ponto.
+3. O loop do WebKit do Playwright pára em 0 (também com os MP4 antigos publicados): um listener de `pause` religa o vídeo que deveria tocar (só perto de 0, visível, aba ativa).
+4. Harness: `OffscreenCanvas` não existe no WebKit (usa `<canvas>`); `troca-em-reproducao` agora exige `maxStallMs < 400` (uma execução com carga alta mediu 5 s, não repetiu: 132–144 ms em duas reexecuções isoladas).
+Sem `requestVideoFrameCallback` (WebKit, Firefox atuais) o desvio de sincronismo medido foi de 5 a 23 ms.
+
+**Sem JavaScript**: cada `<video data-loop-video>` das 9 páginas (15 vídeos) ganhou `<noscript><img … -loop-poster.en.webp></noscript>` (pôster em inglês: é o idioma do texto estático). Com JS ligado o `<noscript>` não é lido nem baixado; com JS desligado nenhum MP4 é pedido (`e2e/nojs.mjs`: home 7 pôsteres, 3 páginas de projeto, todos 720 px). `tests/loop-video.test.js` agora exige o `<noscript>` em cada vídeo. Falha do script (bloqueado/erro) equivale a sem JS; o pôster por idioma só existe quando o player roda (evita carregar o pôster errado antes de saber o idioma).
+
+**Cache e Range (produção medida com curl)**
+- Os MP4/WebP atuais respondem `Cache-Control: public, max-age=0, must-revalidate` + ETag (revalida a cada abertura).
+- **Requisição com `Range` devolve 200 com o arquivo inteiro e sem `Accept-Ranges`** (Cloudflare Workers static assets). Chrome/Chromium/WebKit-Playwright tocam e fazem seek assim (o harness local, porém, serve 206). **Safari/iOS costuma exigir 206 para `<video>`: este é o maior risco antes de publicar e não pôde ser testado aqui.** Os vídeos atuais já se comportam assim em produção; se o Safari real falhar, servir `/assets/video/*` por um Worker/rota com suporte a Range ou por outro host.
+- Adicionado a `_headers` (local, não implantado): `/assets/video/*` → `Cache-Control: public, max-age=604800` (7 dias, depois revalida). Os nomes não têm hash: ao re-renderizar um arquivo, mudar o nome.
+
+**Continua pendente**: Safari/iOS reais; Firefox; conferir `Range` em produção depois do deploy; StockPort wide/tall e backup privado de Goiás/La Pelve (trabalho futuro); tipografia aproximada de Aprovaura/Match Queue (ressalva já documentada).
