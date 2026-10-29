@@ -214,7 +214,7 @@ Permanece igual: MATCH QUEUE (wordmark/logo); Team Falcons (nome e escudo); Vejr
 | q.turn | 10,75–11 | Sua vez de buscar! | Your turn to search! | ¡Tu turno de buscar! | app |  |
 | q.now | 11–11,5 | Match Queue · agora | Match Queue · now | Match Queue · ahora | proposta | notificação simulada |
 | eb.team | 12,25–18 | Monte seu time | Build your team | Arma tu equipo | app~ | app: "Crie seu time" / "Crea tu equipo"; time=equipo |
-| h.team | 12–18 | Crie o time. ⏎ Convide a equipe. | Create the team. ⏎ Invite the squad. | Crea el equipo. ⏎ Invita a la escuadra. | proposta | "squad" aqui = galera do time |
+| h.team | 12–18 | Crie o time. ⏎ Convide a equipe. | Create the team. ⏎ Invite the squad. | Crea el equipo. ⏎ Invita a los tuyos. | proposta | "squad" aqui = galera do time |
 | t.members | 13–18 | {n} membros | {n} members | {n} miembros | app |  |
 | t.owner | 13–18 | Dono | Owner | Dueño | app | teamRoleOwner |
 | t.manager | 13,5–18 | Gerente | Manager | Gerente | app | teamRoleManager |
