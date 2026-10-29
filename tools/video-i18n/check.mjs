@@ -28,6 +28,15 @@ function readSource(p) {
   const base = baseSource(p);
   if (base) return base;
   // fontes fora do repositório (../x): FILMS_DIR aponta para a pasta que contém fan-hub-launch-film e la-pelve-launch-film
+  if (p.startsWith('../') && process.env.FILMS_DIR) {
+    // filmes externos já parametrizados: o texto original só existe no commit raiz (baseline)
+    const [dir, ...rest] = p.slice(3).split('/'), rel = rest.join('/') || '.', cwd = path.resolve(process.env.FILMS_DIR, dir);
+    try {
+      const root = execFileSync('git', ['rev-list', '--max-parents=0', 'HEAD'], { cwd, encoding: 'utf8' }).trim().split('\n')[0];
+      const files = execFileSync('git', ['ls-tree', '-r', '--name-only', root, '--', rel], { cwd, encoding: 'utf8' }).split('\n').filter(f => /\.(js|mjs|html|css)$/.test(f) && !/(^|\/)_v\d/.test(f));
+      if (files.length) return files.map(f => execFileSync('git', ['show', root + ':' + f], { cwd, encoding: 'utf8', maxBuffer: 64 << 20 })).join('\n');
+    } catch {}
+  }
   const abs = p.startsWith('../') && process.env.FILMS_DIR ? path.resolve(process.env.FILMS_DIR, p.slice(3)) : path.resolve(repo, p);
   if (!fs.existsSync(abs)) return null;
   if (fs.statSync(abs).isFile()) return fs.readFileSync(abs, 'utf8');
