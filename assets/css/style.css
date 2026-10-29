@@ -464,11 +464,11 @@ section{ padding: 88px 0; }
 .work-item[data-product="bebometro"] .work-plate.has-video{ background: #050403; }
 .work-item[data-product="orbijob"] .work-plate.has-video{ background: #0d111b; }
 .work-item[data-product="busaogyn"] .work-plate.has-video{ background: #0b0a08; }
-/* desktop: card compacto: placa quadrada de 200px (em vez de metade do card), título menor e resumo maior */
+/* desktop: card compacto: placa quadrada de 230px (em vez de metade do card), título menor e resumo maior */
 @media (min-width: 901px){
-  .work-item:has(.work-plate.has-video){ grid-template-columns: minmax(0,1fr) 200px; }
-  .work-wide:has(.work-plate.has-video){ grid-template-columns: 200px minmax(0,1fr); }
-  .work-item:has(.work-plate.has-video) .work-copy{ padding: 18px 36px; }
+  .work-item:has(.work-plate.has-video){ grid-template-columns: minmax(0,1fr) 230px; }
+  .work-wide:has(.work-plate.has-video){ grid-template-columns: 230px minmax(0,1fr); }
+  .work-item:has(.work-plate.has-video) .work-copy{ padding: 22px 36px; }
   .work-item:has(.work-plate.has-video) .work-copy h3{ font-size: clamp(24px, 2.4vw, 30px); margin-bottom: 8px; }
   .work-item:has(.work-plate.has-video) .work-copy p{ font-size: 16.5px; line-height: 1.6; max-width: 640px; margin-bottom: 12px; }
   .work-item:has(.work-plate.has-video) .showcase-num{ margin-bottom: 6px; }
