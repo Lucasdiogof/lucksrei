@@ -1,0 +1,412 @@
+{
+ "video": "orbijob",
+ "title": "OrbiJob",
+ "origin": "pt-BR",
+ "sources": [
+  "tools/video-orbijob/index.html"
+ ],
+ "protected": [
+  "OrbiJob",
+  "ESCO",
+  "CC BY 4.0"
+ ],
+ "keep": [
+  "OrbiJob (logo)",
+  "PT EN ES DE SV NL FR (códigos de idioma)",
+  "87 (compatibilidade)",
+  "FR",
+  "os 7 rótulos ESCO da demonstração: Programador de software · Software developer · Desarrollador de software · Softwareentwickler · Programvaruutvecklare · Softwareontwikkelaar · Développeur de logiciels"
+ ],
+ "unchecked": [
+  "wd.order"
+ ],
+ "strings": [
+  {
+   "id": "lab1",
+   "t": "4,75–5,25",
+   "pt-BR": "Busca global de vagas",
+   "en": "Global job search",
+   "es": "Búsqueda global de empleos",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "hB",
+   "t": "6,25–12,5",
+   "pt-BR": "Vagas do\nmundo inteiro.",
+   "en": "Jobs from\nall over the world.",
+   "es": "Empleos de\ntodo el mundo.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "pl.ny",
+   "t": "6,25–8",
+   "pt-BR": "Nova York",
+   "en": "New York",
+   "es": "Nueva York",
+   "from": "proposta",
+   "note": "rótulo desenhado no canvas do globo"
+  },
+  {
+   "id": "pl.latam",
+   "t": "6,25–8",
+   "pt-BR": "América Latina",
+   "en": "Latin America",
+   "es": "América Latina",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "pl.uk",
+   "t": "8,25–10",
+   "pt-BR": "Inglaterra",
+   "en": "England",
+   "es": "Inglaterra",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "pl.es",
+   "t": "8,25–10",
+   "pt-BR": "Espanha",
+   "en": "Spain",
+   "es": "España",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "pl.de",
+   "t": "8,5–10",
+   "pt-BR": "Alemanha",
+   "en": "Germany",
+   "es": "Alemania",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "pl.se",
+   "t": "8,5–10,25",
+   "pt-BR": "Suécia",
+   "en": "Sweden",
+   "es": "Suecia",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "pl.tw",
+   "t": "10,25–12",
+   "pt-BR": "Taiwan",
+   "en": "Taiwan",
+   "es": "Taiwán",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "pl.nz",
+   "t": "11,25–12,25",
+   "pt-BR": "Nova Zelândia",
+   "en": "New Zealand",
+   "es": "Nueva Zelanda",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "wm.onsite",
+   "t": "9,25–12",
+   "pt-BR": "Presencial",
+   "en": "On-site",
+   "es": "Presencial",
+   "from": "app",
+   "note": "workModeOnsite"
+  },
+  {
+   "id": "wm.hybrid",
+   "t": "9,25–12,5",
+   "pt-BR": "Híbrido",
+   "en": "Hybrid",
+   "es": "Híbrido",
+   "from": "app",
+   "note": "workModeHybrid"
+  },
+  {
+   "id": "wm.remote",
+   "t": "9,5–12,5",
+   "pt-BR": "Remoto",
+   "en": "Remote",
+   "es": "Remoto",
+   "from": "app",
+   "note": "workModeRemote"
+  },
+  {
+   "id": "srcNote",
+   "t": "9,5–12,5",
+   "pt-BR": "Fontes públicas · atribuição em cada vaga",
+   "en": "Public sources · attribution on every job",
+   "es": "Fuentes públicas · atribución en cada empleo",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "hC",
+   "t": "13,25–19,75",
+   "pt-BR": "Sua profissão,\nem sete idiomas.",
+   "en": "Your profession,\nin seven languages.",
+   "es": "Tu profesión,\nen siete idiomas.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "capC",
+   "t": "13,5–19,75",
+   "pt-BR": "Digite em um idioma. Encontre em todos.",
+   "en": "Type in one language. Find in all.",
+   "es": "Escribe en un idioma. Encuentra en todos.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "escoNote",
+   "t": "13,75–19,75",
+   "pt-BR": "ESCO © União Europeia · CC BY 4.0",
+   "en": "ESCO © European Union · CC BY 4.0",
+   "es": "ESCO © Unión Europea · CC BY 4.0",
+   "from": "proposta",
+   "note": "atribuição de licença: só o nome da instituição muda"
+  },
+  {
+   "id": "wd.order",
+   "t": "13,75–19,75",
+   "pt-BR": "pt,en,es,de,sv,nl,fr",
+   "en": "en,pt,es,de,sv,nl,fr",
+   "es": "es,pt,en,de,sv,nl,fr",
+   "from": "proposta",
+   "note": "ORDEM da demonstração multilíngue: o idioma do usuário vem primeiro (código-fonte hoje fixa pt primeiro, linha 112); os 7 rótulos ESCO não mudam"
+  },
+  {
+   "id": "hD",
+   "t": "20,25–25,5",
+   "pt-BR": "Recomendação\ncom motivo.",
+   "en": "Recommendations\nwith reasons.",
+   "es": "Recomendaciones\ncon motivo.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "gLab",
+   "t": "20,75–25,75",
+   "pt-BR": "Compatibilidade",
+   "en": "Compatibility",
+   "es": "Compatibilidad",
+   "from": "app",
+   "note": "compatibilityLabel"
+  },
+  {
+   "id": "gOf",
+   "t": "21,25–25,75",
+   "pt-BR": "de 100",
+   "en": "out of 100",
+   "es": "de 100",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "gConf",
+   "t": "22,75–25,75",
+   "pt-BR": "Confiança alta",
+   "en": "High confidence",
+   "es": "Confianza alta",
+   "from": "app",
+   "note": "confidenceHigh"
+  },
+  {
+   "id": "why1",
+   "t": "22,75–25,75",
+   "pt-BR": "Mesma profissão em outro idioma: {profissao}",
+   "en": "Same profession, another language: {profissao}",
+   "es": "La misma profesión en otro idioma: {profissao}",
+   "from": "app",
+   "note": "{profissao} = \"Programador de software\" (rótulo ESCO, não traduzir)"
+  },
+  {
+   "id": "why2",
+   "t": "23,25–25,75",
+   "pt-BR": "Remota, aberta a candidatos de qualquer lugar",
+   "en": "Remote, open to candidates from anywhere",
+   "es": "Remoto, abierto a candidatos de cualquier lugar",
+   "from": "app",
+   "note": "rcReasonRemoteAnywhere"
+  },
+  {
+   "id": "why3",
+   "t": "23,75–25,75",
+   "pt-BR": "Escrita em português, um idioma do seu perfil",
+   "en": "Written in Portuguese, a language of your profile",
+   "es": "Escrito en portugués, un idioma de tu perfil",
+   "from": "app",
+   "note": "rcReasonLanguage; o nome do idioma é traduzido, o contexto (perfil em português) permanece"
+  },
+  {
+   "id": "hE",
+   "t": "26–30,25",
+   "pt-BR": "Alertas das\nsuas buscas.",
+   "en": "Alerts for\nyour searches.",
+   "es": "Alertas de\ntus búsquedas.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "al.hour",
+   "t": "26,75–30,25",
+   "pt-BR": "A cada hora",
+   "en": "Every hour",
+   "es": "Cada hora",
+   "from": "app",
+   "note": "ssFreqInstant"
+  },
+  {
+   "id": "al.day",
+   "t": "27–30,25",
+   "pt-BR": "Diário",
+   "en": "Daily",
+   "es": "Diario",
+   "from": "app~",
+   "note": "app: \"Once a day\""
+  },
+  {
+   "id": "al.week",
+   "t": "27,25–30,25",
+   "pt-BR": "Semanal",
+   "en": "Weekly",
+   "es": "Semanal",
+   "from": "app~",
+   "note": "app: \"Once a week\""
+  },
+  {
+   "id": "capE",
+   "t": "27,5–30,25",
+   "pt-BR": "Só vagas abertas e verificadas recentemente.",
+   "en": "Only open jobs, recently verified.",
+   "es": "Solo empleos abiertos y verificados recientemente.",
+   "from": "app~",
+   "note": "ssAlertsHelp"
+  },
+  {
+   "id": "hF",
+   "t": "31,25–36,25",
+   "pt-BR": "Sua candidatura,\netapa por etapa.",
+   "en": "Your application,\nstep by step.",
+   "es": "Tu postulación,\npaso a paso.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "st.interested",
+   "t": "31,5–36,25",
+   "pt-BR": "Interessado",
+   "en": "Interested",
+   "es": "Interesado",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "st.applied",
+   "t": "31,5–36,25",
+   "pt-BR": "Inscrito",
+   "en": "Applied",
+   "es": "Postulado",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "st.screening",
+   "t": "31,5–36,25",
+   "pt-BR": "Triagem",
+   "en": "Screening",
+   "es": "Selección",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "st.interview",
+   "t": "31,75–36,25",
+   "pt-BR": "Entrevista",
+   "en": "Interview",
+   "es": "Entrevista",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "st.offer",
+   "t": "31,75–36,25",
+   "pt-BR": "Proposta",
+   "en": "Offer",
+   "es": "Oferta",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "st.hired",
+   "t": "31,75–36,25",
+   "pt-BR": "Contratado",
+   "en": "Hired",
+   "es": "Contratado",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "stK",
+   "t": "31,75–36,25",
+   "pt-BR": "Etapa",
+   "en": "Stage",
+   "es": "Etapa",
+   "from": "app",
+   "note": "applicationStageLabel"
+  },
+  {
+   "id": "remind",
+   "t": "33,75–35",
+   "pt-BR": "Entrevista nas próximas 24 horas",
+   "en": "Interview in the next 24 hours",
+   "es": "Entrevista en las próximas 24 horas",
+   "from": "app",
+   "note": "ntReminderInterview"
+  },
+  {
+   "id": "capF",
+   "t": "34,5–36,25",
+   "pt-BR": "Você decide a etapa.",
+   "en": "You decide the stage.",
+   "es": "Tú decides la etapa.",
+   "from": "app~",
+   "note": "apStageHint"
+  },
+  {
+   "id": "capF2",
+   "t": "35–36,25",
+   "pt-BR": "O OrbiJob nunca contata o empregador.",
+   "en": "OrbiJob never contacts the employer.",
+   "es": "OrbiJob nunca contacta al empleador.",
+   "from": "app~",
+   "note": "apStageHint"
+  },
+  {
+   "id": "tag1",
+   "t": "39,5–43",
+   "pt-BR": "Oportunidades no mundo inteiro.",
+   "en": "Opportunities worldwide.",
+   "es": "Oportunidades en todo el mundo.",
+   "from": "proposta",
+   "note": "slogan final, linha 1"
+  },
+  {
+   "id": "tag2",
+   "t": "40–43",
+   "pt-BR": "Sua carreira organizada.",
+   "en": "Your career, organized.",
+   "es": "Tu carrera, organizada.",
+   "from": "proposta",
+   "note": "slogan final, linha 2 (em destaque)"
+  }
+ ]
+}

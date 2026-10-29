@@ -1,0 +1,395 @@
+{
+ "video": "bebometro",
+ "title": "Bebômetro",
+ "origin": "pt-BR",
+ "sources": [
+  "tools/video-bebometro/index.html"
+ ],
+ "protected": [
+  "Bebômetro",
+  "Bafômetro",
+  "João",
+  "Gleidson",
+  "Rodrigo",
+  "cachaça"
+ ],
+ "keep": [
+  "Bebômetro (marca/logo)",
+  "João · Gleidson · Rodrigo (apelidos ilustrativos)",
+  "R$ 235,00 · 180,00 · 55,00 · 23,50 · 86,17 · 86,16 · 258,50 (valores BRL)",
+  "400 ml · 600 ml · 200 ml",
+  "÷ 3",
+  "01/03 · 02/03 · 03/03"
+ ],
+ "strings": [
+  {
+   "id": "sub",
+   "t": "4,75–5,25",
+   "pt-BR": "Seu rolê, registrado.",
+   "en": "Your night out, logged.",
+   "es": "Tu salida, registrada.",
+   "from": "proposta",
+   "note": "\"rolê\" = saída/balada; o app usa \"outing/salida\""
+  },
+  {
+   "id": "h1",
+   "t": "6–9,75",
+   "pt-BR": "Começou\no rolê.",
+   "en": "The night out\nbegins.",
+   "es": "Empezó\nla salida.",
+   "from": "proposta",
+   "note": "título grande, 2 linhas, 2ª em destaque"
+  },
+  {
+   "id": "pill",
+   "t": "6,25–9,25",
+   "pt-BR": "Mais uma",
+   "en": "One more",
+   "es": "Otra más",
+   "from": "app",
+   "note": "repeatButton: botão que repete o último pedido"
+  },
+  {
+   "id": "cntLab",
+   "t": "7,5–9,25",
+   "pt-BR": "Chope 400 ml",
+   "en": "Draft beer 400 ml",
+   "es": "Cerveza de barril 400 ml",
+   "from": "app~",
+   "note": "app: categoryDraft; texto mais longo, risco de layout"
+  },
+  {
+   "id": "h5",
+   "t": "10–14",
+   "pt-BR": "Do chope ao\ncoquetel.",
+   "en": "From draft beer\nto cocktails.",
+   "es": "De la cerveza de barril\nal cóctel.",
+   "from": "proposta",
+   "note": "es é mais longo (reduzir fonte ou reformular)"
+  },
+  {
+   "id": "v.beer",
+   "t": "10–14",
+   "pt-BR": "Cerveja",
+   "en": "Beer",
+   "es": "Cerveza",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "v.draft",
+   "t": "10,25–14",
+   "pt-BR": "Chope",
+   "en": "Draft",
+   "es": "Barril",
+   "from": "app~",
+   "note": "rótulo curto de categoryDraft"
+  },
+  {
+   "id": "v.zero",
+   "t": "10,5–14",
+   "pt-BR": "Sem álcool",
+   "en": "Non-alcoholic",
+   "es": "Sin alcohol",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "v.spirit",
+   "t": "10,5–14",
+   "pt-BR": "Destilados",
+   "en": "Spirits",
+   "es": "Destilados",
+   "from": "app~",
+   "note": ""
+  },
+  {
+   "id": "v.rtd",
+   "t": "10,75–14",
+   "pt-BR": "Prontos",
+   "en": "Ready-to-drink",
+   "es": "Bebidas listas",
+   "from": "app~",
+   "note": "rótulo pequeno; es é mais longo"
+  },
+  {
+   "id": "v.cocktail",
+   "t": "10,75–14",
+   "pt-BR": "Coquetéis",
+   "en": "Cocktails",
+   "es": "Cócteles",
+   "from": "app~",
+   "note": ""
+  },
+  {
+   "id": "vNote",
+   "t": "11–12,25",
+   "pt-BR": "Catálogo completo e os seus próprios drinks",
+   "en": "Full catalog plus your own drinks",
+   "es": "Catálogo completo y tus propias bebidas",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "ch.bar",
+   "t": "12,5–14",
+   "pt-BR": "Bar",
+   "en": "Bar",
+   "es": "Bar",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "ch.bbq",
+   "t": "12,5–14",
+   "pt-BR": "Churrasco",
+   "en": "Barbecue",
+   "es": "Asado",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "ch.beach",
+   "t": "12,5–14",
+   "pt-BR": "Praia",
+   "en": "Beach",
+   "es": "Playa",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "ch.club",
+   "t": "12,75–14",
+   "pt-BR": "Balada",
+   "en": "Club",
+   "es": "Discoteca",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "ch.home",
+   "t": "12,75–14",
+   "pt-BR": "Casa",
+   "en": "Home",
+   "es": "Casa",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "ch.rest",
+   "t": "12,75–14",
+   "pt-BR": "Restaurante",
+   "en": "Restaurant",
+   "es": "Restaurante",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "cap1",
+   "t": "14,75–17,5",
+   "pt-BR": "Garrafa\ndividida",
+   "en": "Bottle\nsplit",
+   "es": "Botella\ndividida",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "foot1",
+   "t": "16,75–17,5",
+   "pt-BR": "Porções iguais ou personalizadas",
+   "en": "Equal or custom shares",
+   "es": "Porciones iguales o personalizadas",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "billLab",
+   "t": "17,75–21,75",
+   "pt-BR": "Comanda",
+   "en": "Tab",
+   "es": "Cuenta",
+   "from": "app",
+   "note": "summaryTab"
+  },
+  {
+   "id": "foot2",
+   "t": "18–21,75",
+   "pt-BR": "Valores ilustrativos",
+   "en": "Illustrative amounts",
+   "es": "Valores ilustrativos",
+   "from": "proposta",
+   "note": "aviso de que os valores são exemplos"
+  },
+  {
+   "id": "bc0",
+   "t": "18,25–19,25",
+   "pt-BR": "12 × Chope 400 ml",
+   "en": "12 × Draft beer 400 ml",
+   "es": "12 × Cerveza de barril 400 ml",
+   "from": "app~",
+   "note": "quantidade 12 é dado"
+  },
+  {
+   "id": "bc1",
+   "t": "19–19,75",
+   "pt-BR": "Porção",
+   "en": "Snack platter",
+   "es": "Ración",
+   "from": "proposta",
+   "note": "\"porção\" = prato de petisco, não parcela da conta; revisar"
+  },
+  {
+   "id": "bc2",
+   "t": "19,5–20,25",
+   "pt-BR": "Serviço 10%",
+   "en": "Service 10%",
+   "es": "Servicio 10%",
+   "from": "app",
+   "note": "tabServiceLine"
+  },
+  {
+   "id": "pago",
+   "t": "21,25–21,75",
+   "pt-BR": "pago",
+   "en": "paid",
+   "es": "pagado",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "ghost",
+   "t": "22,75–26,25",
+   "pt-BR": "RESENHA",
+   "en": "GAMES",
+   "es": "JUEGOS",
+   "from": "app",
+   "note": "\"Resenha\" é a aba de jogos (navGames)"
+  },
+  {
+   "id": "tg",
+   "t": "23–26,25",
+   "pt-BR": "Resenha",
+   "en": "Games",
+   "es": "Juegos",
+   "from": "app",
+   "note": "navGames"
+  },
+  {
+   "id": "gameLab",
+   "t": "23,75–26,25",
+   "pt-BR": "3 jogos offline · sem placar, sem punição",
+   "en": "3 offline games · no scoreboard, no penalties",
+   "es": "3 juegos sin conexión · sin marcador, sin castigos",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "g.never",
+   "t": "23–28,5",
+   "pt-BR": "Eu nunca",
+   "en": "Never have I ever",
+   "es": "Yo nunca",
+   "from": "app",
+   "note": "gameNeverTitle"
+  },
+  {
+   "id": "g.most",
+   "t": "24–26,25",
+   "pt-BR": "Quem é mais provável",
+   "en": "Most likely to",
+   "es": "Quién es más probable",
+   "from": "app",
+   "note": "gameMostTitle"
+  },
+  {
+   "id": "g.truth",
+   "t": "25–26,25",
+   "pt-BR": "Verdade ou desafio",
+   "en": "Truth or dare",
+   "es": "Verdad o reto",
+   "from": "app",
+   "note": "gameTruthTitle"
+  },
+  {
+   "id": "g.light",
+   "t": "23–26,25",
+   "pt-BR": "Leve",
+   "en": "Light",
+   "es": "Ligero",
+   "from": "app",
+   "note": "gameModeLight"
+  },
+  {
+   "id": "g.kTruth",
+   "t": "25,25–26,25",
+   "pt-BR": "Verdade",
+   "en": "Truth",
+   "es": "Verdad",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "g.kDare",
+   "t": "25,25–26,25",
+   "pt-BR": "Desafio",
+   "en": "Dare",
+   "es": "Reto",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "q.never",
+   "t": "23–26,25",
+   "pt-BR": "Eu nunca cantei no chuveiro como se fosse um show.",
+   "en": "Never have I ever sung in the shower like it was a concert.",
+   "es": "Yo nunca he cantado en la ducha como si fuera un show.",
+   "from": "proposta",
+   "note": "carta de jogo; texto longo"
+  },
+  {
+   "id": "q.most",
+   "t": "24–26,25",
+   "pt-BR": "Quem é mais provável de pedir comida mesmo depois de ter jantado?",
+   "en": "Who is most likely to order food even after dinner?",
+   "es": "¿Quién es más probable que pida comida incluso después de cenar?",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "q.truth",
+   "t": "25–26,25",
+   "pt-BR": "Qual foi a maior mentira inofensiva que você já contou?",
+   "en": "What's the biggest harmless lie you've ever told?",
+   "es": "¿Cuál es la mentira inofensiva más grande que has dicho?",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "h4",
+   "t": "26,25–28",
+   "pt-BR": "Bafômetro",
+   "en": "Bafômetro",
+   "es": "Bafômetro",
+   "from": "app",
+   "note": "o app mantém o nome nos 3 idiomas (bafoTitle)"
+  },
+  {
+   "id": "tag1",
+   "t": "31,25–35,25",
+   "pt-BR": "Chope, cachaça",
+   "en": "Draft beer, cachaça",
+   "es": "Cerveza de barril, cachaça",
+   "from": "proposta",
+   "note": "slogan final, linha 1; \"cachaça\" é nome de bebida e permanece"
+  },
+  {
+   "id": "tag2",
+   "t": "31,5–35,25",
+   "pt-BR": "e resenha.",
+   "en": "and good company.",
+   "es": "y buena compañía.",
+   "from": "proposta",
+   "note": "slogan final, linha 2 (em destaque); \"resenha\" = papo/convívio, sem equivalente exato"
+  }
+ ]
+}

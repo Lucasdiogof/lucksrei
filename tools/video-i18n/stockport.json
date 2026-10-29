@@ -1,0 +1,738 @@
+{
+ "video": "stockport",
+ "title": "StockPort",
+ "origin": "pt-BR",
+ "sources": [
+  "tools/video-stockport/src"
+ ],
+ "protected": [
+  "StockPort",
+  "Lucksrei",
+  "Pix",
+  "Mercado Bom Dia",
+  "Distribuidora Serra",
+  "Mariana Souza"
+ ],
+ "keep": [
+  "StockPort System (logo)",
+  "catálogo demonstrativo brasileiro: Café Torrado 500 g, Água Mineral 1,5 L, Caderno 96 folhas, Sabão em Pó 1 kg, Biscoito Água e Sal, Detergente 500 ml",
+  "categorias do catálogo: Mercearia, Bebidas, Papelaria, Limpeza (decisão pendente, ver nota)",
+  "Distribuidora Serra · Mariana Souza · Mercado Bom Dia",
+  "R$ (BRL) e números",
+  "código de barras 7 891234 500017",
+  "Pix"
+ ],
+ "strings": [
+  {
+   "id": "h.open",
+   "t": "3–6",
+   "pt-BR": "Estoque, vendas e caixa.\nTudo em um só lugar.",
+   "en": "Inventory, sales and cash register.\nEverything in one place.",
+   "es": "Inventario, ventas y caja.\nTodo en un solo lugar.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "sub.open",
+   "t": "3,5–6",
+   "pt-BR": "Gestão simples para o seu comércio.",
+   "en": "Simple management for your business.",
+   "es": "Gestión simple para tu negocio.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "h.prod",
+   "t": "6,25–8,25",
+   "pt-BR": "Cadastre e organize\nseus produtos.",
+   "en": "Register and organize\nyour products.",
+   "es": "Registra y organiza\ntus productos.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "p.title",
+   "t": "8,25–12",
+   "pt-BR": "Produtos",
+   "en": "Products",
+   "es": "Productos",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "p.new",
+   "t": "8,25–12",
+   "pt-BR": "Novo produto",
+   "en": "New product",
+   "es": "Nuevo producto",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "p.search",
+   "t": "8,25–27,25",
+   "pt-BR": "Buscar produto ou ler código de barras",
+   "en": "Search product or scan barcode",
+   "es": "Buscar producto o leer código de barras",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "p.all",
+   "t": "8,75–12",
+   "pt-BR": "Todos",
+   "en": "All",
+   "es": "Todos",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "p.unit",
+   "t": "8,75–18,75",
+   "pt-BR": "un.",
+   "en": "pcs",
+   "es": "uds.",
+   "from": "proposta",
+   "note": "unidade"
+  },
+  {
+   "id": "p.low",
+   "t": "9–18,75",
+   "pt-BR": "Estoque baixo",
+   "en": "Low stock",
+   "es": "Stock bajo",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "p.found",
+   "t": "10,75–11,25",
+   "pt-BR": "Produto encontrado",
+   "en": "Product found",
+   "es": "Producto encontrado",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "p.price",
+   "t": "11,5–12",
+   "pt-BR": "Preço de venda",
+   "en": "Sale price",
+   "es": "Precio de venta",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "p.stock",
+   "t": "11,5–12",
+   "pt-BR": "Em estoque",
+   "en": "In stock",
+   "es": "En stock",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "p.min",
+   "t": "11,5–12",
+   "pt-BR": "Estoque mínimo",
+   "en": "Minimum stock",
+   "es": "Stock mínimo",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "p.code",
+   "t": "11,5–12",
+   "pt-BR": "Código",
+   "en": "Code",
+   "es": "Código",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "h.stock",
+   "t": "12,25–18,75",
+   "pt-BR": "Acompanhe entradas, saídas\ne estoque baixo.",
+   "en": "Track stock in, stock out\nand low stock.",
+   "es": "Controla entradas, salidas\ny stock bajo.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "s.in",
+   "t": "15–17",
+   "pt-BR": "Entrada registrada",
+   "en": "Stock in recorded",
+   "es": "Entrada registrada",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "s.minShort",
+   "t": "15–17",
+   "pt-BR": "mín.",
+   "en": "min.",
+   "es": "mín.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "s.hist",
+   "t": "15,5–18,75",
+   "pt-BR": "Histórico de movimentações",
+   "en": "Movement history",
+   "es": "Historial de movimientos",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "s.today",
+   "t": "15,5–36",
+   "pt-BR": "Hoje",
+   "en": "Today",
+   "es": "Hoy",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "s.balance",
+   "t": "15,5–18,75",
+   "pt-BR": "saldo",
+   "en": "balance",
+   "es": "saldo",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "s.sale",
+   "t": "15,5–18,75",
+   "pt-BR": "Venda #{n}",
+   "en": "Sale #{n}",
+   "es": "Venta #{n}",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "s.adj",
+   "t": "15,5–18,75",
+   "pt-BR": "Ajuste · avaria",
+   "en": "Adjustment · damage",
+   "es": "Ajuste · avería",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "s.minUnits",
+   "t": "17,25–18,75",
+   "pt-BR": "mínimo {n} un.",
+   "en": "minimum {n} pcs",
+   "es": "mínimo {n} uds.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "h.pos",
+   "t": "19–25",
+   "pt-BR": "Registre vendas\ncom mais agilidade.",
+   "en": "Record sales\nfaster.",
+   "es": "Registra ventas\ncon más agilidad.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.new",
+   "t": "18,75–27,25",
+   "pt-BR": "Nova venda",
+   "en": "New sale",
+   "es": "Nueva venta",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.open",
+   "t": "18,75–27,25",
+   "pt-BR": "Caixa aberto",
+   "en": "Register open",
+   "es": "Caja abierta",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.cart",
+   "t": "22–23,5",
+   "pt-BR": "Carrinho",
+   "en": "Cart",
+   "es": "Carrito",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.nocust",
+   "t": "22–23,5",
+   "pt-BR": "Sem cliente (toque para escolher)",
+   "en": "No customer (tap to choose)",
+   "es": "Sin cliente (toca para elegir)",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.cust",
+   "t": "22,25–23,5",
+   "pt-BR": "Cliente · {n} compras",
+   "en": "Customer · {n} purchases",
+   "es": "Cliente · {n} compras",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.per",
+   "t": "22–23,5",
+   "pt-BR": "/ un.",
+   "en": "/ pc.",
+   "es": "/ ud.",
+   "from": "proposta",
+   "note": "preço por unidade"
+  },
+  {
+   "id": "c.items",
+   "t": "22,25–23,25",
+   "pt-BR": "{n} itens",
+   "en": "{n} items",
+   "es": "{n} artículos",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.subtotal",
+   "t": "22–23,5",
+   "pt-BR": "Subtotal",
+   "en": "Subtotal",
+   "es": "Subtotal",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.discount",
+   "t": "22,25–23,5",
+   "pt-BR": "Desconto",
+   "en": "Discount",
+   "es": "Descuento",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.total",
+   "t": "22–23,5",
+   "pt-BR": "Total",
+   "en": "Total",
+   "es": "Total",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.pay",
+   "t": "23,5–27,25",
+   "pt-BR": "Pagamento",
+   "en": "Payment",
+   "es": "Pago",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.charge",
+   "t": "23,5–27,25",
+   "pt-BR": "Receber",
+   "en": "Charge",
+   "es": "Cobrar",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.cash",
+   "t": "23,75–27,25",
+   "pt-BR": "Dinheiro",
+   "en": "Cash",
+   "es": "Efectivo",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.debit",
+   "t": "23,75–27,25",
+   "pt-BR": "Débito",
+   "en": "Debit",
+   "es": "Débito",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.credit",
+   "t": "23,75–27,25",
+   "pt-BR": "Crédito",
+   "en": "Credit",
+   "es": "Crédito",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.other",
+   "t": "23,75–27,25",
+   "pt-BR": "Outro",
+   "en": "Other",
+   "es": "Otro",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.paid",
+   "t": "23,75–27,25",
+   "pt-BR": "Pago",
+   "en": "Paid",
+   "es": "Pagado",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.short",
+   "t": "23,75–27,25",
+   "pt-BR": "Falta",
+   "en": "Remaining",
+   "es": "Falta",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.change",
+   "t": "23,75–27,25",
+   "pt-BR": "Troco",
+   "en": "Change",
+   "es": "Vuelto",
+   "from": "proposta",
+   "note": "es-AR/UY \"vuelto\"; es-ES \"cambio\""
+  },
+  {
+   "id": "c.confirm",
+   "t": "23,75–27,25",
+   "pt-BR": "Confirmar venda",
+   "en": "Confirm sale",
+   "es": "Confirmar venta",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.done",
+   "t": "25,5–27",
+   "pt-BR": "Venda registrada.",
+   "en": "Sale recorded.",
+   "es": "Venta registrada.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.doneLine",
+   "t": "25,5–27",
+   "pt-BR": "Venda #{n} · {itens} itens · {valor}",
+   "en": "Sale #{n} · {itens} items · {valor}",
+   "es": "Venta #{n} · {itens} artículos · {valor}",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.stockUpd",
+   "t": "25,5–27",
+   "pt-BR": "Estoque atualizado · {produto} {a} → {b} un.",
+   "en": "Stock updated · {produto} {a} → {b} pcs",
+   "es": "Inventario actualizado · {produto} {a} → {b} uds.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.pdf",
+   "t": "25,5–27",
+   "pt-BR": "Recibo em PDF",
+   "en": "PDF receipt",
+   "es": "Recibo en PDF",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "c.split",
+   "t": "25,5–27",
+   "pt-BR": "{a} + {b}",
+   "en": "{a} + {b}",
+   "es": "{a} + {b}",
+   "from": "proposta",
+   "note": "\"Pix + Dinheiro\" → Pix + Cash / Pix + Efectivo"
+  },
+  {
+   "id": "h.res",
+   "t": "27,4–36,5",
+   "pt-BR": "Entenda seus resultados.",
+   "en": "Understand your results.",
+   "es": "Entiende tus resultados.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "r.rev",
+   "t": "28–34,75",
+   "pt-BR": "Faturamento hoje",
+   "en": "Revenue today",
+   "es": "Facturación de hoy",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "r.profit",
+   "t": "28–34,75",
+   "pt-BR": "Lucro hoje · estimado",
+   "en": "Profit today · estimated",
+   "es": "Ganancia de hoy · estimada",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "r.sales",
+   "t": "28–34,75",
+   "pt-BR": "Vendas hoje",
+   "en": "Sales today",
+   "es": "Ventas de hoy",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "r.salesN",
+   "t": "28–34,75",
+   "pt-BR": "{n} vendas registradas",
+   "en": "{n} sales recorded",
+   "es": "{n} ventas registradas",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "r.ticket",
+   "t": "28–34,75",
+   "pt-BR": "ticket médio",
+   "en": "average ticket",
+   "es": "ticket promedio",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "r.cost",
+   "t": "28–34,75",
+   "pt-BR": "perfis com acesso a custos",
+   "en": "profiles with cost access",
+   "es": "perfiles con acceso a costos",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "r.perDay",
+   "t": "29–34,75",
+   "pt-BR": "Faturamento por dia",
+   "en": "Revenue per day",
+   "es": "Facturación por día",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "r.14d",
+   "t": "29–34,75",
+   "pt-BR": "Últimos 14 dias",
+   "en": "Last 14 days",
+   "es": "Últimos 14 días",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "r.restock",
+   "t": "29–34,75",
+   "pt-BR": "Produtos para repor",
+   "en": "Products to restock",
+   "es": "Productos por reponer",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "r.top",
+   "t": "29–34,75",
+   "pt-BR": "Produtos mais vendidos",
+   "en": "Best-selling products",
+   "es": "Productos más vendidos",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "r.byPay",
+   "t": "29–34,75",
+   "pt-BR": "Por forma de pagamento",
+   "en": "By payment method",
+   "es": "Por forma de pago",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "r.below",
+   "t": "32–34,75",
+   "pt-BR": "produtos abaixo do mínimo",
+   "en": "products below minimum",
+   "es": "productos por debajo del mínimo",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "r.closed",
+   "t": "32–34,75",
+   "pt-BR": "Caixa fechado",
+   "en": "Register closed",
+   "es": "Caja cerrada",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "r.drawer",
+   "t": "32–34,75",
+   "pt-BR": "Gaveta do caixa",
+   "en": "Cash drawer",
+   "es": "Gaveta de caja",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "r.stockVal",
+   "t": "32–34,75",
+   "pt-BR": "Valor do estoque",
+   "en": "Stock value",
+   "es": "Valor del inventario",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "r.avgCost",
+   "t": "32–34,75",
+   "pt-BR": "ao custo médio",
+   "en": "at average cost",
+   "es": "a costo promedio",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "rp.title",
+   "t": "35,25–36,5",
+   "pt-BR": "Relatório de vendas",
+   "en": "Sales report",
+   "es": "Informe de ventas",
+   "from": "proposta",
+   "note": "PDF simulado"
+  },
+  {
+   "id": "rp.period",
+   "t": "35,25–36,5",
+   "pt-BR": "{de} a {ate} · gerado em {dia} às {hora}",
+   "en": "{de} to {ate} · generated on {dia} at {hora}",
+   "es": "{de} a {ate} · generado el {dia} a las {hora}",
+   "from": "proposta",
+   "note": "formato de data/hora localizado"
+  },
+  {
+   "id": "rp.salesH",
+   "t": "35,25–36,5",
+   "pt-BR": "Vendas",
+   "en": "Sales",
+   "es": "Ventas",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "rp.revH",
+   "t": "35,25–36,5",
+   "pt-BR": "Faturamento",
+   "en": "Revenue",
+   "es": "Facturación",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "rp.profH",
+   "t": "35,25–36,5",
+   "pt-BR": "Lucro est.",
+   "en": "Est. profit",
+   "es": "Ganancia est.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "rp.marginH",
+   "t": "35,25–36,5",
+   "pt-BR": "Margem",
+   "en": "Margin",
+   "es": "Margen",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "rp.perDay",
+   "t": "35,25–36,5",
+   "pt-BR": "FATURAMENTO POR DIA",
+   "en": "REVENUE PER DAY",
+   "es": "FACTURACIÓN POR DÍA",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "rp.colProd",
+   "t": "35,5–36,5",
+   "pt-BR": "Produto",
+   "en": "Product",
+   "es": "Producto",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "rp.colQty",
+   "t": "35,5–36,5",
+   "pt-BR": "Qtd.",
+   "en": "Qty.",
+   "es": "Cant.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "rp.page",
+   "t": "35,5–36,5",
+   "pt-BR": "página {n} de {m}",
+   "en": "page {n} of {m}",
+   "es": "página {n} de {m}",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "h.end",
+   "t": "39,75–43,5",
+   "pt-BR": "Do estoque à venda.\nTudo conectado.",
+   "en": "From stock to sale.\nEverything connected.",
+   "es": "Del inventario a la venta.\nTodo conectado.",
+   "from": "proposta",
+   "note": "slogan oficial do filme; confirmar com o dono"
+  },
+  {
+   "id": "lic",
+   "t": "40,5–43,5",
+   "pt-BR": "Licença de uso do software",
+   "en": "Software license",
+   "es": "Licencia de uso del software",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "sig",
+   "t": "40,5–43,5",
+   "pt-BR": "Um produto Lucksrei",
+   "en": "A Lucksrei product",
+   "es": "Un producto Lucksrei",
+   "from": "proposta",
+   "note": ""
+  }
+ ]
+}

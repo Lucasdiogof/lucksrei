@@ -1,0 +1,242 @@
+{
+ "video": "busaogyn",
+ "title": "BusãoGyn",
+ "origin": "pt-BR",
+ "sources": [
+  "tools/video-busaogyn/index.html"
+ ],
+ "protected": [
+  "BusãoGyn",
+  "T Paulo Garcia",
+  "T MARANATA",
+  "Goiânia",
+  "CENTRO"
+ ],
+ "keep": [
+  "Busão|Gyn (marca)",
+  "003 · 004 (linhas)",
+  "T MARANATA · T PAULO GARCIA · CENTRO (destinos)",
+  "30402 (código do ponto)",
+  "50501 (ônibus)",
+  "min",
+  "16 (linhas, número)"
+ ],
+ "strings": [
+  {
+   "id": "h1",
+   "t": "0,5–1,5",
+   "pt-BR": "Cadê\no busão?",
+   "en": "Where's\nthe bus?",
+   "es": "¿Dónde está\nel bus?",
+   "from": "proposta",
+   "note": "gíria \"busão\"; 2ª linha em destaque. O app usa \"autobús\" em es; aqui \"bus\" pelo tom coloquial."
+  },
+  {
+   "id": "tag.one",
+   "t": "4,25–5,5",
+   "pt-BR": "Saiba onde seu ônibus está.",
+   "en": "Know where your bus is.",
+   "es": "Sabe dónde está tu autobús.",
+   "from": "proposta",
+   "note": "slogan; es em tuteo, como o app"
+  },
+  {
+   "id": "tag.two",
+   "t": "39,75–42",
+   "pt-BR": "Saiba onde\nseu ônibus está.",
+   "en": "Know where\nyour bus is.",
+   "es": "Sabe dónde\nestá tu autobús.",
+   "from": "proposta",
+   "note": "mesmo slogan em 2 linhas (final e pôster)"
+  },
+  {
+   "id": "hB",
+   "t": "6,25–12,25",
+   "pt-BR": "Digite o código\ndo ponto.",
+   "en": "Enter the\nstop code.",
+   "es": "Escribe el código\nde la parada.",
+   "from": "app~",
+   "note": "app: searchInvalidTitle"
+  },
+  {
+   "id": "plab",
+   "t": "7,25–9,75",
+   "pt-BR": "Código na placa do ponto",
+   "en": "Code on the stop sign",
+   "es": "Código en el letrero de la parada",
+   "from": "app~",
+   "note": "app: \"stop sign\" / \"letrero de la parada\""
+  },
+  {
+   "id": "chip.rt",
+   "t": "9,75–19,5",
+   "pt-BR": "Tempo real",
+   "en": "Real time",
+   "es": "Tiempo real",
+   "from": "app",
+   "note": "qualityRealtime"
+  },
+  {
+   "id": "chip.sc",
+   "t": "15,5–19,5",
+   "pt-BR": "Programado",
+   "en": "Scheduled",
+   "es": "Programado",
+   "from": "app",
+   "note": "qualityScheduled"
+  },
+  {
+   "id": "chip.un",
+   "t": "17–19,5",
+   "pt-BR": "Não confirmado",
+   "en": "Unconfirmed",
+   "es": "No confirmado",
+   "from": "app",
+   "note": "qualityUnknownShort"
+  },
+  {
+   "id": "hC",
+   "t": "13,25–19,25",
+   "pt-BR": "Cada chegada\ndiz de onde vem.",
+   "en": "Every arrival\nshows its source.",
+   "es": "Cada llegada\nmuestra su origen.",
+   "from": "proposta",
+   "note": "a ideia é a origem do dado; versões curtas para caber no recorte central"
+  },
+  {
+   "id": "ql0",
+   "t": "14,25–19,5",
+   "pt-BR": "Posição do GPS da fonte",
+   "en": "GPS position from the source",
+   "es": "Posición GPS de la fuente",
+   "from": "proposta",
+   "note": "hoje já é cortado pelo recorte 1080 de 1920; as traduções devem caber"
+  },
+  {
+   "id": "ql1",
+   "t": "15,75–19,5",
+   "pt-BR": "Horário de tabela",
+   "en": "Timetable schedule",
+   "es": "Horario de tabla",
+   "from": "app~",
+   "note": ""
+  },
+  {
+   "id": "ql2",
+   "t": "17,25–19,5",
+   "pt-BR": "Sem confirmação",
+   "en": "No confirmation",
+   "es": "Sin confirmación",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "capC",
+   "t": "17,5–19,5",
+   "pt-BR": "Dado antigo nunca aparece como ao vivo.",
+   "en": "Old data never shows as live.",
+   "es": "Un dato antiguo nunca aparece como en vivo.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "hD",
+   "t": "19,75–21,75",
+   "pt-BR": "Acompanhe\nno mapa.",
+   "en": "Follow it\non the map.",
+   "es": "Síguelo\nen el mapa.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "hud.live",
+   "t": "21,5–32,5",
+   "pt-BR": "Ao vivo",
+   "en": "Live",
+   "es": "En vivo",
+   "from": "app",
+   "note": "liveLabel"
+  },
+  {
+   "id": "hud.age",
+   "t": "21,5–29,75",
+   "pt-BR": "há {n} s",
+   "en": "{n} s ago",
+   "es": "hace {n} s",
+   "from": "app~",
+   "note": "app: \"{age} ago\" / \"hace {age}\""
+  },
+  {
+   "id": "ctx.bus",
+   "t": "21,75–32,5",
+   "pt-BR": "Ônibus {n}",
+   "en": "Bus {n}",
+   "es": "Autobús {n}",
+   "from": "app",
+   "note": "detailBus"
+  },
+  {
+   "id": "ctx.head",
+   "t": "21,75–32,5",
+   "pt-BR": "Indo para {destino}",
+   "en": "Heading to {destino}",
+   "es": "Rumbo a {destino}",
+   "from": "app",
+   "note": "{destino} = T Paulo Garcia (nome do terminal, não traduzir)"
+  },
+  {
+   "id": "eta",
+   "t": "22,75–32,5",
+   "pt-BR": "min até o ponto {codigo}",
+   "en": "min to stop {codigo}",
+   "es": "min hasta la parada {codigo}",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "hE",
+   "t": "32,75–36",
+   "pt-BR": "Seus pontos,\nguardados.",
+   "en": "Your stops,\nsaved.",
+   "es": "Tus paradas,\nguardadas.",
+   "from": "proposta",
+   "note": "\"ponto\" = parada de ônibus (app: Stop / Parada)"
+  },
+  {
+   "id": "fav.stop",
+   "t": "33–36,25",
+   "pt-BR": "Ponto {codigo}",
+   "en": "Stop {codigo}",
+   "es": "Parada {codigo}",
+   "from": "app",
+   "note": "stopWord"
+  },
+  {
+   "id": "fav.lines",
+   "t": "33–36,25",
+   "pt-BR": "{n} linhas",
+   "en": "{n} lines",
+   "es": "{n} líneas",
+   "from": "app~",
+   "note": ""
+  },
+  {
+   "id": "capE",
+   "t": "34,5–36,25",
+   "pt-BR": "Favoritos e recentes ficam só no seu aparelho.",
+   "en": "Favorites and recents stay only on your device.",
+   "es": "Los favoritos y recientes se quedan solo en tu dispositivo.",
+   "from": "app~",
+   "note": "o app usa \"dispositivo/device\""
+  },
+  {
+   "id": "tag.region",
+   "t": "40,75–42",
+   "pt-BR": "Goiânia e Região Metropolitana",
+   "en": "Goiânia and its Metropolitan Region",
+   "es": "Goiânia y su Región Metropolitana",
+   "from": "proposta",
+   "note": "dado local do Brasil permanece; só a frase é traduzida"
+  }
+ ]
+}

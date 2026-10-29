@@ -1,0 +1,338 @@
+{
+ "video": "goias-app",
+ "title": "Goiás App",
+ "origin": "pt-BR",
+ "sources": [
+  "../fan-hub-launch-film/js",
+  "../fan-hub-launch-film/film.html"
+ ],
+ "protected": [
+  "Goiás",
+  "Avaí",
+  "Independiente",
+  "GOIÁS APP",
+  "Goiás Esporte Clube",
+  "Hailé Pinheiro",
+  "Jean Carlos",
+  "Kadu Sousa",
+  "Daniel Penha",
+  "Josué",
+  "Verdão"
+ ],
+ "keep": [
+  "GOIÁS APP (marca/lockup)",
+  "Goiás · Avaí · Independiente (clubes e escudos)",
+  "jogadores e usernames fictícios (bia.esmeraldina, rafa_verdao…)",
+  "BRASILEIRÃO SÉRIE B (nome da competição)",
+  "Estádio Hailé Pinheiro (nome próprio)",
+  "ARENA",
+  "placares, minutos, números, 4-2-3-1, 3-5-2",
+  "carreira do Josué: Goiás, São Paulo, Wolfsburg, Atlético-MG; elenco da final de 2010 (Harlei…)"
+ ],
+ "sources_note": "fonte fora deste repositório (fan-hub-launch-film, Git local); referência = film.html?v=4 (27 s)",
+ "unchecked": [
+  "m.date",
+  "ev.goalLine",
+  "ev.yellow",
+  "g.lineup.ctx"
+ ],
+ "strings": [
+  {
+   "id": "slogan",
+   "t": "0–3",
+   "pt-BR": "O MAIOR DO CENTRO-OESTE",
+   "en": "THE BIGGEST IN BRAZIL'S CENTER-WEST",
+   "es": "EL MAYOR DEL CENTRO-OESTE DE BRASIL",
+   "from": "proposta",
+   "note": "slogan; \"Centro-Oeste\" é região do Brasil"
+  },
+  {
+   "id": "m.date",
+   "t": "3,5–15,25",
+   "pt-BR": "Domingo, 20 set 2026 · 16h00 · Estádio Hailé Pinheiro",
+   "en": "Sunday, Sep 20, 2026 · 4:00 PM · Estádio Hailé Pinheiro",
+   "es": "Domingo, 20 sep 2026 · 16:00 · Estádio Hailé Pinheiro",
+   "from": "proposta",
+   "note": "formato de data/hora localizado; nome do estádio permanece"
+  },
+  {
+   "id": "live",
+   "t": "4,5–16,75",
+   "pt-BR": "AO VIVO",
+   "en": "LIVE",
+   "es": "EN VIVO",
+   "from": "app",
+   "note": "matchStatusLive"
+  },
+  {
+   "id": "lineup",
+   "t": "7,5–15,25",
+   "pt-BR": "ESCALAÇÃO",
+   "en": "LINEUP",
+   "es": "ALINEACIÓN",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "pos.cam",
+   "t": "10,5–15,25",
+   "pt-BR": "Meia-atacante",
+   "en": "Attacking midfielder",
+   "es": "Mediapunta",
+   "from": "proposta",
+   "note": "posição"
+  },
+  {
+   "id": "ev.goal",
+   "t": "11,75–13,75",
+   "pt-BR": "GOL",
+   "en": "GOAL",
+   "es": "GOL",
+   "from": "app~",
+   "note": "selo \"GOL 67'\"; minuto não muda"
+  },
+  {
+   "id": "ev.goalLine",
+   "t": "12,25–13,75",
+   "pt-BR": "{clube} · Gol",
+   "en": "{clube} · Goal",
+   "es": "{clube} · Gol",
+   "from": "app",
+   "note": "{clube} = Goiás/Avaí (não traduzir)"
+  },
+  {
+   "id": "ev.yellow",
+   "t": "12,5–14",
+   "pt-BR": "{clube} · Cartão amarelo",
+   "en": "{clube} · Yellow card",
+   "es": "{clube} · Tarjeta amarilla",
+   "from": "app",
+   "note": "matchEventYellowCard"
+  },
+  {
+   "id": "nav.matches",
+   "t": "14–16,75",
+   "pt-BR": "JOGOS",
+   "en": "MATCHES",
+   "es": "PARTIDOS",
+   "from": "app",
+   "note": "matchGamesTitle"
+  },
+  {
+   "id": "nav.media",
+   "t": "14–16,75",
+   "pt-BR": "MÍDIA",
+   "en": "MEDIA",
+   "es": "MEDIOS",
+   "from": "app",
+   "note": "navMedia"
+  },
+  {
+   "id": "nav.member",
+   "t": "14,25–16,75",
+   "pt-BR": "SÓCIO",
+   "en": "MEMBER",
+   "es": "SOCIO",
+   "from": "app",
+   "note": "navMembership"
+  },
+  {
+   "id": "nav.store",
+   "t": "14,25–16,75",
+   "pt-BR": "LOJA",
+   "en": "STORE",
+   "es": "TIENDA",
+   "from": "app",
+   "note": "navStore"
+  },
+  {
+   "id": "g.shirt",
+   "t": "15,25–16,25",
+   "pt-BR": "QUEM VESTIU O MANTO?",
+   "en": "WHO WORE THE SHIRT?",
+   "es": "¿QUIÉN VISTIÓ LA CAMISETA?",
+   "from": "app",
+   "note": "arenaGuessPlayerTitle"
+  },
+  {
+   "id": "g.pos",
+   "t": "15,5–16,25",
+   "pt-BR": "POS",
+   "en": "POS",
+   "es": "POS",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "g.cb",
+   "t": "15,5–16,25",
+   "pt-BR": "ZAG",
+   "en": "CB",
+   "es": "DFC",
+   "from": "proposta",
+   "note": "abreviação de posição (zagueiro)"
+  },
+  {
+   "id": "g.kit",
+   "t": "15,5–16,25",
+   "pt-BR": "CAMISA",
+   "en": "SHIRT",
+   "es": "CAMISETA",
+   "from": "app",
+   "note": "guessColShirt"
+  },
+  {
+   "id": "g.youth",
+   "t": "15,5–16,5",
+   "pt-BR": "BASE",
+   "en": "YOUTH",
+   "es": "CANTERA",
+   "from": "app",
+   "note": "guessColBase"
+  },
+  {
+   "id": "g.debut",
+   "t": "15,75–16,5",
+   "pt-BR": "ESTREIA",
+   "en": "DEBUT",
+   "es": "DEBUT",
+   "from": "app",
+   "note": "guessColDebut"
+  },
+  {
+   "id": "quiz.title",
+   "t": "16,5–17,75",
+   "pt-BR": "QUIZ DO VERDÃO",
+   "en": "VERDÃO QUIZ",
+   "es": "QUIZ DEL VERDÃO",
+   "from": "proposta",
+   "note": "\"Verdão\" é apelido do clube e permanece"
+  },
+  {
+   "id": "quiz.q",
+   "t": "16,75–17,75",
+   "pt-BR": "Em que data o Goiás\nEsporte Clube foi fundado?",
+   "en": "On what date was\nGoiás Esporte Clube founded?",
+   "es": "¿En qué fecha fue fundado\nel Goiás Esporte Clube?",
+   "from": "proposta",
+   "note": "nome do clube permanece"
+  },
+  {
+   "id": "quiz.o1",
+   "t": "16,75–17,5",
+   "pt-BR": "6 de abril de 1939",
+   "en": "April 6, 1939",
+   "es": "6 de abril de 1939",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "quiz.o2",
+   "t": "16,75–18",
+   "pt-BR": "6 de abril de 1943",
+   "en": "April 6, 1943",
+   "es": "6 de abril de 1943",
+   "from": "proposta",
+   "note": "alternativa correta"
+  },
+  {
+   "id": "quiz.o3",
+   "t": "16,75–17,5",
+   "pt-BR": "12 de maio de 1945",
+   "en": "May 12, 1945",
+   "es": "12 de mayo de 1945",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "quiz.o4",
+   "t": "16,75–17,75",
+   "pt-BR": "1º de janeiro de 1950",
+   "en": "January 1, 1950",
+   "es": "1 de enero de 1950",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "pts",
+   "t": "17,5–21",
+   "pt-BR": "PTS",
+   "en": "PTS",
+   "es": "PTS",
+   "from": "app",
+   "note": "arenaRankingPoints"
+  },
+  {
+   "id": "weekly",
+   "t": "17,5–22",
+   "pt-BR": "Semanal",
+   "en": "Weekly",
+   "es": "Semanal",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "g.lineup",
+   "t": "18–19",
+   "pt-BR": "ADIVINHE A ESCALAÇÃO",
+   "en": "GUESS THE LINEUP",
+   "es": "ADIVINA LA ALINEACIÓN",
+   "from": "app",
+   "note": "arenaGameLineupTitle"
+  },
+  {
+   "id": "g.lineup.ctx",
+   "t": "18–19",
+   "pt-BR": "Copa Sul-Americana 2010 · Final (ida) · Goiás 2 × 0 Independiente · 3-5-2",
+   "en": "Copa Sudamericana 2010 · Final (1st leg) · Goiás 2 × 0 Independiente · 3-5-2",
+   "es": "Copa Sudamericana 2010 · Final (ida) · Goiás 2 × 0 Independiente · 3-5-2",
+   "from": "proposta",
+   "note": "nome oficial da competição em en/es: \"Copa Sudamericana\"; times permanecem"
+  },
+  {
+   "id": "g.player",
+   "t": "19,25–20,5",
+   "pt-BR": "ADIVINHE O JOGADOR",
+   "en": "GUESS THE PLAYER",
+   "es": "ADIVINA EL JUGADOR",
+   "from": "app",
+   "note": "arenaGameCareerTitle"
+  },
+  {
+   "id": "pos.dm",
+   "t": "19,25–20,5",
+   "pt-BR": "VOLANTE",
+   "en": "DEFENSIVE MIDFIELDER",
+   "es": "VOLANTE",
+   "from": "app",
+   "note": "playerPositionVolFull; en é bem mais longo"
+  },
+  {
+   "id": "rank.title",
+   "t": "20,5–22",
+   "pt-BR": "RANKING DA TORCIDA",
+   "en": "FANS' RANKING",
+   "es": "RANKING DE LA AFICIÓN",
+   "from": "app",
+   "note": "arenaRankingTitle"
+  },
+  {
+   "id": "rank.monthly",
+   "t": "20,5–22",
+   "pt-BR": "Mensal",
+   "en": "Monthly",
+   "es": "Mensual",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "rank.all",
+   "t": "20,5–22",
+   "pt-BR": "Geral",
+   "en": "All-time",
+   "es": "General",
+   "from": "app",
+   "note": "arenaRankingAllTime"
+  }
+ ]
+}

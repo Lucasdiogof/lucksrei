@@ -1,0 +1,748 @@
+{
+ "video": "match-queue",
+ "title": "Match Queue",
+ "origin": "en",
+ "sources": [
+  "tools/video-match-queue/index.html"
+ ],
+ "protected": [
+  "Match Queue",
+  "Team Falcons",
+  "Falcons",
+  "Lucksrei",
+  "Vejrgang",
+  "Msdossary",
+  "AbuMakkah",
+  "Raphinha",
+  "Bellingham",
+  "Karchaoui",
+  "FC Barcelona",
+  "Chelsea",
+  "Real Madrid",
+  "LALIGA EA SPORTS",
+  "PlayStation",
+  "Champions",
+  "Rivals",
+  "PC",
+  "J. Prêcheur",
+  "K7QD2",
+  "Icon"
+ ],
+ "keep": [
+  "MATCH QUEUE (wordmark/logo)",
+  "Team Falcons (nome e escudo)",
+  "Vejrgang · Msdossary · Lucksrei · AbuMakkah (jogadores)",
+  "Cartas FUTBIN: imagens originais mantidas (nomes, PAC SHO PAS DRI DEF PHY, bandeiras)",
+  "Raphinha · Bellingham · Karchaoui · Valencia · Martínez · Bacha · Koundé · de Jong · Lacroix...",
+  "FC Barcelona · Chelsea · Real Madrid · LALIGA EA SPORTS",
+  "Champions · Rivals · PC · PlayStation · Icon",
+  "matchqueue · /join/K7QD2",
+  "L1 R1 △ ○ ✕ □",
+  "88 ST 460K 146K 114K 14–1 7–2–1",
+  "posições (ST LW RM LM CAM RW) e \"Div 2\""
+ ],
+ "strings": [
+  {
+   "id": "tag",
+   "t": "2,5–3 e 43,5–47",
+   "pt-BR": "Um de cada vez na fila.",
+   "en": "One at a time in the queue.",
+   "es": "Uno a la vez en la fila.",
+   "from": "app",
+   "note": "appTagline oficial"
+  },
+  {
+   "id": "eb.mm",
+   "t": "3,25–11,75",
+   "pt-BR": "Matchmaking em tempo real",
+   "en": "Real-time matchmaking",
+   "es": "Matchmaking en tiempo real",
+   "from": "app~",
+   "note": "o app mantém \"Matchmaking\""
+  },
+  {
+   "id": "h1",
+   "t": "3–8,75",
+   "pt-BR": "Um busca.\nOs outros entram na fila.",
+   "en": "One searches.\nThe rest line up.",
+   "es": "Uno busca.\nLos demás hacen fila.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "h2",
+   "t": "3–11,75",
+   "pt-BR": "O próximo da fila\nassume.",
+   "en": "Next in line\ntakes over.",
+   "es": "El siguiente en la fila\ntoma el relevo.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "q.search",
+   "t": "3,5–11",
+   "pt-BR": "Buscando partida",
+   "en": "Searching for a match",
+   "es": "Buscando partida",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "q.pos",
+   "t": "3,75–6",
+   "pt-BR": "Posição {n} na fila",
+   "en": "Position {n} in the queue",
+   "es": "Posición {n} en la cola",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "q.join",
+   "t": "4–18",
+   "pt-BR": "Entrar na fila",
+   "en": "Join the queue",
+   "es": "Entrar en la cola",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "q.you",
+   "t": "5,5–10",
+   "pt-BR": "VOCÊ",
+   "en": "YOU",
+   "es": "TÚ",
+   "from": "app",
+   "note": "selo na lista da fila (maiúsculas)"
+  },
+  {
+   "id": "q.joined",
+   "t": "5,5–6",
+   "pt-BR": "ENTROU",
+   "en": "JOINED",
+   "es": "SE UNIÓ",
+   "from": "proposta",
+   "note": "selo curto"
+  },
+  {
+   "id": "q.opp",
+   "t": "6–16,25",
+   "pt-BR": "Adversário",
+   "en": "Opponent",
+   "es": "Rival",
+   "from": "app~",
+   "note": "app: Gols do adversário / Goles del rival"
+  },
+  {
+   "id": "q.found",
+   "t": "7,5–8,5",
+   "pt-BR": "Partida encontrada",
+   "en": "Match found",
+   "es": "Partido encontrado",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "q.foundCaps",
+   "t": "7,75–8,5",
+   "pt-BR": "PARTIDA ENCONTRADA",
+   "en": "MATCH FOUND",
+   "es": "PARTIDO ENCONTRADO",
+   "from": "app",
+   "note": "selo grande em maiúsculas (pôster); mais longo que o original"
+  },
+  {
+   "id": "q.timeup",
+   "t": "10,25",
+   "pt-BR": "Tempo esgotado",
+   "en": "Time's up",
+   "es": "Se acabó el tiempo",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "q.turn",
+   "t": "10,75–11",
+   "pt-BR": "Sua vez de buscar!",
+   "en": "Your turn to search!",
+   "es": "¡Tu turno de buscar!",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "q.now",
+   "t": "11–11,5",
+   "pt-BR": "Match Queue · agora",
+   "en": "Match Queue · now",
+   "es": "Match Queue · ahora",
+   "from": "proposta",
+   "note": "notificação simulada"
+  },
+  {
+   "id": "eb.team",
+   "t": "12,25–18",
+   "pt-BR": "Monte seu time",
+   "en": "Build your team",
+   "es": "Arma tu equipo",
+   "from": "app~",
+   "note": "app: \"Crie seu time\" / \"Crea tu equipo\"; time=equipo"
+  },
+  {
+   "id": "h.team",
+   "t": "12–18",
+   "pt-BR": "Crie o time.\nConvide a equipe.",
+   "en": "Create the team.\nInvite the squad.",
+   "es": "Crea el equipo.\nInvita a la escuadra.",
+   "from": "proposta",
+   "note": "\"squad\" aqui = galera do time"
+  },
+  {
+   "id": "t.members",
+   "t": "13–18",
+   "pt-BR": "{n} membros",
+   "en": "{n} members",
+   "es": "{n} miembros",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "t.owner",
+   "t": "13–18",
+   "pt-BR": "Dono",
+   "en": "Owner",
+   "es": "Dueño",
+   "from": "app",
+   "note": "teamRoleOwner"
+  },
+  {
+   "id": "t.manager",
+   "t": "13,5–18",
+   "pt-BR": "Gerente",
+   "en": "Manager",
+   "es": "Gerente",
+   "from": "app",
+   "note": "teamRoleManager"
+  },
+  {
+   "id": "t.player",
+   "t": "13,75–18",
+   "pt-BR": "Jogador",
+   "en": "Player",
+   "es": "Jugador",
+   "from": "app",
+   "note": "teamRolePlayer"
+  },
+  {
+   "id": "t.invite",
+   "t": "14–18",
+   "pt-BR": "Convidar jogadores",
+   "en": "Invite players",
+   "es": "Invitar jugadores",
+   "from": "app",
+   "note": "inviteSectionTitle"
+  },
+  {
+   "id": "t.copy",
+   "t": "14–15",
+   "pt-BR": "Copiar link",
+   "en": "Copy link",
+   "es": "Copiar enlace",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "t.copied",
+   "t": "15–18",
+   "pt-BR": "Copiado",
+   "en": "Copied",
+   "es": "Copiado",
+   "from": "proposta",
+   "note": "botão"
+  },
+  {
+   "id": "t.copiedMsg",
+   "t": "15–18",
+   "pt-BR": "Link copiado.",
+   "en": "Link copied.",
+   "es": "Enlace copiado.",
+   "from": "app",
+   "note": "inviteLinkCopied"
+  },
+  {
+   "id": "t.new",
+   "t": "14,75–16,5",
+   "pt-BR": "NOVO JOGADOR",
+   "en": "NEW PLAYER",
+   "es": "NUEVO JUGADOR",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "t.accepted",
+   "t": "16,5–18",
+   "pt-BR": "CONVITE ACEITO",
+   "en": "INVITE ACCEPTED",
+   "es": "INVITACIÓN ACEPTADA",
+   "from": "app",
+   "note": "requestsInvitationAcceptedMessage"
+  },
+  {
+   "id": "eb.db",
+   "t": "18,75–22,75",
+   "pt-BR": "Banco de jogadores",
+   "en": "Player database",
+   "es": "Base de jogadores",
+   "from": "proposta",
+   "note": "es: \"Base de jugadores\""
+  },
+  {
+   "id": "h.db",
+   "t": "18,5–22,5",
+   "pt-BR": "Cada carta.\nCada atributo.",
+   "en": "Every card.\nEvery attribute.",
+   "es": "Cada carta.\nCada atributo.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "eb.mk",
+   "t": "23–26,5",
+   "pt-BR": "Mercado",
+   "en": "Market",
+   "es": "Mercado",
+   "from": "app",
+   "note": "marketTitle"
+  },
+  {
+   "id": "h.mk",
+   "t": "18,5–26,5",
+   "pt-BR": "Saiba o preço\nantes de comprar.",
+   "en": "Know the price\nbefore you buy.",
+   "es": "Conoce el precio\nantes de comprar.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "s.skill",
+   "t": "22–38,75",
+   "pt-BR": "Habilidades {n}★",
+   "en": "Skill moves {n}★",
+   "es": "Habilidades {n}★",
+   "from": "app",
+   "note": "squadCardDetailSkillMovesLabel"
+  },
+  {
+   "id": "s.weak",
+   "t": "22–22,5",
+   "pt-BR": "Pé fraco {n}★",
+   "en": "Weak foot {n}★",
+   "es": "Pie malo {n}★",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "s.left",
+   "t": "22–22,5",
+   "pt-BR": "Pé esquerdo",
+   "en": "Left foot",
+   "es": "Pie izquierdo",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "m.price",
+   "t": "23–33",
+   "pt-BR": "Preço de mercado",
+   "en": "Market price",
+   "es": "Precio de mercado",
+   "from": "app",
+   "note": "marketPriceSectionTitle"
+  },
+  {
+   "id": "m.consoles",
+   "t": "23–24",
+   "pt-BR": "Consoles",
+   "en": "Consoles",
+   "es": "Consolas",
+   "from": "app",
+   "note": "marketPlatformConsoles"
+  },
+  {
+   "id": "m.updated",
+   "t": "24,25–25",
+   "pt-BR": "PC · Atualizado agora",
+   "en": "PC · Updated now",
+   "es": "PC · Actualizado ahora",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "m.add",
+   "t": "24,25–25",
+   "pt-BR": "Adicionar aos favoritos",
+   "en": "Add to favorites",
+   "es": "Agregar a favoritos",
+   "from": "app",
+   "note": "marketFavoriteAddAction"
+  },
+  {
+   "id": "m.in",
+   "t": "25–26",
+   "pt-BR": "Nos favoritos",
+   "en": "In favorites",
+   "es": "En favoritos",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "m.favs",
+   "t": "24,5–25",
+   "pt-BR": "Favoritos",
+   "en": "Favorites",
+   "es": "Favoritos",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "eb.sq",
+   "t": "26,25–33",
+   "pt-BR": "Monte sua escalação",
+   "en": "Manage your squad",
+   "es": "Gestiona tu plantilla",
+   "from": "proposta",
+   "note": "app usa \"escalação/plantilla\""
+  },
+  {
+   "id": "h.sq",
+   "t": "26–33",
+   "pt-BR": "Monte a escalação.",
+   "en": "Build the lineup.",
+   "es": "Arma la alineación.",
+   "from": "app~",
+   "note": "Build lineup = Montar escalação / Armar alineación"
+  },
+  {
+   "id": "sq.chem",
+   "t": "27,75–32",
+   "pt-BR": "Química da escalação",
+   "en": "Team chemistry",
+   "es": "Química de la alineación",
+   "from": "app~",
+   "note": "app: \"Squad chemistry\""
+  },
+  {
+   "id": "sq.overall",
+   "t": "31–33",
+   "pt-BR": "Overall",
+   "en": "Overall",
+   "es": "Media",
+   "from": "app",
+   "note": "squadOverallLabel"
+  },
+  {
+   "id": "sq.value",
+   "t": "31,75–33",
+   "pt-BR": "Valor da escalação",
+   "en": "Squad value",
+   "es": "Valor de la plantilla",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "sq.mgr",
+   "t": "30,5–33",
+   "pt-BR": "Técnico",
+   "en": "Manager",
+   "es": "Entrenador",
+   "from": "app",
+   "note": "squadManagerTitle (técnico da escalação)"
+  },
+  {
+   "id": "sq.nation.fr",
+   "t": "28–30,5",
+   "pt-BR": "França",
+   "en": "France",
+   "es": "Francia",
+   "from": "proposta",
+   "note": "nome de país"
+  },
+  {
+   "id": "sq.nation.br",
+   "t": "30,25",
+   "pt-BR": "Brasil",
+   "en": "Brazil",
+   "es": "Brasil",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "eb.sk",
+   "t": "33–38,75",
+   "pt-BR": "Habilidades",
+   "en": "Skill moves",
+   "es": "Habilidades",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "h.sk",
+   "t": "32,5–38,75",
+   "pt-BR": "Aprenda cada\nhabilidade.",
+   "en": "Learn every\nskill move.",
+   "es": "Aprende cada\nhabilidad.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "sk.dri",
+   "t": "33,25–38",
+   "pt-BR": "Dribles",
+   "en": "Dribbling",
+   "es": "Regates",
+   "from": "app",
+   "note": "controlsDribblingLabel"
+  },
+  {
+   "id": "sk.pas",
+   "t": "33,25–38",
+   "pt-BR": "Passes",
+   "en": "Passing",
+   "es": "Pases",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "sk.sho",
+   "t": "33,5–38",
+   "pt-BR": "Finalização",
+   "en": "Shooting",
+   "es": "Definición",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "sk.def",
+   "t": "33,5–38",
+   "pt-BR": "Defesa",
+   "en": "Defending",
+   "es": "Defensa",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "sk.stepover",
+   "t": "33,5",
+   "pt-BR": "Pedalada (Stepover) direita",
+   "en": "Stepover right",
+   "es": "Pedalada (Stepover) derecha",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "sk.spin",
+   "t": "33,5",
+   "pt-BR": "Girar direito",
+   "en": "Spin right stick",
+   "es": "Girar stick derecho",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "sk.ballroll",
+   "t": "34,5",
+   "pt-BR": "Roleta direita",
+   "en": "Ball roll cut right",
+   "es": "Ruleta derecha",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "sk.rainbow",
+   "t": "35,75",
+   "pt-BR": "Arco-íris simples",
+   "en": "Simple rainbow flick",
+   "es": "Arcoíris simple",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "sk.flick",
+   "t": "35,75",
+   "pt-BR": "Flick direito",
+   "en": "Flick right stick",
+   "es": "Flick stick derecho",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "sk.elastico",
+   "t": "36,5",
+   "pt-BR": "Elástico",
+   "en": "Elastico",
+   "es": "Elástico",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "sk.lowshot",
+   "t": "37,5",
+   "pt-BR": "Chute de efeito rasteiro",
+   "en": "Low finesse shot",
+   "es": "Tiro con efecto raso",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "sk.then",
+   "t": "37,5",
+   "pt-BR": ", depois",
+   "en": ", then",
+   "es": ", luego",
+   "from": "proposta",
+   "note": "fragmento da instrução de controle"
+  },
+  {
+   "id": "sk.again",
+   "t": "37,5",
+   "pt-BR": "de novo",
+   "en": "again",
+   "es": "otra vez",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "eb.rv",
+   "t": "39–43,5",
+   "pt-BR": "Tudo em torno da partida",
+   "en": "Everything around the match",
+   "es": "Todo alrededor del partido",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "h.rv",
+   "t": "38,75–43,5",
+   "pt-BR": "Acompanhe cada partida.\nVeja seu progresso.",
+   "en": "Track every match.\nFollow your progress.",
+   "es": "Sigue cada partido.\nMira tu progreso.",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "rv.hist",
+   "t": "39–39,5",
+   "pt-BR": "Histórico de buscas",
+   "en": "Search history",
+   "es": "Historial de búsquedas",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "rv.searched",
+   "t": "39–39,5",
+   "pt-BR": "{modo} · busca de {tempo}",
+   "en": "{modo} · searched {tempo}",
+   "es": "{modo} · búsqueda de {tempo}",
+   "from": "proposta",
+   "note": "{modo} = Champions/Rivals (não traduzir)"
+  },
+  {
+   "id": "rv.cancelled",
+   "t": "39,25–42,25",
+   "pt-BR": "Cancelada",
+   "en": "Cancelled",
+   "es": "Cancelada",
+   "from": "app",
+   "note": "historyStatusCancelledLabel"
+  },
+  {
+   "id": "rv.expired",
+   "t": "39,25–39,5",
+   "pt-BR": "Expirada",
+   "en": "Expired",
+   "es": "Expirada",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "rv.found",
+   "t": "39–39,5",
+   "pt-BR": "Partida encontrada",
+   "en": "Match found",
+   "es": "Partido encontrado",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "rv.sample",
+   "t": "40,25–43",
+   "pt-BR": "Dados de exemplo",
+   "en": "Sample data",
+   "es": "Datos de ejemplo",
+   "from": "proposta",
+   "note": "aviso (dados demonstrativos)"
+  },
+  {
+   "id": "rv.wins",
+   "t": "40,25–43",
+   "pt-BR": "Vitórias",
+   "en": "Wins",
+   "es": "Victorias",
+   "from": "app",
+   "note": ""
+  },
+  {
+   "id": "rv.draws",
+   "t": "41,5",
+   "pt-BR": "Empates",
+   "en": "Draws",
+   "es": "Empates",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "rv.loss",
+   "t": "40,25",
+   "pt-BR": "Derrotas",
+   "en": "Loss",
+   "es": "Derrotas",
+   "from": "app~",
+   "note": "app: Derrotas/Losses"
+  },
+  {
+   "id": "rv.last5",
+   "t": "40,25–43",
+   "pt-BR": "Últimas 5",
+   "en": "Last 5",
+   "es": "Últimos 5",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "rv.form",
+   "t": "41,75",
+   "pt-BR": "Forma",
+   "en": "Form",
+   "es": "Forma",
+   "from": "proposta",
+   "note": ""
+  },
+  {
+   "id": "rv.div2",
+   "t": "41,5–43",
+   "pt-BR": "Divisão 2",
+   "en": "Division 2",
+   "es": "División 2",
+   "from": "app",
+   "note": "rivalsDivisionDiv2"
+  },
+  {
+   "id": "rv.profile",
+   "t": "42,75–43,5",
+   "pt-BR": "Perfil público",
+   "en": "Public profile",
+   "es": "Perfil público",
+   "from": "app",
+   "note": ""
+  }
+ ]
+}
