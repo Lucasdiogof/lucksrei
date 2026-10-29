@@ -1,7 +1,7 @@
 // node render.cjs sheet <dir> t1,t2,...   |   node render.cjs frames <dir> <fps> <workers> <dsf> [t0] [t1]
 const { chromium } = require('playwright');
 const fs=require('fs'),path=require('path');
-const url='http://127.0.0.1:8770/index.html';
+const url='http://127.0.0.1:8770/index.html'+(process.env.VIDEO_LANG?'?lang='+process.env.VIDEO_LANG:'');   // VIDEO_LANG=pt-BR|en|es (sem ele, en = filme publicado)
 async function page(browser,scale){const ctx=await browser.newContext({viewport:{width:720,height:720},deviceScaleFactor:scale});const p=await ctx.newPage();
   p.on('pageerror',e=>console.error('PAGEERR',e.message));p.on('console',m=>{if(m.type()==='error')console.error('CONSOLE',m.text())});
   await p.goto(url);await p.waitForFunction('window.READY===true');return p}
