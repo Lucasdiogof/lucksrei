@@ -473,6 +473,8 @@ section{ padding: 88px 0; }
   .work-item:has(.work-plate.has-video) .work-copy p{ font-size: 16.5px; line-height: 1.6; max-width: 640px; margin-bottom: 12px; }
   .work-item:has(.work-plate.has-video) .showcase-num{ margin-bottom: 6px; }
   .work-item:has(.work-plate.has-video) .showcase-tagline{ margin-bottom: 8px; }
+  .work-item:has(.work-plate.has-video) .work-plate{ align-self: stretch; }
+  .work-item:has(.work-plate.has-video) .plate-video{ object-fit: contain; }   /* vídeo quadrado inteiro, sem corte */
 }
 
 .work-wide{ grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr); }
