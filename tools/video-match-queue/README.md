@@ -35,7 +35,7 @@ O arquivo publicado sai dos mesmos frames em 2 passes, ~250 kbps (≈1,5 MB; Goi
 `… -c:v libx264 -profile:v high -preset veryslow -b:v 248k -maxrate 560k -bufsize 1120k -pass 1|2 …`
 AV1 (mesmos frames, via um intermediário sem perdas `-c:v libx264 -qp 0`):
 `ffmpeg -i master-lossless.mkv -c:v libsvtav1 -preset 4 -crf 38 -g 300 -svtav1-params tune=0 -pix_fmt yuv420p -movflags +faststart -an match-queue-loop.av1.mp4`
-120 fps + tmix + decimação = motion blur leve. Fonte: Inter / Inter Display instaladas no sistema.
+120 fps + tmix + decimação = motion blur leve. Fonte: Inter 4.0 variável embutida em `assets/fonts/` (OFL); não depende do sistema.
 Por volta de 19,1 s (foco da carta na Database) o Chromium às vezes compõe um único quadro
 de transição de forma diferente entre renders; não é mudança de conteúdo.
 

@@ -1,0 +1,13 @@
+/* Inter 4.0 (estatico) e Inter Display, SIL OFL 1.1 - ver LICENSE-inter.txt. Nenhuma chamada externa. */
+@font-face{font-family:Inter;font-weight:400;font-style:normal;src:url(Inter-Regular.ttf)}
+@font-face{font-family:'Inter Display';font-weight:400;font-style:normal;src:url(InterDisplay-Regular.ttf)}
+@font-face{font-family:Inter;font-weight:500;font-style:normal;src:url(Inter-Medium.ttf)}
+@font-face{font-family:'Inter Display';font-weight:500;font-style:normal;src:url(InterDisplay-Medium.ttf)}
+@font-face{font-family:Inter;font-weight:600;font-style:normal;src:url(Inter-SemiBold.ttf)}
+@font-face{font-family:'Inter Display';font-weight:600;font-style:normal;src:url(InterDisplay-SemiBold.ttf)}
+@font-face{font-family:Inter;font-weight:700;font-style:normal;src:url(Inter-Bold.ttf)}
+@font-face{font-family:'Inter Display';font-weight:700;font-style:normal;src:url(InterDisplay-Bold.ttf)}
+@font-face{font-family:Inter;font-weight:800;font-style:normal;src:url(Inter-ExtraBold.ttf)}
+@font-face{font-family:'Inter Display';font-weight:800;font-style:normal;src:url(InterDisplay-ExtraBold.ttf)}
+@font-face{font-family:Inter;font-weight:900;font-style:normal;src:url(Inter-Black.ttf)}
+@font-face{font-family:'Inter Display';font-weight:900;font-style:normal;src:url(InterDisplay-Black.ttf)}

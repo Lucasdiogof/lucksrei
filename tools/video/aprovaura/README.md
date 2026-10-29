@@ -28,7 +28,7 @@ node render.mjs out/trecho.mp4 --from 46.9 --to 50    # só um trecho
 node sheet.mjs 3 15 30 45 48.5                        # frames avulsos em sheet/
 ./mont.sh conferencia 3 15 30 45 48.5                 # contact sheet em sheet/conferencia.png
 ```
-Playwright vem de `/opt/node22/lib/node_modules/playwright` e o Chromium precisa das fontes Inter instaladas.
+Playwright: `PW_DIR=<pasta com node_modules/playwright>` (ou instalado ao lado); ffmpeg: `$FFMPEG` ou o do PATH. Inter 4.0 e Inter Display vêm embutidas em `assets/fonts/` (OFL), não dependem do sistema.
 Os arquivos publicados em `assets/video/` foram reencodados a partir desse master (AV1 e H.264 mais leve).
 
 ## Rig do Aurudo (final do filme)

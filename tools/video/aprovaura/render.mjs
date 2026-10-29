@@ -1,9 +1,12 @@
 // Renders aprovaura-promo-v8.html frame by frame (deterministic render(t)) and encodes the MP4.
 // usage: node render.mjs [out.mp4] [--from s --to s] [--sheet]
-import { chromium } from '/opt/node22/lib/node_modules/playwright/index.mjs';
+import { createRequire } from 'node:module';
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs'; import path from 'node:path'; import url from 'node:url';
 const here = path.dirname(url.fileURLToPath(import.meta.url));
+// Playwright: PW_DIR (pasta com node_modules/playwright) ou o resolvido a partir daqui; ffmpeg: $FFMPEG ou PATH.
+const { chromium } = createRequire((process.env.PW_DIR || here) + '/')('playwright');
+const FFMPEG = process.env.FFMPEG || 'ffmpeg';
 const args = process.argv.slice(2);
 const out = args.find(a => a.endsWith('.mp4')) || path.join(here, 'out', 'aprovaura-v8.mp4');
 const FPS = 30, SCALE = 2, WORKERS = 4;
@@ -28,7 +31,7 @@ await Promise.all(Array.from({ length: WORKERS }, async (_, w) => {
 }));
 await browser.close();
 console.log(`captured ${N} frames in ${((Date.now() - t0) / 1000).toFixed(1)}s`);
-const r = spawnSync('ffmpeg', ['-v', 'error', '-y', '-framerate', String(FPS), '-i', path.join(frames, '%05d.jpg'),
+const r = spawnSync(FFMPEG, ['-v', 'error', '-y', '-framerate', String(FPS), '-i', path.join(frames, '%05d.jpg'),
   '-vf', 'scale=720:720:flags=lanczos', '-c:v', 'libx264', '-profile:v', 'high', '-pix_fmt', 'yuv420p',
   '-preset', 'slow', '-crf', '20', '-tune', 'animation', '-movflags', '+faststart', '-an', out], { stdio: 'inherit' });
 if (r.status) process.exit(r.status);
