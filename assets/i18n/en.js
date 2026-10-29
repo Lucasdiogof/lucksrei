@@ -140,8 +140,6 @@
   "home.metrics.downloads.suffix": "M+",
   "home.metrics.reviews.suffix": "k+",
   "home.metrics.years.suffix": "+",
-  "home.processo.flow": "<span class=\"flow-node\">Requirements</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Prototyping</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Architecture</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Development</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Testing</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Store release</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Maintenance and growth</span>",
-  "home.processo.h21": "From idea to production",
   "home.projetos.h21": "Own products",
   "home.projetos.p1": "Apps I created and maintain.",
   "home.projetos.p2": "A Goiás fan app: matches, club, a mini-games Arena and the Fans' Lineup.",

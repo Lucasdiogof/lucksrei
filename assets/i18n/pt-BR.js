@@ -140,8 +140,6 @@
   "home.metrics.downloads.suffix": " mi+",
   "home.metrics.reviews.suffix": " mil+",
   "home.metrics.years.suffix": "+",
-  "home.processo.flow": "<span class=\"flow-node\">Levantamento de requisitos</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Prototipação</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Arquitetura</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Desenvolvimento</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Testes</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Publicação nas lojas</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Manutenção e evolução</span>",
-  "home.processo.h21": "Da ideia à produção",
   "home.projetos.h21": "Produtos próprios",
   "home.projetos.p1": "Apps que criei e mantenho.",
   "home.projetos.p2": "App do torcedor do Goiás: jogos, clube, Arena de minijogos e Escalação da Torcida.",

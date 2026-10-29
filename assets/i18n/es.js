@@ -140,8 +140,6 @@
   "home.metrics.downloads.suffix": " M+",
   "home.metrics.reviews.suffix": " mil+",
   "home.metrics.years.suffix": "+",
-  "home.processo.flow": "<span class=\"flow-node\">Levantamiento de requisitos</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Prototipado</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Arquitectura</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Desarrollo</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Pruebas</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Publicación en tiendas</span><span class=\"flow-arrow\" aria-hidden=\"true\">→</span> <span class=\"flow-node\">Mantenimiento y evolución</span>",
-  "home.processo.h21": "De la idea a la producción",
   "home.projetos.h21": "Productos propios",
   "home.projetos.p1": "Apps que creé y mantengo.",
   "home.projetos.p2": "App de la hinchada del Goiás: partidos, club, Arena de minijuegos y Alineación de la Hinchada.",
