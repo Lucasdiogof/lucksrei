@@ -99,3 +99,45 @@ Sem `requestVideoFrameCallback` (WebKit, Firefox atuais) o desvio de sincronismo
 - Adicionado a `_headers` (local, não implantado): `/assets/video/*` → `Cache-Control: public, max-age=604800` (7 dias, depois revalida). Os nomes não têm hash: ao re-renderizar um arquivo, mudar o nome.
 
 **Continua pendente**: Safari/iOS reais; Firefox; conferir `Range` em produção depois do deploy; StockPort wide/tall e backup privado de Goiás/La Pelve (trabalho futuro); tipografia aproximada de Aprovaura/Match Queue (ressalva já documentada).
+
+## H. Etapa 3.1 — HTTP Range, cache versionado, Safari/iOS (tudo local; nada publicado)
+
+**1. Diagnóstico de Range (produção, `curl` GET, `orbijob-loop.mp4` 2.426.717 B e `.av1.mp4` 1.744.257 B)**
+Requisições: sem Range, `bytes=0-99`, `100-199`, `-100`, `99999999-`, `abc`. **Todas → `200 OK` com o arquivo inteiro**, sem `Accept-Ranges`, sem `Content-Range`; `Content-Type: video/mp4`; `Cache-Control: public, max-age=0, must-revalidate`; ETag; `CF-Cache-Status: HIT`. Nenhum 206, nenhum 416 (o intervalo inválido/fora do arquivo também volta 200).
+Arquitetura (`wrangler.jsonc`): **Cloudflare Workers + Static Assets** (não é Pages); o Worker só rodava para `/api/*` (`run_worker_first`); os arquivos saem da camada de assets, que ignora Range. O mesmo comportamento aparece no `wrangler dev` local (pôster com Range → 200), então é da camada de assets, não da borda/cache.
+Por que importa: Safari/iOS depende de 206 para `<video>` e o nosso player faz seek (`currentTime`) em arquivos que o navegador pode ter que baixar de novo inteiros; Chrome tolera.
+
+**2. Solução (necessidade confirmada pelas medições)** — `worker/range.mjs` (≈70 linhas) + rota `"/assets/video/*.mp4"` em `run_worker_first`
+- O Worker lê o MP4 pelo binding `ASSETS` e responde **200** (sem Range/inválido/multi-intervalo/`If-Range` diferente do ETag), **206** (`Content-Range`, `Content-Length`, `Accept-Ranges: bytes`) ou **416** (`Content-Range: bytes */size`, corpo vazio). Preserva ETag, Cache-Control, Content-Type e cabeçalhos de segurança do asset; 304 por ETag continua; `Vary: Range`.
+- Só `.mp4` passa pelo Worker (pôsteres `.webp` não: verificado no `wrangler dev` com o painel de observabilidade — 0 invocações para pôster).
+- Custo: R$ 0 fixo. Não é re-encode, não muda domínio nem arquitetura. **Risco a monitorar**: cada requisição de MP4 passa a contar como invocação do Worker (plano gratuito: 100 mil/dia; um carregamento de vídeo = 1–3 requisições). Passando disso, os MP4 deixam de carregar até o dia seguinte. Mitigações: acompanhar "Requests" do Worker no painel; se aproximar de ~60%, Workers Paid (US$ 5/mês) ou mover os MP4 para R2 público (Range nativo, sem Worker).
+- Alternativas descartadas: R2 + domínio de mídia (infra nova, muda CSP `media-src`); Cache API no Worker (não resolve o Range da camada de assets); nada (Range ausente no Safari).
+- Testado localmente: `tests/video-range.test.js` (parser + 200/206/416/HEAD/If-Range/304/POST/poster) e **`wrangler dev` real** (H.264 e AV1): sem Range 200; `0-99`, `100-199`, `-100` → **206** com `Content-Range` correto e corpo de 100 B (fatia conferida byte a byte com `cmp`); `99999999-` → **416**; `abc` → 200. Pré-visualização `wrangler dev -c wrangler.preview.jsonc` com a página de diagnóstico: troca ES/PT ok (drift 15–17 ms), `_headers`/CSP aplicados, 0 erros JS.
+
+**3. Cache (decisão)** — URLs versionadas + cache longo imutável
+- Antes: `max-age=604800` sem hash → atualização de um vídeo ficaria até 7 dias velha. Agora: todas as URLs de vídeo/pôster levam `?v=<VER>` (`VER` em `assets/js/loop-video.js`, espelhado nos `<noscript>`; teste exige igualdade) e `_headers` dá `public, max-age=31536000, immutable`. HTML e JS continuam `max-age=0, must-revalidate`; ao re-renderizar **qualquer** vídeo ou pôster, sobe-se `VER` e a URL nova ignora o cache antigo (navegador e borda) sem purga.
+- Comparação: ETag puro (0 risco de arquivo velho, mas 1 requisição/Worker por vídeo por visita — pior para a cota); nome com hash (melhor, mas exige renomear 72 arquivos e mexer no pipeline — descartado por pedido de não refazer os finais).
+- Não há conflito com o que está no ar: os finais usam nomes novos (`*-loop.<idioma>.mp4`), os originais `*-loop.mp4` continuam intactos.
+
+**4. Congelamento de ~5 s investigado** — não é corrida do player. `switch.mjs` agora registra `maxRafGapMs` (maior intervalo entre quadros da página). Em WebKit/Playwright com 32 processos ocupando os 32 núcleos, `troca-em-reproducao` falhou 3/3 por critério de tempo, mas com **`maxRafGapMs` ≥ `maxStallMs`** (15,2 s/3,9 s; 10,0 s/10,0 s; 2,6 s/1,9 s): a própria página parou de desenhar (processo do WebKit sem CPU). O resultado lógico estava certo nas 3: arquivo do idioma certo, 1 player no fim, `restarts 0`, drift 6–24 ms. Chrome com a mesma carga: stall 338 ms. Sem carga, WebKit 12/12.
+
+**5. Revalidação do player** (mesmo `loop-video.js`, só a mudança de `VER`): ver tabela de resultados abaixo; dois players sincronizados (`maxPlayers 2` só durante a troca, 1 depois), `restarts 0`, drift ≈ 1 quadro (2–25 ms), último idioma vence, fallback AV1→H.264, lazy load e autoplay preservados, nenhum `<video>` extra deixado no DOM (cenário `home-so-baixa-o-visivel` e `players: 1`).
+
+**6. Safari/iOS: NÃO validado em aparelho real.** Preparado em `tools/video-i18n/ios/`: `serve.mjs` (rede local, Range 206/416), `diag.html/js/css` (painel + relatório copiável), `CHECKLIST-IPHONE.md` (11 cenários pedidos + critério de liberação), `prepare-preview.mjs` + `wrangler.preview.jsonc` (pré-visualização HTTPS isolada em Worker separado — **exige autorização antes do `wrangler deploy`**). O WebKit do Playwright no Windows não conta como aprovação de Safari.
+
+**Publicação (quando autorizada)**: ver `PUBLICACAO-E-ROLLBACK` abaixo.
+
+### PUBLICACAO-E-ROLLBACK (só com autorização do dono)
+**Antes**: (1) iPhone real aprovado (CHECKLIST-IPHONE.md, itens 1–9); (2) `for t in tests/*.test.js; do node $t; done` verde; (3) `git status` limpo no worktree; (4) decidir sobre push de Goiás/La Pelve (repositórios locais, não vão a público).
+**Ordem**: 1. push da branch `video/etapa0-fontes`; 2. merge na `main` (Workers Build publica) — o Worker de Range e os 72 arquivos entram juntos; 3. se o build não disparar: commit vazio "Trigger Workers build".
+**Conferir em produção (curl, depois do build)**:
+```
+curl -s -D- -o /dev/null -H "Range: bytes=0-99" "https://lucksrei.com/assets/video/orbijob-loop.en.mp4?v=1"      # 206 + Content-Range: bytes 0-99/<size> + Accept-Ranges: bytes
+curl -s -D- -o /dev/null -H "Range: bytes=99999999-" "https://lucksrei.com/assets/video/orbijob-loop.en.mp4?v=1"  # 416 + Content-Range: bytes */<size>
+curl -s -D- -o /dev/null "https://lucksrei.com/assets/video/orbijob-loop.en.mp4?v=1"                              # 200 + Cache-Control: public, max-age=31536000, immutable
+curl -s -D- -o /dev/null -H "Range: bytes=0-9" "https://lucksrei.com/assets/video/orbijob-loop-poster.en.webp?v=1" # 200 (pôster não passa pelo Worker)
+```
+Depois: abrir `/` e `/projects/orbijob/?` trocando PT/EN/ES (Chrome e iPhone) e acompanhar "Requests" do Worker no painel por 48 h (cota gratuita: 100 mil/dia).
+**Rollback**: `git revert` do merge (volta `wrangler.jsonc`, `worker/`, `_headers`, player e HTML; os originais `*-loop.mp4` seguem em `assets/video/`). Se só o Range der problema: remover `"/assets/video/*.mp4"` de `run_worker_first` volta ao comportamento atual (200 sem Range) sem tocar nos vídeos. Cache imutável não precisa de purga: URL com `?v=` novo ignora o cache; um `VER` errado se corrige subindo `VER` de novo.
+
+**Resultados automatizados finais (Etapa 3.1, com `?v=` e Worker de Range)**: Chrome 156 H.264 12/12 · Chrome sem rVFC 12/12 · Chromium AV1 12/12 · WebKit 27.2 H.264 12/12 · 14 testes do site verdes (`tests/*.test.js`, inclui `video-range.test.js`). Firefox: não testável nesta máquina. iPhone: pendente.

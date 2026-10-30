@@ -39,6 +39,7 @@ import { handleGithub } from "./github.mjs";
 import { handleContact } from "./contact.mjs";
 import { handleTurnstileConfig } from "./turnstile.mjs";
 import { API_HEADERS, overLimit } from "./security.mjs";
+import { handleVideo, isVideoPath } from "./range.mjs";
 
 const VISITORS_TTL = 300; // s
 const WINDOW_MONTHS = 12;
@@ -292,6 +293,7 @@ export default {
     if (path === "/api/turnstile-config") return handleTurnstileConfig(request, env);
 
     if (path.startsWith("/api/")) return json({ error: "not_found" }, 404, "no-store");
+    if (isVideoPath(url.pathname)) return handleVideo(request, env);
     return env.ASSETS.fetch(request);
   },
 };

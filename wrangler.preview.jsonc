@@ -1,0 +1,16 @@
+{
+  // PRÉ-VISUALIZAÇÃO ISOLADA para testar no iPhone com HTTPS e a borda real. Worker SEPARADO ("lucksrei-video-preview"):
+  // não toca em lucksrei.com, no D1 nem nos rate limits. Sem D1, as chamadas /api/* falham com segurança (o site não depende delas para os vídeos).
+  // Procedimento e remoção: tools/video-i18n/ios/CHECKLIST-IPHONE.md. NÃO rode sem autorização do dono.
+  "name": "lucksrei-video-preview",
+  "workers_dev": true,
+  "preview_urls": false,
+  "main": "worker/index.mjs",
+  "compatibility_date": "2026-09-09",
+  "assets": {
+    "directory": "./.preview",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*", "/assets/video/*.mp4"]
+  }
+}

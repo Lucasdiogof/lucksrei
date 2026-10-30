@@ -13,7 +13,8 @@
 /.well-known/apple-app-site-association
   Content-Type: application/json
 
-# Vídeos de vitrine (um arquivo por idioma e codec): 7 dias de cache, depois revalida pelo ETag. Os nomes não têm hash: ao re-renderizar um arquivo,
-# troque o nome (ex.: -loop2) para não ficar preso no cache. Ver tools/video-i18n/RELATORIO-ETAPA3.md.
+# Vídeos de vitrine (um arquivo por idioma e codec): cache de 1 ano e imutável, seguro porque as URLs levam ?v=<VER> (VER em assets/js/loop-video.js,
+# espelhado nos <noscript> das páginas) e o HTML/JS são sempre revalidados. Ao re-renderizar QUALQUER vídeo ou pôster, suba VER (e os ?v= dos <noscript>):
+# a URL nova ignora o cache antigo. O Range (206) vem do Worker (worker/range.mjs). Ver tools/video-i18n/RELATORIO-ETAPA3.md.
 /assets/video/*
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=31536000, immutable

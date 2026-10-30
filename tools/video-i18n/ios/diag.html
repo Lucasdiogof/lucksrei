@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diagnóstico de vídeo (iPhone)</title>
+<link rel="stylesheet" href="diag.css">
+</head>
+<body>
+<h3>Troca de idioma do vídeo — diagnóstico</h3>
+<div id="box"><video id="v" data-loop-video="goias-app" width="720" height="720" muted loop playsinline preload="none"></video></div>
+<div class="row" id="langs">
+  <button data-l="pt-BR">PT</button><button data-l="en">EN</button><button data-l="es">ES</button>
+</div>
+<div class="row">
+  <button id="seq">PT→EN→ES→PT (3 s cada)</button>
+  <button id="fast">Trocas rápidas (10× em 4 s)</button>
+  <button id="loopend">Trocar perto do fim do loop</button>
+</div>
+<div id="st">…</div>
+<div class="row"><button id="copy">Copiar relatório</button><button id="clear">Limpar</button></div>
+<pre id="log"></pre>
+<script src="/assets/js/loop-video.js"></script>
+<script src="diag.js"></script>
+</body>
+</html>

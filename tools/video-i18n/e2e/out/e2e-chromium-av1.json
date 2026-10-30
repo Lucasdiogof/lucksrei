@@ -23,7 +23,7 @@
     "mp4Requests": "es"
    },
    "name": "abre-em-cada-idioma",
-   "sec": 0.5
+   "sec": 0.7
   },
   {
    "ok": true,
@@ -31,54 +31,55 @@
     {
      "l": "en",
      "file": "en",
-     "t": 5.88,
+     "t": 5.78,
      "players": 1,
      "paused": false
     },
     {
      "l": "es",
      "file": "es",
-     "t": 10.22,
+     "t": 10.11,
      "players": 1,
      "paused": false
     },
     {
      "l": "pt-BR",
      "file": "pt-BR",
-     "t": 14.52,
+     "t": 14.38,
      "players": 1,
      "paused": false
     }
    ],
    "maxStallMs": 51,
-   "srcChanges": 3,
+   "maxRafGapMs": 51,
+   "srcChanges": 4,
    "restarts": 0,
    "maxPlayers": 2,
    "continuity": [
     {
      "to": "en",
      "driftMs": 0,
-     "tookMs": 1844,
+     "tookMs": 1745,
      "attempts": 1,
-     "jumpMs": 24
+     "jumpMs": 27
     },
     {
      "to": "es",
      "driftMs": 0,
-     "tookMs": 1786,
+     "tookMs": 1775,
      "attempts": 1,
-     "jumpMs": 35
+     "jumpMs": 33
     },
     {
      "to": "pt-BR",
      "driftMs": 0,
-     "tookMs": 1757,
+     "tookMs": 1716,
      "attempts": 1,
-     "jumpMs": 33
+     "jumpMs": 34
     }
    ],
    "name": "troca-em-reproducao",
-   "sec": 17.1
+   "sec": 17
   },
   {
    "ok": true,
@@ -90,7 +91,8 @@
      "ok": true
     }
    ],
-   "maxStallMs": 51,
+   "maxStallMs": 35,
+   "maxRafGapMs": 35,
    "srcChanges": 1,
    "restarts": 0,
    "maxPlayers": 2,
@@ -99,7 +101,7 @@
   },
   {
    "ok": true,
-   "frames": 84,
+   "frames": 82,
    "minStdDev": 13.8,
    "maxLumaJump": 2.6,
    "swaps": 1,
@@ -113,47 +115,48 @@
      "phase": "fim",
      "to": "en",
      "file": "en",
-     "t": 0.25
+     "t": 0.3
     },
     {
      "phase": "recomeco",
      "to": "es",
      "file": "es",
-     "t": 2.08
+     "t": 1.92
     }
    ],
    "continuity": [
     {
      "to": "en",
      "driftMs": 0,
-     "tookMs": 2449,
+     "tookMs": 2459,
      "attempts": 1,
-     "jumpMs": 0
+     "jumpMs": 4
     },
     {
      "to": "es",
      "driftMs": 0,
-     "tookMs": 1998,
+     "tookMs": 1820,
      "attempts": 1,
-     "jumpMs": 3
+     "jumpMs": 25
     }
    ],
    "maxStallMs": 50,
+   "maxRafGapMs": 50,
    "srcChanges": 2,
    "restarts": 0,
    "maxPlayers": 2,
    "name": "troca-perto-do-fim-e-do-loop",
-   "sec": 57.7
+   "sec": 57.6
   },
   {
    "ok": true,
    "offscreen": {
     "src": null,
-    "poster": "/assets/video/goias-app-loop-poster.en.webp",
+    "poster": "/assets/video/goias-app-loop-poster.en.webp?v=1",
     "n": 7
    },
    "resumedAt": 3.31,
-   "wasAt": 3.04,
+   "wasAt": 3.03,
    "name": "troca-fora-da-tela",
    "sec": 7.4
   },
@@ -172,7 +175,8 @@
    "ok": true,
    "stillOldAfter1_5s": "pt-BR",
    "final": "en",
-   "maxStallMs": 36,
+   "maxStallMs": 51,
+   "maxRafGapMs": 51,
    "srcChanges": 1,
    "restarts": 0,
    "maxPlayers": 2,
@@ -180,21 +184,22 @@
     {
      "to": "en",
      "driftMs": 0,
-     "tookMs": 2078,
+     "tookMs": 1644,
      "attempts": 1,
-     "jumpMs": -17
+     "jumpMs": 55
     }
    ],
    "name": "conexao-lenta",
-   "sec": 4.2
+   "sec": 3.8
   },
   {
    "ok": true,
    "keptOld": "pt-BR",
    "firstFail": "error",
    "afterRetry": "es",
-   "maxStallMs": 19,
-   "srcChanges": 1,
+   "maxStallMs": 18,
+   "maxRafGapMs": 27,
+   "srcChanges": 0,
    "restarts": 0,
    "maxPlayers": 2,
    "name": "falha-no-download",
@@ -203,8 +208,8 @@
   {
    "ok": true,
    "mp4Requests": 0,
-   "posterBefore": "/assets/video/goias-app-loop-poster.pt-BR.webp",
-   "posterAfter": "/assets/video/goias-app-loop-poster.es.webp",
+   "posterBefore": "/assets/video/goias-app-loop-poster.pt-BR.webp?v=1",
+   "posterAfter": "/assets/video/goias-app-loop-poster.es.webp?v=1",
    "name": "movimento-reduzido",
    "sec": 2.5
   },
@@ -223,7 +228,7 @@
     "videosNaHome": 7
    },
    "name": "home-so-baixa-o-visivel",
-   "sec": 25.7
+   "sec": 25.8
   },
   {
    "ok": true,

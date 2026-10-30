@@ -342,7 +342,7 @@ var UA = { "user-agent": "Mozilla/5.0 (X11; Linux) Safari/537.36" };
 
   // --- integração estática
   var wj2 = read("wrangler.jsonc");
-  check(/"run_worker_first": \["\/api\/\*"\]/.test(wj2), "só /api/* roda o Worker primeiro");
+  check(/"run_worker_first": \["\/api\/\*", "\/assets\/video\/\*\.mp4"\]/.test(wj2), "só /api/* e /assets/video/*.mp4 (Range) rodam o Worker primeiro");
   check(/"name": "lucksrei-site"/.test(wj2) && /"binding": "DB"/.test(wj2) && /"binding": "ASSETS"/.test(wj2), "mesmo Worker, bindings DB e ASSETS");
   var ign = read(".assetsignore");
   ["worker", "migrations", "DESIGN.md"].forEach(function (x) { check(ign.split(/\r?\n/).indexOf(x) >= 0, ".assetsignore deve conter " + x); });

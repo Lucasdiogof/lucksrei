@@ -29,6 +29,7 @@
 
   var SUPPORTED = ["en", "pt-BR", "es"];
   var DIR = "/assets/video/";
+  var VER = "1";             // sobe a cada re-render de qualquer vídeo/pôster (muda a URL → cache longo sem arquivo velho); espelhar nos <noscript> das páginas
   var TOL = 0.04;            // s: um quadro a 30 fps (33 ms) + folga; os dois vídeos nunca apresentam na mesma fase de vsync
   var OK_FRAMES = 8;         // quadros consecutivos alinhados antes de revelar
   var BUFFER_AHEAD = 1.5;    // s de vídeo já baixado à frente do ponto atual
@@ -40,8 +41,8 @@
   function urls(name, locale, av1) {
     locale = norm(locale);
     return {
-      src: DIR + name + "-loop." + locale + (av1 ? ".av1" : "") + ".mp4",
-      poster: DIR + name + "-loop-poster." + locale + ".webp"
+      src: DIR + name + "-loop." + locale + (av1 ? ".av1" : "") + ".mp4?v=" + VER,
+      poster: DIR + name + "-loop-poster." + locale + ".webp?v=" + VER
     };
   }
   // a − b na linha do tempo circular de duração d, em (−d/2, d/2]
@@ -292,5 +293,5 @@
     });
   }
 
-  return { init: init, urls: urls, wrapDiff: wrapDiff, norm: norm, SUPPORTED: SUPPORTED, _slots: slots, _env: env };
+  return { init: init, urls: urls, wrapDiff: wrapDiff, norm: norm, SUPPORTED: SUPPORTED, VER: VER, _slots: slots, _env: env };
 });

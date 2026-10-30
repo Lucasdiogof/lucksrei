@@ -15,3 +15,5 @@ README.pt-BR.md
 README.es.md
 .review
 .github
+.preview
+wrangler.preview.jsonc

@@ -15,3 +15,4 @@ build/
 .dev.vars.*
 *.pem
 *.key
+.preview/

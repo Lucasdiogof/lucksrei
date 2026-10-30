@@ -1,5 +1,5 @@
 {
- "engine": "chrome-h264",
+ "engine": "chrome-h264-norvfc",
  "version": "156.0.8078.74",
  "results": [
   {
@@ -23,7 +23,7 @@
     "mp4Requests": "es"
    },
    "name": "abre-em-cada-idioma",
-   "sec": 0.9
+   "sec": 1.3
   },
   {
    "ok": true,
@@ -31,26 +31,27 @@
     {
      "l": "en",
      "file": "en",
-     "t": 5.7,
+     "t": 5.67,
      "players": 1,
      "paused": false
     },
     {
      "l": "es",
      "file": "es",
-     "t": 9.88,
+     "t": 9.86,
      "players": 1,
      "paused": false
     },
     {
      "l": "pt-BR",
      "file": "pt-BR",
-     "t": 14.07,
+     "t": 13.93,
      "players": 1,
      "paused": false
     }
    ],
-   "maxStallMs": 14,
+   "maxStallMs": 27,
+   "maxRafGapMs": 27,
    "srcChanges": 3,
    "restarts": 0,
    "maxPlayers": 2,
@@ -58,27 +59,27 @@
     {
      "to": "en",
      "driftMs": 22,
-     "tookMs": 1659,
+     "tookMs": 1627,
      "attempts": 1,
      "jumpMs": 21
     },
     {
      "to": "es",
      "driftMs": 22,
-     "tookMs": 1645,
+     "tookMs": 1634,
      "attempts": 1,
      "jumpMs": 21
     },
     {
      "to": "pt-BR",
      "driftMs": 22,
-     "tookMs": 1654,
+     "tookMs": 1531,
      "attempts": 1,
      "jumpMs": 21
     }
    ],
    "name": "troca-em-reproducao",
-   "sec": 16.7
+   "sec": 16.6
   },
   {
    "ok": true,
@@ -90,21 +91,22 @@
      "ok": true
     }
    ],
-   "maxStallMs": 15,
+   "maxStallMs": 19,
+   "maxRafGapMs": 19,
    "srcChanges": 1,
    "restarts": 0,
    "maxPlayers": 2,
    "name": "trocas-rapidas",
-   "sec": 7.7
+   "sec": 7.8
   },
   {
    "ok": true,
-   "frames": 136,
+   "frames": 109,
    "minStdDev": 12.2,
-   "maxLumaJump": 1.7,
+   "maxLumaJump": 3.2,
    "swaps": 1,
    "name": "sem-quadro-vazio-durante-a-troca",
-   "sec": 13.2
+   "sec": 13.3
   },
   {
    "ok": true,
@@ -119,26 +121,27 @@
      "phase": "recomeco",
      "to": "es",
      "file": "es",
-     "t": 1.75
+     "t": 1.69
     }
    ],
    "continuity": [
     {
      "to": "en",
-     "driftMs": 21,
-     "tookMs": 2189,
+     "driftMs": 20,
+     "tookMs": 2202,
      "attempts": 1,
-     "jumpMs": 24
+     "jumpMs": 28
     },
     {
      "to": "es",
      "driftMs": 22,
-     "tookMs": 1642,
+     "tookMs": 1589,
      "attempts": 1,
      "jumpMs": 21
     }
    ],
-   "maxStallMs": 13,
+   "maxStallMs": 38,
+   "maxRafGapMs": 38,
    "srcChanges": 2,
    "restarts": 0,
    "maxPlayers": 2,
@@ -149,13 +152,13 @@
    "ok": true,
    "offscreen": {
     "src": null,
-    "poster": "/assets/video/goias-app-loop-poster.en.webp",
+    "poster": "/assets/video/goias-app-loop-poster.en.webp?v=1",
     "n": 7
    },
-   "resumedAt": 3.23,
+   "resumedAt": 3.24,
    "wasAt": 3.01,
    "name": "troca-fora-da-tela",
-   "sec": 7.4
+   "sec": 7.5
   },
   {
    "ok": true,
@@ -166,13 +169,14 @@
    },
    "after": "es",
    "name": "aba-oculta",
-   "sec": 5.2
+   "sec": 5.4
   },
   {
    "ok": true,
    "stillOldAfter1_5s": "pt-BR",
    "final": "en",
-   "maxStallMs": 14,
+   "maxStallMs": 35,
+   "maxRafGapMs": 35,
    "srcChanges": 0,
    "restarts": 0,
    "maxPlayers": 2,
@@ -180,7 +184,7 @@
     {
      "to": "en",
      "driftMs": 22,
-     "tookMs": 2781,
+     "tookMs": 2796,
      "attempts": 1,
      "note": "amostra da troca não encontrada"
     }
@@ -194,6 +198,7 @@
    "firstFail": "error",
    "afterRetry": "es",
    "maxStallMs": 12,
+   "maxRafGapMs": 12,
    "srcChanges": 0,
    "restarts": 0,
    "maxPlayers": 2,
@@ -203,8 +208,8 @@
   {
    "ok": true,
    "mp4Requests": 0,
-   "posterBefore": "/assets/video/goias-app-loop-poster.pt-BR.webp",
-   "posterAfter": "/assets/video/goias-app-loop-poster.es.webp",
+   "posterBefore": "/assets/video/goias-app-loop-poster.pt-BR.webp?v=1",
+   "posterAfter": "/assets/video/goias-app-loop-poster.es.webp?v=1",
    "name": "movimento-reduzido",
    "sec": 2.5
   },
@@ -223,7 +228,7 @@
     "videosNaHome": 7
    },
    "name": "home-so-baixa-o-visivel",
-   "sec": 25.8
+   "sec": 25.9
   },
   {
    "ok": true,

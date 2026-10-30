@@ -78,13 +78,14 @@ const state = page => page.evaluate(() => {
 
 // congelamento (maior intervalo sem o tempo do vídeo visível avançar), reinício em 0 e número de players
 const analyze = page => page.evaluate(() => {
-  const s = window.__samples; let maxStall = 0, last = null, restarts = 0;
+  const s = window.__samples; let maxStall = 0, last = null, restarts = 0, maxGap = 0;
   for (let i = 1; i < s.length; i++) {
     const a = s[i - 1], b = s[i];
+    maxGap = Math.max(maxGap, b.p - a.p);   // maior intervalo entre quadros da página: se ≈ maxStall, a thread principal parou (carga da máquina), não o player
     if (b.t !== a.t && !b.paused) { if (last != null) maxStall = Math.max(maxStall, b.p - last); last = b.p; }
     if (a.src && b.src && a.src !== b.src && b.t < 0.7 && a.t > 3 && a.t < (a.d || 1e9) - 3) restarts++;
   }
-  return { maxStallMs: Math.round(maxStall), srcChanges: s.filter((x, i) => i && x.src !== s[i - 1].src).length, restarts, maxPlayers: Math.max(...s.map(x => x.n)) };
+  return { maxStallMs: Math.round(maxStall), maxRafGapMs: Math.round(maxGap), srcChanges: s.filter((x, i) => i && x.src !== s[i - 1].src).length, restarts, maxPlayers: Math.max(...s.map(x => x.n)) };
 });
 // salto da linha do tempo na troca: tempo do 1º quadro do novo − (tempo do último quadro do antigo + tempo decorrido)
 const continuity = page => page.evaluate(() => {
