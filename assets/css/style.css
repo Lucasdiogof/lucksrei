@@ -2027,13 +2027,13 @@ html[data-theme="light"][data-amb="contact"] .page-hero h1::after{ background: l
    ===================================================================== */
 @media (min-width: 901px){
   #projetos .work{ grid-template-columns: repeat(2, minmax(0,1fr)); gap: 18px; }
-  #projetos .work-item:has(.work-plate.has-video), #projetos .work-wide:has(.work-plate.has-video){ grid-template-columns: 210px minmax(0,1fr); align-items: stretch; }
+  #projetos .work-item:has(.work-plate.has-video), #projetos .work-wide:has(.work-plate.has-video){ grid-template-columns: 238px minmax(0,1fr); align-items: stretch; min-height: 238px; }
   #projetos .work-item .work-plate{ order: 1; border-left: 0; border-right: 1px solid var(--border); }
-  /* o quadrado do vídeo segue a largura da coluna (não a altura da linha), senão invade o texto */
-  #projetos .work-item:has(.work-plate.has-video) .work-plate{ align-self: center; width: 100%; height: auto; aspect-ratio: 1 / 1; border-right: 0; }
+  /* o vídeo (quadrado, 238px de largura) preenche a altura do card; se o texto deixar o card mais alto, sobra só o fundo do próprio filme, sem faixa clara */
+  #projetos .work-item:has(.work-plate.has-video) .work-plate{ align-self: stretch; width: 100%; height: auto; aspect-ratio: auto; border-right: 0; }
   #projetos .work-item .work-copy{ order: 2; padding: 20px 26px; }
   #projetos .work-item:has(.work-plate.has-video) .work-copy h3{ font-size: 24px; }
   #projetos .work-item:has(.work-plate.has-video) .work-copy p{ font-size: 14.5px; line-height: 1.55; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   #projetos .work-item:last-child:nth-child(odd){ grid-column: 1 / -1; }
-  #projetos .work-item:last-child:nth-child(odd):has(.work-plate.has-video){ grid-template-columns: 210px minmax(0,1fr); }
+  #projetos .work-item:last-child:nth-child(odd):has(.work-plate.has-video){ grid-template-columns: 238px minmax(0,1fr); }
 }
