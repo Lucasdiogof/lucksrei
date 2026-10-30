@@ -1,0 +1,482 @@
+{
+ "res": [
+  {
+   "page": "home",
+   "app": "aprovaura",
+   "steps": [
+    {
+     "l": "pt-BR",
+     "ok": false,
+     "v": [
+      " t=0 PAUSED"
+     ]
+    },
+    {
+     "l": "en",
+     "ok": true,
+     "v": [
+      "/assets/video/aprovaura-loop.en.av1.mp4?v=1 t=4.22"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    },
+    {
+     "l": "es",
+     "ok": true,
+     "v": [
+      "/assets/video/aprovaura-loop.es.av1.mp4?v=1 t=8.79"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    },
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/aprovaura-loop.pt-BR.av1.mp4?v=1 t=13.12"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    }
+   ],
+   "reqs": 47,
+   "errs": []
+  },
+  {
+   "page": "aura",
+   "app": "aprovaura",
+   "steps": [
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/aprovaura-loop.pt-BR.av1.mp4?v=1 t=1.48"
+     ]
+    },
+    {
+     "l": "en",
+     "ok": true,
+     "v": [
+      "/assets/video/aprovaura-loop.en.av1.mp4?v=1 t=5.89"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 4
+     }
+    },
+    {
+     "l": "es",
+     "ok": true,
+     "v": [
+      "/assets/video/aprovaura-loop.es.av1.mp4?v=1 t=10.21"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 4
+     }
+    },
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/aprovaura-loop.pt-BR.av1.mp4?v=1 t=14.48"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 4
+     }
+    }
+   ],
+   "reqs": 7,
+   "errs": []
+  },
+  {
+   "page": "fan-hub",
+   "app": "goias-app",
+   "steps": [
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/goias-app-loop.pt-BR.av1.mp4?v=1 t=1.47"
+     ]
+    },
+    {
+     "l": "en",
+     "ok": true,
+     "v": [
+      "/assets/video/goias-app-loop.en.av1.mp4?v=1 t=5.98"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    },
+    {
+     "l": "es",
+     "ok": true,
+     "v": [
+      "/assets/video/goias-app-loop.es.av1.mp4?v=1 t=10.36"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    },
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/goias-app-loop.pt-BR.av1.mp4?v=1 t=14.72"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    }
+   ],
+   "reqs": 7,
+   "errs": []
+  },
+  {
+   "page": "la-pelve",
+   "app": "la-pelve",
+   "steps": [
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/la-pelve-loop.pt-BR.av1.mp4?v=1 t=1.47"
+     ]
+    },
+    {
+     "l": "en",
+     "ok": true,
+     "v": [
+      "/assets/video/la-pelve-loop.en.av1.mp4?v=1 t=6.01"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    },
+    {
+     "l": "es",
+     "ok": true,
+     "v": [
+      "/assets/video/la-pelve-loop.es.av1.mp4?v=1 t=10.38"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    },
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/la-pelve-loop.pt-BR.av1.mp4?v=1 t=14.73"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    }
+   ],
+   "reqs": 7,
+   "errs": []
+  },
+  {
+   "page": "match-queue",
+   "app": "match-queue",
+   "steps": [
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/match-queue-loop.pt-BR.av1.mp4?v=1 t=1.45"
+     ]
+    },
+    {
+     "l": "en",
+     "ok": true,
+     "v": [
+      "/assets/video/match-queue-loop.en.av1.mp4?v=1 t=5.92"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    },
+    {
+     "l": "es",
+     "ok": true,
+     "v": [
+      "/assets/video/match-queue-loop.es.av1.mp4?v=1 t=10.43"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    },
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/match-queue-loop.pt-BR.av1.mp4?v=1 t=14.73"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    }
+   ],
+   "reqs": 7,
+   "errs": []
+  },
+  {
+   "page": "bebometro",
+   "app": "bebometro",
+   "steps": [
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/bebometro-loop.pt-BR.av1.mp4?v=1 t=1.45"
+     ]
+    },
+    {
+     "l": "en",
+     "ok": true,
+     "v": [
+      "/assets/video/bebometro-loop.en.av1.mp4?v=1 t=5.83"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    },
+    {
+     "l": "es",
+     "ok": true,
+     "v": [
+      "/assets/video/bebometro-loop.es.av1.mp4?v=1 t=10.22"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    },
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/bebometro-loop.pt-BR.av1.mp4?v=1 t=14.56"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    }
+   ],
+   "reqs": 7,
+   "errs": []
+  },
+  {
+   "page": "orbijob",
+   "app": "orbijob",
+   "steps": [
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/orbijob-loop.pt-BR.av1.mp4?v=1 t=1.46"
+     ]
+    },
+    {
+     "l": "en",
+     "ok": true,
+     "v": [
+      "/assets/video/orbijob-loop.en.av1.mp4?v=1 t=5.89"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    },
+    {
+     "l": "es",
+     "ok": true,
+     "v": [
+      "/assets/video/orbijob-loop.es.av1.mp4?v=1 t=10.29"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    },
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/orbijob-loop.pt-BR.av1.mp4?v=1 t=14.72"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    }
+   ],
+   "reqs": 7,
+   "errs": []
+  },
+  {
+   "page": "busaogyn",
+   "app": "busaogyn",
+   "steps": [
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/busaogyn-loop.pt-BR.av1.mp4?v=1 t=1.42"
+     ]
+    },
+    {
+     "l": "en",
+     "ok": true,
+     "v": [
+      "/assets/video/busaogyn-loop.en.av1.mp4?v=1 t=5.8"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    },
+    {
+     "l": "es",
+     "ok": true,
+     "v": [
+      "/assets/video/busaogyn-loop.es.av1.mp4?v=1 t=10.12"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    },
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/busaogyn-loop.pt-BR.av1.mp4?v=1 t=14.35"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    }
+   ],
+   "reqs": 7,
+   "errs": []
+  },
+  {
+   "page": "stockport",
+   "app": "stockport",
+   "steps": [
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/stockport-loop.pt-BR.av1.mp4?v=1 t=1.47"
+     ]
+    },
+    {
+     "l": "en",
+     "ok": true,
+     "v": [
+      "/assets/video/stockport-loop.en.av1.mp4?v=1 t=5.88"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    },
+    {
+     "l": "es",
+     "ok": true,
+     "v": [
+      "/assets/video/stockport-loop.es.av1.mp4?v=1 t=10.29"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    },
+    {
+     "l": "pt-BR",
+     "ok": true,
+     "v": [
+      "/assets/video/stockport-loop.pt-BR.av1.mp4?v=1 t=14.56"
+     ],
+     "sw": {
+      "ok": true,
+      "drift": 0
+     }
+    }
+   ],
+   "reqs": 7,
+   "errs": []
+  }
+ ],
+ "init": [
+  {
+   "saved": "es",
+   "nav": "pt-BR",
+   "reqs": [
+    "/assets/video/aprovaura-loop-poster.es.webp?v=1",
+    "/assets/video/aprovaura-loop.es.av1.mp4?v=1"
+   ],
+   "src": [
+    "/assets/video/aprovaura-loop.es.av1.mp4?v=1"
+   ]
+  },
+  {
+   "saved": null,
+   "nav": "en-US",
+   "reqs": [
+    "/assets/video/aprovaura-loop-poster.en.webp?v=1",
+    "/assets/video/aprovaura-loop.en.av1.mp4?v=1"
+   ],
+   "src": [
+    "/assets/video/aprovaura-loop.en.av1.mp4?v=1"
+   ]
+  },
+  {
+   "saved": null,
+   "nav": "es-ES",
+   "reqs": [
+    "/assets/video/aprovaura-loop-poster.es.webp?v=1",
+    "/assets/video/aprovaura-loop.es.av1.mp4?v=1"
+   ],
+   "src": [
+    "/assets/video/aprovaura-loop.es.av1.mp4?v=1"
+   ]
+  },
+  {
+   "saved": null,
+   "nav": "pt-BR",
+   "reqs": [
+    "/assets/video/aprovaura-loop-poster.pt-BR.webp?v=1",
+    "/assets/video/aprovaura-loop.pt-BR.av1.mp4?v=1"
+   ],
+   "src": [
+    "/assets/video/aprovaura-loop.pt-BR.av1.mp4?v=1"
+   ]
+  }
+ ]
+}
