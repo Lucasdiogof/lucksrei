@@ -24,8 +24,8 @@ header{position:fixed;top:0;left:0;width:100%;background:rgba(23,24,26,.92);back
 .btn-primary{background:var(--secondary);color:#fff;box-shadow:0 4px 14px rgba(23,24,26,.15)}
 .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(23,24,26,.25)}
 .btn-primary:active{transform:scale(.98)}
-header .btn-primary{background:var(--accent)}
-header .btn-primary:hover{background:#A2642B}
+header .btn-primary{background:var(--primary);color:var(--secondary)}
+header .btn-primary:hover{background:#D79A5C}
 .btn-ghost{background:transparent;color:var(--secondary);border:1px solid var(--secondary)}
 .btn-ghost:hover{transform:translateY(-2px);background:var(--secondary);color:#fff}
 main{padding-top:6rem}

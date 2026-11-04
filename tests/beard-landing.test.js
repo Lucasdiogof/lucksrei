@@ -24,7 +24,7 @@ Object.keys(plans).forEach(function (d) {
   assert(card.indexOf("Comprar " + d + " dias") > -1, "botão " + d);
 });
 assert.strictEqual((html.match(/pay\.hotmart\.com/g) || []).length, 8, "4 links + 4 ofertas no JSON-LD");
-["autoagend", "portal do cliente", "payhip", "whop", "mercado livre", "whatsapp autom"].forEach(function (t) {
+["mais popular", "autoagend", "portal do cliente", "payhip", "whop", "mercado livre", "whatsapp autom"].forEach(function (t) {
   assert(html.toLowerCase().indexOf(t) === -1, "termo proibido: " + t);
 });
 ["hero-financeiro", "hero-agenda", "logo", "og"].forEach(function (n) {
