@@ -1,0 +1,12 @@
+{
+  // Worker ESTÁTICO dedicado a sistemas.lucksrei.com (sem script, sem D1, sem rate limits): só serve a pasta ./systems.
+  // NÃO foi criado nem publicado. Passos exatos em docs/systems/PUBLISHING.md. Isolado do Worker "lucksrei-site".
+  "name": "lucksrei-systems",
+  "workers_dev": false,
+  "preview_urls": false,
+  "compatibility_date": "2026-09-09",
+  "assets": {
+    "directory": "./systems",
+    "not_found_handling": "404-page"
+  }
+}
