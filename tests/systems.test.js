@@ -23,7 +23,7 @@ Object.keys(plans).forEach(function (slug) {
     var url = "https://pay.hotmart.com/" + plans[slug].base + "?off=" + plans[slug].offs[d];
     var m = html.match(new RegExp('<a href="' + url.replace(/[?.]/g, "\\$&") + '"[^>]*data-days="' + d + '"[^>]*>Comprar ' + d + " dias</a>"));
     assert(m, slug + " checkout " + d);
-    assert(m[0].indexOf('data-track="checkout_click"') > -1 && m[0].indexOf('rel="noopener"') > -1, slug + " attrs " + d);
+    assert(m[0].indexOf('data-track="checkout_link_click"') > -1 && m[0].indexOf('rel="noopener"') > -1, slug + " attrs " + d);
     assert(html.indexOf(prices[d]) > -1 && html.indexOf(perDay[d] + " por dia") > -1, slug + " price " + d);
   });
   assert.strictEqual((html.match(/pay\.hotmart\.com/g) || []).length, 8, slug + ": 4 links + 4 JSON-LD offers");
@@ -31,8 +31,8 @@ Object.keys(plans).forEach(function (slug) {
   assert.strictEqual((html.match(/<h1>/g) || []).length, 1, slug + " one h1");
   assert(html.indexOf("Prefere comprar por outra plataforma?") > -1, slug + " alt platforms");
   assert(html.indexOf("renovação automática") > -1 && html.indexOf("ativação") > -1, slug + " payment rules");
-  assert.strictEqual(html.indexOf("https://beard.lucksrei.com") > -1, slug === "beard", slug + " app url only on its own page");
-  assert.strictEqual(html.indexOf("https://stockport.lucksrei.com") > -1, slug === "stockport", slug + " app url only on its own page");
+  assert.strictEqual(html.indexOf('href="https://beard.lucksrei.com"') > -1, slug === "beard", slug + " app url only on its own page");
+  assert.strictEqual(html.indexOf('href="https://stockport.lucksrei.com"') > -1, slug === "stockport", slug + " app url only on its own page");
 });
 // product rules must not leak between products
 assert(read("beard/index.html").indexOf("7 dias por padrão") > -1, "beard grace period");
@@ -72,6 +72,10 @@ assert(read("_headers").indexOf("script-src 'self';") > -1 && read("_headers").i
 var cfgSrc = read("assets/js/tracking-config.js");
 assert(/ga4: ""/.test(cfgSrc) && /googleAds: ""/.test(cfgSrc) && /metaPixel: ""/.test(cfgSrc), "no marketing IDs committed");
 
+// documentation referenced from the shipped config must exist
+["docs/systems/PUBLISHING.md", "docs/systems/TRACKING.md", "docs/systems/README.md"].forEach(function (d) { assert(fs.existsSync(path.join(root, d)), "falta " + d); });
+assert(read("_headers").indexOf("docs/systems/TRACKING.md") > -1 && fs.readFileSync(path.join(root, "wrangler.systems.jsonc"), "utf8").indexOf("docs/systems/PUBLISHING.md") > -1, "references point to existing docs");
+
 // 2. The main Worker must not serve the showcase, and the showcase Worker is assets-only.
 assert(/^systems$/m.test(fs.readFileSync(path.join(root, ".assetsignore"), "utf8")), "main worker ignores systems/");
 var wj = JSON.parse(fs.readFileSync(path.join(root, "wrangler.systems.jsonc"), "utf8").replace(/^\s*\/\/.*$/gm, ""));
@@ -80,14 +84,14 @@ assert(wj.name === "lucksrei-systems" && wj.assets.directory === "./systems" && 
 // 3. Tracking with a stubbed browser: silent without consent; a checkout click is never a purchase.
 function run(consent) {
   var handlers = {}, store = consent ? { lx_consent: consent } : {};
-  var anchor = { dataset: { product: "beard", days: "30", value: "29.90", track: "checkout_click" }, href: "https://pay.hotmart.com/M108332227C?off=v3744m8m" };
+  var anchor = { dataset: { product: "beard", days: "30", price: "29.90", track: "checkout_link_click" }, href: "https://pay.hotmart.com/M108332227C?off=v3744m8m" };
   anchor.closest = function () { return anchor; };
   var ctx = {
     window: { LX_TRACKING: {} }, location: { search: "?utm_source=google&utm_campaign=beard%20teste" },
     localStorage: { getItem: function (k) { return store[k] || null; }, setItem: function (k, v) { store[k] = v; } },
     document: {
       currentScript: { getAttribute: function () { return "beard"; } }, getElementById: function () { return null; }, querySelector: function () { return null; },
-      querySelectorAll: function () { return [anchor]; }, addEventListener: function (t, f) { handlers[t] = f; }, head: { appendChild: function () {} }, createElement: function () { return {}; }
+      querySelectorAll: function (sel) { return /checkout_link_click/.test(sel) ? [anchor] : []; }, addEventListener: function (t, f) { handlers[t] = f; }, head: { appendChild: function () {} }, createElement: function () { return {}; }
     },
     URL: URL, URLSearchParams: URLSearchParams, Date: Date
   };
@@ -101,6 +105,16 @@ assert.strictEqual(run("denied").events.length, 0, "denied: nothing recorded");
 assert.strictEqual(run(null).events.length, 0, "undecided: nothing recorded");
 var granted = run("granted");
 var names = granted.events.map(function (e) { return e.name; });
-assert(names.indexOf("checkout_click") > -1 && names.indexOf("purchase") === -1, "granted: checkout click is not a purchase");
-assert(/[?&]src=google/.test(granted.href) && /sck=beard_30_beardteste/.test(granted.href), "utm forwarded to Hotmart as src/sck: " + granted.href);
+assert(names.indexOf("checkout_link_click") > -1, "granted: checkout link click recorded as an interaction");
+["purchase", "begin_checkout", "InitiateCheckout", "Lead", "checkout_started"].forEach(function (n) { assert(names.indexOf(n) === -1, "never emits " + n); });
+// outbound clicks must map to custom events, never Meta standard conversions
+var js = fs.readFileSync(path.join(S, "assets/js/systems.js"), "utf8");
+assert(!/fbq\("track", "(Lead|InitiateCheckout|Purchase|AddToCart|CompleteRegistration)"/.test(js) && js.indexOf('"trackCustom"') > -1, "meta: custom events only");
+assert(!/gtag\("event", "(purchase|begin_checkout|generate_lead)"/.test(js), "ga4: no conversion event names");
+var u = new URL(granted.href);
+assert.strictEqual(u.searchParams.get("sck"), "b|30|google|beardteste", "sck: product|days|source|campaign");
+assert(u.searchParams.get("sck").length <= 30 && u.searchParams.get("sck").indexOf("_") === -1, "sck within Hotmart limits (30 chars, no underscore)");
+assert.strictEqual(u.searchParams.get("src"), null, "src is not used (affiliate parameter)");
+assert.strictEqual(u.searchParams.get("utm_source"), "google", "utm forwarded");
+assert.strictEqual(u.searchParams.get("off"), "v3744m8m", "offer preserved");
 console.log("systems: ok");

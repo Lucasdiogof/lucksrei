@@ -12,13 +12,13 @@ Status: **implemented in the repo, not published.** Nothing remote was changed (
 | Beard landing | `lucksrei.com/beard/` (PR #24, 71c463a), HTTP 200. Reused: copy, 8 Hotmart links, screenshots, hero, FAQ and the grace-period text. |
 | StockPort landing | `lucasdiogo1234.hotmart.host/stockport-system`, HTTP 200 (Hotmart Pages). Kept as is; not the final home. |
 | Web apps | `beard.lucksrei.com` and `stockport.lucksrei.com` both answer 200 (StockPort title "StockPort System", confirmed in its repo `product.json`). They are app/login hosts, never sales pages. |
-| Store apps | App Store pages for both exist (HTTP 200, titles "Beard System" / "StockPort System"). Google Play URLs return 200 but Play titles were not readable without JS (**unverified**). The live portfolio already links all four. The showcase mentions them as text links, no store badges. |
+| Store apps | **Confirmed live on 2026-11-05 (this review):** App Store lookup API returns both apps (Beard 1.0.1 id6828040621, StockPort 1.0.0 id6825179571, seller "Lucas Diogo Franca", Brazil); both Google Play pages render the title, developer and an **Instalar** button, while a bogus package returns 404. Availability was checked for Brazil only. The pages mention the stores as plain text links in "Onde usar", with no badges, and always as secondary to the Web access. |
 | `sistemas.lucksrei.com` | Does not resolve (curl exit 000). Not provisioned. |
 | Beard product facts | Internal ERP; public booking was retired (`docs/public-booking.md`); grace 7 days configurable (read-only/export by permission, then block). |
 | StockPort product facts | From `docs/business-rules.md` / `status.md`: products/categories, camera scanner (Android/iOS) + manual code, stock entries/adjustments/history/low stock, POS with Pix/cash/debit/credit/other and change, PDF receipt (not fiscal), cash register, customers, suppliers, reports, CSV export, roles with cost/profit hidden from staff. **No fiscal documents.** No documented grace period (only "expired" derived from `expires_at`), so none is claimed. |
 | Existing analytics | The portfolio has first-party visit counting (D1). No GA/Meta/Ads tags anywhere. |
-| Checkouts | All 8 Hotmart URLs answer 200 (this proves the page loads, not that each offer has the right price: **to confirm in the Hotmart phase**). Whop: 2/2 answer 200. Payhip: 403 to automated requests (bot block; **unverified**). Mercado Livre StockPort 30d: reachable only through a Mercado Livre verification redirect (**unverified**). |
-| **Missing data** | Beard's four Mercado Livre listings: no link found in the repos/docs. Listed as pending; the Beard page shows only Whop and Payhip. StockPort shows only the one known Mercado Livre listing (labelled "30 dias"). |
+| Checkouts | All 8 Hotmart URLs answer 200 (proves the page loads, **not** that each offer has the right price/period: confirm with one visit per offer in the Hotmart phase). Whop 2/2 answer 200. Payhip returns 403 to automated requests (bot block, unverified). Mercado Livre StockPort 30d redirects automated clients to a login wall (unverified). |
+| **Missing data** | **Beard Mercado Livre (4 listings): not recovered.** Searched: both product repos and docs, the live portfolio, a web search (no results for the seller/product) and the Mercado Livre listing/seller pages (login wall; no sign-in was attempted). The owner must supply the four URLs. The Beard page shows Whop and Payhip only; StockPort shows its one known Mercado Livre listing, labelled "30 dias". When the links arrive: add them to `marketplaces` in `tools/systems/data.mjs` and rebuild. |
 | Screenshots | Beard: existing approved real captures (6 + 2 hero). StockPort: raw real captures from `stockport-system/docs/screenshots-ux2` (780×1638, demo company data, labelled as such). The Play/App Store marketing frames were **not** used because they contain headlines and device mockups. **No desktop-resolution StockPort capture exists** (only 780×487); a 1280px web capture of dashboard/POS is the one image worth obtaining. |
 
 ## 2. Architecture decision
@@ -49,14 +49,9 @@ Status: **implemented in the repo, not published.** Nothing remote was changed (
 | Alternatives | Whop, Payhip (both products), Mercado Livre (StockPort 30d; Beard pending) | live / partly unverified |
 | Support/legal | `lucksrei.com/support/`, `/terms/`, `/privacy/` | live |
 
-## 4. Publishing (needs owner approval; none of this was run)
+## 4. Publishing
 
-1. Merge the PR. The main Worker build is unaffected (`systems/` ignored); run tests are green.
-2. Cloudflare dashboard → Workers & Pages → Create → **Import from GitHub** (`Lucasdiogof/lucksrei`, the same repo); project name `lucksrei-systems`; deploy command `npx wrangler deploy --config wrangler.systems.jsonc`; no build command. (CLI alternative: `npx wrangler deploy --config wrangler.systems.jsonc`.)
-3. Worker → Settings → Domains & Routes → **Add Custom Domain** `sistemas.lucksrei.com` (Cloudflare creates the DNS record and certificate; the zone is already on Cloudflare). Do not use a wildcard.
-4. Verify: `/`, `/beard/`, `/stockport/`, `/sitemap.xml`, `/robots.txt`, headers (`curl -I`), a real checkout click per product, mobile.
-5. Rollback: remove the Custom Domain (portfolio and apps are unaffected) or roll the Worker back to the previous deployment.
-6. Submit `https://sistemas.lucksrei.com/sitemap.xml` in Search Console (new Domain property).
+See [PUBLISHING.md](PUBLISHING.md): isolation, costs/limits verified against Cloudflare docs, a protected hosted review step (Version URL + Cloudflare Access) **before** the domain, domain attach, rollback. Nothing was run.
 
 ## 5. Migration plan (separate phase, after step 4 is validated)
 
@@ -71,19 +66,31 @@ Status: **implemented in the repo, not published.** Nothing remote was changed (
 
 Impact: ads must use `sistemas.lucksrei.com/<product>/` as the final URL (UTMs do not change the canonical or create duplicate pages). Support must know both pages exist during the overlap.
 
-## 6. Conversion tracking (prepared, off)
+## 6. Conversion tracking
 
-* `systems/assets/js/tracking-config.js` has empty `ga4`, `googleAds`, `metaPixel`. **Empty = nothing loads.** No IDs are committed.
-* A cookie banner (Recusar / Aceitar, equal weight; "Preferências de cookies" in the footer) stores the choice in `localStorage`. Before consent nothing is loaded, sent or queued.
-* Events (after consent): `page_view`, `cta_click` (where), `checkout_click` (product, days, value, BRL), `marketplace_click`, `store_click`, `app_link_click`. GA4 names: `select_checkout` for the checkout click. Meta: `PageView`, `ViewContent`, `InitiateCheckout` (checkout click), `Lead` (marketplace click). **`checkout_click` is a click, never a purchase.** No purchase event exists in the showcase.
-* UTMs: `utm_source/medium/campaign` are read in memory only (no cookie or storage) and forwarded to Hotmart as `src` and `sck` (`product_days_medium_campaign`), so the Hotmart sales report can attribute purchases to a campaign. Canonical URLs ignore query strings.
-* **To enable** (owner action): fill the IDs, then widen `systems/_headers` CSP only as needed: `script-src 'self' https://www.googletagmanager.com https://connect.facebook.net`; `connect-src 'self' https://www.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://www.facebook.com https://connect.facebook.net`; `img-src 'self' data: https://www.google-analytics.com https://www.facebook.com https://*.googletagmanager.com`. Keep Consent Mode off (no tag before consent).
-* **Real purchases** can only come from Hotmart: its Pixel/Conversions-API or webhook integration. Not implemented. A safe proposal if wanted: a Worker endpoint receiving the Hotmart webhook, verifying the `hottok` header in constant time, deduplicating on transaction id (D1), and sending Meta Conversions API / Google Ads offline conversions with the `sck`/`src` values; no personal data stored beyond the transaction id. Cost: free tier. Needs decisions and credentials from the owner.
-* **Missing to start ads**: GA4 measurement ID, Google Ads conversion ID/label (and linked GA4), Meta Pixel ID and verified domain `lucksrei.com`, the Hotmart pixel settings, and LGPD wording approved for the Privacy page (the banner links to the existing `/privacy/`, which does not yet describe marketing cookies: **to update before enabling**).
+See [TRACKING.md](TRACKING.md): consent behaviour, event semantics (interactions only, custom events, no Lead/InitiateCheckout/Purchase), UTM/`sck` strategy with what Hotmart documents and what is still unproven, the safe design for real purchase conversions, CSP changes and the missing data.
 
-## 7. Validation done
+## 7. Validation
 
-* `node tests/systems.test.js` (+ all existing tests): generated files fresh; 4 plans × 2 products with exact price, per-day cost and Hotmart offer; 8 checkout URLs per page; canonical; one h1; no forbidden promises; no inline script/style/handlers; local assets and `rel=noopener`; hero image not lazy; strict CSP; no tracking IDs; main Worker ignores `systems/`; tracking silent without consent and never emits a purchase; UTM → `src/sck`.
-* Real Chrome on 9 widths (320, 375, 390, 428, 768, 1024, 1366, 1440, 1920) × 3 pages: zero horizontal overflow, zero console errors, zero failed requests, every image decoded after scrolling (checked for the lazy gallery).
-* Screenshots: `docs/systems/screenshots/` (390 and 1440, fold + full page).
-* **Not done**: Lighthouse/CLS numbers, Safari/Firefox, keyboard-walk of the lightbox by hand, real checkout purchase, real post-deploy test. Run Lighthouse on the preview after step 2.
+* `node tests/systems.test.js` plus all existing tests: generated files fresh; 4 plans x 2 products with exact price, per-day cost and Hotmart offer; canonical; one h1; no forbidden promises; no inline script/style/handlers; assets and `rel=noopener`; hero image not lazy; strict CSP; no tracking IDs; main Worker ignores `systems/`; tracking silent without consent; no conversion events; `sck` within Hotmart limits.
+* Real Chrome, 9 widths (320 to 1920) x 3 pages: zero horizontal overflow, console errors or failed requests; every gallery tab image decoded (each tab clicked).
+* **Lighthouse 12, served by `wrangler dev` (real workerd, real `_headers`), headless Chrome 156, default throttling (mobile = simulated slow 4G + 4x CPU; desktop preset), consent banner visible.** Local network, so absolute LCP is optimistic; re-run on the hosted copy.
+
+| Page | Form factor | Performance | Accessibility | Best practices | SEO | LCP | CLS | TBT |
+|---|---|---|---|---|---|---|---|---|
+| `/` | mobile | 100 | 100 | 100 | 100 | 1.5 s | 0 | 0 ms |
+| `/` | desktop | 100 | 100 | 100 | 100 | 0.5 s | 0 | 0 ms |
+| `/beard/` | mobile | 100 | 100 | 100 | 100 | 1.8 s | 0 | 0 ms |
+| `/beard/` | desktop | 100 | 100 | 100 | 100 | 0.5 s | 0 | 0 ms |
+| `/stockport/` | mobile | 99 | 100 | 100 | 100 | 2.1 s | 0 | 0 ms |
+| `/stockport/` | desktop | 100 | 100 | 100 | 100 | 0.6 s | 0 | 0 ms |
+
+  No performance/accessibility/best-practice/SEO audit failed except Lighthouse's informational "network dependency tree" insight. Nothing needed fixing, so no complexity was added.
+* **Not done**: Safari/Firefox, a purchase through any checkout, hosted-copy Lighthouse.
+
+## 8. Differences from the previous landings (for the visual review)
+
+* **Beard** (`lucksrei.com/beard/` stays as is): same copy, offers, FAQ and real screenshots; new header navigation, "O que costuma atrapalhar" section, **screenshot stage** (large screen with module tabs and click-to-zoom instead of six small thumbnails), per-day cost on every plan, "Menor custo por dia" replaces "Boa escolha"/"Melhor valor", other-platform block (Whop, Payhip), store text links, cookie banner, strict CSP.
+* **StockPort** (Hotmart Pages page stays as is): new page with its own blue identity and the official logo; raw real captures instead of designed store frames; no claim about fiscal documents or a grace period.
+* **Institutional home**: new catalog in graphite/gold with the official wordmark and crown; two product cards; scales to more products from `data.mjs`.
+* Screenshots: `docs/systems/screenshots/` (desktop 1440 and mobile 390, fold and full page, three pages).

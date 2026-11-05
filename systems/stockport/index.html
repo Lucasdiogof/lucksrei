@@ -75,35 +75,38 @@
   <section class="screens" id="telas">
     <div class="container">
       <div class="section-title"><h2>O sistema por dentro</h2><p>Telas reais do StockPort System. Valores e nomes exibidos são dados de demonstração. Toque para ampliar.</p></div>
-      <div class="shots shots-portrait">
-          <figure class="shot">
+      <div class="stage stage-portrait" data-stage>
+        <div class="stage-tabs" role="tablist" aria-label="Telas do sistema" hidden><button type="button" role="tab" id="tab-0" aria-controls="panel-0" aria-selected="true" tabindex="0" data-i="0">Painel</button><button type="button" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="false" tabindex="-1" data-i="1">Vendas</button><button type="button" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false" tabindex="-1" data-i="2">Pagamento</button><button type="button" role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false" tabindex="-1" data-i="3">Estoque</button><button type="button" role="tab" id="tab-4" aria-controls="panel-4" aria-selected="false" tabindex="-1" data-i="4">Caixa</button><button type="button" role="tab" id="tab-5" aria-controls="panel-5" aria-selected="false" tabindex="-1" data-i="5">Clientes</button><button type="button" role="tab" id="tab-6" aria-controls="panel-6" aria-selected="false" tabindex="-1" data-i="6">Relatórios</button></div>
+        <div class="stage-panels">
+          <figure class="shot on" role="tabpanel" id="panel-0" aria-labelledby="tab-0">
             <button type="button" class="shot-btn" data-full="/assets/img/stockport/painel.webp" data-cap="Painel: Faturamento do dia e produtos para repor." aria-label="Ampliar a tela Painel"><img src="/assets/img/stockport/painel.webp" width="780" height="1638" loading="lazy" decoding="async" alt="StockPort System: tela de painel"></button>
             <figcaption><strong>Painel</strong><span>Faturamento do dia e produtos para repor.</span></figcaption>
           </figure>
-          <figure class="shot">
+          <figure class="shot" role="tabpanel" id="panel-1" aria-labelledby="tab-1">
             <button type="button" class="shot-btn" data-full="/assets/img/stockport/vendas.webp" data-cap="Vendas: Busca, carrinho e código de barras." aria-label="Ampliar a tela Vendas"><img src="/assets/img/stockport/vendas.webp" width="780" height="1638" loading="lazy" decoding="async" alt="StockPort System: tela de vendas"></button>
             <figcaption><strong>Vendas</strong><span>Busca, carrinho e código de barras.</span></figcaption>
           </figure>
-          <figure class="shot">
+          <figure class="shot" role="tabpanel" id="panel-2" aria-labelledby="tab-2">
             <button type="button" class="shot-btn" data-full="/assets/img/stockport/pagamento.webp" data-cap="Pagamento: Formas de pagamento combinadas, com troco." aria-label="Ampliar a tela Pagamento"><img src="/assets/img/stockport/pagamento.webp" width="780" height="1638" loading="lazy" decoding="async" alt="StockPort System: tela de pagamento"></button>
             <figcaption><strong>Pagamento</strong><span>Formas de pagamento combinadas, com troco.</span></figcaption>
           </figure>
-          <figure class="shot">
+          <figure class="shot" role="tabpanel" id="panel-3" aria-labelledby="tab-3">
             <button type="button" class="shot-btn" data-full="/assets/img/stockport/estoque.webp" data-cap="Estoque: Entradas, ajustes e histórico de movimentações." aria-label="Ampliar a tela Estoque"><img src="/assets/img/stockport/estoque.webp" width="780" height="1638" loading="lazy" decoding="async" alt="StockPort System: tela de estoque"></button>
             <figcaption><strong>Estoque</strong><span>Entradas, ajustes e histórico de movimentações.</span></figcaption>
           </figure>
-          <figure class="shot">
+          <figure class="shot" role="tabpanel" id="panel-4" aria-labelledby="tab-4">
             <button type="button" class="shot-btn" data-full="/assets/img/stockport/caixa.webp" data-cap="Caixa: Sessão de caixa e saldo esperado." aria-label="Ampliar a tela Caixa"><img src="/assets/img/stockport/caixa.webp" width="780" height="1638" loading="lazy" decoding="async" alt="StockPort System: tela de caixa"></button>
             <figcaption><strong>Caixa</strong><span>Sessão de caixa e saldo esperado.</span></figcaption>
           </figure>
-          <figure class="shot">
+          <figure class="shot" role="tabpanel" id="panel-5" aria-labelledby="tab-5">
             <button type="button" class="shot-btn" data-full="/assets/img/stockport/clientes.webp" data-cap="Clientes: Cadastro e histórico de compras." aria-label="Ampliar a tela Clientes"><img src="/assets/img/stockport/clientes.webp" width="780" height="1638" loading="lazy" decoding="async" alt="StockPort System: tela de clientes"></button>
             <figcaption><strong>Clientes</strong><span>Cadastro e histórico de compras.</span></figcaption>
           </figure>
-          <figure class="shot">
+          <figure class="shot" role="tabpanel" id="panel-6" aria-labelledby="tab-6">
             <button type="button" class="shot-btn" data-full="/assets/img/stockport/relatorios.webp" data-cap="Relatórios: Faturamento, ticket médio e lucro estimado." aria-label="Ampliar a tela Relatórios"><img src="/assets/img/stockport/relatorios.webp" width="780" height="1638" loading="lazy" decoding="async" alt="StockPort System: tela de relatórios"></button>
             <figcaption><strong>Relatórios</strong><span>Faturamento, ticket médio e lucro estimado.</span></figcaption>
           </figure>
+        </div>
       </div>
     </div>
   </section>
@@ -124,7 +127,7 @@
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Acesso pela Web</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Pagamento único, sem renovação</li>
           </ul>
-          <a href="https://pay.hotmart.com/Y108188423I?off=2etqhbn4" class="btn btn-primary" rel="noopener" data-track="checkout_click" data-product="stockport" data-days="30" data-value="29.90">Comprar 30 dias</a>
+          <a href="https://pay.hotmart.com/Y108188423I?off=2etqhbn4" class="btn btn-primary" rel="noopener" data-track="checkout_link_click" data-product="stockport" data-days="30" data-price="29.90">Comprar 30 dias</a>
         </div>
         <div class="pricing-card">
           
@@ -136,7 +139,7 @@
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Acesso pela Web</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Pagamento único, sem renovação</li>
           </ul>
-          <a href="https://pay.hotmart.com/Y108188423I?off=abyjgd6l" class="btn btn-primary" rel="noopener" data-track="checkout_click" data-product="stockport" data-days="90" data-value="79.90">Comprar 90 dias</a>
+          <a href="https://pay.hotmart.com/Y108188423I?off=abyjgd6l" class="btn btn-primary" rel="noopener" data-track="checkout_link_click" data-product="stockport" data-days="90" data-price="79.90">Comprar 90 dias</a>
         </div>
         <div class="pricing-card">
           
@@ -148,7 +151,7 @@
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Acesso pela Web</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Pagamento único, sem renovação</li>
           </ul>
-          <a href="https://pay.hotmart.com/Y108188423I?off=3hhdqjj4" class="btn btn-primary" rel="noopener" data-track="checkout_click" data-product="stockport" data-days="180" data-value="149.90">Comprar 180 dias</a>
+          <a href="https://pay.hotmart.com/Y108188423I?off=3hhdqjj4" class="btn btn-primary" rel="noopener" data-track="checkout_link_click" data-product="stockport" data-days="180" data-price="149.90">Comprar 180 dias</a>
         </div>
         <div class="pricing-card featured">
           <span class="badge dark">Menor custo por dia</span>
@@ -160,7 +163,7 @@
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Acesso pela Web</li>
             <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg> Pagamento único, sem renovação</li>
           </ul>
-          <a href="https://pay.hotmart.com/Y108188423I?off=0e1joqem" class="btn btn-primary" rel="noopener" data-track="checkout_click" data-product="stockport" data-days="365" data-value="269.90">Comprar 365 dias</a>
+          <a href="https://pay.hotmart.com/Y108188423I?off=0e1joqem" class="btn btn-primary" rel="noopener" data-track="checkout_link_click" data-product="stockport" data-days="365" data-price="269.90">Comprar 365 dias</a>
         </div>
     </div>
     <p class="pricing-note">O pagamento é processado pela Hotmart. Depois da confirmação, a Lucksrei ativa a licença manualmente e envia as instruções por e-mail.</p>

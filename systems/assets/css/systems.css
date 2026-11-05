@@ -64,20 +64,27 @@ main{padding-top:4.5rem}
 .feature-card h3{font-size:1.1rem;margin-bottom:.5rem}.feature-card p{color:var(--muted);font-size:.95rem}
 .center-cta{text-align:center;margin-top:2.5rem}
 .screens{padding:5rem 2rem}
-.shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
-.shots-portrait{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-.shot{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:.75rem .75rem 1.1rem;display:flex;flex-direction:column;gap:.75rem}
+.stage-panels{display:grid;gap:1.5rem}
+.shot{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:.9rem .9rem 1.2rem;display:flex;flex-direction:column;gap:.9rem;min-width:0}
 .shot-btn{display:block;width:100%;border:0;padding:0;background:#17181A;border-radius:10px;overflow:hidden;cursor:zoom-in;line-height:0}
-.shots-portrait .shot-btn{background:var(--surface);border:1px solid var(--line)}
-.shot-btn img{width:100%;height:auto;display:block;transition:transform .4s var(--ease)}
-.shot-btn:hover img{transform:scale(1.02)}
-.shot figcaption{display:flex;flex-direction:column;padding:0 .35rem;font-size:.92rem;color:var(--muted)}
-.shot figcaption strong{color:var(--ink);font-size:1.02rem}
+.shot-btn img{width:100%;height:auto;display:block}
+.shot figcaption{display:flex;flex-direction:column;padding:0 .35rem;font-size:.95rem;color:var(--muted)}
+.shot figcaption strong{color:var(--ink);font-size:1.1rem}
+.stage-portrait .shot-btn{background:var(--surface);border:1px solid var(--line);max-width:340px;margin:0 auto}
+.stage-portrait .shot figcaption{text-align:center}
+.stage.is-on{display:grid;grid-template-columns:230px minmax(0,1fr);gap:2.25rem;align-items:start}
+.stage.is-on .shot{display:none}
+.stage.is-on .shot.on{display:flex}
+.stage-tabs{display:flex;flex-direction:column;gap:.4rem}
+.stage-tabs button{font:inherit;font-weight:600;text-align:left;padding:.8rem 1rem;min-height:44px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;transition:all .2s var(--ease)}
+.stage-tabs button:hover{border-color:var(--accent)}
+.stage-tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.stage-tabs[hidden]{display:none}
 .pricing{max-width:var(--wrap);margin:0 auto}
 .pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.5rem}
-.pricing-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:2.25rem 1.75rem 1.75rem;display:flex;flex-direction:column;position:relative}
+.pricing-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:2rem 1.75rem 1.75rem;display:flex;flex-direction:column;position:relative}
 .pricing-card.featured{border-color:var(--accent);box-shadow:0 16px 36px rgba(0,0,0,.08)}
-.badge{position:absolute;top:1rem;right:1rem;background:var(--ink);color:#fff;font-size:.72rem;font-weight:700;padding:.25rem .7rem;border-radius:20px;text-transform:uppercase;letter-spacing:.04em}
+.badge{position:absolute;top:-.8rem;right:1.25rem;background:var(--ink);color:#fff;font-size:.72rem;font-weight:700;padding:.25rem .7rem;border-radius:20px;text-transform:uppercase;letter-spacing:.04em}
 .pricing-duration{font-size:1.1rem;font-weight:600;color:var(--muted)}
 .pricing-price{font-size:2.3rem;font-weight:800;letter-spacing:-.03em;line-height:1.2;margin-top:.35rem}
 .pricing-day{font-size:.9rem;color:var(--muted);margin-bottom:1.25rem}
@@ -160,10 +167,11 @@ footer{background:var(--bar);color:#fff;padding:3.5rem 2rem 2rem;text-align:cent
   .hero-actions .btn{flex:1 1 100%}
   .logo-text{display:none}
   header .btn{padding:.6rem 1rem;font-size:.9rem}
-  .shots{grid-template-columns:1fr}
-  .shots-portrait{grid-template-columns:repeat(2,1fr);gap:1rem}
-  .shots-portrait .shot{padding:.5rem .5rem .8rem}
-  .consent div{width:100%}.consent .btn{flex:1}
+  .stage.is-on{grid-template-columns:minmax(0,1fr);gap:1rem}
+  .stage-tabs{flex-direction:row;overflow-x:auto;padding-bottom:.25rem;scrollbar-width:thin}
+  .stage-tabs button{white-space:nowrap;flex:0 0 auto}
+  .shot{padding:.6rem .6rem 1rem}
+  .consent{left:.5rem;right:.5rem;bottom:.5rem;padding:.75rem .9rem;gap:.6rem;font-size:.82rem;line-height:1.4}.consent p{flex:1 1 100%}.consent div{width:100%}.consent .btn{flex:1;min-height:40px;padding:.45rem .75rem;font-size:.88rem}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.pricing-card,.feature-card,.product-card{transform:none!important}}
 body[data-theme="stockport"] .logo img[src*="stockport"]{height:46px}

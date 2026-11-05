@@ -97,13 +97,14 @@ function productPage(p) {
             <li>${check} Acesso pela Web</li>
             <li>${check} Pagamento único, sem renovação</li>
           </ul>
-          <a href="${offerUrl(i)}" class="btn btn-primary" rel="noopener" ${track("checkout_click", ` data-days="${pl.days}" data-value="${(pl.cents / 100).toFixed(2)}"`)}>Comprar ${pl.days} dias</a>
+          <a href="${offerUrl(i)}" class="btn btn-primary" rel="noopener" ${track("checkout_link_click", ` data-days="${pl.days}" data-price="${(pl.cents / 100).toFixed(2)}"`)}>Comprar ${pl.days} dias</a>
         </div>`).join("");
   const feats = p.features.map(([ic, t, d]) => `
           <div class="feature-card"><div class="feature-icon">${icon(ic)}</div><h3>${esc(t)}</h3><p>${esc(d)}</p></div>`).join("");
   const probs = p.problems.map(([t, d]) => `<div class="problem"><h3>${esc(t)}</h3><p>${esc(d)}</p></div>`).join("");
+  const tabs = p.screens.map(([f, t], i) => `<button type="button" role="tab" id="tab-${i}" aria-controls="panel-${i}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}" data-i="${i}">${esc(t)}</button>`).join("");
   const screens = p.screens.map(([f, t, d], i) => `
-          <figure class="shot">
+          <figure class="shot${i === 0 ? " on" : ""}" role="tabpanel" id="panel-${i}" aria-labelledby="tab-${i}">
             <button type="button" class="shot-btn" data-full="${base}${f}" data-cap="${esc(t)}: ${esc(d)}" aria-label="Ampliar a tela ${esc(t)}"><img src="${base}${f}" width="${p.screenW}" height="${p.screenH}" loading="lazy" decoding="async" alt="${esc(p.name)}: tela de ${esc(t.toLowerCase())}"></button>
             <figcaption><strong>${esc(t)}</strong><span>${esc(d)}</span></figcaption>
           </figure>`).join("");
@@ -152,7 +153,10 @@ function productPage(p) {
   <section class="screens" id="telas">
     <div class="container">
       <div class="section-title"><h2>O sistema por dentro</h2><p>${esc(p.screensLead)} Toque para ampliar.</p></div>
-      <div class="shots${p.portrait ? " shots-portrait" : ""}">${screens}
+      <div class="stage${p.portrait ? " stage-portrait" : ""}" data-stage>
+        <div class="stage-tabs" role="tablist" aria-label="Telas do sistema" hidden>${tabs}</div>
+        <div class="stage-panels">${screens}
+        </div>
       </div>
     </div>
   </section>
