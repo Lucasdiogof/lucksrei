@@ -17,3 +17,5 @@ README.es.md
 .github
 .preview
 wrangler.preview.jsonc
+systems
+wrangler.systems.jsonc
