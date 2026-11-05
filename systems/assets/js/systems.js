@@ -109,6 +109,7 @@
       b.addEventListener("keydown", function (e) {
         var k = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
         if (k) { e.preventDefault(); show((i + k + tabs.length) % tabs.length, true); }
+        else if (e.key === "Home" || e.key === "End") { e.preventDefault(); show(e.key === "Home" ? 0 : tabs.length - 1, true); }
       });
     });
   });
