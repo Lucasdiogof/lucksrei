@@ -21,7 +21,7 @@ Object.keys(plans).forEach(function (slug) {
   var html = read(slug + "/index.html");
   [30, 90, 180, 365].forEach(function (d) {
     var url = "https://pay.hotmart.com/" + plans[slug].base + "?off=" + plans[slug].offs[d];
-    var m = html.match(new RegExp('<a href="' + url.replace(/[?.]/g, "\\$&") + '"[^>]*data-days="' + d + '"[^>]*>Comprar ' + d + " dias</a>"));
+    var m = html.match(new RegExp('<a href="' + url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + '"[^>]*data-days="' + d + '"[^>]*>Comprar ' + d + " dias</a>"));
     assert(m, slug + " checkout " + d);
     assert(m[0].indexOf('data-track="checkout_link_click"') > -1 && m[0].indexOf('rel="noopener"') > -1, slug + " attrs " + d);
     assert(html.indexOf(prices[d]) > -1 && html.indexOf(perDay[d] + " por dia") > -1, slug + " price " + d);
