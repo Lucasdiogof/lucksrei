@@ -104,10 +104,10 @@ function productPage(p) {
   const probs = p.problems.map(([t, d]) => `<div class="problem"><h3>${esc(t)}</h3><p>${esc(d)}</p></div>`).join("");
   const tabs = p.screens.map(([f, t], i) => `<button type="button" role="tab" id="tab-${i}" aria-controls="panel-${i}" aria-selected="${i === 0}" tabindex="${i === 0 ? 0 : -1}" data-i="${i}">${esc(t)}</button>`).join("");
   const screens = p.screens.map(([f, t, d], i) => `
-          <figure class="shot${i === 0 ? " on" : ""}" role="tabpanel" id="panel-${i}" aria-labelledby="tab-${i}">
+          <div class="shot${i === 0 ? " on" : ""}" role="tabpanel" id="panel-${i}" aria-labelledby="tab-${i}">
             <button type="button" class="shot-btn" data-full="${base}${f}" data-cap="${esc(t)}: ${esc(d)}" aria-label="Ampliar a tela ${esc(t)}"><img src="${base}${f}" width="${p.screenW}" height="${p.screenH}" loading="lazy" decoding="async" alt="${esc(p.name)}: tela de ${esc(t.toLowerCase())}"></button>
-            <figcaption><strong>${esc(t)}</strong><span>${esc(d)}</span></figcaption>
-          </figure>`).join("");
+            <p class="cap"><strong>${esc(t)}</strong><span>${esc(d)}</span></p>
+          </div>`).join("");
   const faq = p.faq.map(([q, a]) => `      <details><summary>${esc(q)}</summary><p>${a}</p></details>`).join("\n");
   const market = p.marketplaces.map(([n, u]) => `<a href="${u}" rel="noopener" ${track("marketplace_click", ` data-marketplace="${esc(n.split(" (")[0].toLowerCase().replace(/ /g, "-"))}"`)}>${esc(n)}</a>`).join("");
   const important = p.important.map((x) => `<li>${esc(x)}</li>`).join("");
@@ -246,12 +246,17 @@ function indexPage() {
 </header>
 
 <main id="conteudo">
-  <section class="hero hero-institutional">
-    <div class="hero-content">
-      <p class="eyebrow">Lucksrei Systems</p>
-      <h1>Sistemas de gestão para quem faz o negócio acontecer.</h1>
-      <p class="lead">Desenvolvemos e vendemos softwares simples e completos para organizar a rotina de pequenos negócios, com licença de pagamento único e suporte direto com quem desenvolveu.</p>
-      <div class="hero-actions"><a href="#sistemas" class="btn btn-primary">Conhecer os sistemas</a><a href="#como-funciona" class="btn btn-ghost">Como funciona</a></div>
+  <section class="hero-band">
+    <div class="hero hero-institutional">
+      <div class="hero-content">
+        <p class="eyebrow">Lucksrei Systems</p>
+        <h1>Sistemas de gestão para quem faz o negócio acontecer.</h1>
+        <p class="lead">Desenvolvemos e vendemos softwares simples e completos para organizar a rotina de pequenos negócios, com licença de pagamento único e suporte direto com quem desenvolveu.</p>
+        <div class="hero-actions"><a href="#sistemas" class="btn btn-primary">Conhecer os sistemas</a><a href="#como-funciona" class="btn btn-ghost">Como funciona</a></div>
+      </div>
+      <div class="hero-products" aria-label="Sistemas disponíveis">
+        ${PRODUCTS.map((p) => `<a class="hero-product" data-theme="${p.theme}" href="/${p.slug}/" data-track="cta_click" data-product="${p.slug}" data-where="home-hero"><img src="/assets/img/${p.slug}/${p.logo.src}" alt="${esc(p.name)}" width="${p.logo.w}" height="${p.logo.h}"><span>${esc(p.audience)}</span><b>${esc(p.tagline)}</b></a>`).join("")}
+      </div>
     </div>
   </section>
 
