@@ -41,3 +41,6 @@ Review checklist on the hosted copy: the three pages at 390 and 1440 px, `curl -
 
 ## Not part of this procedure
 Hotmart external pages, redirects from `lucksrei.com/beard/`, marketplace edits, tracking IDs and ads campaigns: see README §5 and TRACKING.md, each needs its own approval.
+
+## Hosted Lighthouse: known limitation of the preview (05/11/2026)
+Lighthouse 12.8.2 against the password-protected preview URL fails on every run with `PROTOCOL_TIMEOUT (CSS.enable)` (tried: shared Chrome, own Chrome, fresh profile, 120-180 s protocol timeout). The same Lighthouse and Chrome on the same pages served locally complete all four categories at 100 (mobile, home). Partial hosted data (performance 100, accessibility 100) is not a full result: Best Practices is missing and SEO reads 69 because `is-crawlable` fails on the `X-Robots-Tag: noindex` that `*.workers.dev` previews add. That is an environment property, not a page defect, and the preview protection and noindex were deliberately left untouched. Run the hosted Lighthouse again on the final domain, where the page is public and indexable.
