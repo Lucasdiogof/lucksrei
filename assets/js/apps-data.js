@@ -76,7 +76,7 @@
         logo: '/assets/img/apps/stockport.webp', platforms: ['android', 'ios', 'web'], androidUrl: 'https://play.google.com/store/apps/details?id=com.lucksrei.stockport', iosUrl: 'https://apps.apple.com/br/app/stockport-system/id6825179571', webUrl: 'https://stockport.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'PostgreSQL', 'RLS'], caseUrl: '/projects/stockport/' },
       { id: 'beard', name: 'Beard System', subtitle: { en: 'Scheduling, clients, commissions and cash for barbershops', 'pt-BR': 'Agenda, clientes, comissões e caixa para barbearias', es: 'Agenda, clientes, comisiones y caja para barberías' }, group: 'systems', sector: 'management',
-        logo: '/assets/img/apps/beard.webp', platforms: ['android', 'ios', 'web'], androidUrl: null, iosUrl: null, webUrl: 'https://beard.lucksrei.com',
+        logo: '/assets/img/apps/beard.webp', platforms: ['android', 'ios', 'web'], androidUrl: 'https://play.google.com/store/apps/details?id=com.lucksrei.beard.system', iosUrl: 'https://apps.apple.com/br/app/beard-system/id6828040621', webUrl: 'https://beard.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'PostgreSQL', 'RLS'] },
 
       /* ---- profissionais (do mais recente para o mais antigo, pelo fim do período) ---- */

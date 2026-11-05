@@ -387,7 +387,7 @@ section{ padding: 88px 0; }
 
 /* ---------- about ---------- */
 .about-grid{
-  display: grid; grid-template-columns: 1.3fr .7fr; gap: 40px; align-items: start;
+  display: grid; grid-template-columns: minmax(0, 760px); gap: 40px; align-items: start;
 }
 .about-body h2{ margin-bottom: 16px; }
 .about-body p{ color: var(--text-dim); font-size: 16.5px; line-height: 1.75; margin-bottom: 16px; }
