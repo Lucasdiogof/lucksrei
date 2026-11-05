@@ -1,6 +1,6 @@
 # Lucksrei Systems showcase (sistemas.lucksrei.com)
 
-Status: **implemented in the repo, not published.** Nothing remote was changed (no DNS, Worker, Custom Domain, Hotmart or marketplace edits).
+Status: **published on 2026-11-05** (PR #25, merge commit `74728fc`): Worker `lucksrei-systems` with the Custom Domain `sistemas.lucksrei.com`. Hotmart, Payhip, Whop, Mercado Livre, analytics and redirects were not touched. Details, tests and rollback: [PUBLISHING.md](PUBLISHING.md).
 
 ## 1. Audit (verified on 2026-11-05; "unverified" is marked as such)
 
@@ -51,7 +51,7 @@ Status: **implemented in the repo, not published.** Nothing remote was changed (
 
 ## 4. Publishing
 
-See [PUBLISHING.md](PUBLISHING.md): isolation, costs/limits verified against Cloudflare docs, a protected hosted review step (Version URL + Cloudflare Access) **before** the domain, domain attach, rollback. Nothing was run.
+Done on 2026-11-05. See [PUBLISHING.md](PUBLISHING.md): what was published, how to deploy again, rollback, the Cloudflare bot-script/CSP note and the remaining items.
 
 ## 5. Migration plan (separate phase, after step 4 is validated)
 

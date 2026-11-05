@@ -79,7 +79,8 @@ assert(read("_headers").indexOf("docs/systems/TRACKING.md") > -1 && fs.readFileS
 // 2. The main Worker must not serve the showcase, and the showcase Worker is assets-only.
 assert(/^systems$/m.test(fs.readFileSync(path.join(root, ".assetsignore"), "utf8")), "main worker ignores systems/");
 var wj = JSON.parse(fs.readFileSync(path.join(root, "wrangler.systems.jsonc"), "utf8").replace(/^\s*\/\/.*$/gm, ""));
-assert(wj.name === "lucksrei-systems" && wj.assets.directory === "./systems" && !wj.main && !wj.d1_databases && !wj.routes, "systems worker is static only");
+assert(wj.name === "lucksrei-systems" && wj.assets.directory === "./systems" && !wj.main && !wj.d1_databases && !wj.ratelimits && wj.workers_dev === false && wj.preview_urls === false, "systems worker is static only");
+assert(wj.routes.length === 1 && wj.routes[0].pattern === "sistemas.lucksrei.com" && wj.routes[0].custom_domain === true, "the only route is the sistemas.lucksrei.com Custom Domain");
 
 // 3. Tracking with a stubbed browser: silent without consent; a checkout click is never a purchase.
 function run(consent) {

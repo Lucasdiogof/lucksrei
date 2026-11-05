@@ -1,10 +1,17 @@
 {
   // Worker ESTÁTICO dedicado a sistemas.lucksrei.com (sem script, sem D1, sem rate limits): só serve a pasta ./systems.
-  // NÃO foi criado nem publicado. Passos exatos em docs/systems/PUBLISHING.md. Isolado do Worker "lucksrei-site".
+  // Publicado em produção em 05/11/2026. Procedimento de deploy, rollback e CSP: docs/systems/PUBLISHING.md. Isolado do Worker "lucksrei-site".
   "name": "lucksrei-systems",
   "workers_dev": false,
   "preview_urls": false,
   "compatibility_date": "2026-09-09",
+  // Declara o Custom Domain que já existe no painel (Worker lucksrei-systems -> sistemas.lucksrei.com). Não adiciona domínio novo.
+  "routes": [
+    {
+      "pattern": "sistemas.lucksrei.com",
+      "custom_domain": true
+    }
+  ],
   "assets": {
     "directory": "./systems",
     "not_found_handling": "404-page"
