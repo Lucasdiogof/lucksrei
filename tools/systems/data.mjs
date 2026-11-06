@@ -48,7 +48,7 @@ const SP_FAQ_PAY = [
   ["Quando começa a validade?", "O período de uso começa quando você ativa o acesso (ao criar sua senha pelo convite) ou, no máximo, 30 dias depois da confirmação do pagamento, o que ocorrer primeiro. Nunca começa antes da aprovação do pagamento. Os 30 dias são apenas o limite para o início da contagem: a duração do plano continua sendo a que você comprou (30, 90, 180 ou 365 dias)."]
 ];
 const SP_FAQ_END = [
-  ["Como funciona o reembolso?", "O reembolso segue as regras e os termos da Hotmart, plataforma de pagamento, e o prazo de garantia informado na página de compra."],
+  ["Como funciona o reembolso?", "O reembolso segue as regras e os termos da Hotmart, plataforma de pagamento, e o prazo para solicitação é de 7 dias."],
   ["Como falar com o suporte?", `Pela <a href="${MAIN}/support/">página de suporte</a> ou pelo e-mail <a href="mailto:${SP_SUPPORT_EMAIL}">${SP_SUPPORT_EMAIL}</a>, informando o e-mail da compra e o número do pedido.`]
 ];
 
