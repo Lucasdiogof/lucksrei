@@ -41,6 +41,17 @@ const FAQ_END = [
   ["Como falar com o suporte?", `Pela <a href="${MAIN}/support/">página de suporte</a> ou pelo e-mail <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a>.`]
 ];
 
+const SP_SUPPORT_EMAIL = "stockport@lucksrei.com";
+const SP_FAQ_PAY = [
+  COMMON_FAQ_PAY[0],
+  COMMON_FAQ_PAY[1],
+  ["Quando começa a validade?", "O período de uso começa quando você ativa o acesso (ao criar sua senha pelo convite) ou, no máximo, 30 dias depois da confirmação do pagamento, o que ocorrer primeiro. Nunca começa antes da aprovação do pagamento. Os 30 dias são apenas o limite para o início da contagem: a duração do plano continua sendo a que você comprou (30, 90, 180 ou 365 dias)."]
+];
+const SP_FAQ_END = [
+  ["Como funciona o reembolso?", "O reembolso segue as regras e os termos da Hotmart, plataforma de pagamento, e o prazo de garantia informado na página de compra."],
+  ["Como falar com o suporte?", `Pela <a href="${MAIN}/support/">página de suporte</a> ou pelo e-mail <a href="mailto:${SP_SUPPORT_EMAIL}">${SP_SUPPORT_EMAIL}</a>, informando o e-mail da compra e o número do pedido.`]
+];
+
 export const PRODUCTS = [
   {
     slug: "beard", theme: "beard", name: "Beard System",
@@ -174,15 +185,28 @@ export const PRODUCTS = [
       "A compra não inclui código-fonte ou personalização exclusiva."
     ],
     accessWho: "a conta do seu comércio",
+    supportEmail: SP_SUPPORT_EMAIL,
+    // wording that only applies to purchases made on Hotmart (invite by e-mail); the other platforms stay manual (altNote)
+    flow: {
+      pricingLead: "Todas as licenças têm as mesmas funcionalidades; muda apenas o período de uso. O pagamento é único, sem renovação automática, e o período começa na ativação do acesso ou, no máximo, 30 dias após a confirmação do pagamento.",
+      pricingNote: "O pagamento é processado pela Hotmart. Depois da confirmação, você recebe por e-mail um convite individual para criar a sua própria senha e ativar o acesso.",
+      s3: "Receba, no e-mail usado na compra, o convite individual de acesso.",
+      s4: "Crie a sua própria senha pelo convite. Nós nunca enviamos senhas.",
+      s5: "Entre no StockPort System e comece a usar.",
+      infoP: "O período de uso começa quando você ativa o acesso ou, no máximo, 30 dias depois da confirmação do pagamento, o que ocorrer primeiro, e nunca antes da aprovação. Os 30 dias são apenas o limite para o início da contagem: a duração do plano continua sendo a que você comprou. O convite chega depois da confirmação do pagamento; não prometemos um prazo exato.",
+      altNote: "Nestas plataformas, a ativação é feita manualmente pela Lucksrei depois da confirmação e pode não ser imediata."
+    },
     faq: [
-      ...COMMON_FAQ_PAY,
-      ["Como recebo meu acesso?", "Depois da confirmação do pagamento, a Lucksrei cria manualmente a conta do seu comércio e envia as instruções por e-mail ao endereço usado na compra. Você cria sua própria senha. O acesso não é instantâneo."],
+      ...SP_FAQ_PAY,
+      ["Como recebo meu acesso?", "Depois da confirmação do pagamento na Hotmart, você recebe, no e-mail usado na compra, um convite individual (uso único, válido por 7 dias) para criar a sua própria senha e ativar o acesso. Nós nunca enviamos senhas. O convite depende da confirmação do pagamento e da entrega do e-mail, por isso não prometemos um prazo exato."],
+      ["Não recebi o e-mail do convite. O que faço?", "Confira as pastas de Spam e Lixo eletrônico. Se o convite expirou ou já foi usado, abra o StockPort, na tela de entrada toque em “Ative sua conta” (ao lado de “Primeiro acesso?”), informe o e-mail da compra e toque em “Enviar e-mail de ativação”. Se ainda assim não chegar, fale com o suporte informando o e-mail e o número do pedido."],
+      ["Já sou cliente e tenho conta. E se eu comprar de novo?", "Se o e-mail da compra já estiver ligado a uma conta existente, nossa equipe confirma a sua identidade antes de associar o novo período, para proteger os dados da conta. Compre com o mesmo e-mail da conta e, se precisar, fale com o suporte."],
       ["Posso usar o leitor de código de barras?", "Sim. No celular Android e iPhone você lê o código com a câmera; em qualquer dispositivo também é possível digitar o código ou usar um leitor que funcione como teclado."],
       ["O StockPort emite nota fiscal?", "Não. O sistema controla estoque, vendas e caixa e gera recibo em PDF sem valor fiscal. A emissão de NF-e, NFC-e ou SAT não faz parte desta versão."],
       ["Os funcionários podem acessar?", "Sim. Você convida os usuários e define o perfil de cada um. Por exemplo, o perfil de balcão vende, mas não enxerga custos e lucro."],
       ["Preciso instalar algo?", "Não. O acesso é pelo navegador. Os aplicativos do StockPort na Google Play e na App Store também podem ser usados."],
-      ["O que acontece quando a licença vence?", "Ao fim do período, o acesso fica indisponível até uma nova licença ser ativada. A renovação é manual: compre um novo período e avise o suporte com o número do pedido e o e-mail da conta. Veja os detalhes nos Termos."],
-      ...FAQ_END
+      ["O que acontece quando a licença vence?", "Ao fim do período, o acesso fica indisponível até um novo período ser ativado. Para renovar, compre um novo plano com o mesmo e-mail da conta: os dias que ainda restarem são mantidos. Se o e-mail for outro, o suporte ajuda a identificar a conta. Não há renovação automática."],
+      ...SP_FAQ_END
     ]
   }
 ];

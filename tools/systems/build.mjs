@@ -52,7 +52,7 @@ const foot = (dataProduct) => `
 </html>
 `;
 
-const footer = (extra = "") => `<footer>
+const footer = (extra = "", email = SUPPORT_EMAIL) => `<footer>
   <div class="footer-content">
     <img class="footer-logo" src="/assets/img/lucksrei/lucksrei-crown.webp" alt="" width="56" height="40">
     <h3>Lucksrei Systems</h3>
@@ -63,7 +63,7 @@ const footer = (extra = "") => `<footer>
       <a href="${LEGAL.terms}">Termos</a>
       <a href="${LEGAL.privacy}">Privacidade</a>
       <a href="${MAIN}">lucksrei.com</a>
-      <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a>
+      <a href="mailto:${email}">${email}</a>
     </nav>
     <div class="copyright">© 2026 Lucksrei Systems. Todos os direitos reservados.</div>
   </div>
@@ -164,15 +164,16 @@ function productPage(p) {
   <section class="pricing" id="planos">
     <div class="section-title">
       <h2>${esc(p.pricingTitle)}</h2>
-      <p>Todas as licenças têm as mesmas funcionalidades. O pagamento é único, sem renovação automática, e o prazo conta a partir da ativação.</p>
+      <p>${p.flow?.pricingLead ?? "Todas as licenças têm as mesmas funcionalidades. O pagamento é único, sem renovação automática, e o prazo conta a partir da ativação."}</p>
     </div>
     <div class="pricing-grid">${plans}
     </div>
-    <p class="pricing-note">O pagamento é processado pela Hotmart. Depois da confirmação, a Lucksrei ativa a licença manualmente e envia as instruções por e-mail.</p>
+    <p class="pricing-note">${p.flow?.pricingNote ?? "O pagamento é processado pela Hotmart. Depois da confirmação, a Lucksrei ativa a licença manualmente e envia as instruções por e-mail."}</p>
     <div class="alt-buy">
       <h3>Prefere comprar por outra plataforma?</h3>
       <p>As licenças também estão disponíveis em:</p>
-      <div class="alt-links">${market}</div>
+      <div class="alt-links">${market}</div>${p.flow?.altNote ? `
+      <p class="pricing-note">${p.flow.altNote}</p>` : ""}
     </div>
   </section>
 
@@ -184,11 +185,11 @@ function productPage(p) {
           <ol>
             <li>Escolha o período de acesso.</li>
             <li>Finalize a compra na Hotmart.</li>
-            <li>A Lucksrei cria ${p.accessWho}.</li>
-            <li>Receba as instruções por e-mail, no endereço usado na compra.</li>
-            <li>Ative seu acesso, defina sua senha e comece a usar.</li>
+            <li>${p.flow?.s3 ?? `A Lucksrei cria ${p.accessWho}.`}</li>
+            <li>${p.flow?.s4 ?? "Receba as instruções por e-mail, no endereço usado na compra."}</li>
+            <li>${p.flow?.s5 ?? "Ative seu acesso, defina sua senha e comece a usar."}</li>
           </ol>
-          <p class="info-p">A conta é criada manualmente, depois da confirmação do pagamento, e o acesso não é necessariamente imediato. O período contratado começa a contar a partir da ativação.</p>
+          <p class="info-p">${p.flow?.infoP ?? "A conta é criada manualmente, depois da confirmação do pagamento, e o acesso não é necessariamente imediato. O período contratado começa a contar a partir da ativação."}</p>
         </div>
         <div class="info-box">
           <h3>Onde usar</h3>
@@ -207,7 +208,7 @@ ${faq}
   </section>
 </main>
 
-${footer(PRODUCTS.filter((x) => x !== p).map((x) => `<a href="/${x.slug}/">${esc(x.name)}</a>`).join(""))}
+${footer(PRODUCTS.filter((x) => x !== p).map((x) => `<a href="/${x.slug}/">${esc(x.name)}</a>`).join(""), p.supportEmail)}
 ` + foot(p.slug);
 }
 
@@ -273,10 +274,10 @@ function indexPage() {
     <div class="container">
       <div class="info-grid">
         <div class="info-box"><h3>Como funciona</h3>
-          <ol><li>Escolha o sistema e o período da licença.</li><li>Pague pela Hotmart (ou outra plataforma disponível na página do sistema).</li><li>A Lucksrei ativa a sua conta manualmente e envia as instruções por e-mail.</li><li>Use pelo navegador, no computador, Android ou iPhone.</li></ol>
+          <ol><li>Escolha o sistema e o período da licença.</li><li>Pague pela Hotmart (ou outra plataforma disponível na página do sistema).</li><li>Depois da confirmação do pagamento, você recebe as instruções de acesso por e-mail.</li><li>Use pelo navegador, no computador, Android ou iPhone.</li></ol>
         </div>
         <div class="info-box"><h3>Licenças</h3>
-          <ul><li>30 dias, 90 dias, 180 dias ou 365 dias.</li><li>Mesmas funcionalidades em todas.</li><li>Pagamento único, sem renovação automática.</li><li>O prazo começa na ativação da conta pela Lucksrei.</li></ul>
+          <ul><li>30 dias, 90 dias, 180 dias ou 365 dias.</li><li>Mesmas funcionalidades em todas.</li><li>Pagamento único, sem renovação automática.</li><li>O prazo de uso começa na ativação do acesso, conforme a regra descrita na página de cada sistema.</li></ul>
         </div>
       </div>
     </div>
