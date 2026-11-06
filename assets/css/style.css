@@ -1964,11 +1964,11 @@ html[data-theme="light"][data-amb="contact"] .page-hero h1::after{ background: l
    Animações em transform/opacity (+ @property na borda); reduced motion: parado.
    ===================================================================== */
 @property --ga-a{ syntax: "<angle>"; inherits: false; initial-value: 0deg; }
-.get-app{ display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.get-app{ display: flex; flex-wrap: nowrap; gap: 10px; margin-top: 26px; }
 
 .ga-btn{
   position: relative; isolation: isolate; overflow: hidden; display: inline-flex; align-items: center; gap: 12px; min-height: 58px;
-  padding: 9px 18px 9px 9px; border-radius: 14px; text-decoration: none; color: #fff;
+  flex: 0 1 auto; min-width: 0; padding: 9px 14px 9px 9px; border-radius: 14px; text-decoration: none; color: #fff;
   background: linear-gradient(180deg, #17171b, #0b0b0d); box-shadow: 0 14px 34px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);
   transition: transform .25s var(--ease), box-shadow .25s var(--ease);
   animation: ga-in .6s var(--ease) both;
@@ -2005,16 +2005,18 @@ html[data-theme="light"][data-amb="contact"] .page-hero h1::after{ background: l
 @keyframes ga-hop{ 35%{ transform: translateY(-5px) rotate(-6deg); } 65%{ transform: translateY(1px) rotate(3deg); } }
 .ga-text{ display: flex; flex-direction: column; line-height: 1.1; }
 .ga-text small{ font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: rgba(255,255,255,.55); }
-.ga-text strong{ font-size: 16.5px; font-weight: 650; letter-spacing: -.01em; }
-.ga-arrow{ width: 16px; height: 16px; margin-left: 4px; opacity: .5; transition: transform .25s var(--ease), opacity .25s var(--ease); }
+.ga-text strong{ font-size: 15.5px; white-space: nowrap; font-weight: 650; letter-spacing: -.01em; }
+.ga-arrow{ width: 14px; height: 14px; margin-left: 2px; opacity: .5; transition: transform .25s var(--ease), opacity .25s var(--ease); }
 .ga-btn:hover .ga-arrow, .ga-btn:focus-visible .ga-arrow{ transform: translate(3px, -3px); opacity: 1; }
 
 /* cor de destaque de cada plataforma */
 .ga-web{ --ga-c: #eecc6d; }
 .ga-ios{ --ga-c: #ffffff; }
 .ga-android{ --ga-c: #3ddc84; }
+.ga-android .ga-icon{ background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
+.ga-android .ga-icon svg{ width: 24px; height: 24px; }
 
-@media (max-width: 560px){ .get-app{ flex-direction: column; } .ga-btn{ width: 100%; } .ga-arrow{ margin-left: auto; } }
+@media (max-width: 700px){ .get-app{ flex-direction: column; } .ga-btn{ width: 100%; } .ga-arrow{ margin-left: auto; } }
 @media (hover: none){ .ga-btn:hover{ transform: none; } }
 @media (prefers-reduced-motion: reduce){
   .ga-btn, .ga-btn::before, .ga-btn::after, .ga-btn:hover .ga-icon{ animation: none !important; }
