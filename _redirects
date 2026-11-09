@@ -1,1 +1,9 @@
 /projects/fifa-queue/*  /projects/match-queue/:splat  301
+
+# Legal URLs published in the Beard product config (product.json) point to the project pages.
+/privacy/beard  /projects/beard/privacy/  301
+/terms/beard  /projects/beard/terms/  301
+/support/beard  /projects/beard/support/  301
+/account-deletion/beard  /projects/beard/account-deletion/  301
+/data-deletion/beard  /projects/beard/data-deletion/  301
+/licensing/beard  /projects/beard/licensing/  301
