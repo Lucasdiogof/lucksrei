@@ -77,7 +77,12 @@
   function dropGaCookies() {
     document.cookie.split(";").forEach(function (c) {
       var n = c.split("=")[0].trim();
-      if (n === "_ga" || n.indexOf("_ga_") === 0) document.cookie = n + "=; Max-Age=0; path=/; domain=" + location.hostname + "; SameSite=Lax; Secure";
+      if (n !== "_ga" && n.indexOf("_ga_") !== 0) return;
+      // The Google tag ignores cookie_domain and writes these two cookies on the parent domain (lucksrei.com), so expire them on the
+      // host and on each parent domain. Only the _ga / _ga_<id> names are touched; no other cookie.
+      var parts = location.hostname.split(".");
+      for (var i = 0; i <= parts.length - 2; i++) document.cookie = n + "=; Max-Age=0; path=/; domain=" + parts.slice(i).join(".") + "; SameSite=Lax; Secure";
+      document.cookie = n + "=; Max-Age=0; path=/; SameSite=Lax; Secure";
     });
   }
   function setConsent(v) {
