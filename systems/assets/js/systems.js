@@ -39,7 +39,7 @@
       s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(first);
       document.head.appendChild(s);
       window.gtag("js", new Date());
-      if (cfg.ga4) window.gtag("config", cfg.ga4, { send_page_view: false });
+      if (cfg.ga4) window.gtag("config", cfg.ga4, { send_page_view: false, allow_google_signals: false, allow_ad_personalization_signals: false });
       if (cfg.googleAds) window.gtag("config", cfg.googleAds);
     }
     if (cfg.metaPixel) {
@@ -54,6 +54,7 @@
   // our event -> [GA4 event name, Meta custom event | "PageView"]. Custom names on purpose; never standard conversion events.
   var MAP = {
     page_view: ["page_view", "PageView"],
+    plans_view: ["plans_view", "PlansView"],
     cta_click: ["cta_click", "CtaClick"],
     checkout_link_click: ["checkout_link_click", "CheckoutLinkClick"],
     marketplace_click: ["marketplace_link_click", "MarketplaceLinkClick"],
@@ -72,9 +73,16 @@
 
   // ---- consent banner ----
   var banner = document.getElementById("consent");
+  // Declining removes the Google Analytics cookies already set on this domain.
+  function dropGaCookies() {
+    document.cookie.split(";").forEach(function (c) {
+      var n = c.split("=")[0].trim();
+      if (n === "_ga" || n.indexOf("_ga_") === 0) document.cookie = n + "=; Max-Age=0; path=/; domain=" + location.hostname + "; SameSite=Lax; Secure";
+    });
+  }
   function setConsent(v) {
     store(v); if (banner) banner.hidden = true;
-    if (v === "granted") loadTags();
+    if (v === "granted") loadTags(); else if (cfg.ga4) { try { dropGaCookies(); } catch (e) { /* nothing to drop */ } }
   }
   if (banner) {
     banner.addEventListener("click", function (e) { var b = e.target.closest("[data-consent]"); if (b) setConsent(b.dataset.consent === "accept" ? "granted" : "denied"); });
@@ -125,6 +133,15 @@
       lb.showModal();
     });
     lb.addEventListener("click", function (e) { if (e.target === lb) lb.close(); });
+  }
+
+  // plan interest: the plans section was seen (once per page view; consent is checked inside track)
+  var plans = document.getElementById("planos");
+  if (plans && window.IntersectionObserver) {
+    var seen = false;
+    new IntersectionObserver(function (es, ob) {
+      es.forEach(function (en) { if (en.isIntersecting && !seen) { seen = true; ob.disconnect(); track("plans_view", { product: product }); } });
+    }, { threshold: 0.1 }).observe(plans);
   }
 
   decorateCheckout();

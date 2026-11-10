@@ -300,7 +300,7 @@ const notFound = head({ title: "Página não encontrada | Lucksrei Systems", des
 <main id="conteudo" class="nf"><h1>Página não encontrada</h1><p>O endereço não existe. Veja os sistemas disponíveis.</p><p><a class="btn btn-primary" href="/">Ir para o catálogo</a></p></main>
 ` + foot("");
 
-const csp = "default-src 'self'; script-src 'self'; style-src 'self'; style-src-attr 'none'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'none'; frame-src 'none'; worker-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; object-src 'none'";
+const csp = "default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self'; style-src-attr 'none'; img-src 'self' data: https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com; font-src 'self'; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; media-src 'none'; frame-src 'none'; worker-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; object-src 'none'";
 const files = {
   "index.html": indexPage(),
   "404.html": notFound,
