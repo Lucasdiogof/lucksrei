@@ -76,9 +76,15 @@ assert(/hero-note">[^<]*não emite nota fiscal/.test(read("stockport/index.html"
 });
 assert.strictEqual(read("sitemap.xml").split("<loc>").length, 4, "sitemap has 3 urls");
 assert(read("robots.txt").indexOf("Sitemap: https://sistemas.lucksrei.com/sitemap.xml") > -1, "robots");
-assert(read("_headers").indexOf("script-src 'self';") > -1 && read("_headers").indexOf("unsafe-inline") === -1, "strict CSP");
+assert(read("_headers").indexOf("script-src 'self' https://www.googletagmanager.com;") > -1 && read("_headers").indexOf("unsafe-inline") === -1, "strict CSP");
 var cfgSrc = read("assets/js/tracking-config.js");
-assert(/ga4: ""/.test(cfgSrc) && /googleAds: ""/.test(cfgSrc) && /metaPixel: ""/.test(cfgSrc), "no marketing IDs committed");
+assert(/ga4: "G-629PGJE5CZ"/.test(cfgSrc) && /googleAds: ""/.test(cfgSrc) && /metaPixel: ""/.test(cfgSrc), "only the GA4 id is set; Ads and Meta stay empty until their own PRs");
+var hdr = read("_headers");
+assert(hdr.indexOf("script-src 'self' https://www.googletagmanager.com;") > -1 && !/facebook|doubleclick|googleadservices/.test(hdr), "CSP opened only for GA4 domains");
+assert(hdr.indexOf("connect-src 'self' https://www.google-analytics.com") > -1 && hdr.indexOf("unsafe-inline") === -1 && hdr.indexOf("unsafe-eval") === -1, "CSP connect for GA4, still no unsafe-*");
+var priv = fs.readFileSync(path.join(root, "privacy/index.html"), "utf8");
+["pt", "en", "es"].forEach(function (l) { assert(priv.indexOf('id="' + l + '-medicao"') > -1 && priv.indexOf('href="#' + l + '-medicao"') > -1, "privacy: GA4 section + TOC in " + l); });
+assert(/_ga_*/.test(priv) && /Google Analytics/.test(priv), "privacy names the cookies and the tool");
 
 // documentation referenced from the shipped config must exist
 ["docs/systems/PUBLISHING.md", "docs/systems/TRACKING.md", "docs/systems/README.md"].forEach(function (d) { assert(fs.existsSync(path.join(root, d)), "falta " + d); });

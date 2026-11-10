@@ -1,6 +1,18 @@
-# Tracking and consent (prepared, OFF)
+# Tracking and consent
 
-`systems/assets/js/tracking-config.js` holds `ga4`, `googleAds`, `metaPixel`, all empty and committed empty (a test enforces it). Empty ID = that tool never loads. Nothing is sent, loaded or even queued before the visitor clicks **Aceitar**; **Recusar** stores a denial. The choice is kept in `localStorage` (`lx_consent`), reopened by "Preferências de cookies" in the footer.
+**Status (10 Nov 2026): GA4 is ON for the sales pages; Google Ads and Meta Pixel are still OFF.** GA4 account `415826588` (Lucksrei Systems), property `563751558` (Lucksrei — Comercial, America/Sao_Paulo, BRL), web stream "Lucksrei Systems — Vendas", Measurement ID `G-629PGJE5CZ` (public id, safe in the repo). One property for both products: **Beard and StockPort are separated by the `product` parameter on every event and by page path** (`/beard/`, `/stockport/`). Register `product`, `plan`, `days`, `where` as event-scoped custom dimensions in GA4 to report on them.
+
+What GA4 does here: loaded only after **Aceitar** (no Consent Mode, no tag before consent); `send_page_view:false` and one explicit `page_view` per page load (no duplicate); Google signals and ad personalisation **off**; declining (or revoking in "Preferências de cookies") deletes the `_ga`/`_ga_*` cookies of the domain. CSP opened only for `www.googletagmanager.com` (script), `*.google-analytics.com` / `*.analytics.google.com` (connect, img). New event `plans_view` fires once when the plans section is seen (plan interest); `checkout_link_click` carries product, days, price, plan (`beard-30`...). The Privacy page (section 3.1, pt/en/es) describes the tool, cookies, purpose and consent.
+
+Verification: `node tests/browser/systems-ga4.mjs` (Playwright, desktop + iPhone 13 viewport, decline / undecided / accept / revoke, CSP violations, duplicates). It stubs every Google request: no test hit reaches the real property.
+
+Dedup between tools: GA4 never receives sales from the site. Real purchases come only from Hotmart (approved order); when conversions are later sent to GA4/Meta/Ads, dedupe on the Hotmart transaction id, and do not also fire a browser purchase event.
+
+---
+(Original design notes below.)
+
+
+`systems/assets/js/tracking-config.js` holds `ga4` (set), `googleAds`, `metaPixel` (empty; a test enforces that). Empty ID = that tool never loads. Nothing is sent, loaded or even queued before the visitor clicks **Aceitar**; **Recusar** stores a denial. The choice is kept in `localStorage` (`lx_consent`), reopened by "Preferências de cookies" in the footer.
 
 ## Event semantics (what each event does and does not prove)
 
