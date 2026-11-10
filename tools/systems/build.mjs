@@ -164,11 +164,11 @@ function productPage(p) {
   <section class="pricing" id="planos">
     <div class="section-title">
       <h2>${esc(p.pricingTitle)}</h2>
-      <p>${p.flow?.pricingLead ?? "Todas as licenças têm as mesmas funcionalidades. O pagamento é único, sem renovação automática, e o prazo conta a partir da ativação."}</p>
+      <p>${p.flow?.pricingLead ?? "Todas as licenças têm as mesmas funcionalidades. O pagamento é único, sem renovação automática, e o prazo conta a partir da ativação ou, no máximo, 30 dias após a aprovação do pagamento."}</p>
     </div>
     <div class="pricing-grid">${plans}
     </div>
-    <p class="pricing-note">${p.flow?.pricingNote ?? "O pagamento é processado pela Hotmart. Depois da confirmação, a Lucksrei ativa a licença manualmente e envia as instruções por e-mail."}</p>
+    <p class="pricing-note">${p.flow?.pricingNote ?? "O pagamento é processado pela plataforma de venda escolhida (por exemplo, a Hotmart). Depois da confirmação, a Lucksrei ativa a licença manualmente e envia as instruções por e-mail."}</p>
     <div class="alt-buy">
       <h3>Prefere comprar por outra plataforma?</h3>
       <p>As licenças também estão disponíveis em:</p>
@@ -184,12 +184,12 @@ function productPage(p) {
           <h3>Como funciona</h3>
           <ol>
             <li>Escolha o período de acesso.</li>
-            <li>Finalize a compra na Hotmart.</li>
+            <li>Finalize a compra na plataforma de venda da oferta escolhida (por exemplo, a Hotmart).</li>
             <li>${p.flow?.s3 ?? `A Lucksrei cria ${p.accessWho}.`}</li>
             <li>${p.flow?.s4 ?? "Receba as instruções por e-mail, no endereço usado na compra."}</li>
             <li>${p.flow?.s5 ?? "Ative seu acesso, defina sua senha e comece a usar."}</li>
           </ol>
-          <p class="info-p">${p.flow?.infoP ?? "A conta é criada manualmente, depois da confirmação do pagamento, e o acesso não é necessariamente imediato. O período contratado começa a contar a partir da ativação."}</p>
+          <p class="info-p">${p.flow?.infoP ?? "A conta é criada manualmente, depois da confirmação do pagamento, e o acesso não é necessariamente imediato. O período contratado (30, 90, 180 ou 365 dias) começa na ativação ou, no máximo, 30 dias após a aprovação do pagamento, o que ocorrer primeiro; ativar depois desse limite não reinicia a contagem."}</p>
         </div>
         <div class="info-box">
           <h3>Onde usar</h3>

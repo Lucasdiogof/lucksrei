@@ -34,10 +34,10 @@ export const icon = (k) => `<svg width="24" height="24" viewBox="0 0 24 24" fill
 const COMMON_FAQ_PAY = [
   ["O pagamento é mensal?", "Não. O pagamento é único para o período escolhido (30, 90, 180 ou 365 dias). Não há cobrança recorrente."],
   ["A licença renova automaticamente?", "Não. É uma licença pré-paga, sem assinatura e sem renovação automática. Para continuar depois do prazo, basta contratar um novo período."],
-  ["Quando começa a validade?", "A validade é contada a partir da ativação da licença pela Lucksrei, e não da data da compra."]
+  ["Quando começa a validade?", "A licença começa na data da ativação ou, no máximo, 30 dias após a aprovação do pagamento, prevalecendo o que ocorrer primeiro. Ativar depois desse limite não reinicia a contagem. Os planos têm 30, 90, 180 ou 365 dias, são pré-pagos e não se renovam automaticamente."]
 ];
 const FAQ_END = [
-  ["Como funciona o reembolso?", "O reembolso segue as regras e os termos da Hotmart, plataforma de pagamento, e o prazo para solicitação é de 7 dias."],
+  ["Como funciona o reembolso?", "O reembolso segue as regras da plataforma em que você comprou (na Hotmart, o prazo para solicitação é de 7 dias) e os direitos previstos em lei, como o de desistência em compras feitas fora do estabelecimento (art. 49 do Código de Defesa do Consumidor). Veja os Termos de Uso."],
   ["Como falar com o suporte?", `Pela <a href="${MAIN}/support/">página de suporte</a> ou pelo e-mail <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a>.`]
 ];
 
