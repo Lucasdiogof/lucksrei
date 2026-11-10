@@ -59,7 +59,7 @@ for (const [pname, opts] of Object.entries(profiles)) {
     assert.strictEqual(g.reqs.filter((u) => u.includes("gtag/js")).length, 1, tag + ": gtag loaded exactly once");
     assert(g.reqs.every((u) => u.includes("id=" + GA)), tag + ": only the GA4 id is requested");
     const cfgs = await gaCfg(page); assert.strictEqual(cfgs.length, 1, tag + ": config once");
-    assert.strictEqual(cfgs[0].send_page_view, false); assert.strictEqual(cfgs[0].allow_google_signals, false); assert.strictEqual(cfgs[0].allow_ad_personalization_signals, false);
+    assert.strictEqual(cfgs[0].cookie_domain, "localhost", tag + ": cookie_domain pinned to the page host (sistemas.lucksrei.com in production)"); assert.strictEqual(cfgs[0].send_page_view, false); assert.strictEqual(cfgs[0].allow_google_signals, false); assert.strictEqual(cfgs[0].allow_ad_personalization_signals, false);
     let ev = await events(page);
     assert.deepStrictEqual(ev.filter((e) => e.name === "page_view").map((e) => e.product), [product], tag + ": one page_view with product");
     await page.locator("#planos").scrollIntoViewIfNeeded(); await page.waitForTimeout(600);

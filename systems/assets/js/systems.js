@@ -39,7 +39,7 @@
       s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(first);
       document.head.appendChild(s);
       window.gtag("js", new Date());
-      if (cfg.ga4) window.gtag("config", cfg.ga4, { send_page_view: false, allow_google_signals: false, allow_ad_personalization_signals: false });
+      if (cfg.ga4) window.gtag("config", cfg.ga4, { send_page_view: false, cookie_domain: location.hostname, allow_google_signals: false, allow_ad_personalization_signals: false });
       if (cfg.googleAds) window.gtag("config", cfg.googleAds);
     }
     if (cfg.metaPixel) {
