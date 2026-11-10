@@ -113,13 +113,25 @@ export const PRODUCTS = [
       "A compra não inclui código-fonte ou personalização exclusiva."
     ],
     accessWho: "a conta da sua barbearia",
+    // wording for purchases made on Hotmart (automatic invite by e-mail, no promised time); the other platforms stay manual (altNote)
+    flow: {
+      pricingLead: "Todas as licenças têm as mesmas funcionalidades; muda apenas o período de uso. O pagamento é único, sem renovação automática, e o período começa na ativação do acesso ou, no máximo, 30 dias após a confirmação do pagamento.",
+      pricingNote: "O pagamento é processado pela Hotmart. Depois da confirmação, você recebe por e-mail um convite individual para criar a sua própria senha e ativar o acesso.",
+      s3: "Receba, no e-mail usado na compra, o convite individual de acesso.",
+      s4: "Crie a sua própria senha pelo convite. Nós nunca enviamos senhas.",
+      s5: "Entre no Beard System e comece a usar.",
+      infoP: "O período de uso começa quando você ativa o acesso ou, no máximo, 30 dias depois da confirmação do pagamento, o que ocorrer primeiro, e nunca antes da aprovação. Os 30 dias são apenas o limite para o início da contagem: a duração do plano continua sendo a que você comprou. O convite chega depois da confirmação do pagamento; não prometemos um prazo exato.",
+      altNote: "Nestas plataformas, a ativação é feita manualmente pela Lucksrei depois da confirmação e pode não ser imediata."
+    },
     faq: [
       ...COMMON_FAQ_PAY,
-      ["Como recebo meu acesso?", "Depois da confirmação do pagamento, a Lucksrei cria manualmente a conta da barbearia e envia as instruções por e-mail ao endereço usado na compra. Você define sua própria senha. O acesso não é instantâneo."],
+      ["Como recebo meu acesso?", "Depois da confirmação do pagamento na Hotmart, você recebe, no e-mail usado na compra, um convite individual (uso único, válido por 7 dias) para criar a sua própria senha e ativar o acesso. Nós nunca enviamos senhas. O convite depende da confirmação do pagamento e da entrega do e-mail, por isso não prometemos um prazo exato. Em compras por outras plataformas (Whop, Payhip), a ativação é manual e pode não ser imediata."],
+      ["Não recebi o e-mail do convite. O que faço?", "Confira as pastas de Spam e Lixo eletrônico. Se o convite expirou ou já foi usado, abra o Beard, na tela de entrada toque em “Ative sua conta” (ao lado de “Primeiro acesso?”), informe o e-mail da compra e toque em “Enviar e-mail de ativação”. Se ainda assim não chegar, fale com o suporte informando o e-mail e o número do pedido."],
+      ["Já sou cliente e tenho conta. E se eu comprar de novo?", "Se o e-mail da compra já estiver ligado à sua barbearia, o novo período é associado à conta existente. Se o e-mail for outro ou houver qualquer dúvida sobre a conta, nossa equipe confirma a sua identidade antes de associar, para proteger os dados. Compre com o mesmo e-mail da conta e, se precisar, fale com o suporte."],
       ["Os funcionários podem acessar?", "Sim. O proprietário convida os usuários da barbearia e define papéis e permissões de acesso para cada um."],
       ["Os clientes da barbearia precisam criar conta?", "Não. O Beard é um sistema de gestão interna: quem usa são o proprietário, administradores, gerentes e a equipe autorizada. O cliente pede o horário à barbearia e o profissional registra no sistema. Se a barbearia habilitar os avisos por e-mail e o cliente tiver e-mail cadastrado, ele pode receber avisos informativos."],
       ["Preciso instalar algo?", "Não. O acesso é pelo navegador, no computador, no tablet ou no celular. Os aplicativos do Beard na Google Play e na App Store também podem ser usados."],
-      ["O que acontece quando a licença vence?", "Depois do vencimento há um período de tolerância, de 7 dias por padrão, em que você só consulta e exporta os dados (conforme as permissões do seu perfil), sem fazer alterações. Terminado esse prazo, o acesso é bloqueado. Os dados da barbearia não são apagados por causa do vencimento e, quando a licença é renovada, o acesso volta com os dados que já existiam. A renovação é manual: compre um novo período e avise o suporte com o número do pedido e o e-mail da conta."],
+      ["O que acontece quando a licença vence?", "Depois do vencimento há um período de tolerância, de 7 dias por padrão, em que você só consulta e exporta os dados (conforme as permissões do seu perfil), sem fazer alterações. Terminado esse prazo, o acesso é bloqueado. Os dados da barbearia não são apagados por causa do vencimento e, quando a licença é renovada, o acesso volta com os dados que já existiam. Para renovar, compre um novo período com o mesmo e-mail da conta. Se o e-mail for outro ou o novo período não aparecer, fale com o suporte informando o número do pedido e o e-mail da conta."],
       ...FAQ_END
     ]
   },
@@ -185,6 +197,7 @@ export const PRODUCTS = [
       "A compra não inclui código-fonte ou personalização exclusiva."
     ],
     accessWho: "a conta do seu comércio",
+    heroNote: "não emite nota fiscal",
     supportEmail: SP_SUPPORT_EMAIL,
     // wording that only applies to purchases made on Hotmart (invite by e-mail); the other platforms stay manual (altNote)
     flow: {

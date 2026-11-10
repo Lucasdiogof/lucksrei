@@ -129,7 +129,7 @@ function productPage(p) {
         <a href="#planos" class="btn btn-primary" ${track("cta_click", ' data-where="hero"')}>Conhecer as licenças</a>
         <a href="#funcionalidades" class="btn btn-ghost">Ver funcionalidades</a>
       </div>
-      <p class="hero-note">A partir de ${brl(PLANS[0].cents)} · pagamento único · sem renovação automática</p>
+      <p class="hero-note">A partir de ${brl(PLANS[0].cents)} · pagamento único · sem renovação automática${p.heroNote ? ` · ${esc(p.heroNote)}` : ""}</p>
     </div>
     ${heroImgs}
   </section>

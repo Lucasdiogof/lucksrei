@@ -38,6 +38,14 @@ Object.keys(plans).forEach(function (slug) {
 assert(read("beard/index.html").indexOf("7 dias por padrão") > -1, "beard grace period");
 assert(read("stockport/index.html").indexOf("tolerância") === -1, "stockport has no documented grace period");
 assert(read("stockport/index.html").indexOf("O StockPort não emite nota fiscal") > -1, "stockport fiscal disclaimer");
+// Hotmart activation is automatic (invite by e-mail) in both products, with no promised delivery time; manual only on the other platforms.
+["beard", "stockport"].forEach(function (slug) {
+  var h = read(slug + "/index.html");
+  assert(h.indexOf("convite individual") > -1, slug + ": describes the e-mail invite");
+  assert(h.indexOf("criada manualmente") === -1 && h.indexOf("cria manualmente") === -1, slug + ": no manual creation claim for Hotmart");
+  assert(h.indexOf("não prometemos um prazo exato") > -1, slug + ": no delivery time promised");
+});
+assert(/hero-note">[^<]*não emite nota fiscal/.test(read("stockport/index.html")), "stockport: hero says it does not issue invoices");
 
 ["index.html", "beard/index.html", "stockport/index.html", "404.html"].forEach(function (f) {
   var html = read(f), low = html.toLowerCase();
