@@ -45,6 +45,8 @@
     if (cfg.metaPixel) {
       /* eslint-disable */
       !function (f, b, e, v, n, t, s) { if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments); }; if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = "2.0"; n.queue = []; t = b.createElement(e); t.async = !0; t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s); }(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+      // No automatic button/form/microdata events and no advanced matching: only the events we send ourselves, no personal data.
+      window.fbq("set", "autoConfig", false, cfg.metaPixel);
       window.fbq("init", cfg.metaPixel);
       /* eslint-enable */
     }
@@ -61,6 +63,7 @@
     store_click: ["store_link_click", "StoreLinkClick"],
     app_link_click: ["app_link_click", "AppLinkClick"]
   };
+  function eid() { try { return crypto.randomUUID(); } catch (e) { return String(Date.now()) + Math.random().toString(16).slice(2); } }
   function track(name, p) {
     p = p || {};
     window.lxEvents = window.lxEvents || [];
@@ -68,18 +71,19 @@
     window.lxEvents.push({ name: name, params: p });
     var m = MAP[name]; if (!m) return;
     if (window.gtag) window.gtag("event", m[0], p);
-    if (window.fbq) { if (m[1] === "PageView") window.fbq("track", "PageView"); else window.fbq("trackCustom", m[1], p); }
+    // eventID is random per event: a future server-side (Conversions API) copy of the same event reuses it so Meta can deduplicate.
+    if (window.fbq) { var o = { eventID: eid() }; if (m[1] === "PageView") window.fbq("track", "PageView", p, o); else window.fbq("trackCustom", m[1], p, o); }
   }
 
   // ---- consent banner ----
   var banner = document.getElementById("consent");
-  // Declining removes the Google Analytics cookies already set on this domain.
+  // Declining removes the measurement cookies already set on this domain: Google Analytics (_ga, _ga_*) and Meta Pixel (_fbp, _fbc).
   function dropGaCookies() {
     document.cookie.split(";").forEach(function (c) {
       var n = c.split("=")[0].trim();
-      if (n !== "_ga" && n.indexOf("_ga_") !== 0) return;
+      if (n !== "_ga" && n.indexOf("_ga_") !== 0 && n !== "_fbp" && n !== "_fbc") return;
       // The Google tag ignores cookie_domain and writes these two cookies on the parent domain (lucksrei.com), so expire them on the
-      // host and on each parent domain. Only the _ga / _ga_<id> names are touched; no other cookie.
+      // host and on each parent domain. Only the _ga / _ga_<id> / _fbp / _fbc names are touched; no other cookie.
       var parts = location.hostname.split(".");
       for (var i = 0; i <= parts.length - 2; i++) document.cookie = n + "=; Max-Age=0; path=/; domain=" + parts.slice(i).join(".") + "; SameSite=Lax; Secure";
       document.cookie = n + "=; Max-Age=0; path=/; SameSite=Lax; Secure";
@@ -87,7 +91,11 @@
   }
   function setConsent(v) {
     store(v); if (banner) banner.hidden = true;
-    if (v === "granted") loadTags(); else if (cfg.ga4) { try { dropGaCookies(); } catch (e) { /* nothing to drop */ } }
+    if (v === "granted") { if (loaded) { if (window.fbq) window.fbq("consent", "grant"); } else loadTags(); } // re-accept on the same page: just re-grant, no second PageView
+    else {
+      if (window.fbq) window.fbq("consent", "revoke"); // stop Meta from sending/storing anything more; track() is already gated on stored()
+      if (cfg.ga4 || cfg.metaPixel) { try { dropGaCookies(); } catch (e) { /* nothing to drop */ } }
+    }
   }
   if (banner) {
     banner.addEventListener("click", function (e) { var b = e.target.closest("[data-consent]"); if (b) setConsent(b.dataset.consent === "accept" ? "granted" : "denied"); });
