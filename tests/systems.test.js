@@ -46,6 +46,11 @@ assert(read("stockport/index.html").indexOf("O StockPort não emite nota fiscal"
   assert(h.indexOf("não prometemos um prazo exato") > -1, slug + ": no delivery time promised");
 });
 assert(/hero-note">[^<]*não emite nota fiscal/.test(read("stockport/index.html")), "stockport: hero says it does not issue invoices");
+// ad -> page message match: the ads say "R$ 29,90 por 30 dias", "sem mensalidade" and (Beard) "Comissão sem caderno"
+["beard", "stockport"].forEach(function (slug) {
+  assert(/hero-note">30 dias por R\$ 29,90 · pagamento único, sem mensalidade/.test(read(slug + "/index.html")), slug + ": hero shows the 30-day price and no monthly fee");
+});
+assert(/class="lead">[^<]*comissões/.test(read("beard/index.html")), "beard: hero mentions commissions");
 
 ["index.html", "beard/index.html", "stockport/index.html", "404.html"].forEach(function (f) {
   var html = read(f), low = html.toLowerCase();
