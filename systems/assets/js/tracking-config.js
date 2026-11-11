@@ -3,5 +3,5 @@
 window.LX_TRACKING = {
   ga4: "G-629PGJE5CZ", // GA4 property 563751558 (public id)
   googleAds: "",  // e.g. "AW-XXXXXXXXXX"
-  metaPixel: ""   // numeric Pixel ID
+  metaPixel: "1159174163259187" // Meta Pixel / dataset "Lucksrei Systems - Vendas" (public id)
 };

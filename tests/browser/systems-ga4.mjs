@@ -27,6 +27,7 @@ async function open(ctx, url) {
     const u = r.request().url(); g.reqs.push(u);
     if (u.includes("gtag/js")) r.fulfill({ contentType: "text/javascript", body: "/*stub*/" }); else r.abort();
   });
+  await page.route(/facebook\./, (r) => r.abort()); // a real Pixel id may be set in tracking-config.js: never let a test hit Meta
   page.on("console", (m) => { if (/Content Security Policy/i.test(m.text())) g.csp.push(m.text()); });
   await page.goto(base + url); await page.waitForLoadState("networkidle");
   return { page, g };
