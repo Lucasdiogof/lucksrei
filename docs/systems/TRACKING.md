@@ -1,6 +1,6 @@
 # Tracking and consent
 
-**Status (10 Nov 2026): GA4 is ON for the sales pages; Google Ads is OFF; Meta Pixel code is READY but dormant until `metaPixel` in `tracking-config.js` gets a numeric id (PR `feat/systems-meta-pixel`, not merged).** Meta Pixel (when the id is set): loads only after **Aceitar**, `autoConfig` off (no automatic button/form/microdata events), no advanced matching, only our own events (`PageView` with `product`, custom `PlansView`/`CheckoutLinkClick`/...), each with a random `eventID` so a future Conversions API copy can deduplicate. Revoking removes `_fbp`/`_fbc`. Beard and StockPort share one Pixel and are told apart by the `product` parameter. No `Purchase`/`Lead`/`InitiateCheckout` from the site, ever: real purchases come from Hotmart (approved order) and, when integrated, are sent server-side with the Hotmart transaction id as `event_id`. Test: `node tests/browser/systems-meta.mjs` (fake id, Facebook stubbed).
+**Status (10 Nov 2026): GA4 is ON for the sales pages; Google Ads is OFF; Meta Pixel `1159174163259187` is ON for visitors who click Aceitar once PR `feat/systems-meta-pixel` is merged and `lucksrei-systems` is deployed (the id is already in `tracking-config.js`; merge + deploy activates it).** Meta Pixel: loads only after **Aceitar**, `autoConfig` off (no automatic button/form/microdata events), no advanced matching, only our own events (`PageView` with `product`, custom `PlansView`/`CheckoutLinkClick`/...), each with a random `eventID` so a future Conversions API copy can deduplicate. Revoking calls `fbq('consent','revoke')` and removes `_fbp`/`_fbc`; accepting again on the same page calls `fbq('consent','grant')` without a second `PageView`. Beard and StockPort share one Pixel and are told apart by the `product` parameter. No `Purchase`/`Lead`/`InitiateCheckout` from the site, ever: real purchases come from Hotmart (approved order) and, when integrated, are sent server-side with the Hotmart transaction id as `event_id`. Test: `node tests/browser/systems-meta.mjs` (fake id, Facebook stubbed; covers decline, accept, revoke, re-accept).
 
 (GA4 notes follow.)
 
@@ -16,7 +16,7 @@ Dedup between tools: GA4 never receives sales from the site. Real purchases come
 (Original design notes below.)
 
 
-`systems/assets/js/tracking-config.js` holds `ga4` (set), `googleAds`, `metaPixel` (empty; a test enforces that). Empty ID = that tool never loads. Nothing is sent, loaded or even queued before the visitor clicks **Aceitar**; **Recusar** stores a denial. The choice is kept in `localStorage` (`lx_consent`), reopened by "Preferências de cookies" in the footer.
+`systems/assets/js/tracking-config.js` holds `ga4` (set), `googleAds`, `metaPixel` (set to `1159174163259187`). Empty ID = that tool never loads. Nothing is sent, loaded or even queued before the visitor clicks **Aceitar**; **Recusar** stores a denial. The choice is kept in `localStorage` (`lx_consent`), reopened by "Preferências de cookies" in the footer.
 
 ## Event semantics (what each event does and does not prove)
 

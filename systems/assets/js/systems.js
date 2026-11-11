@@ -91,7 +91,11 @@
   }
   function setConsent(v) {
     store(v); if (banner) banner.hidden = true;
-    if (v === "granted") loadTags(); else if (cfg.ga4 || cfg.metaPixel) { try { dropGaCookies(); } catch (e) { /* nothing to drop */ } }
+    if (v === "granted") { if (loaded) { if (window.fbq) window.fbq("consent", "grant"); } else loadTags(); } // re-accept on the same page: just re-grant, no second PageView
+    else {
+      if (window.fbq) window.fbq("consent", "revoke"); // stop Meta from sending/storing anything more; track() is already gated on stored()
+      if (cfg.ga4 || cfg.metaPixel) { try { dropGaCookies(); } catch (e) { /* nothing to drop */ } }
+    }
   }
   if (banner) {
     banner.addEventListener("click", function (e) { var b = e.target.closest("[data-consent]"); if (b) setConsent(b.dataset.consent === "accept" ? "granted" : "denied"); });

@@ -57,6 +57,21 @@ for (const product of ["beard", "stockport"]) {
   await page.evaluate(() => { document.cookie = "_fbp=x; path=/"; document.cookie = "_fbc=y; path=/"; document.cookie = "keep=1; path=/"; });
   await page.locator(".footer-links button.linklike").click(); await page.locator("#consent [data-consent=deny]").click();
   const ck = await page.evaluate(() => document.cookie); assert(!/_fbp|_fbc/.test(ck) && /keep=1/.test(ck), product + ": revoke removes only _fbp/_fbc (" + ck + ")");
-  await ctx.close(); console.log("ok -", product, "accept/events/revoke"); n++;
+  // revoke tells the Pixel (consent revoke) and nothing more is sent, even from clicks
+  const before = (await queue(page)).length;
+  assert(!(await queue(page)).slice(0, before).every((a) => !(a[0] === "consent" && a[1] === "revoke")), product + ": fbq('consent','revoke') called");
+  await page.locator('a[data-track="checkout_link_click"]').first().click({ force: true }); await page.waitForTimeout(200);
+  assert.strictEqual((await queue(page)).length, before, product + ": revoked -> no new Meta events");
+  // accept again on the same page: grant, no second PageView, events flow again
+  await page.locator(".footer-links button.linklike").click(); await page.locator("#consent [data-consent=accept]").click(); await page.waitForTimeout(200);
+  let q3 = await queue(page);
+  assert(q3.some((a) => a[0] === "consent" && a[1] === "grant"), product + ": fbq('consent','grant') called");
+  assert.strictEqual(q3.filter((a) => a[0] === "track" && a[1] === "PageView").length, 1, product + ": re-accept -> still one PageView");
+  assert.strictEqual(q3.filter((a) => a[0] === "init").length, 1, product + ": re-accept -> no second init");
+  assert.strictEqual(g.fb.filter((u) => u.includes("fbevents.js")).length, 1, product + ": fbevents.js still loaded once");
+  const c0 = q3.filter((a) => a[0] === "trackCustom").length;
+  await page.locator('a[data-track="checkout_link_click"]').first().click({ force: true }); await page.waitForTimeout(200);
+  assert.strictEqual((await queue(page)).filter((a) => a[0] === "trackCustom").length, c0 + 1, product + ": events flow again after re-accept");
+  await ctx.close(); console.log("ok -", product, "accept/events/revoke/re-accept"); n++;
 }
 await browser.close(); srv.close(); console.log(`\nsystems-meta browser: ${n} groups ok`);
