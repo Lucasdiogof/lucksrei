@@ -15,15 +15,17 @@
 
   // ---- UTM: kept in memory only (no cookie, no storage). Hotmart documents `sck` for producer links that go straight to the checkout
   // (up to 30 chars; "|" separates parts; "_" is reserved) and recommends carrying the UTMs too. We do not use `src` (affiliate/alt-page parameter).
+  // sck = product|source|campaign|content: the plan is already in the Hotmart offer (`off`), so it is left out to keep the ad angle within 30 chars.
+  // Click ids (gclid/fbclid) are never forwarded: Hotmart cannot store them in 30 chars and GA4/Meta read them from this page.
   var q = new URLSearchParams(location.search);
   var clean = function (v) { return (v || "").replace(/[^A-Za-z0-9.-]/g, "").slice(0, 20); };
-  var utm = { source: clean(q.get("utm_source")), medium: clean(q.get("utm_medium")), campaign: clean(q.get("utm_campaign")) };
+  var utm = { source: clean(q.get("utm_source")), medium: clean(q.get("utm_medium")), campaign: clean(q.get("utm_campaign")), content: clean(q.get("utm_content")) };
   function decorateCheckout() {
-    if (!utm.source && !utm.medium && !utm.campaign) return;
+    if (!utm.source && !utm.medium && !utm.campaign && !utm.content) return;
     [].forEach.call(document.querySelectorAll('a[data-track="checkout_link_click"]'), function (a) {
       var u = new URL(a.href);
-      ["source", "medium", "campaign"].forEach(function (k) { if (utm[k]) u.searchParams.set("utm_" + k, utm[k]); });
-      u.searchParams.set("sck", [a.dataset.product.charAt(0), a.dataset.days, utm.source, utm.campaign].filter(Boolean).join("|").slice(0, 30));
+      ["source", "medium", "campaign", "content"].forEach(function (k) { if (utm[k]) u.searchParams.set("utm_" + k, utm[k]); });
+      u.searchParams.set("sck", [a.dataset.product.charAt(0), utm.source, utm.campaign, utm.content].filter(Boolean).join("|").slice(0, 30));
       a.href = u.toString();
     });
   }
