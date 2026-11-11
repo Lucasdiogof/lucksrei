@@ -57,7 +57,7 @@
 
   // our event -> [GA4 event name, Meta custom event | "PageView"]. Custom names on purpose; never standard conversion events.
   var MAP = {
-    page_view: ["page_view", "PageView"],
+    page_view: [null, "PageView"], // GA4: null on purpose, the gtag.js automatic page_view is the only one (a manual one doubled it)
     plans_view: ["plans_view", "PlansView"],
     cta_click: ["cta_click", "CtaClick"],
     checkout_link_click: ["checkout_link_click", "CheckoutLinkClick"],
@@ -72,7 +72,7 @@
     if (stored() !== "granted") return; // consent denied or undecided: nothing is sent or even queued
     window.lxEvents.push({ name: name, params: p });
     var m = MAP[name]; if (!m) return;
-    if (window.gtag) window.gtag("event", m[0], p);
+    if (window.gtag && m[0]) window.gtag("event", m[0], p);
     // eventID is random per event: a future server-side (Conversions API) copy of the same event reuses it so Meta can deduplicate.
     if (window.fbq) { var o = { eventID: eid() }; if (m[1] === "PageView") window.fbq("track", "PageView", p, o); else window.fbq("trackCustom", m[1], p, o); }
   }
