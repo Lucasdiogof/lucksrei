@@ -55,14 +55,14 @@ for (const [pname, opts] of Object.entries(profiles)) {
     assert.strictEqual(g.reqs.length, 0, tag + ": undecided -> zero Google requests");
     ok(tag + ": undecided sends nothing");
 
-    // ---- accept: one loader, one page_view, product label, no conversion events
+    // ---- accept: one loader, no manual page_view (gtag.js sends the single automatic one), product label on other events, no conversion events
     await page.locator("#consent [data-consent=accept]").click(); await page.waitForTimeout(300);
     assert.strictEqual(g.reqs.filter((u) => u.includes("gtag/js")).length, 1, tag + ": gtag loaded exactly once");
     assert(g.reqs.every((u) => u.includes("id=" + GA)), tag + ": only the GA4 id is requested");
     const cfgs = await gaCfg(page); assert.strictEqual(cfgs.length, 1, tag + ": config once");
     assert.strictEqual(cfgs[0].cookie_domain, "localhost", tag + ": cookie_domain pinned to the page host (sistemas.lucksrei.com in production)"); assert.strictEqual(cfgs[0].send_page_view, false); assert.strictEqual(cfgs[0].allow_google_signals, false); assert.strictEqual(cfgs[0].allow_ad_personalization_signals, false);
     let ev = await events(page);
-    assert.deepStrictEqual(ev.filter((e) => e.name === "page_view").map((e) => e.product), [product], tag + ": one page_view with product");
+    assert.strictEqual(ev.filter((e) => e.name === "page_view").length, 0, tag + ": no manual page_view sent to GA4 (the automatic one from gtag.js is the only one)");
     await page.locator("#planos").scrollIntoViewIfNeeded(); await page.waitForTimeout(600);
     await page.evaluate(() => window.scrollBy(0, 40)); await page.evaluate(() => window.scrollBy(0, -40)); await page.waitForTimeout(300);
     ev = await events(page);
@@ -75,11 +75,11 @@ for (const [pname, opts] of Object.entries(profiles)) {
     assert.strictEqual(ck[0].product, product); assert.strictEqual(ck[0].currency, "BRL"); assert(ck[0].plan.startsWith(product + "-"), tag + ": plan label");
     assert(ev.every((e) => !/purchase|begin_checkout|generate_lead/.test(e.name)), tag + ": no conversion event names");
     assert.deepStrictEqual(g.csp, [], tag + ": no CSP violations (" + g.csp.join(" | ") + ")");
-    ok(tag + ": accept -> single page_view, plans_view, checkout_link_click, CSP clean");
+    ok(tag + ": accept -> no manual page_view, plans_view, checkout_link_click, CSP clean");
 
-    // ---- reload while granted: still exactly one page_view
+    // ---- reload while granted: still no manual page_view
     await page.reload(); await page.waitForLoadState("networkidle"); await page.waitForTimeout(300);
-    ev = await events(page); assert.strictEqual(ev.filter((e) => e.name === "page_view").length, 1, tag + ": reload -> one page_view");
+    ev = await events(page); assert.strictEqual(ev.filter((e) => e.name === "page_view").length, 0, tag + ": reload -> no manual page_view");
     // ---- change of mind: reopen preferences and decline -> GA cookies removed, others kept
     await page.evaluate(() => { document.cookie = "_ga=GA1.1.1.1; path=/"; document.cookie = "_ga_ABC=GS2.1.x; path=/"; document.cookie = "keep=1; path=/"; });
     await page.locator(".footer-links .linklike").click(); await page.locator("#consent [data-consent=deny]").click();

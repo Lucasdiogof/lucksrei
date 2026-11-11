@@ -131,6 +131,7 @@ assert(names.indexOf("checkout_link_click") > -1, "granted: checkout link click 
 var js = fs.readFileSync(path.join(S, "assets/js/systems.js"), "utf8");
 assert(!/fbq\("track", "(Lead|InitiateCheckout|Purchase|AddToCart|CompleteRegistration)"/.test(js) && js.indexOf('"trackCustom"') > -1, "meta: custom events only");
 assert(!/gtag\("event", "(purchase|begin_checkout|generate_lead)"/.test(js), "ga4: no conversion event names");
+assert(js.indexOf('page_view: [null, "PageView"]') > -1, "ga4: no manual page_view (gtag.js automatic one is the only one)");
 var u = new URL(granted.href);
 assert.strictEqual(u.searchParams.get("sck"), "b|google|bd-search1|comissao", "sck: product|source|campaign|content");
 assert.strictEqual(u.searchParams.get("utm_content"), "comissao", "utm_content forwarded (ad angle)");
