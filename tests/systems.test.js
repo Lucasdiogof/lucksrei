@@ -102,7 +102,7 @@ function run(consent) {
   var anchor = { dataset: { product: "beard", days: "30", price: "29.90", track: "checkout_link_click" }, href: "https://pay.hotmart.com/M108332227C?off=v3744m8m" };
   anchor.closest = function () { return anchor; };
   var ctx = {
-    window: { LX_TRACKING: {} }, location: { search: "?utm_source=google&utm_campaign=beard%20teste" },
+    window: { LX_TRACKING: {} }, location: { search: "?utm_source=google&utm_medium=cpc&utm_campaign=bd-search1&utm_content=comissao&gclid=TEST123" },
     localStorage: { getItem: function (k) { return store[k] || null; }, setItem: function (k, v) { store[k] = v; } },
     document: {
       currentScript: { getAttribute: function () { return "beard"; } }, getElementById: function () { return null; }, querySelector: function () { return null; },
@@ -127,7 +127,9 @@ var js = fs.readFileSync(path.join(S, "assets/js/systems.js"), "utf8");
 assert(!/fbq\("track", "(Lead|InitiateCheckout|Purchase|AddToCart|CompleteRegistration)"/.test(js) && js.indexOf('"trackCustom"') > -1, "meta: custom events only");
 assert(!/gtag\("event", "(purchase|begin_checkout|generate_lead)"/.test(js), "ga4: no conversion event names");
 var u = new URL(granted.href);
-assert.strictEqual(u.searchParams.get("sck"), "b|30|google|beardteste", "sck: product|days|source|campaign");
+assert.strictEqual(u.searchParams.get("sck"), "b|google|bd-search1|comissao", "sck: product|source|campaign|content");
+assert.strictEqual(u.searchParams.get("utm_content"), "comissao", "utm_content forwarded (ad angle)");
+assert.strictEqual(u.searchParams.get("gclid"), null, "click ids are not forwarded to Hotmart");
 assert(u.searchParams.get("sck").length <= 30 && u.searchParams.get("sck").indexOf("_") === -1, "sck within Hotmart limits (30 chars, no underscore)");
 assert.strictEqual(u.searchParams.get("src"), null, "src is not used (affiliate parameter)");
 assert.strictEqual(u.searchParams.get("utm_source"), "google", "utm forwarded");
