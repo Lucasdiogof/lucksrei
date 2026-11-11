@@ -94,7 +94,7 @@ function productPage(p) {
           <div class="pricing-day">${perDay(pl)} por dia</div>
           <ul class="pricing-features">
             <li>${check} Todas as funcionalidades</li>
-            <li>${check} Acesso pela Web</li>
+            <li>${check} Web, Android e iPhone</li>
             <li>${check} Pagamento único, sem renovação</li>
           </ul>
           <a href="${offerUrl(i)}" class="btn btn-primary" rel="noopener" ${track("checkout_link_click", ` data-days="${pl.days}" data-price="${(pl.cents / 100).toFixed(2)}"`)}>Comprar ${pl.days} dias</a>
@@ -116,7 +116,7 @@ function productPage(p) {
 <header>
   <a href="#" class="logo" aria-label="${esc(p.name)}"><img src="${base}${p.logo.src}" alt="${esc(p.name)}" width="${p.logo.w}" height="${p.logo.h}"></a>
   <nav class="nav" aria-label="Seções"><a href="#funcionalidades">Funcionalidades</a><a href="#telas">Telas</a><a href="#planos">Planos</a><a href="#faq">Dúvidas</a></nav>
-  <a href="#planos" class="btn btn-primary" ${track("cta_click", ' data-where="header"')}>Ver licenças</a>
+  <a href="#planos" class="btn btn-primary" ${track("cta_click", ' data-where="header"')}>Ver preços</a>
 </header>
 
 <main id="conteudo">
@@ -126,10 +126,10 @@ function productPage(p) {
       <h1>${esc(hero.h1)}</h1>
       <p class="lead">${esc(hero.lead)}</p>
       <div class="hero-actions">
-        <a href="#planos" class="btn btn-primary" ${track("cta_click", ' data-where="hero"')}>Conhecer as licenças</a>
+        <a href="#planos" class="btn btn-primary" ${track("cta_click", ' data-where="hero"')}>Ver planos e preços</a>
         <a href="#funcionalidades" class="btn btn-ghost">Ver funcionalidades</a>
       </div>
-      <p class="hero-note">A partir de ${brl(PLANS[0].cents)} · pagamento único · sem renovação automática${p.heroNote ? ` · ${esc(p.heroNote)}` : ""}</p>
+      <p class="hero-note">${PLANS[0].days} dias por ${brl(PLANS[0].cents)} · pagamento único, sem mensalidade · sem renovação automática${p.heroNote ? ` · ${esc(p.heroNote)}` : ""}</p>
     </div>
     ${heroImgs}
   </section>

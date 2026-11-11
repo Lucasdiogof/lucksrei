@@ -67,7 +67,7 @@ export const PRODUCTS = [
     og: "og.png", ogW: 1200, ogH: 628,
     hero: {
       h1: "Sua barbearia em um só sistema.",
-      lead: "Agenda, clientes, equipe, caixa e financeiro em uma plataforma de gestão interna, pensada para o dia a dia da barbearia.",
+      lead: "Agenda, clientes, comissões, caixa e financeiro em uma plataforma de gestão interna, pensada para o dia a dia da barbearia.",
       main: { src: "hero-financeiro.webp", w: 1400, h: 875, alt: "Tela de financeiro do Beard System no computador" },
       phone: { src: "hero-agenda.webp", w: 360, h: 779, alt: "Tela de agenda do Beard System no celular" }
     },
