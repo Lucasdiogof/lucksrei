@@ -18,6 +18,33 @@ Dedup between tools: GA4 never receives sales from the site. Real purchases come
 
 `systems/assets/js/tracking-config.js` holds `ga4` (set), `googleAds`, `metaPixel` (set to `1159174163259187`). Empty ID = that tool never loads. Nothing is sent, loaded or even queued before the visitor clicks **Aceitar**; **Recusar** stores a denial. The choice is kept in `localStorage` (`lx_consent`), reopened by "Preferências de cookies" in the footer.
 
+## Aggregated measurement without cookies (PR `feat/systems-aggregate-measurement`; NOT deployed)
+
+**Why.** GA4 and the Meta Pixel load only after **Aceitar**, so anyone who ignores or declines the banner is invisible to them. On 12 Nov 2026 Meta reported 24 link clicks and 20 landing-page views since the launch (11 Nov 17:50), while GA4 and the Pixel had **zero** events after it; all earlier events (11 Nov 14-15h BRT, desktop Chrome) were the owner's own tests. The ad URLs are correct (read from the Meta preview: `https://sistemas.lucksrei.com/<product>/?utm_source=meta&utm_medium=paid&utm_campaign=bd-teste1|sp-teste1&utm_content=preco`; Google final URLs were not readable in the interface). The banner is the most likely cause, but the banner records nothing, so this is a hypothesis. This counter makes it testable.
+
+**Options compared (all free).**
+| Option | Sees UTMs? | Verdict |
+|---|---|---|
+| Cloudflare Web Analytics | No: "do not log query strings", no campaign tracking | Cannot answer the question |
+| Zone HTTP analytics (dashboard) | No query strings, counts every request incl. bots and prefetch | Useful only as a ceiling |
+| Workers Analytics Engine | Yes, if a Worker runs | Free (100k points/day, 10k queries/day) but reading needs an API token; no data in a plain SQL file |
+| **Own endpoint + D1 counters (chosen)** | Yes, allow-listed | Free tier, reads with `wrangler d1 execute` (no token), the Worker already has this pattern in `lucksrei-site` (`/api/visit`) |
+Making the Worker run on the pages themselves (`run_worker_first` on `/beard/*`) would count raw HTTP requests, but it would put every page view inside the Free plan limit (over it the *pages* answer 429). Not done. Static assets stay free and unlimited; only `POST /m` runs code (`wrangler.systems.jsonc`: `main`, `run_worker_first: ["/m"]`).
+
+**What happens.** `systems.js` sends `POST /m` (fetch, `credentials: omit`, keepalive) on page load (`pv`), when the plans section is seen (`plans`) and on a Hotmart link click (`checkout`, with the plan days). `systems-worker/handler.mjs` validates and increments one row of `lx_hits` (UTC hour x event x product x source x medium x campaign x content x referrer class x days). Independent of the banner on purpose; it never loads or re-enables GA4/Pixel and does not read the consent choice.
+
+**What is stored / not stored.** Stored: counters only. Never stored: IP (used in memory by the rate limiter as a hash), user-agent, cookies, headers, gclid/fbclid, referrer URL, full URL, any UTM value outside the allow-list (becomes `other`; empty becomes `none`). Allow-lists live in `handler.mjs` (`CAMPAIGNS`, `CONTENTS`, ...): **add new campaigns there when they launch**. Global Privacy Control / Do Not Track: nothing counted. Bots (UA filter), datacenter networks, wrong Origin, bodies over 400 bytes and 120 requests/min per IP are ignored; the answer is always 204 and the page never waits for it. Retention: delete rows older than 400 days (SQL in the migration).
+
+**Legal.** No cookie or device storage, no identifier: counters do not identify anyone, which is why the banner is not asked. That is not a licence to skip transparency: `privacy/index.html` section 3.1 (pt/en/es) now describes the counter, the legitimate-interest basis (LGPD art. 7, IX), that it runs even if cookies are declined, what is not kept, and the 400-day retention. If this is ever extended (IDs, IPs, fingerprints, per-person funnels), consent and a new assessment are required. Cloudflare still sees the connection (it is the host); the Worker stores nothing of it.
+
+**Limits.** Counts page loads and clicks, never visitors (a reload counts twice; no id exists to deduplicate). Needs JavaScript and a browser that does not block the script; bots that run JS from residential networks pass. Not a consent-rate: there is no denominator for "banner shown". `pv` here vs Meta "landing page views" vs GA4 sessions are three different things and are never to be divided into each other as one funnel rate. A click on the Hotmart link is not a checkout opened or a sale.
+
+**Deploy (needs the owner; creates one free D1 database).**
+1. `npx wrangler d1 create lucksrei-systems-hits` and paste the printed id into `wrangler.systems.jsonc` (the zero UUID makes a deploy fail on purpose).
+2. `npx wrangler d1 migrations apply lucksrei-systems-hits -c wrangler.systems.jsonc --remote`
+3. `npx wrangler deploy -c wrangler.systems.jsonc --dry-run`, then deploy (PUBLISHING.md). Rollback: previous Worker version, or remove `main`/`d1_databases`/`ratelimits`/`run_worker_first` from the config and deploy again; the table can stay.
+4. Read: `npx wrangler d1 execute lucksrei-systems-hits -c wrangler.systems.jsonc --remote --command "SELECT substr(hour,1,10) d, event, product, source, campaign, SUM(n) n FROM lx_hits GROUP BY 1,2,3,4,5 ORDER BY 1,3,2"`. Tests: `node tests/systems-measure.test.js` and `node tests/browser/systems-measure.mjs`.
+
 ## Event semantics (what each event does and does not prove)
 
 The site only reports **interactions**. It never reports a conversion.

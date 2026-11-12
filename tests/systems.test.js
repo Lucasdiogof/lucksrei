@@ -98,16 +98,23 @@ assert(read("_headers").indexOf("docs/systems/TRACKING.md") > -1 && fs.readFileS
 // 2. The main Worker must not serve the showcase, and the showcase Worker is assets-only.
 assert(/^systems$/m.test(fs.readFileSync(path.join(root, ".assetsignore"), "utf8")), "main worker ignores systems/");
 var wj = JSON.parse(fs.readFileSync(path.join(root, "wrangler.systems.jsonc"), "utf8").replace(/^\s*\/\/.*$/gm, ""));
-assert(wj.name === "lucksrei-systems" && wj.assets.directory === "./systems" && !wj.main && !wj.d1_databases && !wj.ratelimits && wj.workers_dev === false && wj.preview_urls === false, "systems worker is static only");
+// The Worker is static for every page: the ONLY path that runs code is POST /m (aggregated, cookie-less counter, systems-worker/measure.mjs).
+assert(wj.name === "lucksrei-systems" && wj.assets.directory === "./systems" && wj.main === "systems-worker/measure.mjs" && wj.workers_dev === false && wj.preview_urls === false, "systems worker: static assets + the /m counter only");
+assert(JSON.stringify(wj.assets.run_worker_first) === '["/m"]', "only /m runs the Worker (pages and assets stay free and unlimited)");
+assert(wj.d1_databases.length === 1 && wj.d1_databases[0].binding === "DB" && wj.d1_databases[0].database_name === "lucksrei-systems-hits" && wj.ratelimits.length === 1 && wj.ratelimits[0].name === "RL_MEASURE", "only the counter database and its rate limit are bound");
+assert(!wj.vars && !wj.kv_namespaces && !wj.r2_buckets && !wj.services && !wj.ai && !wj.analytics_engine_datasets, "no other bindings (no paid or external service)");
+assert(/^systems-worker$/m.test(fs.readFileSync(path.join(root, ".assetsignore"), "utf8")), "main worker does not ship systems-worker/");
 assert(wj.routes.length === 1 && wj.routes[0].pattern === "sistemas.lucksrei.com" && wj.routes[0].custom_domain === true, "the only route is the sistemas.lucksrei.com Custom Domain");
 
 // 3. Tracking with a stubbed browser: silent without consent; a checkout click is never a purchase.
+var fetches = [];
 function run(consent) {
+  fetches.length = 0;
   var handlers = {}, store = consent ? { lx_consent: consent } : {};
   var anchor = { dataset: { product: "beard", days: "30", price: "29.90", track: "checkout_link_click" }, href: "https://pay.hotmart.com/M108332227C?off=v3744m8m" };
   anchor.closest = function () { return anchor; };
   var ctx = {
-    window: { LX_TRACKING: {} }, location: { search: "?utm_source=google&utm_medium=cpc&utm_campaign=bd-search1&utm_content=comissao&gclid=TEST123" },
+    window: { LX_TRACKING: {} }, location: { search: "?utm_source=google&utm_medium=cpc&utm_campaign=bd-search1&utm_content=comissao&gclid=TEST123", protocol: "https:" }, navigator: {}, fetch: function (u, o) { fetches.push({ u: u, o: o }); return Promise.resolve({}); },
     localStorage: { getItem: function (k) { return store[k] || null; }, setItem: function (k, v) { store[k] = v; } },
     document: {
       currentScript: { getAttribute: function () { return "beard"; } }, getElementById: function () { return null; }, querySelector: function () { return null; },
@@ -119,8 +126,14 @@ function run(consent) {
   vm.createContext(ctx);
   vm.runInContext(fs.readFileSync(path.join(S, "assets/js/systems.js"), "utf8"), ctx);
   handlers.click({ target: anchor });
-  return { events: ctx.window.lxEvents || [], href: anchor.href };
+  return { events: ctx.window.lxEvents || [], href: anchor.href, fetches: fetches.slice() };
 }
+// the aggregated counter (/m) does not depend on the banner: page load + checkout click, no credentials, only allow-listable fields, never a click id
+[run("denied"), run(null), run("granted")].forEach(function (r) {
+  assert.deepStrictEqual(r.fetches.map(function (f) { return f.u; }), ["/m", "/m"], "counter: pv + checkout, regardless of consent");
+  r.fetches.forEach(function (f) { assert.strictEqual(f.o.credentials, "omit"); assert(!/gclid|TEST123/.test(f.o.body), "no click id in the counter body"); });
+  assert.deepStrictEqual(JSON.parse(r.fetches[1].o.body), { e: "checkout", p: "beard", s: "google", m: "cpc", c: "bd-search1", k: "comissao", r: "", d: 30 });
+});
 assert.strictEqual(run("denied").events.length, 0, "denied: nothing recorded");
 assert.strictEqual(run(null).events.length, 0, "undecided: nothing recorded");
 var granted = run("granted");

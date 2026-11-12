@@ -30,6 +30,25 @@
     });
   }
 
+  // ---- aggregated, cookie-less measurement (own Worker, POST /m; docs/systems/TRACKING.md). Independent of the banner on purpose: it stores no
+  // id and no cookie, only counts "page loaded / plans seen / checkout link clicked" per allow-listed campaign. It never loads or re-enables
+  // a third-party tag. Counts loads and clicks, not people. Global Privacy Control / Do Not Track = nothing is sent. Failures are ignored.
+  var optOut = navigator.globalPrivacyControl === true || navigator.doNotTrack === "1";
+  var refClass = (function () {
+    try {
+      var h = new URL(document.referrer).hostname;
+      return /(^|\.)(facebook\.com|fb\.com|instagram\.com|fb\.me)$/.test(h) ? "facebook" : /(^|\.)google\.[a-z.]+$/.test(h) ? "google" : "other";
+    } catch (e) { return ""; }
+  })();
+  function measure(ev, days) {
+    if (optOut || !product || location.protocol.indexOf("http") !== 0) return;
+    try {
+      // credentials omitted: the browser attaches no cookie (not even the _ga ones of the parent domain) to this request
+      fetch("/m", { method: "POST", credentials: "omit", keepalive: true, cache: "no-store", referrerPolicy: "no-referrer",
+        body: JSON.stringify({ e: ev, p: product, s: utm.source, m: utm.medium, c: utm.campaign, k: utm.content, r: refClass, d: days || 0 }) }).catch(function () { /* measurement must never matter */ });
+    } catch (e) { /* idem */ }
+  }
+
   // ---- tag loading (after consent) ----
   function loadTags() {
     if (loaded) return; loaded = true;
@@ -113,6 +132,7 @@
     var d = a.dataset, p = { product: d.product || product };
     ["days", "price", "where", "store", "marketplace"].forEach(function (k) { if (d[k]) p[k] = k === "price" || k === "days" ? Number(d[k]) : d[k]; });
     if (d.track === "checkout_link_click") { p.currency = "BRL"; p.plan = p.product + "-" + p.days; if (utm.source) p.utm_source = utm.source; if (utm.campaign) p.utm_campaign = utm.campaign; }
+    if (d.track === "checkout_link_click") measure("checkout", Number(d.days));
     track(d.track, p);
   });
 
@@ -155,9 +175,10 @@
   if (plans && window.IntersectionObserver) {
     var seen = false;
     new IntersectionObserver(function (es, ob) {
-      es.forEach(function (en) { if (en.isIntersecting && !seen) { seen = true; ob.disconnect(); track("plans_view", { product: product }); } });
+      es.forEach(function (en) { if (en.isIntersecting && !seen) { seen = true; ob.disconnect(); measure("plans"); track("plans_view", { product: product }); } });
     }, { threshold: 0.1 }).observe(plans);
   }
 
   decorateCheckout();
+  measure("pv");
 })();
