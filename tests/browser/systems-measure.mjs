@@ -31,9 +31,10 @@ const browser = await chromium.launch({ channel: process.env.PW_CHANNEL });
 const UTM = "?utm_source=meta&utm_medium=paid&utm_campaign=bd-teste1&utm_content=preco&fbclid=ABC&gclid=XYZ";
 let n = 0; const ok = (m) => console.log("ok -", m, ++n && "");
 
-async function visit(product, qs, { choice, gpc, preCookie } = {}) {
+async function visit(product, qs, { choice, gpc, dnt, preCookie } = {}) {
   rows.length = 0; seenCookieHeaders.length = 0;
   const ctx = await browser.newContext({ extraHTTPHeaders: gpc ? { "Sec-GPC": "1" } : {}, userAgent: "Mozilla/5.0 (Linux; Android 14) Chrome/130 Mobile Safari/537.36" });
+  if (dnt) await ctx.addInitScript(() => Object.defineProperty(navigator, "doNotTrack", { value: "1" }));
   if (gpc) await ctx.addInitScript(() => Object.defineProperty(navigator, "globalPrivacyControl", { value: true }));
   if (preCookie) await ctx.addCookies([{ name: "_ga", value: "GA1.1.123.456", url: base }]);
   const page = await ctx.newPage(); const ext = [];
@@ -72,6 +73,11 @@ r = await visit("beard", UTM, { gpc: true });
 assert.strictEqual(r.rows.length, 0, "Global Privacy Control: nothing counted");
 assert.strictEqual(r.cookies.length, 0, "Global Privacy Control: no request at all");
 ok("GPC respected");
+
+r = await visit("beard", UTM, { dnt: true });
+assert.strictEqual(r.rows.length, 0, "Do Not Track: nothing counted");
+assert.strictEqual(r.cookies.length, 0, "Do Not Track: no request at all");
+ok("DNT respected");
 
 for (const m of ["500", "hang"]) {
   mode = m;

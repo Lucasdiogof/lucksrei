@@ -94,11 +94,11 @@ var root = path.join(__dirname, "..");
   assert.strictEqual((await ignored("null", post("null"))), "invalid");
   assert.strictEqual((await ignored("bad utf8", new Request(ORIGIN + "/m", { method: "POST", headers: BROWSER, body: new Uint8Array([0xff, 0xfe, 0x7b]) }))), "invalid");
 
-  // 6c. retention: rows older than 400 days are removed, newer ones kept (SQL cutoff computed from the hour string)
+  // 6c. retention: rows older than 399 days are removed (daily cron, so nothing outlives 400), newer ones kept (SQL cutoff computed from the hour string)
   var dels = []; var rdb = { prepare: function (sql) { return { bind: function () { dels.push([sql].concat([].slice.call(arguments))); return this; }, run: async function () { return { meta: { changes: 3 } }; } }; } };
   assert.strictEqual(await M.purgeOld({ DB: rdb }, new Date("2026-11-12T03:17:00Z")), 3);
   assert(/DELETE FROM lx_hits WHERE hour < \?1/.test(dels[0][0]));
-  assert.strictEqual(dels[0][1], "2025-10-08T03", "cutoff = now - 400 days");
+  assert.strictEqual(dels[0][1], "2025-10-09T03", "cutoff = now - 399 days (daily cron: oldest surviving row <= 400 days)");
   var sched = []; await E.scheduled({ scheduledTime: Date.parse("2026-11-12T03:17:00Z") }, { DB: rdb }, { waitUntil: function (p) { sched.push(p); } }); await Promise.all(sched);
   assert.strictEqual(dels.length, 2, "scheduled() runs the purge");
 

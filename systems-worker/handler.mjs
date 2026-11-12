@@ -64,8 +64,10 @@ async function readCapped(request) {
   return new TextDecoder().decode(all);
 }
 
-export const RETENTION_DAYS = 400;
-// Cron Trigger (free plan: 5 per account, we use 1): deletes counters older than RETENTION_DAYS. Returns the number of rows removed.
+// Promise to the public: counters live at most 400 days. The cron runs once a day, so a row can wait up to 24 h for its purge:
+// purging at 399 days (by the START of the hour bucket, always older than the events in it) keeps the oldest row <= 400 days. A skipped run delays it by a day.
+export const RETENTION_DAYS = 399;
+// Cron Trigger (free plan: 5 per account, we use 1). Returns the number of rows removed.
 export async function purgeOld(env, now = new Date()) {
   const cutoff = hourUtc(new Date(now.getTime() - RETENTION_DAYS * 86400000));
   const r = await env.DB.prepare("DELETE FROM lx_hits WHERE hour < ?1").bind(cutoff).run();
