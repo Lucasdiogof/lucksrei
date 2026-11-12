@@ -84,3 +84,6 @@ Only Hotmart knows a purchase happened. Safe design if wanted: Hotmart webhook (
 
 ## Missing before ads can be measured
 GA4 measurement ID (and its link to Google Ads), Google Ads conversion goal decision, Meta Pixel ID and the verified domain `lucksrei.com`, Hotmart pixel/integration settings, one test purchase to confirm `sck` arrival, and the Privacy text.
+
+
+**Deployed 12 Nov 2026 (Worker `lucksrei-systems` version `01fe29e0-5c74-4d0b-90dc-ce5974529217`; previous `2e9022ef-ff13-4221-aa7d-ea695b29c216`, before it `dce7d2de-f0c8-4843-a434-495a03d7d77a`).** D1 `lucksrei-systems-hits` id `e529062a-c20a-4103-a2d6-a27ff9aa19f7` (account `70b6ccb1...`, Free plan), migration 0001 applied, cron `17 3 * * *`. Rollback: `wrangler rollback 2e9022ef-ff13-4221-aa7d-ea695b29c216 -c wrangler.systems.jsonc` (the old version has no `/m`: the pages keep working, counting stops).
