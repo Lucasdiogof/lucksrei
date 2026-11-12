@@ -47,6 +47,31 @@ export function normalize(b) {
   };
 }
 
+// Reads at most MAX_BODY bytes: stops pulling the stream as soon as the cap is passed, whatever Content-Length says (or omits). null = too big.
+async function readCapped(request) {
+  const declared = Number(request.headers.get("content-length"));
+  if (declared > MAX_BODY) return null;
+  if (!request.body) return "";
+  const reader = request.body.getReader(); const parts = []; let total = 0;
+  for (;;) {
+    const { done: end, value } = await reader.read();
+    if (end) break;
+    total += value.byteLength;
+    if (total > MAX_BODY) { try { await reader.cancel(); } catch (e) { /* already closed */ } return null; }
+    parts.push(value);
+  }
+  const all = new Uint8Array(total); let o = 0; for (const p of parts) { all.set(p, o); o += p.byteLength; }
+  return new TextDecoder().decode(all);
+}
+
+export const RETENTION_DAYS = 400;
+// Cron Trigger (free plan: 5 per account, we use 1): deletes counters older than RETENTION_DAYS. Returns the number of rows removed.
+export async function purgeOld(env, now = new Date()) {
+  const cutoff = hourUtc(new Date(now.getTime() - RETENTION_DAYS * 86400000));
+  const r = await env.DB.prepare("DELETE FROM lx_hits WHERE hour < ?1").bind(cutoff).run();
+  return r && r.meta ? r.meta.changes : 0;
+}
+
 const hourUtc = (d) => d.toISOString().slice(0, 13);
 
 function done(why) { return new Response(null, { status: 204, headers: { ...API_HEADERS, "cache-control": "no-store", "x-lx-measure": why } }); }
@@ -60,8 +85,8 @@ export async function handleMeasure(request, env, now = new Date()) {
     const cf = request.cf || {};
     if (DATACENTER_ASNS.has(Number(cf.asn)) || DATACENTER_ORG.test(String(cf.asOrganization || ""))) return done("datacenter");
     if (await overLimit(env, "RL_MEASURE", request)) return done("limit");
-    const text = await request.text();
-    if (text.length > MAX_BODY) return done("size");
+    const text = await readCapped(request);
+    if (text === null) return done("size");
     let row; try { row = normalize(JSON.parse(text)); } catch (e) { row = null; }
     if (!row) return done("invalid");
     await env.DB.prepare(

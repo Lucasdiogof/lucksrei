@@ -75,6 +75,33 @@ var root = path.join(__dirname, "..");
   assert.strictEqual(await ignored("product", post({ e: "pv", p: "outro" })), "invalid");
   assert.strictEqual(await ignored("limit", post(ok), { RL_MEASURE: { limit: async function () { return { success: false }; } } }), "limit");
 
+  // 6b. body limit is enforced on the STREAM: no/wrong Content-Length, chunked big bodies, never read past the cap, nothing written
+  async function streamed(chunks, headers) {
+    var pulled = 0, i = 0, d = fakeDb();
+    var body = new ReadableStream({ pull: function (c) { if (i >= chunks.length) return c.close(); pulled += chunks[i].length; c.enqueue(new TextEncoder().encode(chunks[i++])); } });
+    var req = new Request(ORIGIN + "/m", { method: "POST", headers: Object.assign({}, BROWSER, headers || {}), body: body, duplex: "half" });
+    var x = await run(req, { DB: d });
+    return { why: x.headers.get("x-lx-measure"), writes: d.binds.length, pulled: pulled };
+  }
+  var big = await streamed(new Array(5000).fill("x".repeat(1000)));
+  assert.strictEqual(big.why, "size"); assert.strictEqual(big.writes, 0); assert(big.pulled < 50000, "stopped reading early: " + big.pulled);
+  assert.strictEqual((await streamed(["{", "x".repeat(450), "}"], { "content-length": "10" })).why, "size", "lying small Content-Length");
+  assert.strictEqual((await streamed(["x".repeat(100)], { "content-length": "999999" })).why, "size", "huge declared length rejected before reading");
+  var chunked = await streamed([JSON.stringify(ok).slice(0, 20), JSON.stringify(ok).slice(20)]);
+  assert.strictEqual(chunked.why, "stored", "small chunked body still counts");
+  assert.strictEqual((await ignored("empty", post(""))), "invalid");
+  assert.strictEqual((await ignored("array", post("[1,2]"))), "invalid");
+  assert.strictEqual((await ignored("null", post("null"))), "invalid");
+  assert.strictEqual((await ignored("bad utf8", new Request(ORIGIN + "/m", { method: "POST", headers: BROWSER, body: new Uint8Array([0xff, 0xfe, 0x7b]) }))), "invalid");
+
+  // 6c. retention: rows older than 400 days are removed, newer ones kept (SQL cutoff computed from the hour string)
+  var dels = []; var rdb = { prepare: function (sql) { return { bind: function () { dels.push([sql].concat([].slice.call(arguments))); return this; }, run: async function () { return { meta: { changes: 3 } }; } }; } };
+  assert.strictEqual(await M.purgeOld({ DB: rdb }, new Date("2026-11-12T03:17:00Z")), 3);
+  assert(/DELETE FROM lx_hits WHERE hour < \?1/.test(dels[0][0]));
+  assert.strictEqual(dels[0][1], "2025-10-08T03", "cutoff = now - 400 days");
+  var sched = []; await E.scheduled({ scheduledTime: Date.parse("2026-11-12T03:17:00Z") }, { DB: rdb }, { waitUntil: function (p) { sched.push(p); } }); await Promise.all(sched);
+  assert.strictEqual(dels.length, 2, "scheduled() runs the purge");
+
   // 7. a real mobile network (not a datacenter) still counts; GET is refused; a rate-limiter failure never blocks counting
   db = fakeDb();
   await run(post(ok, {}, { asn: 28573, asOrganization: "CLARO S.A." }), { DB: db, RL_MEASURE: { limit: async function () { throw new Error("rl down"); } } });

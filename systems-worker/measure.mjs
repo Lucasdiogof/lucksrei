@@ -1,12 +1,14 @@
-/* lucksrei-systems Worker entry. Only POST /m runs code (assets.run_worker_first = ["/m"]); everything else is served by the assets layer.
- * The logic, the privacy rules and the allow-lists live in handler.mjs. This file must export ONLY the default handler (workerd rejects
- * other named exports). */
-import { handleMeasure } from "./handler.mjs";
+/* Entry of the lucksrei-systems Worker. It must export ONLY the default object (workerd rejects other named exports); logic is in handler.mjs.
+ * fetch: POST /m counts, everything else falls to the static assets. scheduled: daily retention cleanup (cron in wrangler.systems.jsonc). */
+import { handleMeasure, purgeOld } from "./handler.mjs";
 
 export default {
   async fetch(request, env) {
     const { pathname } = new URL(request.url);
     if (pathname === "/m") return handleMeasure(request, env);
     return env.ASSETS ? env.ASSETS.fetch(request) : new Response("not found", { status: 404 });
+  },
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(purgeOld(env, new Date(event.scheduledTime)));
   },
 };

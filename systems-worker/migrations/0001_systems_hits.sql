@@ -16,4 +16,4 @@ CREATE TABLE IF NOT EXISTS lx_hits (
   PRIMARY KEY (hour, event, product, source, medium, campaign, content, ref, days),
   CHECK (n >= 0)
 ) WITHOUT ROWID;
--- Retention: delete what is older than 400 days, e.g.  DELETE FROM lx_hits WHERE hour < strftime('%Y-%m-%dT%H', 'now', '-400 days');
+-- Retention: done automatically by the Worker cron (scheduled -> purgeOld, daily 03:17 UTC, 400 days). Manual equivalent:  DELETE FROM lx_hits WHERE hour < strftime('%Y-%m-%dT%H', 'now', '-400 days');
