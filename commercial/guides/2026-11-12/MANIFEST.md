@@ -12,4 +12,6 @@ Esta pasta fica fora do site publicado (`.assetsignore`).
 | StockPort | Payhip | StockPort_System_Guia_Oficial_Payhip.pdf | 2026-11-12 | c892dd2a8f4fedf27b20af1080fbe0e5796ad371d98180f80cdbc3add6284e49 | 2475614 |
 | StockPort | Whop | StockPort_System_Guia_Oficial_Whop.pdf | 2026-11-12 | fba12abbae56f1c7f56972fc8aa4a8550557424d9380c9ca0396c060a5316b31 | 2475637 |
 
-Mercado Livre: `Mercado_Livre_Mensagens_Pos_Compra.txt` ainda nao foi recebido; sera acrescentado aqui quando o dono o enviar.
+| Beard + StockPort | Mercado Livre | Mercado_Livre_Mensagens_Pos_Compra.txt | 2026-11-12 | 6b572182b783d88f8e5126872795c442d7a5f609997fb10515978b35ac0ffa22 | 1148 |
+
+Mercado Livre: texto (UTF-8, sem PDF) para respostas rapidas de pos-venda; contingencia de atendimento, nao substitui a liberacao automatica.
