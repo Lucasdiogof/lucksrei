@@ -153,4 +153,10 @@ assert(u.searchParams.get("sck").length <= 30 && u.searchParams.get("sck").index
 assert.strictEqual(u.searchParams.get("src"), null, "src is not used (affiliate parameter)");
 assert.strictEqual(u.searchParams.get("utm_source"), "google", "utm forwarded");
 assert.strictEqual(u.searchParams.get("off"), "v3744m8m", "offer preserved");
+["beard", "stockport"].forEach(function (slug) {
+  var h = read(slug + "/index.html");
+  assert(/id="sticky-cta"[^>]*href="#planos"|href="#planos"[^>]*id="sticky-cta"/.test(h) && /data-where="sticky"/.test(h), slug + ": sticky Ver planos CTA to #planos");
+  assert(h.indexOf("Ver planos a partir de R$ 29,90") > -1, slug + ": hero CTA states the entry price");
+  assert.strictEqual((h.match(/data-track="checkout_link_click"/g) || []).length, 4, slug + ": four checkout links preserved");
+});
 console.log("systems: ok");
