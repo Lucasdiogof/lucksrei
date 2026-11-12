@@ -1,5 +1,5 @@
 {
-  // Worker ESTÁTICO dedicado a sistemas.lucksrei.com (sem script, sem D1, sem rate limits): só serve a pasta ./systems.
+  // Worker dedicado a sistemas.lucksrei.com: serve ./systems e só executa script em POST /m (contador agregado em D1) + cron diário de retenção (400 dias).
   // Publicado em produção em 05/11/2026. Procedimento de deploy, rollback e CSP: docs/systems/PUBLISHING.md. Isolado do Worker "lucksrei-site".
   "name": "lucksrei-systems",
   "workers_dev": false,
@@ -12,8 +12,28 @@
       "custom_domain": true
     }
   ],
+  // MEASUREMENT (PR feat/systems-aggregate-measurement, NOT deployed): the Worker gets a script ONLY for POST /m. Pages and assets still bypass it
+  // (free, unlimited). Before deploying: `wrangler d1 create lucksrei-systems-hits`, paste the id below, apply systems-worker/migrations
+  // (see docs/systems/TRACKING.md, "Aggregated measurement"). The placeholder id makes `wrangler deploy` fail loudly instead of running without storage.
+  "main": "systems-worker/measure.mjs",
   "assets": {
     "directory": "./systems",
-    "not_found_handling": "404-page"
-  }
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/m"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "lucksrei-systems-hits",
+      // placeholder: replace with the id printed by `wrangler d1 create`
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "systems-worker/migrations"
+    }
+  ],
+  // Retention: one daily Cron Trigger (free plan allows 5 per account) deletes counters older than 400 days (handler.mjs purgeOld).
+  "triggers": { "crons": ["17 3 * * *"] },
+  "ratelimits": [
+    { "name": "RL_MEASURE", "namespace_id": "7311", "simple": { "limit": 120, "period": 60 } }
+  ]
 }
