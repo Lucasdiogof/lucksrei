@@ -79,7 +79,7 @@ function productPage(p) {
     "@context": "https://schema.org", "@type": "Product", name: p.name,
     description: p.description, brand: { "@type": "Brand", name: "Lucksrei Systems" },
     url: canonical, image: ORIGIN + base + p.og,
-    offers: PLANS.map((pl, i) => ({ "@type": "Offer", name: `Licença de ${pl.days} dias`, price: (pl.cents / 100).toFixed(2), priceCurrency: "BRL", url: offerUrl(i) }))
+    offers: PLANS.map((pl, i) => ({ "@type": "Offer", name: `Licença de ${pl.days} dias`, price: (pl.cents / 100).toFixed(2), priceCurrency: "BRL", availability: "https://schema.org/InStock", url: offerUrl(i) }))
   };
   const hero = p.hero;
   const heroImgs = hero.main
