@@ -179,6 +179,20 @@
     }, { threshold: 0.1 }).observe(plans);
   }
 
+  // mobile sticky "Ver planos": only while neither the hero nor the plans are on screen; sits above the consent banner while it is open
+  var sticky = document.getElementById("sticky-cta"), hero = document.querySelector(".hero");
+  if (sticky && hero && plans && window.IntersectionObserver) {
+    var inHero = true, inPlans = false;
+    var upd = function () {
+      var open = banner && !banner.hidden;
+      sticky.style.setProperty("--consent-h", open ? banner.offsetHeight + 8 + "px" : "0px");
+      sticky.hidden = inHero || inPlans;
+    };
+    var io = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.target === hero) inHero = en.isIntersecting; else inPlans = en.isIntersecting; }); upd(); });
+    io.observe(hero); io.observe(plans);
+    if (banner) banner.addEventListener("click", function () { setTimeout(upd, 0); });
+  }
+
   decorateCheckout();
   measure("pv");
 })();

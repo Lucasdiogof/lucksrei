@@ -126,13 +126,14 @@ function productPage(p) {
       <h1>${esc(hero.h1)}</h1>
       <p class="lead">${esc(hero.lead)}</p>
       <div class="hero-actions">
-        <a href="#planos" class="btn btn-primary" ${track("cta_click", ' data-where="hero"')}>Ver planos e preços</a>
-        <a href="#funcionalidades" class="btn btn-ghost">Ver funcionalidades</a>
+        <a href="#planos" class="btn btn-primary" ${track("cta_click", ' data-where="hero"')}>Ver planos a partir de ${brl(PLANS[0].cents)}</a>
+        <a href="#funcionalidades" class="btn btn-ghost btn-secondary">Ver funcionalidades</a>
       </div>
       <p class="hero-note">${PLANS[0].days} dias por ${brl(PLANS[0].cents)} · pagamento único, sem mensalidade · sem renovação automática${p.heroNote ? ` · ${esc(p.heroNote)}` : ""}</p>
     </div>
     ${heroImgs}
   </section>
+  <a href="#planos" id="sticky-cta" class="sticky-cta btn btn-primary" ${track("cta_click", ' data-where="sticky"')} hidden>Ver planos a partir de ${brl(PLANS[0].cents)}</a>
 
   <section class="problems" aria-labelledby="problemas">
     <div class="container">
