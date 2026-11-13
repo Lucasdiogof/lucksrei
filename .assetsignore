@@ -21,5 +21,3 @@ systems
 wrangler.systems.jsonc
 systems-worker
 commercial
-# StockPort System withdrawn (2026-11-13): keep the showcase videos in the repo, do not publish them.
-assets/video/stockport-loop*
