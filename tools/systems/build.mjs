@@ -15,7 +15,7 @@ const head = ({ title, description, canonical, ogTitle, ogDescription, ogImage, 
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="${theme === "stockport" ? "#0B1B3B" : "#17181A"}">
+<meta name="theme-color" content="#17181A">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <link rel="canonical" href="${canonical}">

@@ -37,7 +37,7 @@ const gaCfg = (page) => page.evaluate((id) => (window.dataLayer || []).filter((a
 const noNav = (page) => page.locator('a[data-track="checkout_link_click"]').first().evaluate((a) => a.addEventListener("click", (e) => e.preventDefault()));
 
 for (const [pname, opts] of Object.entries(profiles)) {
-  for (const product of ["beard", "stockport"]) {
+  for (const product of ["beard"]) {
     const url = `/${product}/`, tag = `${pname} ${product}`;
     // ---- decline: nothing loads, nothing is sent
     let ctx = await browser.newContext(opts); let { page, g } = await open(ctx, url);

@@ -1,4 +1,4 @@
-/* Lucksrei Systems showcase. One stylesheet, three identities via [data-theme] tokens (lucksrei | beard | stockport).
+/* Lucksrei Systems showcase. One stylesheet, three identities via [data-theme] tokens (lucksrei | beard).
    CSP: no inline styles, own font. */
 @font-face{font-family:'Outfit';font-style:normal;font-weight:400 800;font-display:swap;src:url(/assets/fonts/outfit-latin.woff2) format('woff2')}
 :root{--ease:cubic-bezier(.16,1,.3,1);--radius:14px;--wrap:1200px}
@@ -6,8 +6,6 @@
 body[data-theme="lucksrei"],.product-card[data-theme="lucksrei"]{--ink:#17181A;--bar:#101113;--bar-ink:#fff;--accent:#B8923A;--accent-ink:#7A5C16;--on-accent:#17181A;--bg:#F6F4EF;--surface:#fff;--muted:#55524D;--line:rgba(120,106,90,.25);--btn:#17181A;--btn-ink:#fff;--bar-btn:#C9A24C;--bar-btn-ink:#17181A}
 /* Beard: grafite e cobre sobre creme */
 body[data-theme="beard"],.product-card[data-theme="beard"]{--ink:#17181A;--bar:#17181A;--bar-ink:#fff;--accent:#B87333;--accent-ink:#8A5424;--on-accent:#fff;--bg:#F8F5EF;--surface:#fff;--muted:#55524D;--line:rgba(120,106,90,.25);--btn:#17181A;--btn-ink:#fff;--bar-btn:#C98A4B;--bar-btn-ink:#17181A}
-/* StockPort: azul profundo e branco */
-body[data-theme="stockport"],.product-card[data-theme="stockport"]{--ink:#0B1B3B;--bar:#0B1B3B;--bar-ink:#fff;--accent:#2563EB;--accent-ink:#1D4FBF;--on-accent:#fff;--bg:#F3F6FB;--surface:#fff;--muted:#4B5A75;--line:rgba(37,70,140,.18);--btn:#1D5FD6;--btn-ink:#fff;--bar-btn:#2F6FF0;--bar-btn-ink:#fff}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:5rem}
 body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden;-webkit-text-size-adjust:100%}
@@ -49,7 +47,6 @@ main{padding-top:4.5rem}
 .hero-product img{height:34px;width:auto;align-self:flex-start;margin-bottom:.35rem}
 .hero-product span{font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#C9A24C}
 .hero-product b{font-weight:600;font-size:1.05rem;line-height:1.3}
-.hero-product[data-theme="stockport"] img{height:44px}
 .hero h1{font-size:clamp(2.1rem,4.4vw,3.6rem);letter-spacing:-.03em;line-height:1.06;margin-bottom:1.25rem}
 .lead{color:var(--muted);font-size:1.15rem;max-width:56ch;margin-bottom:2rem}
 .hero-actions{display:flex;flex-wrap:wrap;gap:.75rem}
@@ -198,6 +195,5 @@ footer{background:var(--bar);color:#fff;padding:3.5rem 2rem 2rem;text-align:cent
   .sticky-cta[hidden]{display:none}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.pricing-card,.feature-card,.product-card{transform:none!important}}
-body[data-theme="stockport"] .logo img[src*="stockport"]{height:46px}
 
 @media (min-width:641px){.sticky-cta{display:none!important}}

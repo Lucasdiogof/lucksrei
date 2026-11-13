@@ -4,7 +4,7 @@
  * The Worker is still STATIC for every page: only POST /m runs code (assets.run_worker_first = ["/m"]); pages, images and JS
  * are served by the assets layer, which is free and unlimited. Nothing here can slow or break a page or the checkout.
  *
- *   POST /m  body {"e":"pv|plans|checkout","p":"beard|stockport","s":utm_source,"m":utm_medium,"c":utm_campaign,"k":utm_content,"r":ref class,"d":days}
+ *   POST /m  body {"e":"pv|plans|checkout","p":"beard","s":utm_source,"m":utm_medium,"c":utm_campaign,"k":utm_content,"r":ref class,"d":days}
  *            always 204. Counts one event in (UTC hour x event x product x allow-listed dimensions) in D1 table lx_hits.
  *
  * It measures what the ad platforms cannot tell us and what GA4/Pixel miss without consent: that the page LOADED in a browser that ran our
@@ -20,12 +20,12 @@ import { API_HEADERS, overLimit } from "../worker/security.mjs";
 
 export const ALLOWED_ORIGIN = "https://sistemas.lucksrei.com";
 const EVENTS = new Set(["pv", "plans", "checkout"]);
-const PRODUCTS = new Set(["beard", "stockport"]);
+const PRODUCTS = new Set(["beard"]);
 const SOURCES = new Set(["meta", "google", "teste"]);
 const MEDIUMS = new Set(["paid", "cpc"]);
 // shortcut: campaign and ad-angle names are an allow-list edited here; unknown ones show up as "other". Add new campaigns to this list on launch.
-const CAMPAIGNS = new Set(["bd-teste1", "sp-teste1", "bd-search1", "sp-search1"]);
-const CONTENTS = new Set(["comissao", "preco", "estoque", "sistema"]);
+const CAMPAIGNS = new Set(["bd-teste1", "bd-search1"]);
+const CONTENTS = new Set(["comissao", "preco", "sistema"]);
 const REFS = new Set(["facebook", "google", "other"]);
 const DAYS = new Set([30, 90, 180, 365]);
 const MAX_BODY = 400;

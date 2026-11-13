@@ -18,8 +18,6 @@ const browser = await chromium.launch({ channel: process.env.PW_CHANNEL }); // P
 const cases = [
   ["beard", "M108332227C", "?utm_source=meta&utm_medium=paid&utm_campaign=bd-teste1&utm_content=comissao", "b|meta|bd-teste1|comissao"],
   ["beard", "M108332227C", "?utm_source=google&utm_medium=cpc&utm_campaign=bd-search1&utm_content=preco&gclid=TEST123", "b|google|bd-search1|preco"],
-  ["stockport", "Y108188423I", "?utm_source=meta&utm_medium=paid&utm_campaign=sp-teste1&utm_content=comissao", "s|meta|sp-teste1|comissao"],
-  ["stockport", "Y108188423I", "?utm_source=google&utm_medium=cpc&utm_campaign=sp-search1&utm_content=estoque&gclid=TEST123", "s|google|sp-search1|estoque"],
   ["beard", "M108332227C", "?utm_source=google&utm_medium=cpc&utm_campaign=bd-search1-longa&utm_content=comissao_v2&fbclid=x", null],
 ];
 let n = 0;

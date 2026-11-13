@@ -27,7 +27,7 @@ async function open(ctx, url) {
 }
 const queue = (page) => page.evaluate(() => (window.fbq && window.fbq.queue || []).map((a) => Array.from(a)));
 let n = 0;
-for (const product of ["beard", "stockport"]) {
+for (const product of ["beard"]) {
   const url = `/${product}/`;
   let ctx = await browser.newContext(); let { page, g } = await open(ctx, url);
   assert.strictEqual(g.fb.length, 0, product + ": undecided -> zero Facebook requests");
