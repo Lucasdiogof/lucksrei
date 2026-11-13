@@ -134,6 +134,7 @@
       }
     });
     if (plats.childNodes.length) foot.appendChild(plats);
+    if (app.status === "development") foot.appendChild(el("span", "app-note", I.t("apps.status.development")));
     if (app.private && !app.androidUrl && !app.iosUrl) foot.appendChild(el("span", "app-note", I.t("apps.private")));
     if (app.caseUrl) {
       var c = el("a", "app-case", I.t("apps.case"));

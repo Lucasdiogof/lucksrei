@@ -206,6 +206,7 @@
   "apps.logo_pending": "{name} logo (coming soon)",
   "apps.own_tag": "Own product",
   "apps.private": "Private project",
+  "apps.status.development": "In development",
   "apps.s1.div1": "<a href=\"/\">Lucksrei</a> / Apps",
   "apps.s1.div2": "<span class=\"chip\">Fintech</span><span class=\"chip\">Banking white-label</span> <span class=\"chip\">InsurTech</span><span class=\"chip\">AgroTech</span> <span class=\"chip\">GovTech</span><span class=\"chip\">Mobility</span> <span class=\"chip\">Education</span><span class=\"chip\">Health</span> <span class=\"chip\">Sports</span><span class=\"chip\">Games</span><span class=\"chip\">RetailTech</span><span class=\"chip\">Jobs</span>",
   "apps.s1.h11": "Apps and products",
