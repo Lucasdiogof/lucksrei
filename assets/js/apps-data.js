@@ -19,6 +19,7 @@
  *   downloads   texto, ex.: '1M+'   (null = não exibe)
  *   rating      número, ex.: 4.4    (null = não exibe)
  *   reviewCount número, ex.: 72600  (null = não exibe)
+ *   status      'development' = selo "Em desenvolvimento" (apps.status.development)
  *   private     true = "Projeto privado" quando não há loja
  *   period      'AAAA[-MM]/AAAA[-MM]' ou '/present'; formatado por idioma com Intl
  *   technologies lista de tecnologias
@@ -42,7 +43,7 @@
   }
 
   window.LUCKSREI_APPS = {
-    expected: { own: 7, systems: 1, professional: 9, cooper: 20, total: 37 },
+    expected: { own: 7, systems: 2, professional: 9, cooper: 20, total: 38 },
     featured: ['fan-hub', 'toro', 'iza', 'aprovaura', 'cooper-pay'],
     // textos dos grupos: apps.filter.<id>, apps.group.<id>.title|intro (assets/i18n)
     groups: [{ id: 'own' }, { id: 'systems' }, { id: 'professional' }, { id: 'cooper' }],
@@ -75,6 +76,9 @@
       { id: 'beard', name: 'Beard System', subtitle: { en: 'Scheduling, clients, commissions and cash for barbershops', 'pt-BR': 'Agenda, clientes, comissões e caixa para barbearias', es: 'Agenda, clientes, comisiones y caja para barberías' }, group: 'systems', sector: 'management',
         logo: '/assets/img/apps/beard.webp', platforms: ['android', 'ios', 'web'], androidUrl: 'https://play.google.com/store/apps/details?id=com.lucksrei.beard.system', iosUrl: 'https://apps.apple.com/br/app/beard-system/id6828040621', webUrl: 'https://beard.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'PostgreSQL', 'RLS'] },
+      { id: 'tech', name: 'Tech System', subtitle: { en: 'Repair shop management', 'pt-BR': 'Gestão de Assistências Técnicas', es: 'Gestión de Servicios Técnicos' }, group: 'systems', sector: 'management', status: 'development',
+        logo: '/assets/img/apps/tech.webp', platforms: ['web'], webUrl: 'https://tech.lucksrei.com',
+        downloads: null, rating: null, reviewCount: null },
 
       /* ---- profissionais (do mais recente para o mais antigo, pelo fim do período) ---- */
       { id: 'tabela-fone', name: 'Tabela Fone', subtitle: { en: 'Price intelligence for used phone retailers', 'pt-BR': 'Inteligência de preços para lojistas de celulares usados', es: 'Inteligencia de precios para tiendas de celulares usados' }, group: 'professional', sector: 'retailtech',
