@@ -154,9 +154,7 @@ assert.strictEqual(u.searchParams.get("off"), "v3744m8m", "offer preserved");
   assert(h.indexOf("Ver planos a partir de R$ 29,90") > -1, slug + ": hero CTA states the entry price");
   assert.strictEqual((h.match(/data-track="checkout_link_click"/g) || []).length, 4, slug + ": four checkout links preserved");
 });
-// StockPort withdrawn (2026-11-13): no page, no link, no sitemap entry; old URLs redirect (302, reversible) to the catalog; its images are not uploaded.
+// StockPort withdrawn (2026-11-13): no page, no link, no sitemap entry.
 assert(!fs.existsSync(path.join(S, "stockport/index.html")), "stockport page removed");
 ["index.html", "beard/index.html", "404.html", "sitemap.xml"].forEach(function (f) { assert(!/stockport|Y108188423I/i.test(read(f)), f + ": no StockPort reference"); });
-var redir = read("_redirects");
-["/stockport / 302", "/stockport/ / 302", "/stockport/* / 302"].forEach(function (r) { assert(redir.split(/\r?\n/).some(function (l) { return l.trim().split(/\s+/).join(" ") === r; }), "systems/_redirects: " + r); });
 console.log("systems: ok");

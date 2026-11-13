@@ -1,5 +1,0 @@
-# StockPort System was withdrawn from sale on 2026-11-13 (docs/encerramento-comercial.md in stockport-system).
-# 302 keeps it reversible: delete these lines and restore the product in tools/systems/data.mjs to bring the page back.
-/stockport  /  302
-/stockport/  /  302
-/stockport/*  /  302

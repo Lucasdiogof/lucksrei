@@ -35,8 +35,8 @@ var root = path.join(__dirname, "..");
 
   // 3. no UTM at all -> "none"; checkout carries the plan; click ids and any extra field are ignored (never stored)
   db = fakeDb();
-  await run(post({ e: "checkout", p: "stockport", d: 90, gclid: "G123", fbclid: "F456", email: "a@b.c", url: "https://x/?id=1", ua: "secret" }), { DB: db });
-  assert.deepStrictEqual(db.binds[0], ["2026-11-12T14", "checkout", "stockport", "none", "none", "none", "none", "none", 90]);
+  await run(post({ e: "checkout", p: "beard", d: 90, gclid: "G123", fbclid: "F456", email: "a@b.c", url: "https://x/?id=1", ua: "secret" }), { DB: db });
+  assert.deepStrictEqual(db.binds[0], ["2026-11-12T14", "checkout", "beard", "none", "none", "none", "none", "none", 90]);
   assert(!JSON.stringify(db.binds).match(/G123|F456|a@b|secret|x\//), "nothing from the body outside the allow-lists is stored");
 
   // 4. unknown / hostile values collapse into "other"; days outside the plans become 0; days only count on checkout
@@ -49,10 +49,10 @@ var root = path.join(__dirname, "..");
   db = fakeDb(); var seen = {}, r = 7;
   var rnd = function () { r = (r * 16807) % 2147483647; return r; };
   for (var i = 0; i < 600; i++) {
-    await run(post({ e: ["pv", "plans", "checkout", "zz"][rnd() % 4], p: ["beard", "stockport", "x"][rnd() % 3], s: "s" + rnd(), m: "m" + rnd(), c: "c" + rnd(), k: "k" + rnd(), r: "r" + rnd(), d: rnd() }), { DB: db });
+    await run(post({ e: ["pv", "plans", "checkout", "zz"][rnd() % 4], p: ["beard", "x"][rnd() % 2], s: "s" + rnd(), m: "m" + rnd(), c: "c" + rnd(), k: "k" + rnd(), r: "r" + rnd(), d: rnd() }), { DB: db });
   }
   db.binds.forEach(function (b) { seen[b.slice(1).join("|")] = 1; });
-  assert(Object.keys(seen).length <= 3 * 2 * 2 * 2 * 2 * 2 * 2 * 2, "bounded rows: " + Object.keys(seen).length);
+  assert(Object.keys(seen).length <= 2 * 2 * 2 * 2 * 2 * 2 * 2 * 2, "bounded rows: " + Object.keys(seen).length);
   assert(!db.binds.some(function (b) { return /^(s|m|c|k|r)\d/.test(b.slice(3).join(" ")); }), "random strings never reach the table");
 
   // 6. things that must be ignored (204, nothing written): other origin, opt-out signals, bots, datacenters, big or malformed bodies, invalid events

@@ -65,9 +65,9 @@ for (const choice of [undefined, "deny", "accept"]) {
   ok(`beard ${choice || "undecided"}: counted without cookie/storage, third parties untouched`);
 }
 
-let r = await visit("stockport", "", { choice: "deny" });
-assert.deepStrictEqual(r.rows.map((x) => x.slice(1, 8)).filter((x) => x[0] !== "plans" && x[0] !== "checkout"), [["pv", "stockport", "none", "none", "none", "none", "none"]], "no UTM -> none");
-ok("stockport without UTM counted as none");
+let r = await visit("beard", "", { choice: "deny" });
+assert.deepStrictEqual(r.rows.map((x) => x.slice(1, 8)).filter((x) => x[0] !== "plans" && x[0] !== "checkout"), [["pv", "beard", "none", "none", "none", "none", "none"]], "no UTM -> none");
+ok("beard without UTM counted as none");
 
 r = await visit("beard", UTM, { gpc: true });
 assert.strictEqual(r.rows.length, 0, "Global Privacy Control: nothing counted");
