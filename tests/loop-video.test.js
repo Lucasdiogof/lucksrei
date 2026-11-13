@@ -9,7 +9,7 @@ function read(p) { return fs.readFileSync(path.join(root, p), "utf8"); }
 
 var LV = require(path.join(root, "assets/js/loop-video.js"));
 var LOCALES = ["en", "pt-BR", "es"];
-var NAMES = ["goias-app", "aprovaura", "la-pelve", "match-queue", "bebometro", "orbijob", "busaogyn", "stockport"];
+var NAMES = ["goias-app", "aprovaura", "la-pelve", "match-queue", "bebometro", "orbijob", "busaogyn"];
 
 check(JSON.stringify(LV.SUPPORTED) === JSON.stringify(LOCALES), "locales do player devem ser en, pt-BR, es");
 check(LV.norm("fr") === "en" && LV.norm("pt-BR") === "pt-BR", "locale desconhecido cai para en");
@@ -33,7 +33,7 @@ NAMES.forEach(function (n) {
 });
 
 // markup: todas as páginas usam só data-loop-video="<nome>" (sem src/poster fixos) e o mesmo script central
-var pages = ["index.html", "projects/aura/index.html", "projects/bebometro/index.html", "projects/busaogyn/index.html", "projects/fan-hub/index.html", "projects/la-pelve/index.html", "projects/match-queue/index.html", "projects/orbijob/index.html", "projects/stockport/index.html"];
+var pages = ["index.html", "projects/aura/index.html", "projects/bebometro/index.html", "projects/busaogyn/index.html", "projects/fan-hub/index.html", "projects/la-pelve/index.html", "projects/match-queue/index.html", "projects/orbijob/index.html"];
 var seen = {};
 pages.forEach(function (p) {
   var h = read(p);

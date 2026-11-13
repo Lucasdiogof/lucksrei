@@ -30,7 +30,7 @@ A static site with no build step and no framework: plain HTML, CSS and JavaScrip
 | --- | --- |
 | `/` | Home: pixel-art hero scene, case studies, technical skills with evidence, visitor map and contact |
 | `/apps/` | Every Lucksrei app and system, with tabs, store links and web app links |
-| `/projects/<app>/` | Case study per app (Aprovaura, Bebômetro, BusãoGyn, Fan Hub, La Pelve, Match Queue, OrbiJob, StockPort) plus its privacy, support and data-deletion pages |
+| `/projects/<app>/` | Case study per app (Aprovaura, Bebômetro, BusãoGyn, Fan Hub, La Pelve, Match Queue, OrbiJob) plus its privacy, support and data-deletion pages |
 | `/privacy/`, `/terms/`, `/support/` | General legal and support pages for the licensed systems |
 | `/contact/` | Contact form (Resend, optional Turnstile) |
 | `/visitors/` | Aggregated visits by country and state/region |

@@ -236,9 +236,9 @@ function indexPage() {
       </article>`;
   }).join("");
   return head({
-    title: "Lucksrei Systems: sistemas de gestão para barbearias e comércios",
-    description: "Lucksrei Systems desenvolve e vende sistemas de gestão: Beard System para barbearias e StockPort System para estoque, vendas e caixa. Licenças de pagamento único.",
-    canonical, ogTitle: "Lucksrei Systems: sistemas de gestão para o seu negócio", ogDescription: "Beard System para barbearias e StockPort System para comércios. Licenças de 30 a 365 dias, pagamento único.",
+    title: "Lucksrei Systems: sistemas de gestão para barbearias",
+    description: "Lucksrei Systems desenvolve e vende sistemas de gestão: Beard System, a gestão completa para barbearias. Licenças de pagamento único.",
+    canonical, ogTitle: "Lucksrei Systems: sistemas de gestão para o seu negócio", ogDescription: "Beard System para barbearias. Licenças de 30 a 365 dias, pagamento único.",
     ogImage: ORIGIN + "/assets/img/lucksrei/og.jpg", ogW: 1200, ogH: 630, theme: "lucksrei", jsonld
   }) + `
 <header>

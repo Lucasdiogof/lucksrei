@@ -41,17 +41,6 @@ const FAQ_END = [
   ["Como falar com o suporte?", `Pela <a href="${MAIN}/support/">página de suporte</a> ou pelo e-mail <a href="mailto:${SUPPORT_EMAIL}">${SUPPORT_EMAIL}</a>.`]
 ];
 
-const SP_SUPPORT_EMAIL = "stockport@lucksrei.com";
-const SP_FAQ_PAY = [
-  COMMON_FAQ_PAY[0],
-  COMMON_FAQ_PAY[1],
-  ["Quando começa a validade?", "O período de uso começa quando você ativa o acesso (ao criar sua senha pelo convite) ou, no máximo, 30 dias depois da confirmação do pagamento, o que ocorrer primeiro. Nunca começa antes da aprovação do pagamento. Os 30 dias são apenas o limite para o início da contagem: a duração do plano continua sendo a que você comprou (30, 90, 180 ou 365 dias)."]
-];
-const SP_FAQ_END = [
-  ["Como funciona o reembolso?", "O reembolso segue as regras e os termos da Hotmart, plataforma de pagamento, e o prazo para solicitação é de 7 dias."],
-  ["Como falar com o suporte?", `Pela <a href="${MAIN}/support/">página de suporte</a> ou pelo e-mail <a href="mailto:${SP_SUPPORT_EMAIL}">${SP_SUPPORT_EMAIL}</a>, informando o e-mail da compra e o número do pedido.`]
-];
-
 export const PRODUCTS = [
   {
     slug: "beard", theme: "beard", name: "Beard System",
@@ -133,93 +122,6 @@ export const PRODUCTS = [
       ["Preciso instalar algo?", "Não. O acesso é pelo navegador, no computador, no tablet ou no celular. Os aplicativos do Beard na Google Play e na App Store também podem ser usados."],
       ["O que acontece quando a licença vence?", "Depois do vencimento há um período de tolerância, de 7 dias por padrão, em que você só consulta e exporta os dados (conforme as permissões do seu perfil), sem fazer alterações. Terminado esse prazo, o acesso é bloqueado. Os dados da barbearia não são apagados por causa do vencimento e, quando a licença é renovada, o acesso volta com os dados que já existiam. Para renovar, compre um novo período com o mesmo e-mail da conta. Se o e-mail for outro ou o novo período não aparecer, fale com o suporte informando o número do pedido e o e-mail da conta."],
       ...FAQ_END
-    ]
-  },
-  {
-    slug: "stockport", theme: "stockport", name: "StockPort System",
-    tagline: "Estoque, vendas e caixa para o seu comércio",
-    audience: "Pequenos comércios",
-    appUrl: "https://stockport.lucksrei.com",
-    store: { android: "https://play.google.com/store/apps/details?id=com.lucksrei.stockport", ios: "https://apps.apple.com/br/app/stockport-system/id6825179571" },
-    title: "StockPort System: controle de estoque, vendas e caixa para comércio | Lucksrei Systems",
-    description: "Sistema de estoque, vendas e caixa para pequeno comércio: produtos, código de barras, entradas e saídas, clientes, fornecedores e relatórios. Licença de 30 a 365 dias, pagamento único.",
-    ogTitle: "StockPort System: estoque, vendas e caixa",
-    ogDescription: "Produtos, estoque, vendas, caixa, clientes, fornecedores e relatórios em um só sistema. Licenças de 30, 90, 180 e 365 dias, pagamento único.",
-    logo: { src: "logo.svg", w: 150, h: 55 },
-    og: "og.png", ogW: 1200, ogH: 630,
-    hero: {
-      h1: "Do estoque à venda, tudo conectado.",
-      lead: "Cadastre produtos, controle o estoque, venda no caixa e acompanhe os resultados do seu comércio em um só sistema.",
-      phone: { src: "painel.webp", w: 780, h: 1638, alt: "Painel do StockPort System no celular, com faturamento do dia e alertas de estoque" },
-      second: { src: "vendas.webp", w: 780, h: 1638, alt: "Tela de vendas do StockPort System com carrinho e busca por código de barras" }
-    },
-    problems: [
-      ["Estoque no caderno", "Sem registro de entradas e saídas, só se descobre que o produto acabou quando o cliente pede."],
-      ["Caixa que não fecha", "Sem controle de abertura, suprimentos e retiradas, a diferença do caixa aparece no fim do dia sem explicação."],
-      ["Decisão no escuro", "Sem relatórios de vendas e lucro estimado, fica difícil saber o que repor e o que realmente rende."]
-    ],
-    featuresTitle: "O que o StockPort faz pelo seu comércio",
-    featuresLead: "Um sistema simples para o dono, o gerente e o balcão.",
-    features: [
-      ["box", "Produtos e categorias", "Cadastre produtos com categoria, código de barras, preço de venda, custo e estoque mínimo."],
-      ["scan", "Código de barras", "Busque pelo nome ou leia o código com a câmera do celular (Android e iPhone) ou com um leitor."],
-      ["bag", "Vendas", "Carrinho com quantidades, descontos e cliente; pagamento combinado em dinheiro, Pix, débito ou crédito, com troco."],
-      ["truck", "Entradas e fornecedores", "Registre entradas de mercadoria por fornecedor e consulte o histórico completo de movimentações."],
-      ["alert", "Estoque baixo", "Produtos abaixo do mínimo aparecem na lista de reposição e nos alertas do painel."],
-      ["card", "Caixa", "Abertura, suprimentos, retiradas e fechamento, com o saldo esperado na gaveta."],
-      ["chart", "Relatórios e exportação", "Faturamento, ticket médio e lucro estimado por período, com exportação em CSV e recibo em PDF."],
-      ["team", "Usuários e permissões", "Defina quem vende, quem repõe estoque e quem enxerga custos e lucro."]
-    ],
-    screens: [
-      ["painel.webp", "Painel", "Faturamento do dia e produtos para repor."],
-      ["vendas.webp", "Vendas", "Busca, carrinho e código de barras."],
-      ["pagamento.webp", "Pagamento", "Formas de pagamento combinadas, com troco."],
-      ["estoque.webp", "Estoque", "Entradas, ajustes e histórico de movimentações."],
-      ["caixa.webp", "Caixa", "Sessão de caixa e saldo esperado."],
-      ["clientes.webp", "Clientes", "Cadastro e histórico de compras."],
-      ["relatorios.webp", "Relatórios", "Faturamento, ticket médio e lucro estimado."]
-    ],
-    screenW: 780, screenH: 1638, portrait: true,
-    screensLead: "Telas reais do StockPort System. Valores e nomes exibidos são dados de demonstração.",
-    pricingTitle: "Escolha a licença do seu comércio",
-    checkout: "https://pay.hotmart.com/Y108188423I?off=",
-    offers: ["2etqhbn4", "abyjgd6l", "3hhdqjj4", "0e1joqem"],
-    marketplaces: [
-      ["Whop", "https://whop.com/lucksrei/stockport-system/"],
-      ["Payhip", "https://payhip.com/b/yQDHG"],
-      ["Mercado Livre (30 dias)", "https://www.mercadolivre.com.br/stockport-30-dias--gestao-de-estoque-vendas-e-caixa/up/MLBU5652230878"]
-    ],
-    important: [
-      "Produto digital, sem envio físico.",
-      "Todas as licenças têm as mesmas funcionalidades; muda apenas o período de acesso.",
-      "Cada comércio possui seus próprios dados e usuários.",
-      "O StockPort não emite nota fiscal (NF-e, NFC-e ou SAT); o recibo em PDF não tem valor fiscal.",
-      "A compra não inclui código-fonte ou personalização exclusiva."
-    ],
-    accessWho: "a conta do seu comércio",
-    heroNote: "não emite nota fiscal",
-    supportEmail: SP_SUPPORT_EMAIL,
-    // wording that only applies to purchases made on Hotmart (invite by e-mail); the other platforms stay manual (altNote)
-    flow: {
-      pricingLead: "Todas as licenças têm as mesmas funcionalidades; muda apenas o período de uso. O pagamento é único, sem renovação automática, e o período começa na ativação do acesso ou, no máximo, 30 dias após a confirmação do pagamento.",
-      pricingNote: "O pagamento é processado pela Hotmart. Depois da confirmação, você recebe por e-mail um convite individual para criar a sua própria senha e ativar o acesso.",
-      s3: "Receba, no e-mail usado na compra, o convite individual de acesso.",
-      s4: "Crie a sua própria senha pelo convite. Nós nunca enviamos senhas.",
-      s5: "Entre no StockPort System e comece a usar.",
-      infoP: "O período de uso começa quando você ativa o acesso ou, no máximo, 30 dias depois da confirmação do pagamento, o que ocorrer primeiro, e nunca antes da aprovação. Os 30 dias são apenas o limite para o início da contagem: a duração do plano continua sendo a que você comprou. O convite chega depois da confirmação do pagamento; não prometemos um prazo exato.",
-      altNote: "Nestas plataformas, a ativação é feita manualmente pela Lucksrei depois da confirmação e pode não ser imediata."
-    },
-    faq: [
-      ...SP_FAQ_PAY,
-      ["Como recebo meu acesso?", "Depois da confirmação do pagamento na Hotmart, você recebe, no e-mail usado na compra, um convite individual (uso único, válido por 7 dias) para criar a sua própria senha e ativar o acesso. Nós nunca enviamos senhas. O convite depende da confirmação do pagamento e da entrega do e-mail, por isso não prometemos um prazo exato."],
-      ["Não recebi o e-mail do convite. O que faço?", "Confira as pastas de Spam e Lixo eletrônico. Se o convite expirou ou já foi usado, abra o StockPort, na tela de entrada toque em “Ative sua conta” (ao lado de “Primeiro acesso?”), informe o e-mail da compra e toque em “Enviar e-mail de ativação”. Se ainda assim não chegar, fale com o suporte informando o e-mail e o número do pedido."],
-      ["Já sou cliente e tenho conta. E se eu comprar de novo?", "Se o e-mail da compra já estiver ligado a uma conta existente, nossa equipe confirma a sua identidade antes de associar o novo período, para proteger os dados da conta. Compre com o mesmo e-mail da conta e, se precisar, fale com o suporte."],
-      ["Posso usar o leitor de código de barras?", "Sim. No celular Android e iPhone você lê o código com a câmera; em qualquer dispositivo também é possível digitar o código ou usar um leitor que funcione como teclado."],
-      ["O StockPort emite nota fiscal?", "Não. O sistema controla estoque, vendas e caixa e gera recibo em PDF sem valor fiscal. A emissão de NF-e, NFC-e ou SAT não faz parte desta versão."],
-      ["Os funcionários podem acessar?", "Sim. Você convida os usuários e define o perfil de cada um. Por exemplo, o perfil de balcão vende, mas não enxerga custos e lucro."],
-      ["Preciso instalar algo?", "Não. O acesso é pelo navegador. Os aplicativos do StockPort na Google Play e na App Store também podem ser usados."],
-      ["O que acontece quando a licença vence?", "Ao fim do período, o acesso fica indisponível até um novo período ser ativado. Para renovar, compre um novo plano com o mesmo e-mail da conta: os dias que ainda restarem são mantidos. Se o e-mail for outro, o suporte ajuda a identificar a conta. Não há renovação automática."],
-      ...SP_FAQ_END
     ]
   }
 ];
