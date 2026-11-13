@@ -42,7 +42,7 @@
   }
 
   window.LUCKSREI_APPS = {
-    expected: { own: 7, systems: 2, professional: 9, cooper: 20, total: 38 },
+    expected: { own: 7, systems: 1, professional: 9, cooper: 20, total: 37 },
     featured: ['fan-hub', 'toro', 'iza', 'aprovaura', 'cooper-pay'],
     // textos dos grupos: apps.filter.<id>, apps.group.<id>.title|intro (assets/i18n)
     groups: [{ id: 'own' }, { id: 'systems' }, { id: 'professional' }, { id: 'cooper' }],
