@@ -11,7 +11,7 @@ var D = require(path.join(root, "assets/js/skills-data.js"));
 var T = require(path.join(root, "assets/js/skills-details.js"));
 var LOCALES = ["en", "pt-BR", "es"];
 
-var EXPECTED = ["flutter","dart","android","ios","clean-architecture","bloc","tdd","automated-testing","playwright","dependency-injection","get-it","go-router","freezed","getx","solid","rest-api","graphql","supabase","offline-first","sqlite","postgresql","firebase","firebase-auth","fastlane","codemagic","github-actions","app-store-connect","google-play-console","in-app-purchases","git","github","rls","modular-packages","cloudflare-workers","cloudflare-pages","crashlytics","remote-config","firebase-messaging","onesignal","resend","firestore","whatsapp-api","zendesk","facebook-login","sentry","firebase-rtdb","gemini","ml-kit","deep-links","i18n","gps","google-maps","mapbox","maplibre","web-pwa","pdf","flavors","webview","barcode-scanning","biometrics","hive","sembast","micro-frontends","jwt","scrum","azure-devops","gitlab","sql","provider","typescript","javascript","react","nextjs","tailwind"];
+var EXPECTED = ["flutter","dart","android","ios","clean-architecture","bloc","tdd","automated-testing","playwright","dependency-injection","get-it","go-router","freezed","getx","solid","rest-api","graphql","supabase","offline-first","sqlite","postgresql","firebase","firebase-auth","fastlane","codemagic","github-actions","app-store-connect","google-play-console","in-app-purchases","git","github","rls","modular-packages","cloudflare-workers","crashlytics","remote-config","firebase-messaging","onesignal","resend","firestore","whatsapp-api","zendesk","facebook-login","sentry","firebase-rtdb","gemini","ml-kit","deep-links","i18n","gps","google-maps","mapbox","maplibre","web-pwa","pdf","flavors","webview","barcode-scanning","biometrics","hive","sembast","micro-frontends","jwt","scrum","azure-devops","gitlab","sql","provider","typescript","javascript","react","nextjs","tailwind"];
 check(JSON.stringify(D.ORDER.map(function (s) { return s.id; })) === JSON.stringify(EXPECTED), "ordem da grade diferente da esperada (por importância)");
 
 // Conceitos e produtos sem logotipo distinto confiável devem usar a apresentação sem imagem.
@@ -101,7 +101,7 @@ check(["flutter", "dart", "android", "ios", "supabase", "postgresql"].every(func
 check(has("clean-architecture", "projects", "fan-hub"), "Goiás App documenta Clean Architecture");
 check(!has("android", "projects", "match-queue") && has("ios", "projects", "match-queue"), "Match Queue só iOS");
 // Os chips do catálogo são declarações públicas verificáveis; os repositórios próprios também fornecem evidências independentes.
-check(["tabela-fone","vai","gpol","busaogyn","orbijob","bebometro","stockport"].every(function (p) { return !!D.PROJECTS[p]; }), "novos projetos ausentes da seção de skills");
+check(["tabela-fone","vai","gpol","busaogyn","orbijob","bebometro"].every(function (p) { return !!D.PROJECTS[p]; }), "novos projetos ausentes da seção de skills");
 check(has("bloc","projects","tabela-fone") && has("rest-api","projects","emater") && has("firebase","projects","iza"), "BLoC/REST/Firebase com vínculos evidenciados");
 check(D.PROJECTS["fan-hub"].name === "Goiás App" && D.PROJECTS["fan-hub"].href === "/projects/fan-hub/", "FanHub como nome do produto, URL preservada");
 check(/Goiás App/.test(T.supabase.en[2]), "Supabase deve usar o nome atual Goiás App");
@@ -127,7 +127,7 @@ check(order.every(function (v, i) { return v > 0 && (i === 0 || v > order[i - 1]
 
 
 // Inventário revisado a partir de /apps/: todas as novas competências devem apontar para projetos reais.
-check(D.ORDER.length === 74, "total de skills esperado: 74");
+check(D.ORDER.length === 73, "total de skills esperado: 73");
 // Agrupamento por stack: cada skill em exatamente um grupo, com nome nos 3 idiomas.
 (function () {
   var seen = {};
@@ -140,13 +140,13 @@ check(D.ORDER.length === 74, "total de skills esperado: 74");
 })();
 // Flutter e Dart são indissociáveis em aplicativos Flutter; lista compartilhada evita regressão.
 check(ids.flutter.projects === ids.dart.projects, "Flutter e Dart devem compartilhar a mesma lista de projetos");
-check(ids.flutter.projects.length === 19, "total de projetos Flutter/Dart (incluindo Cooper Pay) deve ser 19");
-check(["emater","agr-fiscal","stockport","orbijob","bebometro"].every(function (p) { return has("dart","projects",p); }), "Dart precisa refletir projetos recentes e profissionais");
-check(!has("firebase","projects","bebometro") && !has("firebase","projects","stockport") && !has("firebase","projects","aprovaura"), "Não inferir Firebase a partir de Supabase");
+check(ids.flutter.projects.length === 18, "total de projetos Flutter/Dart (incluindo Cooper Pay) deve ser 18");
+check(["emater","agr-fiscal","orbijob","bebometro"].every(function (p) { return has("dart","projects",p); }), "Dart precisa refletir projetos recentes e profissionais");
+check(!has("firebase","projects","bebometro") && !has("firebase","projects","aprovaura"), "Não inferir Firebase a partir de Supabase");
 
-const coverage = [["go-router","tabela-fone"],["freezed","tabela-fone"],["getx","iza"],["modular-packages","toro"],["micro-frontends","boosteragro"],["graphql","toro"],["offline-first","la-pelve"],["sqlite","la-pelve"],["firebase-auth","vai"],["firestore","gpol"],["firebase-rtdb","vai"],["in-app-purchases","tabela-fone"],["onesignal","toro"],["whatsapp-api","la-pelve"],["zendesk","iza"],["facebook-login","iza"],["ml-kit","orbijob"],["google-maps","emater"],["mapbox","agrosmart"],["maplibre","busaogyn"],["pdf","agr-fiscal"],["webview","orbijob"],["barcode-scanning","stockport"],["biometrics","toro"]];
+const coverage = [["go-router","tabela-fone"],["freezed","tabela-fone"],["getx","iza"],["modular-packages","toro"],["micro-frontends","boosteragro"],["graphql","toro"],["offline-first","la-pelve"],["sqlite","la-pelve"],["firebase-auth","vai"],["firestore","gpol"],["firebase-rtdb","vai"],["in-app-purchases","tabela-fone"],["onesignal","toro"],["whatsapp-api","la-pelve"],["zendesk","iza"],["facebook-login","iza"],["ml-kit","orbijob"],["google-maps","emater"],["mapbox","agrosmart"],["maplibre","busaogyn"],["pdf","agr-fiscal"],["webview","orbijob"],["barcode-scanning","beard"],["biometrics","toro"]];
 coverage.forEach(function (pair) { check(has(pair[0], "projects", pair[1]), "vínculo ausente: " + pair.join(" → ")); });
-["busaogyn", "orbijob", "bebometro", "stockport"].forEach(function (p) {
+["busaogyn", "orbijob", "bebometro"].forEach(function (p) {
   check(has("flutter", "projects", p), "Flutter sem projeto recente " + p);
 });
 check(has("maplibre", "projects", "busaogyn") && has("ml-kit", "projects", "orbijob"), "skills atuais sem vínculo aos novos apps");

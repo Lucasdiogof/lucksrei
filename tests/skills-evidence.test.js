@@ -93,8 +93,7 @@ const sourceProjects = {
   "aprovaura": { repo: "aprovaura", yaml: "pubspec.yaml", pkgs: ["flutter_bloc","get_it","go_router","supabase_flutter"], functions: true, actions: true },
   "busaogyn": { repo: "busaogyn", yaml: "app/pubspec.yaml", pkgs: ["flutter_bloc","maplibre_gl"], functions: false, actions: true },
   "orbijob": { repo: "orbijob", yaml: "app/pubspec.yaml", pkgs: ["flutter_bloc","get_it","supabase_flutter","google_mlkit_translation","firebase_core","firebase_messaging","webview_flutter"], functions: true, actions: true },
-  "bebometro": { repo: "bebometro", yaml: "pubspec.yaml", pkgs: ["flutter_bloc","get_it","supabase_flutter","google_mlkit_text_recognition","geolocator"], functions: true, actions: true },
-  "stockport": { repo: "stockport-system", yaml: "pubspec.yaml", pkgs: ["flutter_bloc","get_it","go_router","supabase_flutter","pdf","mobile_scanner"], functions: true, actions: true }
+  "bebometro": { repo: "bebometro", yaml: "pubspec.yaml", pkgs: ["flutter_bloc","get_it","supabase_flutter","google_mlkit_text_recognition","geolocator"], functions: true, actions: true }
 };
 const packageSkills = {
   flutter_bloc: ["bloc"], get_it: ["get-it","dependency-injection"],
@@ -126,7 +125,7 @@ check(known.flutter.projects.includes("cooper-pay"), "Cooper Pay Flutter experie
 check(known["firebase-auth"].projects.every(x => ["vai", "gpol"].includes(x)),
   "Do not infer Firebase Authentication from Firebase Messaging");
 const summaries = D.ORDER.length;
-check(summaries === 74, "All 74 skills must remain in inventory");
+check(summaries === 73, "All 73 skills must remain in inventory");
 if (errors.length) {
   console.error("FAIL:\n - " + errors.join("\n - "));
   process.exit(1);

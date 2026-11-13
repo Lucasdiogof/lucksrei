@@ -14,9 +14,9 @@
 
   return {
     "go-router": {
-      en: ["Declarative routing for Flutter.","Defines nested routes, URL parameters, redirections and deep-link navigation using Flutter Router APIs.","Declarative navigation in Tabela Fone, Match Queue, Goiás App, La Pelve, Aprovaura and StockPort."],
-      "pt-BR": ["Navegação declarativa no Flutter.","Define rotas aninhadas, parâmetros, redirecionamentos e deep links com as APIs Router do Flutter.","Navegação declarativa no Tabela Fone, Match Queue, Goiás App, La Pelve, Aprovaura e StockPort."],
-      es: ["Navegación declarativa en Flutter.","Define rutas anidadas, parámetros, redirecciones y enlaces profundos con las API Router de Flutter.","Navegación declarativa en Tabela Fone, Match Queue, Goiás App, La Pelve, Aprovaura y StockPort."]
+      en: ["Declarative routing for Flutter.","Defines nested routes, URL parameters, redirections and deep-link navigation using Flutter Router APIs.","Declarative navigation in Tabela Fone, Match Queue, Goiás App, La Pelve and Aprovaura."],
+      "pt-BR": ["Navegação declarativa no Flutter.","Define rotas aninhadas, parâmetros, redirecionamentos e deep links com as APIs Router do Flutter.","Navegação declarativa no Tabela Fone, Match Queue, Goiás App, La Pelve e Aprovaura."],
+      es: ["Navegación declarativa en Flutter.","Define rutas anidadas, parámetros, redirecciones y enlaces profundos con las API Router de Flutter.","Navegación declarativa en Tabela Fone, Match Queue, Goiás App, La Pelve y Aprovaura."]
     },
     "freezed": {
       en: ["Immutable models and unions in Dart.","Generates copyWith, equality, serialization helpers and sealed union-style data models for Dart applications.","Used for models and state handling in Tabela Fone."],
@@ -114,9 +114,9 @@
       es: ["Renderizado open source de mapas vectoriales.","Muestra mapas interactivos con estilos personalizados y capas geográficas.","Utilizado en mapas y ubicación de autobuses de BusãoGyn."]
     },
     "pdf": {
-      en: ["Generate printable application documents.","Creates structured reports, receipts and shareable documents with attention to typography and data integrity.","Printable reports and exports in AGR Fiscal, StockPort and Goiás App."],
-      "pt-BR": ["Geração de documentos imprimíveis.","Cria relatórios, recibos e documentos compartilháveis com cuidado tipográfico e integridade de dados.","Relatórios e exportações para impressão no AGR Fiscal, StockPort e Goiás App."],
-      es: ["Generación de documentos imprimibles.","Crea informes, recibos y documentos compartibles cuidando tipografía e integridad de datos.","Informes y exportaciones imprimibles en AGR Fiscal, StockPort y Goiás App."]
+      en: ["Generate printable application documents.","Creates structured reports, receipts and shareable documents with attention to typography and data integrity.","Printable reports and exports in AGR Fiscal and Goiás App."],
+      "pt-BR": ["Geração de documentos imprimíveis.","Cria relatórios, recibos e documentos compartilháveis com cuidado tipográfico e integridade de dados.","Relatórios e exportações para impressão no AGR Fiscal e Goiás App."],
+      es: ["Generación de documentos imprimibles.","Crea informes, recibos y documentos compartibles cuidando tipografía e integridad de datos.","Informes y exportaciones imprimibles en AGR Fiscal y Goiás App."]
     },
     "webview": {
       en: ["Embedded browser experiences in mobile apps.","Renders external web pages inside the app while handling navigation, permissions and web session isolation.","Used for viewing job portals in OrbiJob."],
@@ -124,9 +124,9 @@
       es: ["Navegación Web integrada en aplicaciones.","Renderiza sitios en la app con control de navegación, permisos y aislamiento de sesiones.","Utilizado para abrir portales de empleo en OrbiJob."]
     },
     "barcode-scanning": {
-      en: ["Fast data capture with camera scanners.","Reads barcode values through camera integrations and supports manual input when scanning is unavailable.","Used to identify products in StockPort inventory and sales."],
-      "pt-BR": ["Captura rápida de códigos de barras.","Lê códigos com a câmera e oferece digitação manual quando o scanner não está disponível.","Utilizado para identificar produtos no estoque e nas vendas do StockPort."],
-      es: ["Captura rápida de códigos de barras.","Lee códigos mediante cámara y permite introducirlos manualmente cuando no hay escáner.","Utilizado para identificar productos y ventas en StockPort."]
+      en: ["Fast data capture with camera scanners.","Reads barcode values through camera integrations and supports manual input when scanning is unavailable.","Used to identify products in Beard System inventory and sales."],
+      "pt-BR": ["Captura rápida de códigos de barras.","Lê códigos com a câmera e oferece digitação manual quando o scanner não está disponível.","Utilizado para identificar produtos no estoque e nas vendas do Beard System."],
+      es: ["Captura rápida de códigos de barras.","Lee códigos mediante cámara y permite introducirlos manualmente cuando no hay escáner.","Utilizado para identificar productos y ventas en Beard System."]
     },
     "biometrics": {
       en: ["Biometric verification in mobile apps.","Uses operating-system biometric prompts to confirm access to protected actions and sensitive screens.","Biometric access at Toro Investimentos and local biometric checks in La Pelve."],
@@ -189,9 +189,9 @@
       es: ["Conectar capas sin dependencias rígidas.", "Técnica en la que los objetos reciben sus dependencias en lugar de crearlas, lo que desacopla capas y facilita las pruebas.", "Conecta repositorios, data sources y casos de uso con la capa de presentación mediante constructores e interfaces, de modo que cada capa pueda sustituirse por un fake en las pruebas."]
     },
     "automated-testing": {
-      en: ["Unit and widget tests that guard releases.","Automated checks that verify behavior on every change, from unit tests of business rules to widget tests of the UI.","Regression suites in all eight current Flutter codebases, including OrbiJob, Bebômetro and StockPort."],
-      "pt-BR": ["Testes unitários e de widget que protegem os releases.","Verificações automáticas que validam o comportamento a cada mudança, de testes unitários das regras de negócio a testes de widget da UI.","Suítes de regressão nos oito repositórios Flutter atuais, incluindo OrbiJob, Bebômetro e StockPort."],
-      es: ["Pruebas unitarias y de widget que protegen los releases.","Verificaciones automáticas que validan el comportamiento en cada cambio, desde pruebas unitarias de reglas de negocio hasta pruebas de widget de la UI.","Suites de regresión en los ocho repositorios Flutter actuales, incluidos OrbiJob, Bebômetro y StockPort."]
+      en: ["Unit and widget tests that guard releases.","Automated checks that verify behavior on every change, from unit tests of business rules to widget tests of the UI.","Regression suites in all seven current Flutter codebases, including OrbiJob and Bebômetro."],
+      "pt-BR": ["Testes unitários e de widget que protegem os releases.","Verificações automáticas que validam o comportamento a cada mudança, de testes unitários das regras de negócio a testes de widget da UI.","Suítes de regressão nos sete repositórios Flutter atuais, incluindo OrbiJob e Bebômetro."],
+      es: ["Pruebas unitarias y de widget que protegen los releases.","Verificaciones automáticas que validan el comportamiento en cada cambio, desde pruebas unitarias de reglas de negocio hasta pruebas de widget de la UI.","Suites de regresión en los siete repositorios Flutter actuales, incluidos OrbiJob y Bebômetro."]
     },
     "rest-api": {
       en: ["Talking to backends over HTTP.","An architectural style for web services that exposes resources over HTTP, usually exchanging JSON.","HTTP and JSON integrations with backend services, including public-sector mobile applications EMATER-GO Mobi and AGR Fiscal."],
@@ -199,14 +199,14 @@
       es: ["Hablar con backends por HTTP.","Estilo arquitectónico de servicios web que expone recursos por HTTP, normalmente intercambiando JSON.","Integraciones HTTP y JSON con servicios de backend, incluidas las aplicaciones públicas EMATER-GO Mobi y AGR Fiscal."]
     },
     supabase: {
-      en: ["Open-source backend on top of PostgreSQL.","A backend platform with a Postgres database, authentication, storage and real-time features.","Backend for Match Queue, Goiás App, La Pelve, Aprovaura, OrbiJob, Bebômetro, StockPort and Tabela Fone."],
-      "pt-BR": ["Backend open source sobre PostgreSQL.","Plataforma de backend com banco Postgres, autenticação, storage e recursos em tempo real.","Backend de Match Queue, Goiás App, La Pelve, Aprovaura, OrbiJob, Bebômetro, StockPort e Tabela Fone."],
-      es: ["Backend de código abierto sobre PostgreSQL.","Plataforma de backend con base de datos Postgres, autenticación, storage y funciones en tiempo real.","Backend de Match Queue, Goiás App, La Pelve, Aprovaura, OrbiJob, Bebômetro, StockPort y Tabela Fone."]
+      en: ["Open-source backend on top of PostgreSQL.","A backend platform with a Postgres database, authentication, storage and real-time features.","Backend for Match Queue, Goiás App, La Pelve, Aprovaura, OrbiJob, Bebômetro and Tabela Fone."],
+      "pt-BR": ["Backend open source sobre PostgreSQL.","Plataforma de backend com banco Postgres, autenticação, storage e recursos em tempo real.","Backend de Match Queue, Goiás App, La Pelve, Aprovaura, OrbiJob, Bebômetro e Tabela Fone."],
+      es: ["Backend de código abierto sobre PostgreSQL.","Plataforma de backend con base de datos Postgres, autenticación, storage y funciones en tiempo real.","Backend de Match Queue, Goiás App, La Pelve, Aprovaura, OrbiJob, Bebômetro y Tabela Fone."]
     },
     postgresql: {
-      en: ["Relational database.","An open-source relational database known for reliability, SQL compliance and extensibility.","Relational storage underlying eight Supabase-based apps, including Tabela Fone, OrbiJob and StockPort."],
-      "pt-BR": ["Banco de dados relacional.","Banco relacional open source conhecido por confiabilidade, aderência ao SQL e extensibilidade.","Banco relacional de oito apps baseados em Supabase, incluindo Tabela Fone, OrbiJob e StockPort."],
-      es: ["Base de datos relacional.","Base de datos relacional de código abierto conocida por su fiabilidad, cumplimiento de SQL y extensibilidad.","Base de datos relacional de ocho apps con Supabase, incluidos Tabela Fone, OrbiJob y StockPort."]
+      en: ["Relational database.","An open-source relational database known for reliability, SQL compliance and extensibility.","Relational storage underlying seven Supabase-based apps, including Tabela Fone and OrbiJob."],
+      "pt-BR": ["Banco de dados relacional.","Banco relacional open source conhecido por confiabilidade, aderência ao SQL e extensibilidade.","Banco relacional de sete apps baseados em Supabase, incluindo Tabela Fone e OrbiJob."],
+      es: ["Base de datos relacional.","Base de datos relacional de código abierto conocida por su fiabilidad, cumplimiento de SQL y extensibilidad.","Base de datos relacional de siete apps con Supabase, incluidos Tabela Fone y OrbiJob."]
     },
     firebase: {
       en: ["Google's backend services for apps.","A suite of managed services for apps, including Firestore and Realtime Database, authentication, messaging and crash reporting.","Firebase in IZA, Toro, Agrosmart, Vai and GPOL, plus messaging and diagnostics in recent mobile products."],
@@ -259,9 +259,9 @@
       es: ["Alojamiento y colaboración de código.", "Plataforma para alojar repositorios Git, revisar código y automatizar workflows.", "Donde alojo y reviso código. Mi perfil público está en github.com/Lucasdiogof."]
     },
     sql: {
-      en: ["The language of relational data.","The standard language for querying and modifying data in relational databases.","SQL migrations in Match Queue, Goiás App, La Pelve, OrbiJob, Bebômetro and StockPort."],
-      "pt-BR": ["A linguagem dos dados relacionais.","Linguagem padrão para consultar e modificar dados em bancos relacionais.","Migrações SQL no Match Queue, Goiás App, La Pelve, OrbiJob, Bebômetro e StockPort."],
-      es: ["El lenguaje de los datos relacionales.","Lenguaje estándar para consultar y modificar datos en bases de datos relacionales.","Migraciones SQL en Match Queue, Goiás App, La Pelve, OrbiJob, Bebômetro y StockPort."]
+      en: ["The language of relational data.","The standard language for querying and modifying data in relational databases.","SQL migrations in Match Queue, Goiás App, La Pelve, OrbiJob and Bebômetro."],
+      "pt-BR": ["A linguagem dos dados relacionais.","Linguagem padrão para consultar e modificar dados em bancos relacionais.","Migrações SQL no Match Queue, Goiás App, La Pelve, OrbiJob e Bebômetro."],
+      es: ["El lenguaje de los datos relacionales.","Lenguaje estándar para consultar y modificar datos en bases de datos relacionales.","Migraciones SQL en Match Queue, Goiás App, La Pelve, OrbiJob y Bebômetro."]
     },
     javascript: {
       en: ["The language of the web.", "The scripting language that runs in every browser, and on servers and edge runtimes.", "Used in web work such as this portfolio, which is plain HTML, CSS and JavaScript served by a Cloudflare Worker."],
@@ -294,29 +294,24 @@
       es: ["Pruebas de extremo a extremo en navegadores reales.", "Herramienta que controla Chromium, Firefox y WebKit para probar un sitio como lo haría un usuario, incluidas comprobaciones de accesibilidad con axe.", "Pruebas automatizadas del sitio de Samara Rúbia: navegación, idiomas, menú, enlaces y accesibilidad en escritorio y móvil."]
     },
     resend: {
-      en: ["Transactional email by API.", "An email delivery service with a simple API and SMTP, used for account and invitation messages with a verified sending domain.", "Account activation and invite emails sent by the Edge Functions of StockPort System and Beard System."],
-      "pt-BR": ["E-mail transacional por API.", "Serviço de envio de e-mail com API simples e SMTP, usado em mensagens de conta e convite com domínio de envio verificado.", "E-mails de ativação de conta e convite enviados pelas Edge Functions do StockPort System e do Beard System."],
-      es: ["Correo transaccional por API.", "Servicio de envío de correo con API simple y SMTP, usado en mensajes de cuenta e invitación con dominio de envío verificado.", "Correos de activación de cuenta e invitación enviados por las Edge Functions de StockPort System y Beard System."]
-    },
-    "cloudflare-pages": {
-      en: ["Static web hosting on the Cloudflare edge.", "Cloudflare hosting for static sites and web builds, deployed from the command line or CI and served from the edge.", "Web build and activation and invite pages of StockPort System, deployed with Wrangler."],
-      "pt-BR": ["Hospedagem web estática na borda da Cloudflare.", "Hospedagem da Cloudflare para sites estáticos e builds web, publicada pela linha de comando ou CI e servida da borda.", "Build web e páginas de ativação e convite do StockPort System, publicados com o Wrangler."],
-      es: ["Alojamiento web estático en el borde de Cloudflare.", "Alojamiento de Cloudflare para sitios estáticos y builds web, publicado por línea de comandos o CI y servido desde el borde.", "Build web y páginas de activación e invitación de StockPort System, publicados con Wrangler."]
+      en: ["Transactional email by API.", "An email delivery service with a simple API and SMTP, used for account and invitation messages with a verified sending domain.", "Account activation and invite emails sent by the Edge Functions of Beard System."],
+      "pt-BR": ["E-mail transacional por API.", "Serviço de envio de e-mail com API simples e SMTP, usado em mensagens de conta e convite com domínio de envio verificado.", "E-mails de ativação de conta e convite enviados pelas Edge Functions do Beard System."],
+      es: ["Correo transaccional por API.", "Servicio de envío de correo con API simple y SMTP, usado en mensajes de cuenta e invitación con dominio de envío verificado.", "Correos de activación de cuenta e invitación enviados por las Edge Functions de Beard System."]
     },
     "web-pwa": {
-      en: ["Flutter apps that also run in the browser.","Flutter Web runs Dart in the browser. Installable PWA support requires extra app-specific configuration.","Web builds for Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob, Bebômetro and StockPort, at different release stages."],
-      "pt-BR": ["Apps Flutter que também rodam no navegador.","Flutter Web executa Dart no navegador. A instalação como PWA exige configuração específica em cada aplicativo.","Builds Web de Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob, Bebômetro e StockPort, em diferentes fases de publicação."],
-      es: ["Apps Flutter que también funcionan en el navegador.","Flutter Web ejecuta Dart en el navegador. La instalación como PWA exige configuración específica de cada aplicación.","Builds Web de Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob, Bebômetro y StockPort, en distintas etapas de publicación."]
+      en: ["Flutter apps that also run in the browser.","Flutter Web runs Dart in the browser. Installable PWA support requires extra app-specific configuration.","Web builds for Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob and Bebômetro, at different release stages."],
+      "pt-BR": ["Apps Flutter que também rodam no navegador.","Flutter Web executa Dart no navegador. A instalação como PWA exige configuração específica em cada aplicativo.","Builds Web de Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob e Bebômetro, em diferentes fases de publicação."],
+      es: ["Apps Flutter que también funcionan en el navegador.","Flutter Web ejecuta Dart en el navegador. La instalación como PWA exige configuración específica de cada aplicación.","Builds Web de Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob y Bebômetro, en distintas etapas de publicación."]
     },
     "deep-links": {
-      en: ["Links that open a specific screen of the app.","Android App Links and iOS Universal Links route a URL straight into the right screen, with a web fallback when the app is not installed.","Team invite links in Match Queue, app navigation in Tabela Fone and authentication callbacks in StockPort."],
-      "pt-BR": ["Links que abrem uma tela específica do app.","Android App Links e iOS Universal Links levam uma URL direto para a tela certa, com a versão web como alternativa quando o app não está instalado.","Links de convite de equipe no Match Queue, navegação no Tabela Fone e callbacks de autenticação no StockPort."],
-      es: ["Enlaces que abren una pantalla específica de la app.","Android App Links e iOS Universal Links llevan una URL directo a la pantalla correcta, con la versión web como alternativa cuando la app no está instalada.","Enlaces de invitación de equipos en Match Queue, navegación en Tabela Fone y retornos de autenticación en StockPort."]
+      en: ["Links that open a specific screen of the app.","Android App Links and iOS Universal Links route a URL straight into the right screen, with a web fallback when the app is not installed.","Team invite links in Match Queue and app navigation in Tabela Fone."],
+      "pt-BR": ["Links que abrem uma tela específica do app.","Android App Links e iOS Universal Links levam uma URL direto para a tela certa, com a versão web como alternativa quando o app não está instalado.","Links de convite de equipe no Match Queue e navegação no Tabela Fone."],
+      es: ["Enlaces que abren una pantalla específica de la app.","Android App Links e iOS Universal Links llevan una URL directo a la pantalla correcta, con la versión web como alternativa cuando la app no está instalada.","Enlaces de invitación de equipos en Match Queue y navegación en Tabela Fone."]
     },
     i18n: {
-      en: ["Apps in more than one language.","Internationalization prepares the code for several languages and localization delivers the translated texts, formats and content.","Localized Flutter interfaces in Aprovaura, BusãoGyn, OrbiJob, Bebômetro and StockPort."],
-      "pt-BR": ["Apps em mais de um idioma.","Internacionalização prepara o código para vários idiomas e a localização entrega os textos, formatos e conteúdos traduzidos.","Interfaces Flutter localizadas no Aprovaura, BusãoGyn, OrbiJob, Bebômetro e StockPort."],
-      es: ["Apps en más de un idioma.","La internacionalización prepara el código para varios idiomas y la localización entrega los textos, formatos y contenidos traducidos.","Interfaces Flutter localizadas en Aprovaura, BusãoGyn, OrbiJob, Bebômetro y StockPort."]
+      en: ["Apps in more than one language.","Internationalization prepares the code for several languages and localization delivers the translated texts, formats and content.","Localized Flutter interfaces in Aprovaura, BusãoGyn, OrbiJob and Bebômetro."],
+      "pt-BR": ["Apps em mais de um idioma.","Internacionalização prepara o código para vários idiomas e a localização entrega os textos, formatos e conteúdos traduzidos.","Interfaces Flutter localizadas no Aprovaura, BusãoGyn, OrbiJob e Bebômetro."],
+      es: ["Apps en más de un idioma.","La internacionalización prepara el código para varios idiomas y la localización entrega los textos, formatos y contenidos traducidos.","Interfaces Flutter localizadas en Aprovaura, BusãoGyn, OrbiJob y Bebômetro."]
     },
     gps: {
       en: ["Device location in mobile apps.","Location services read the device position through GPS and the network, with runtime permissions on Android and iOS.","Location flows at Cooper Tec and in freelance work including AGR Fiscal and Vai, plus Bebômetro."],
@@ -324,9 +319,9 @@
       es: ["Ubicación del dispositivo en apps móviles.","Los servicios de ubicación leen la posición del dispositivo por GPS y red, con permisos en tiempo de ejecución en Android e iOS.","Ubicación en Cooper Tec y proyectos freelance, incluidos AGR Fiscal y Vai, además de Bebômetro."]
     },
     rls: {
-      en: ["Access rules enforced by the database.","A PostgreSQL feature that filters rows per user with policies, so each user only reads and writes their own data, whatever the client sends.","PostgreSQL policies protect user and company data in Match Queue, La Pelve, OrbiJob, Bebômetro and StockPort, beyond checks in the UI."],
-      "pt-BR": ["Regras de acesso aplicadas pelo banco.","Recurso do PostgreSQL que filtra linhas por usuário com políticas, para que cada um só leia e grave os próprios dados, independentemente do que o cliente envia.","Políticas do PostgreSQL protegem dados de usuários e empresas no Match Queue, La Pelve, OrbiJob, Bebômetro e StockPort, além das validações da interface."],
-      es: ["Reglas de acceso aplicadas por la base de datos.","Función de PostgreSQL que filtra filas por usuario con políticas, para que cada uno solo lea y escriba sus propios datos, sin importar lo que envíe el cliente.","Las políticas de PostgreSQL protegen datos de usuarios y empresas en Match Queue, La Pelve, OrbiJob, Bebômetro y StockPort, además de la interfaz."]
+      en: ["Access rules enforced by the database.","A PostgreSQL feature that filters rows per user with policies, so each user only reads and writes their own data, whatever the client sends.","PostgreSQL policies protect user and company data in Match Queue, La Pelve, OrbiJob and Bebômetro, beyond checks in the UI."],
+      "pt-BR": ["Regras de acesso aplicadas pelo banco.","Recurso do PostgreSQL que filtra linhas por usuário com políticas, para que cada um só leia e grave os próprios dados, independentemente do que o cliente envia.","Políticas do PostgreSQL protegem dados de usuários e empresas no Match Queue, La Pelve, OrbiJob e Bebômetro, além das validações da interface."],
+      es: ["Reglas de acceso aplicadas por la base de datos.","Función de PostgreSQL que filtra filas por usuario con políticas, para que cada uno solo lea y escriba sus propios datos, sin importar lo que envíe el cliente.","Las políticas de PostgreSQL protegen datos de usuarios y empresas en Match Queue, La Pelve, OrbiJob y Bebômetro, además de la interfaz."]
     },
     "cloudflare-workers": {
       en: ["Serverless code at the edge.","Cloudflare's serverless platform runs JavaScript/TypeScript close to the user, with storage options such as KV and D1.","Web hosting and edge work for Match Queue, Goiás App, La Pelve, Aprovaura, BusãoGyn, OrbiJob and Bebômetro."],
@@ -379,9 +374,9 @@
       es: ["Entrega ágil en sprints cortos.", "Marco ágil con sprints, planificación, dailies, reviews y retrospectivas en torno a un backlog priorizado.", "Proceso diario de los equipos móviles en Cooper Tec y Agrosmart: planificación de sprint, estimaciones, reviews y retrospectivas."]
     },
     "get-it": {
-      en: ["Service locator for Dart and Flutter.","A simple service locator that registers dependencies once and resolves them anywhere, including singletons, lazy singletons and factories.","Dependency wiring with get_it in seven Flutter apps, including OrbiJob, Bebômetro and StockPort."],
-      "pt-BR": ["Service locator para Dart e Flutter.","Service locator simples que registra as dependências uma vez e as resolve em qualquer ponto, com singletons, lazy singletons e factories.","Injeção de dependências com get_it em sete apps Flutter, incluindo OrbiJob, Bebômetro e StockPort."],
-      es: ["Service locator para Dart y Flutter.","Service locator simple que registra las dependencias una vez y las resuelve en cualquier punto, con singletons, lazy singletons y factories.","Inyección de dependencias con get_it en siete apps Flutter, incluidos OrbiJob, Bebômetro y StockPort."]
+      en: ["Service locator for Dart and Flutter.","A simple service locator that registers dependencies once and resolves them anywhere, including singletons, lazy singletons and factories.","Dependency wiring with get_it in six Flutter apps, including OrbiJob and Bebômetro."],
+      "pt-BR": ["Service locator para Dart e Flutter.","Service locator simples que registra as dependências uma vez e as resolve em qualquer ponto, com singletons, lazy singletons e factories.","Injeção de dependências com get_it em seis apps Flutter, incluindo OrbiJob e Bebômetro."],
+      es: ["Service locator para Dart y Flutter.","Service locator simple que registra las dependencias una vez y las resuelve en cualquier punto, con singletons, lazy singletons y factories.","Inyección de dependencias con get_it en seis apps Flutter, incluidos OrbiJob y Bebômetro."]
     }
   };
 });
