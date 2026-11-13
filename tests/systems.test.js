@@ -1,4 +1,4 @@
-/* sistemas.lucksrei.com showcase: generated files are fresh, 4 plans x 2 products with the right prices and Hotmart offers,
+/* sistemas.lucksrei.com showcase: generated files are fresh, 4 plans x 1 product (Beard; StockPort was withdrawn on 2026-11-13) with the right prices and Hotmart offers,
  * links/assets resolve, nothing forbidden is promised, and tracking stays silent without consent.
  * Run: node tests/systems.test.js */
 "use strict";
@@ -11,8 +11,7 @@ var read = function (f) { return fs.readFileSync(path.join(S, f), "utf8"); };
 cp.execFileSync(process.execPath, [path.join(root, "tools/systems/build.mjs"), "--check"], { stdio: "inherit" });
 
 var plans = {
-  beard: { base: "M108332227C", offs: { 30: "v3744m8m", 90: "266mk4ak", 180: "6swonc53", 365: "ohpz770b" } },
-  stockport: { base: "Y108188423I", offs: { 30: "2etqhbn4", 90: "abyjgd6l", 180: "3hhdqjj4", 365: "0e1joqem" } }
+  beard: { base: "M108332227C", offs: { 30: "v3744m8m", 90: "266mk4ak", 180: "6swonc53", 365: "ohpz770b" } }
 };
 var prices = { 30: "R$ 29,90", 90: "R$ 79,90", 180: "R$ 149,90", 365: "R$ 269,90" };
 var perDay = { 30: "R$ 1,00", 90: "R$ 0,89", 180: "R$ 0,83", 365: "R$ 0,74" };
@@ -32,27 +31,23 @@ Object.keys(plans).forEach(function (slug) {
   assert(html.indexOf("Prefere comprar por outra plataforma?") > -1, slug + " alt platforms");
   assert(html.indexOf("renovação automática") > -1 && html.indexOf("ativação") > -1, slug + " payment rules");
   assert.strictEqual(html.indexOf('href="https://beard.lucksrei.com"') > -1, slug === "beard", slug + " app url only on its own page");
-  assert.strictEqual(html.indexOf('href="https://stockport.lucksrei.com"') > -1, slug === "stockport", slug + " app url only on its own page");
 });
 // product rules must not leak between products
 assert(read("beard/index.html").indexOf("7 dias por padrão") > -1, "beard grace period");
-assert(read("stockport/index.html").indexOf("tolerância") === -1, "stockport has no documented grace period");
-assert(read("stockport/index.html").indexOf("O StockPort não emite nota fiscal") > -1, "stockport fiscal disclaimer");
 // Hotmart activation is automatic (invite by e-mail) in both products, with no promised delivery time; manual only on the other platforms.
-["beard", "stockport"].forEach(function (slug) {
+["beard"].forEach(function (slug) {
   var h = read(slug + "/index.html");
   assert(h.indexOf("convite individual") > -1, slug + ": describes the e-mail invite");
   assert(h.indexOf("criada manualmente") === -1 && h.indexOf("cria manualmente") === -1, slug + ": no manual creation claim for Hotmart");
   assert(h.indexOf("não prometemos um prazo exato") > -1, slug + ": no delivery time promised");
 });
-assert(/hero-note">[^<]*não emite nota fiscal/.test(read("stockport/index.html")), "stockport: hero says it does not issue invoices");
 // ad -> page message match: the ads say "R$ 29,90 por 30 dias", "sem mensalidade" and (Beard) "Comissão sem caderno"
-["beard", "stockport"].forEach(function (slug) {
+["beard"].forEach(function (slug) {
   assert(/hero-note">30 dias por R\$ 29,90 · pagamento único, sem mensalidade/.test(read(slug + "/index.html")), slug + ": hero shows the 30-day price and no monthly fee");
 });
 assert(/class="lead">[^<]*comissões/.test(read("beard/index.html")), "beard: hero mentions commissions");
 
-["index.html", "beard/index.html", "stockport/index.html", "404.html"].forEach(function (f) {
+["index.html", "beard/index.html", "404.html"].forEach(function (f) {
   var html = read(f), low = html.toLowerCase();
   ["mais vendido", "mais popular", "autoagend", "portal do cliente", "24 horas", "garantia de resultado", "depoimento", "clientes satisfeitos"].forEach(function (t) {
     assert(low.indexOf(t) === -1, f + ": termo proibido " + t);
@@ -75,11 +70,11 @@ assert(/class="lead">[^<]*comissões/.test(read("beard/index.html")), "beard: he
     assert(/width="\d+"/.test(i) && /height="\d+"/.test(i) && /alt=/.test(i), f + ": img sem dimensões/alt " + i);
   });
 });
-["beard", "stockport"].forEach(function (s) {
+["beard"].forEach(function (s) {
   var hero = read(s + "/index.html").split('<section class="hero">')[1].split("</section>")[0];
   assert(hero.indexOf('loading="lazy"') === -1 && hero.indexOf('fetchpriority="high"') > -1, s + " hero image eager");
 });
-assert.strictEqual(read("sitemap.xml").split("<loc>").length, 4, "sitemap has 3 urls");
+assert.strictEqual(read("sitemap.xml").split("<loc>").length, 3, "sitemap has 2 urls");
 assert(read("robots.txt").indexOf("Sitemap: https://sistemas.lucksrei.com/sitemap.xml") > -1, "robots");
 assert(read("_headers").indexOf("script-src 'self' https://www.googletagmanager.com https://connect.facebook.net;") > -1 && read("_headers").indexOf("unsafe-inline") === -1, "strict CSP");
 var cfgSrc = read("assets/js/tracking-config.js");
@@ -153,10 +148,16 @@ assert(u.searchParams.get("sck").length <= 30 && u.searchParams.get("sck").index
 assert.strictEqual(u.searchParams.get("src"), null, "src is not used (affiliate parameter)");
 assert.strictEqual(u.searchParams.get("utm_source"), "google", "utm forwarded");
 assert.strictEqual(u.searchParams.get("off"), "v3744m8m", "offer preserved");
-["beard", "stockport"].forEach(function (slug) {
+["beard"].forEach(function (slug) {
   var h = read(slug + "/index.html");
   assert(/id="sticky-cta"[^>]*href="#planos"|href="#planos"[^>]*id="sticky-cta"/.test(h) && /data-where="sticky"/.test(h), slug + ": sticky Ver planos CTA to #planos");
   assert(h.indexOf("Ver planos a partir de R$ 29,90") > -1, slug + ": hero CTA states the entry price");
   assert.strictEqual((h.match(/data-track="checkout_link_click"/g) || []).length, 4, slug + ": four checkout links preserved");
 });
+// StockPort withdrawn (2026-11-13): no page, no link, no sitemap entry; old URLs redirect (302, reversible) to the catalog; its images are not uploaded.
+assert(!fs.existsSync(path.join(S, "stockport/index.html")), "stockport page removed");
+["index.html", "beard/index.html", "404.html", "sitemap.xml"].forEach(function (f) { assert(!/stockport|Y108188423I/i.test(read(f)), f + ": no StockPort reference"); });
+var redir = read("_redirects");
+["/stockport / 302", "/stockport/ / 302", "/stockport/* / 302"].forEach(function (r) { assert(redir.split(/\r?\n/).some(function (l) { return l.trim().split(/\s+/).join(" ") === r; }), "systems/_redirects: " + r); });
+assert(/^assets\/img\/stockport\r?$/m.test(read(".assetsignore")), "systems/.assetsignore keeps StockPort images out of the upload");
 console.log("systems: ok");

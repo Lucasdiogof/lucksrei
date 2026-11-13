@@ -30,7 +30,7 @@ Site estático, sem etapa de build e sem framework: HTML, CSS e JavaScript puros
 | --- | --- |
 | `/` | Início: cena em pixel art no hero, cases, habilidades técnicas com evidências, mapa de visitantes e contato |
 | `/apps/` | Todos os apps e sistemas da Lucksrei, com abas, links das lojas e dos apps web |
-| `/projects/<app>/` | Case de cada app (Aprovaura, Bebômetro, BusãoGyn, Fan Hub, La Pelve, Match Queue, OrbiJob, StockPort) e as páginas de privacidade, suporte e exclusão de dados |
+| `/projects/<app>/` | Case de cada app (Aprovaura, Bebômetro, BusãoGyn, Fan Hub, La Pelve, Match Queue, OrbiJob) e as páginas de privacidade, suporte e exclusão de dados |
 | `/privacy/`, `/terms/`, `/support/` | Páginas gerais de privacidade, termos e suporte dos sistemas licenciados |
 | `/contact/` | Formulário de contato (Resend, Turnstile opcional) |
 | `/visitors/` | Visitas agregadas por país e estado/região |

@@ -7,3 +7,8 @@
 /account-deletion/beard  /projects/beard/account-deletion/  301
 /data-deletion/beard  /projects/beard/data-deletion/  301
 /licensing/beard  /projects/beard/licensing/  301
+
+# StockPort System withdrawn from sale on 2026-11-13: the case page redirects to its support page (legal pages stay). 302 keeps it reversible.
+/projects/stockport  /projects/stockport/support/  302
+/projects/stockport/  /projects/stockport/support/  302
+/projects/stockport/index.html  /projects/stockport/support/  302
