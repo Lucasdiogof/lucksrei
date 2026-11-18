@@ -76,8 +76,8 @@
       { id: 'beard', name: 'Beard System', subtitle: { en: 'Scheduling, clients, commissions and cash for barbershops', 'pt-BR': 'Agenda, clientes, comissões e caixa para barbearias', es: 'Agenda, clientes, comisiones y caja para barberías' }, group: 'systems', sector: 'management',
         logo: '/assets/img/apps/beard.webp', platforms: ['android', 'ios', 'web'], androidUrl: 'https://play.google.com/store/apps/details?id=com.lucksrei.beard.system', iosUrl: 'https://apps.apple.com/br/app/beard-system/id6828040621', webUrl: 'https://beard.lucksrei.com',
         downloads: null, rating: null, reviewCount: null, technologies: ['Flutter', 'Supabase', 'PostgreSQL', 'RLS'] },
-      { id: 'tech', name: 'Tech System', subtitle: { en: 'Repair shop management', 'pt-BR': 'Gestão de Assistências Técnicas', es: 'Gestión de Servicios Técnicos' }, group: 'systems', sector: 'management', status: 'development',
-        logo: '/assets/img/apps/tech.webp', platforms: ['web'], webUrl: 'https://tech.lucksrei.com',
+      { id: 'tech', name: 'Tech System', subtitle: { en: 'Repair shop management', 'pt-BR': 'Gestão de Assistências Técnicas', es: 'Gestión de Servicios Técnicos' }, group: 'systems', sector: 'management',
+        logo: '/assets/img/apps/tech.webp', platforms: ['web'], webUrl: 'https://tech.lucksrei.com', pageUrl: '/tech/',
         downloads: null, rating: null, reviewCount: null },
 
       /* ---- profissionais (do mais recente para o mais antigo, pelo fim do período) ---- */

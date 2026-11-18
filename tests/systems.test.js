@@ -11,7 +11,8 @@ var read = function (f) { return fs.readFileSync(path.join(S, f), "utf8"); };
 cp.execFileSync(process.execPath, [path.join(root, "tools/systems/build.mjs"), "--check"], { stdio: "inherit" });
 
 var plans = {
-  beard: { base: "M108332227C", offs: { 30: "v3744m8m", 90: "266mk4ak", 180: "6swonc53", 365: "ohpz770b" } }
+  beard: { base: "M108332227C", offs: { 30: "v3744m8m", 90: "266mk4ak", 180: "6swonc53", 365: "ohpz770b" } },
+  tech: { base: "G108540478S", offs: { 30: "9sd1hisj", 90: "uw2vrhwa", 180: "26y1jwtc", 365: "tqbkw02l" } }
 };
 var prices = { 30: "R$ 29,90", 90: "R$ 79,90", 180: "R$ 149,90", 365: "R$ 269,90" };
 var perDay = { 30: "R$ 1,00", 90: "R$ 0,89", 180: "R$ 0,83", 365: "R$ 0,74" };
@@ -31,6 +32,7 @@ Object.keys(plans).forEach(function (slug) {
   assert(html.indexOf("Prefere comprar por outra plataforma?") > -1, slug + " alt platforms");
   assert(html.indexOf("renovação automática") > -1 && html.indexOf("ativação") > -1, slug + " payment rules");
   assert.strictEqual(html.indexOf('href="https://beard.lucksrei.com"') > -1, slug === "beard", slug + " app url only on its own page");
+  assert.strictEqual(html.indexOf('href="https://tech.lucksrei.com"') > -1, slug === "tech", slug + " tech app url only on its own page");
 });
 // product rules must not leak between products
 assert(read("beard/index.html").indexOf("7 dias por padrão") > -1, "beard grace period");
@@ -47,7 +49,7 @@ assert(read("beard/index.html").indexOf("7 dias por padrão") > -1, "beard grace
 });
 assert(/class="lead">[^<]*comissões/.test(read("beard/index.html")), "beard: hero mentions commissions");
 
-["index.html", "beard/index.html", "404.html"].forEach(function (f) {
+["index.html", "beard/index.html", "tech/index.html", "404.html"].forEach(function (f) {
   var html = read(f), low = html.toLowerCase();
   ["mais vendido", "mais popular", "autoagend", "portal do cliente", "24 horas", "garantia de resultado", "depoimento", "clientes satisfeitos"].forEach(function (t) {
     assert(low.indexOf(t) === -1, f + ": termo proibido " + t);
@@ -70,11 +72,11 @@ assert(/class="lead">[^<]*comissões/.test(read("beard/index.html")), "beard: he
     assert(/width="\d+"/.test(i) && /height="\d+"/.test(i) && /alt=/.test(i), f + ": img sem dimensões/alt " + i);
   });
 });
-["beard"].forEach(function (s) {
+["beard", "tech"].forEach(function (s) {
   var hero = read(s + "/index.html").split('<section class="hero">')[1].split("</section>")[0];
   assert(hero.indexOf('loading="lazy"') === -1 && hero.indexOf('fetchpriority="high"') > -1, s + " hero image eager");
 });
-assert.strictEqual(read("sitemap.xml").split("<loc>").length, 3, "sitemap has 2 urls");
+assert.strictEqual(read("sitemap.xml").split("<loc>").length, 4, "sitemap has 3 urls");
 assert(read("robots.txt").indexOf("Sitemap: https://sistemas.lucksrei.com/sitemap.xml") > -1, "robots");
 assert(read("_headers").indexOf("script-src 'self' https://www.googletagmanager.com https://connect.facebook.net;") > -1 && read("_headers").indexOf("unsafe-inline") === -1, "strict CSP");
 var cfgSrc = read("assets/js/tracking-config.js");

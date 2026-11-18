@@ -1,4 +1,4 @@
-/* Lucksrei Systems showcase. One stylesheet, three identities via [data-theme] tokens (lucksrei | beard).
+/* Lucksrei Systems showcase. One stylesheet, three identities via [data-theme] tokens (lucksrei | beard | tech).
    CSP: no inline styles, own font. */
 @font-face{font-family:'Outfit';font-style:normal;font-weight:400 800;font-display:swap;src:url(/assets/fonts/outfit-latin.woff2) format('woff2')}
 :root{--ease:cubic-bezier(.16,1,.3,1);--radius:14px;--wrap:1200px}
@@ -6,6 +6,8 @@
 body[data-theme="lucksrei"],.product-card[data-theme="lucksrei"]{--ink:#17181A;--bar:#101113;--bar-ink:#fff;--accent:#B8923A;--accent-ink:#7A5C16;--on-accent:#17181A;--bg:#F6F4EF;--surface:#fff;--muted:#55524D;--line:rgba(120,106,90,.25);--btn:#17181A;--btn-ink:#fff;--bar-btn:#C9A24C;--bar-btn-ink:#17181A}
 /* Beard: grafite e cobre sobre creme */
 body[data-theme="beard"],.product-card[data-theme="beard"]{--ink:#17181A;--bar:#17181A;--bar-ink:#fff;--accent:#B87333;--accent-ink:#8A5424;--on-accent:#fff;--bg:#F8F5EF;--surface:#fff;--muted:#55524D;--line:rgba(120,106,90,.25);--btn:#17181A;--btn-ink:#fff;--bar-btn:#C98A4B;--bar-btn-ink:#17181A}
+/* Tech: azul-marinho, branco e ciano */
+body[data-theme="tech"],.product-card[data-theme="tech"]{--ink:#0B1636;--bar:#031554;--bar-ink:#fff;--accent:#01BCFD;--accent-ink:#0078B8;--on-accent:#031554;--bg:#F4F7FC;--surface:#fff;--muted:#4C5878;--line:rgba(3,21,84,.16);--btn:#031554;--btn-ink:#fff;--bar-btn:#01BCFD;--bar-btn-ink:#031554}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:5rem}
 body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;overflow-x:hidden;-webkit-text-size-adjust:100%}

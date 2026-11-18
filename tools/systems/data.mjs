@@ -27,6 +27,9 @@ const I = {
   scan: '<path d="M4 7V5a1 1 0 0 1 1-1h2M17 4h2a1 1 0 0 1 1 1v2M20 17v2a1 1 0 0 1-1 1h-2M7 20H5a1 1 0 0 1-1-1v-2"/><line x1="8" y1="8" x2="8" y2="16"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="16" y1="8" x2="16" y2="16"/>',
   bag: '<path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>',
   truck: '<rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>',
+  wrench: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.1-.6-.6-2.1z"/>',
+  shield: '<path d="M12 2l8 3v6c0 5-3.4 9-8 11-4.6-2-8-6-8-11V5z"/><polyline points="9 12 11 14 15 10"/>',
+  file: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/>',
   alert: '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>'
 };
 export const icon = (k) => `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">${I[k]}</svg>`;
@@ -122,6 +125,101 @@ export const PRODUCTS = [
       ["Preciso instalar algo?", "Não. O acesso é pelo navegador, no computador, no tablet ou no celular. Os aplicativos do Beard na Google Play e na App Store também podem ser usados."],
       ["O que acontece quando a licença vence?", "Depois do vencimento há um período de tolerância, de 7 dias por padrão, em que você só consulta e exporta os dados (conforme as permissões do seu perfil), sem fazer alterações. Terminado esse prazo, o acesso é bloqueado. Os dados da barbearia não são apagados por causa do vencimento e, quando a licença é renovada, o acesso volta com os dados que já existiam. Para renovar, compre um novo período com o mesmo e-mail da conta. Se o e-mail for outro ou o novo período não aparecer, fale com o suporte informando o número do pedido e o e-mail da conta."],
       ...FAQ_END
+    ]
+  },
+  {
+    slug: "tech", theme: "tech", name: "Tech System",
+    tagline: "Gestão completa para assistências técnicas",
+    audience: "Assistências técnicas",
+    appUrl: "https://tech.lucksrei.com",
+    supportEmail: "tech@lucksrei.com",
+    platforms: "Web, no computador e no celular",
+    title: "Tech System: sistema para assistência técnica com ordens de serviço, estoque e financeiro | Lucksrei Systems",
+    description: "Software de gestão para assistência técnica: ordens de serviço, clientes e equipamentos, estoque de peças, agenda, financeiro e garantias. Licença de 30 a 365 dias, pagamento único, sem renovação automática.",
+    ogTitle: "Tech System: gestão completa para assistências técnicas",
+    ogDescription: "Ordens de serviço, clientes, estoque, agenda, financeiro e garantias em um só sistema. Licenças de 30, 90, 180 e 365 dias, pagamento único.",
+    logo: { src: "logo.webp", w: 37, h: 44 },
+    og: "og.png", ogW: 1200, ogH: 628,
+    hero: {
+      h1: "Sua assistência técnica em um só sistema.",
+      lead: "Ordens de serviço, clientes e equipamentos, estoque de peças, agenda, financeiro e garantias em uma plataforma de gestão interna para a sua assistência.",
+      main: { src: "hero.webp", w: 1400, h: 875, alt: "Tech System no computador e no celular: painel da assistência técnica e agenda" }
+    },
+    problems: [
+      ["Ordens de serviço no papel", "Aparelhos recebidos, defeitos relatados e prazos anotados em papel ou no WhatsApp se perdem, e o cliente liga perguntando o status."],
+      ["Peças sem controle", "Sem registro de entradas e saídas, a peça acaba na hora do reparo ou fica parada na gaveta sem ninguém saber."],
+      ["Orçamento, garantia e pagamento soltos", "Sem histórico por equipamento, fica difícil provar o que foi feito, até quando vale a garantia e quanto ainda falta receber."]
+    ],
+    featuresTitle: "Tudo o que a sua assistência precisa",
+    featuresLead: "Ferramentas de gestão interna para o dono, os técnicos e os atendentes.",
+    features: [
+      ["wrench", "Ordens de serviço", "Abertura rápida, acompanhamento por etapa do reparo e entregas organizadas, com status claros para toda a equipe."],
+      ["user", "Clientes e equipamentos", "Cadastre clientes, identifique cada aparelho e consulte o histórico de serviços."],
+      ["file", "Orçamentos e diagnósticos", "Registre o diagnóstico, monte o orçamento e gere orçamentos e comprovantes em PDF com os dados da sua assistência."],
+      ["box", "Estoque de peças", "Controle peças, histórico de movimentações e alertas de estoque baixo."],
+      ["cal", "Agenda e atendimentos", "Organize atendimentos, retiradas e entregas no dia a dia."],
+      ["chart", "Financeiro", "Acompanhe pagamentos, pagamentos parciais, saldos pendentes e indicadores."],
+      ["shield", "Garantias e histórico", "Prazos de garantia, retornos e histórico dos reparos em um só lugar."],
+      ["team", "Equipe e permissões", "Cadastre os membros da assistência e defina responsabilidades e permissões por função."]
+    ],
+    screens: [
+      ["visao-geral.webp", "Visão geral", "Painel da assistência no computador e no celular."],
+      ["ordens.webp", "Ordens de serviço", "Cada reparo do recebimento à entrega."],
+      ["nova-os.webp", "Nova OS", "Poucos campos para abrir e acompanhar a ordem."],
+      ["clientes.webp", "Clientes e equipamentos", "Cadastro e histórico de ordens."],
+      ["estoque.webp", "Estoque", "Peças, movimentações e estoque baixo."],
+      ["agenda.webp", "Agenda", "Atendimentos, retiradas e entregas."],
+      ["financeiro.webp", "Financeiro", "Pagamentos, saldos e recebimentos."],
+      ["garantias.webp", "Garantias", "Prazo, cobertura e histórico do reparo."],
+      ["equipe.webp", "Equipe e ajustes", "Permissões, dados da assistência e licença."]
+    ],
+    screenW: 1000, screenH: 1000,
+    screensLead: "Imagens do Tech System no computador e no celular.",
+    pricingTitle: "Escolha a licença da sua assistência",
+    checkout: "https://pay.hotmart.com/G108540478S?off=",
+    offers: ["9sd1hisj", "uw2vrhwa", "26y1jwtc", "tqbkw02l"],
+    marketplaces: [
+      ["Mercado Livre (30 dias)", "https://produto.mercadolivre.com.br/MLB-5572868101"],
+      ["Mercado Livre (90 dias)", "https://produto.mercadolivre.com.br/MLB-5572925785"],
+      ["Mercado Livre (180 dias)", "https://produto.mercadolivre.com.br/MLB-5572930309"],
+      ["Mercado Livre (365 dias)", "https://produto.mercadolivre.com.br/MLB-8010015330"],
+      ["Whop (30 dias)", "https://whop.com/checkout/plan_qoDZ4o0DdKsh6"],
+      ["Whop (90 dias)", "https://whop.com/checkout/plan_vVAoLhq57CBI1"],
+      ["Whop (180 dias)", "https://whop.com/checkout/plan_FSRshrHH4gpuD"],
+      ["Whop (365 dias)", "https://whop.com/checkout/plan_pacc7EdLwdjzT"],
+      ["Payhip (30 dias)", "https://payhip.com/b/dyo1w"],
+      ["Payhip (90 dias)", "https://payhip.com/b/QLZcN"],
+      ["Payhip (180 dias)", "https://payhip.com/b/Frd8J"],
+      ["Payhip (365 dias)", "https://payhip.com/b/9CfJ5"]
+    ],
+    important: [
+      "Produto digital, sem envio físico.",
+      "Todas as licenças têm as mesmas funcionalidades; muda apenas o período de acesso.",
+      "Cada assistência possui seus próprios dados e usuários.",
+      "O Tech System é para a gestão interna da assistência: o cliente final não usa o sistema nem cria conta.",
+      "A compra não inclui código-fonte ou personalização exclusiva."
+    ],
+    accessWho: "a conta da sua assistência",
+    flow: {
+      pricingLead: "Todas as licenças têm as mesmas funcionalidades; muda apenas o período de uso. O pagamento é único, sem renovação automática, e o período começa na ativação do acesso ou, no máximo, 30 dias após a confirmação do pagamento.",
+      pricingNote: "O pagamento é processado pela Hotmart. Depois da confirmação, você recebe no e-mail da compra as instruções do primeiro acesso.",
+      s3: "Receba, no e-mail usado na compra, as instruções do primeiro acesso.",
+      s4: "Informe o e-mail, digite o código de 6 dígitos enviado a ele e crie a sua própria senha. Nós nunca enviamos senhas.",
+      s5: "Entre no Tech System e comece a usar.",
+      infoP: "O período de uso começa quando você ativa o acesso ou, no máximo, 30 dias depois da confirmação do pagamento, o que ocorrer primeiro, e nunca antes da aprovação. Os 30 dias são apenas o limite para o início da contagem: a duração do plano (30, 90, 180 ou 365 dias) não muda.",
+      altNote: "Em cada plataforma a ativação segue o fluxo dela e pode não ser imediata. Use o mesmo e-mail da compra para acessar."
+    },
+    faq: [
+      ["O que é o Tech System?", "É um sistema de gestão para assistências técnicas de celulares, notebooks, computadores, tablets e outros eletrônicos. Reúne ordens de serviço, clientes e equipamentos, estoque, agenda, financeiro, garantias, equipe e orçamentos em PDF."],
+      ...COMMON_FAQ_PAY,
+      ["Como recebo meu acesso?", "Depois da confirmação do pagamento, você recebe no e-mail usado na compra as instruções do primeiro acesso: informe o e-mail, digite o código de 6 dígitos enviado a ele e crie a sua própria senha. Nós nunca enviamos senhas."],
+      ["Já sou cliente. Como renovo?", "Compre um novo plano usando o mesmo e-mail da conta; os dias restantes são mantidos."],
+      ["Os funcionários podem acessar?", "Sim. A licença é por assistência e vale para toda a equipe cadastrada nela, com permissões por função."],
+      ["Os clientes da assistência precisam criar conta?", "Não. O Tech System é de uso interno: quem usa são o proprietário e a equipe autorizada."],
+      ["Preciso instalar algo?", "Não. O acesso é pelo navegador, no computador, no tablet ou no celular, em tech.lucksrei.com."],
+      ["O que acontece quando a licença vence?", "Ao vencer, a assistência entra em um período somente leitura por alguns dias: dá para consultar, mas não registrar. Depois disso o acesso fica bloqueado até a renovação. Os dados não são apagados por vencimento."],
+      ["Como funciona o reembolso?", "O reembolso segue as regras da plataforma em que você comprou (na Hotmart, o prazo para solicitação é de 7 dias) e os direitos previstos em lei, como o de desistência em compras feitas fora do estabelecimento (art. 49 do Código de Defesa do Consumidor). Veja os <a href=\"https://lucksrei.com/projects/tech/terms/\">Termos de Uso</a>."],
+      ["Como falar com o suporte?", "Pelo e-mail <a href=\"mailto:tech@lucksrei.com\">tech@lucksrei.com</a>, informando o e-mail usado na compra em caso de dúvida de pagamento. Veja também a <a href=\"https://lucksrei.com/projects/tech/support/\">página de suporte</a>."]
     ]
   }
 ];

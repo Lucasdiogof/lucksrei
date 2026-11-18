@@ -187,6 +187,8 @@
   "apps.a11y.div_arialabel1": "Filter apps",
   "apps.case": "View case study →",
   "apps.case_aria": "View the {name} case study",
+  "apps.page": "View product page →",
+  "apps.page_aria": "View the {name} product page",
   "apps.downloads": "downloads",
   "apps.ecosystem": "Cooper Pay ecosystem",
   "apps.filter.all": "All",

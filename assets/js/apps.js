@@ -136,6 +136,12 @@
     if (plats.childNodes.length) foot.appendChild(plats);
     if (app.status === "development") foot.appendChild(el("span", "app-note", I.t("apps.status.development")));
     if (app.private && !app.androidUrl && !app.iosUrl) foot.appendChild(el("span", "app-note", I.t("apps.private")));
+    if (app.pageUrl) {
+      var pg = el("a", "app-case", I.t("apps.page"));
+      pg.href = app.pageUrl;
+      pg.setAttribute("aria-label", I.t("apps.page_aria", { name: app.name }));
+      foot.appendChild(pg);
+    }
     if (app.caseUrl) {
       var c = el("a", "app-case", I.t("apps.case"));
       c.href = app.caseUrl;

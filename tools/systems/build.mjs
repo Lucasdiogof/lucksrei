@@ -83,7 +83,7 @@ function productPage(p) {
   };
   const hero = p.hero;
   const heroImgs = hero.main
-    ? `<div class="hero-media hero-desktop"><img class="main" src="${base}${hero.main.src}" width="${hero.main.w}" height="${hero.main.h}" alt="${esc(hero.main.alt)}" fetchpriority="high"><img class="phone" src="${base}${hero.phone.src}" width="${hero.phone.w}" height="${hero.phone.h}" alt="${esc(hero.phone.alt)}"></div>`
+    ? `<div class="hero-media hero-desktop"><img class="main" src="${base}${hero.main.src}" width="${hero.main.w}" height="${hero.main.h}" alt="${esc(hero.main.alt)}" fetchpriority="high">${hero.phone ? `<img class="phone" src="${base}${hero.phone.src}" width="${hero.phone.w}" height="${hero.phone.h}" alt="${esc(hero.phone.alt)}">` : ""}</div>`
     : `<div class="hero-media hero-phones"><img src="${base}${hero.phone.src}" width="${hero.phone.w}" height="${hero.phone.h}" alt="${esc(hero.phone.alt)}" fetchpriority="high"><img src="${base}${hero.second.src}" width="${hero.second.w}" height="${hero.second.h}" alt="${esc(hero.second.alt)}"></div>`;
   const track = (ev, extra = "") => `data-track="${ev}" data-product="${p.slug}"${extra}`;
   const plans = PLANS.map((pl, i) => `
@@ -94,7 +94,7 @@ function productPage(p) {
           <div class="pricing-day">${perDay(pl)} por dia</div>
           <ul class="pricing-features">
             <li>${check} Todas as funcionalidades</li>
-            <li>${check} Web, Android e iPhone</li>
+            <li>${check} ${p.platforms ?? "Web, Android e iPhone"}</li>
             <li>${check} Pagamento único, sem renovação</li>
           </ul>
           <a href="${offerUrl(i)}" class="btn btn-primary" rel="noopener" ${track("checkout_link_click", ` data-days="${pl.days}" data-price="${(pl.cents / 100).toFixed(2)}"`)}>Comprar ${pl.days} dias</a>
@@ -195,7 +195,7 @@ function productPage(p) {
         <div class="info-box">
           <h3>Onde usar</h3>
           <p>Acesse pelo navegador no computador, Android ou iPhone, sem instalar nada: <a href="${p.appUrl}" rel="noopener" ${track("app_link_click")}>${p.appUrl.replace("https://", "")}</a> (endereço de acesso do sistema, para quem já tem conta).</p>
-          <p class="info-p">Aplicativos: <a href="${p.store.android}" rel="noopener" ${track("store_click", ' data-store="google-play"')}>Google Play</a> · <a href="${p.store.ios}" rel="noopener" ${track("store_click", ' data-store="app-store"')}>App Store</a></p>
+          <p class="info-p">${p.store ? `Aplicativos: <a href="${p.store.android}" rel="noopener" ${track("store_click", ' data-store="google-play"')}>Google Play</a> · <a href="${p.store.ios}" rel="noopener" ${track("store_click", ' data-store="app-store"')}>App Store</a>` : "Aplicativos para Android e iPhone: em breve nas lojas."}</p>
           <h3 class="h3-gap">Informações importantes</h3>
           <ul>${important}</ul>
         </div>
@@ -236,9 +236,9 @@ function indexPage() {
       </article>`;
   }).join("");
   return head({
-    title: "Lucksrei Systems: sistemas de gestão para barbearias",
-    description: "Lucksrei Systems desenvolve e vende sistemas de gestão: Beard System, a gestão completa para barbearias. Licenças de pagamento único.",
-    canonical, ogTitle: "Lucksrei Systems: sistemas de gestão para o seu negócio", ogDescription: "Beard System para barbearias. Licenças de 30 a 365 dias, pagamento único.",
+    title: "Lucksrei Systems: sistemas de gestão para barbearias e assistências técnicas",
+    description: "Lucksrei Systems desenvolve e vende sistemas de gestão: Beard System, para barbearias, e Tech System, para assistências técnicas. Licenças de pagamento único.",
+    canonical, ogTitle: "Lucksrei Systems: sistemas de gestão para o seu negócio", ogDescription: "Beard System para barbearias e Tech System para assistências técnicas. Licenças de 30 a 365 dias, pagamento único.",
     ogImage: ORIGIN + "/assets/img/lucksrei/og.jpg", ogW: 1200, ogH: 630, theme: "lucksrei", jsonld
   }) + `
 <header>

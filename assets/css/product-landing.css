@@ -100,3 +100,9 @@ footer{background:var(--secondary);color:#fff;padding:4rem 2rem 2rem;text-align:
   .hero-image-wrapper img.phone{bottom:5%}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+/* Tech System: azul-marinho, branco e ciano (só troca os tokens) */
+body[data-product="tech"]{--primary:#01BCFD;--accent:#01BCFD;--accent-ink:#0078B8;--secondary:#031554;--bg-color:#F4F7FC;--text-main:#0B1636;--text-secondary:#4C5878;--border-color:rgba(3,21,84,.16)}
+body[data-product="tech"] header{background:rgba(3,21,84,.94)}
+body[data-product="tech"] .btn-primary{color:#fff}
+body[data-product="tech"] header .btn-primary{background:#01BCFD;color:#031554}
