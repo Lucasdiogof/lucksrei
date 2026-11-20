@@ -130,7 +130,7 @@ const html = `<!doctype html>
           <div class="info-box">
             <h3>Informações importantes</h3>
             <ul>${imp}</ul>
-            <p class="info-p">Acesse pelo navegador: <a href="${p.appUrl}" rel="noopener">tech.lucksrei.com</a>. Aplicativos para Android e iPhone: em breve nas lojas.</p>
+            <p class="info-p">Acesse pelo navegador: <a href="${p.appUrl}" rel="noopener">tech.lucksrei.com</a>. Aplicativos: <a href="${p.store.android}" rel="noopener">Google Play</a> · <a href="${p.store.ios}" rel="noopener">App Store</a>.</p>
           </div>
         </div>
       </div>

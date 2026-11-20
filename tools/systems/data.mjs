@@ -132,6 +132,7 @@ export const PRODUCTS = [
     tagline: "Gestão completa para assistências técnicas",
     audience: "Assistências técnicas",
     appUrl: "https://tech.lucksrei.com",
+    store: { android: "https://play.google.com/store/apps/details?id=com.lucksrei.tech_system", ios: "https://apps.apple.com/br/app/tech-system/id6836102371" },
     supportEmail: "tech@lucksrei.com",
     platforms: "Web, no computador e no celular",
     title: "Tech System: sistema para assistência técnica com ordens de serviço, estoque e financeiro | Lucksrei Systems",
