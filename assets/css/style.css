@@ -416,6 +416,7 @@ section{ padding: 88px 0; }
 .work-item[data-product="bebometro"]{ --p: #f2a81d; --mix: 8%; }
 .work-item[data-product="orbijob"]{ --p: #a298ff; --mix: 8%; }
 .work-item[data-product="busaogyn"]{ --p: #ffc53d; --mix: 8%; }
+.work-item[data-product="jardim-feliz"]{ --p: #7fcf6a; --mix: 8%; }
 .work-item:hover{ border-color: color-mix(in srgb, var(--p) 40%, var(--border)); }
 .work-copy{ display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 44px 44px 40px; }
 .work-copy h3{ font-size: clamp(28px, 3.4vw, 42px); margin-bottom: 14px; transition: color .2s var(--ease); }
