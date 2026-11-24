@@ -73,7 +73,7 @@
         downloads: null, rating: null, reviewCount: null, period: '2026-10/present', technologies: ['Flutter', 'Supabase', 'Cloudflare Workers'], caseUrl: '/projects/bebometro/' },
       { id: 'jardim-feliz', name: 'Jardim Feliz', subtitle: { en: 'Smart care for your plants', 'pt-BR': 'Cuidados inteligentes para as suas plantas', es: 'Cuidados inteligentes para tus plantas' }, group: 'own', sector: 'lifestyle',
         logo: '/assets/img/apps/jardim-feliz.webp', platforms: ['web'], webUrl: 'https://jardimfeliz.lucksrei.com',
-        downloads: null, rating: null, reviewCount: null, period: '2026-11/present' },
+        downloads: null, rating: null, reviewCount: null, period: '2026-11/present', caseUrl: '/projects/jardim-feliz/' },
 
       /* ---- Lucksrei Systems: sistemas genéricos para pequenos negócios. Novo sistema = mais um registro group 'systems' (+ logo em assets/img/apps/<id>.webp). Não entram na home. ---- */
       { id: 'beard', name: 'Beard System', subtitle: { en: 'Scheduling, clients, commissions and cash for barbershops', 'pt-BR': 'Agenda, clientes, comissões e caixa para barbearias', es: 'Agenda, clientes, comisiones y caja para barberías' }, group: 'systems', sector: 'management',

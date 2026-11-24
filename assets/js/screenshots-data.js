@@ -4201,6 +4201,175 @@
         "night-arrivals"
       ]
     }
+  },
+  "jardimfeliz": {
+    "dir": "jardim-feliz",
+    "slots": {
+      "garden": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1640
+          ],
+          "en": [
+            738,
+            1640
+          ],
+          "es": [
+            738,
+            1640
+          ]
+        }
+      },
+      "new-plant": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1640
+          ],
+          "en": [
+            738,
+            1640
+          ],
+          "es": [
+            738,
+            1640
+          ]
+        }
+      },
+      "plant-detail": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1640
+          ],
+          "en": [
+            738,
+            1640
+          ],
+          "es": [
+            738,
+            1640
+          ]
+        }
+      },
+      "identify": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1640
+          ],
+          "en": [
+            738,
+            1640
+          ],
+          "es": [
+            738,
+            1640
+          ]
+        }
+      },
+      "learn": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1640
+          ],
+          "en": [
+            738,
+            1640
+          ],
+          "es": [
+            738,
+            1640
+          ]
+        }
+      },
+      "games": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1640
+          ],
+          "en": [
+            738,
+            1640
+          ],
+          "es": [
+            738,
+            1640
+          ]
+        }
+      },
+      "calendar": {
+        "locales": [
+          "pt-BR",
+          "en",
+          "es"
+        ],
+        "dims": {
+          "pt-BR": [
+            738,
+            1640
+          ],
+          "en": [
+            738,
+            1640
+          ],
+          "es": [
+            738,
+            1640
+          ]
+        }
+      }
+    },
+    "blocks": {
+      "j1": [
+        "garden",
+        "new-plant"
+      ],
+      "j2": [
+        "plant-detail"
+      ],
+      "j3": [
+        "identify"
+      ],
+      "j4": [
+        "learn",
+        "games",
+        "calendar"
+      ]
+    }
   }
 };
 
